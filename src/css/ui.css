@@ -1,4 +1,4 @@
-body {
+body.checklist-visible {
     margin-right: 240px !important;
     position: relative;
 }
@@ -11,4 +11,9 @@ body {
     top: 0;
     bottom: 0;
     background: #eee;
+    display: none;
+}
+
+.checklist-visible .checklist-ui {
+    display: block;
 }

@@ -8,4 +8,5 @@ $(function () {
   const ui = new UI({
     parent: "#container"
   });
+  ui.show();
 });

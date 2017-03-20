@@ -19,6 +19,16 @@ class UI {
     this.element = $(html).appendTo(parent);
     return this;
   }
+
+  hide () {
+    $(document.body).removeClass("checklist-visible");
+    return this;
+  }
+
+  show () {
+    $(document.body).addClass("checklist-visible");
+    return this;
+  }
 }
 
 module.exports = UI;
