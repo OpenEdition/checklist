@@ -1,0 +1,10 @@
+{
+    "undef": true,
+    "unused": "vars",
+    "browser": true,
+    "node": true,
+    "eqnull": true,
+    "esversion": 6,
+    "jquery": true,
+    "indent": 2
+}
