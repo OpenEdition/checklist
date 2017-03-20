@@ -1,0 +1,14 @@
+body {
+    margin-right: 240px !important;
+    position: relative;
+}
+
+.checklist-ui {
+    width: 200px;
+    padding: 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #eee;
+}

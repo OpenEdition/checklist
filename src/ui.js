@@ -1,3 +1,6 @@
+// Load UI styles
+require("./css/ui.css");
+
 // TODO: il faudrait que ce soit un event emitter. Pourquoi ne pas étendre https://github.com/Olical/EventEmitter
 class UI {
   constructor (options) {
