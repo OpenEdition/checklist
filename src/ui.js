@@ -1,9 +1,11 @@
+const EventEmitter = require("eventemitter2").EventEmitter2;
+
 // Load UI styles
 require("./css/ui.css");
 
-// TODO: il faudrait que ce soit un event emitter. Pourquoi ne pas étendre https://github.com/Olical/EventEmitter
-class UI {
+class UI extends EventEmitter {
   constructor (options) {
+    super();
     this.attach(options.parent);
   }
 
@@ -17,16 +19,19 @@ class UI {
       throw Error("UI: parent is required and must be unique");
     }
     this.element = $(html).appendTo(parent);
+    this.emit("attached");
     return this;
   }
 
   hide () {
     $(document.body).removeClass("checklist-visible");
+    this.emit("hidden");
     return this;
   }
 
   show () {
     $(document.body).addClass("checklist-visible");
+    this.emit("visible");
     return this;
   }
 }
