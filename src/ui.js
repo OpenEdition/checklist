@@ -4,9 +4,9 @@ const EventEmitter = require("eventemitter2").EventEmitter2;
 require("./css/ui.css");
 
 class UI extends EventEmitter {
-  constructor (options) {
+  constructor ({ parent = "body" }) {
     super();
-    this.attach(options.parent);
+    this.attach(parent);
   }
 
   attach (parent) {
