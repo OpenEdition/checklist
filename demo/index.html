@@ -4,7 +4,24 @@
   <meta charset="utf-8">
   <title>Demo page</title>
 
+  <!-- jQuery -->
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+  <!-- Custom rules -->
+  <script>
+    window.checklist = {};
+    window.checklist.rules = [
+      {
+        name: "Test",
+        action: function (resolve, reject) {
+          console.log("Processing Test...");
+          resolve();
+        }
+      }
+    ]
+  </script>
+
+  <!-- Core app -->
   <script src="../dist/app.bundle.js"></script>
 </head>
 <body>
