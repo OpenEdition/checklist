@@ -7,10 +7,14 @@ class Check extends EventEmitter {
   }
 
   run () {
-    // TODO: passer les parametres à action()
-    new Promise(this.action)
-      .then(() => this.emit("done"))
-      .catch(() => this.emit("error")); // TODO: passer l'erreur en param
+    const onFulfilled = (res) => {
+      this.notification = res; // TODO: new Notification()
+      this.emit("done", res);
+    };
+    const onRejected = (err) => {
+      this.emit("error", err);
+    };
+    new Promise(this.action).then(onFulfilled, onRejected);
     return this;
   }
 }
