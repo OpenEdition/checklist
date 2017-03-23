@@ -13,6 +13,11 @@
     window.checklist.rules = [
       {
         name: "Test",
+        condition: function () {
+            var b = Math.random() >= 0.5;
+            console.log("Condition is " + b);
+            return b;
+        },
         action: function (resolve, reject) {
           console.log("Processing Test...");
           resolve("Test result");

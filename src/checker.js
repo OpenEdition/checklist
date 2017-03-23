@@ -4,6 +4,7 @@ class Check extends EventEmitter {
   constructor ({ rule }) {
     super();
     this.action = rule.action;
+    this.condition = rule.condition;
   }
 
   run () {
@@ -17,6 +18,13 @@ class Check extends EventEmitter {
     new Promise(this.action).then(onFulfilled, onRejected);
     return this;
   }
+
+  test () {
+    if (typeof this.condition === "function") {
+      return this.condition();
+    }
+    return true;
+  }
 }
 
 class Checker extends EventEmitter {
@@ -29,9 +37,12 @@ class Checker extends EventEmitter {
     const getCheckPromises = (rule) => {
       return new Promise ((resolve, reject) => {
         const check = new Check({ rule });
-        check.once("done", resolve);
-        check.once("error", reject);
-        check.run();
+        // TODO: inclure ceci dans le constructeur de Check
+        if (check.test()) {
+          check.once("done", resolve);
+          check.once("error", reject);
+          check.run();
+        }
       });
     };
 
