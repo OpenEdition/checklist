@@ -1,5 +1,5 @@
 const EventEmitter = require("eventemitter2").EventEmitter2;
-const Check = require("./check.js")
+const Check = require("./check.js");
 
 
 class Checker extends EventEmitter {
