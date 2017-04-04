@@ -11,7 +11,10 @@ class Checker extends EventEmitter {
   run () {
     const getCheckPromises = (rule) => {
       return new Promise ((resolve, reject) => {
-        const check = new Check({ rule });
+        const check = new Check({
+          checker: this,
+          rule 
+        });
         check.once("done", resolve);
         check.once("error", reject);
       });

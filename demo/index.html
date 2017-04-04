@@ -20,10 +20,8 @@
     window.checklist.rules = [
       {
         name: "Test",
-        condition: function () {
-            var b = Math.random() >= 0.5;
-            console.log("Condition is " + b);
-            return b;
+        condition: function (context) {
+          return context.article && context.textes;
         },
         action: function () {
           console.log("Processing Test...");

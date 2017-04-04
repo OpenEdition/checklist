@@ -6,15 +6,17 @@ function runCheck (check) {
 }
 
 function testCheck (check) {
+  const context = check.checker.context;
   if (typeof check.condition === "function") {
-    return check.condition();
+    return check.condition(context);
   }
   return true;
 }
 
 class Check extends EventEmitter {
-  constructor ({ rule }) {
+  constructor ({ checker, rule }) {
     super();
+    this.checker = checker;
     this.action = rule.action;
     this.condition = rule.condition;
     if (testCheck(this)) {
