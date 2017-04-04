@@ -66,11 +66,13 @@ class Check extends EventEmitter {
 
   reject (err) {
     this.emit("error", err);
+    return this;
   }
 
   resolve (value) {
     this.notification = value; // TODO: new Notification()
     this.emit("done", value);
+    return this;
   }
 }
 
