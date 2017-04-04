@@ -20,9 +20,7 @@
     window.checklist.rules = [
       {
         name: "Test",
-        condition: function (context) {
-          return context.article && context.textes;
-        },
+        condition: "article && textes",
         action: function () {
           console.log("Processing Test...");
           this.resolve("Test result");

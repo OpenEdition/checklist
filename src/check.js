@@ -5,10 +5,30 @@ function runCheck (check) {
   return check;
 }
 
+// Eval a condition defined as a string
+function evalStringCondition (condition, context) {
+  // Replace context keys by their values in string
+  function replaceAttributes (condition, context) {
+    const contextKeys = Object.getOwnPropertyNames(context);
+    contextKeys.forEach(function(key) {
+      const re = new RegExp(`\\b${key}\\b` ,"g");
+      const stringValue = context[key].toString();
+      condition = condition.replace(re, stringValue);
+    });
+    return condition;
+  }
+
+  const conditionToEval = replaceAttributes(condition, context);
+  // No worry, eval is safe here
+  return eval(conditionToEval);
+}
+
 function testCheck (check) {
   const context = check.checker.context;
   if (typeof check.condition === "function") {
     return check.condition(context);
+  } else if (typeof check.condition === "string") {
+    return evalStringCondition(check.condition, context);
   }
   return true;
 }
