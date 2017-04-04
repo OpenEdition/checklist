@@ -7,6 +7,23 @@ function runCheck (check) {
 
 // Eval a condition defined as a string
 function evalStringCondition (condition, context) {
+  // Parse condition to get keys
+  function getKeys (condition, context) {
+    const keys = condition.match(/\b[^!&|()]*\b/g);
+    if (keys === "null") return [];
+    // Remove empty
+    return keys.filter((key) => key.trim().length > 0);
+  }
+
+  // Add missing keys to context in order to avoid ReferenceError when using eval
+  function addKeys (context, evaledKeys) {
+    const fullContext = {};
+    evaledKeys.forEach((key) => {
+      fullContext[key] = typeof context[key] !== "undefined" ? context[key] : false;
+    });
+    return fullContext;
+  }
+
   // Replace context keys by their values in string
   function replaceAttributes (condition, context) {
     const contextKeys = Object.getOwnPropertyNames(context);
@@ -18,7 +35,10 @@ function evalStringCondition (condition, context) {
     return condition;
   }
 
-  const conditionToEval = replaceAttributes(condition, context);
+  const evaledKeys = getKeys(condition, context);
+  const fullContext = addKeys(context, evaledKeys);
+  const conditionToEval = replaceAttributes(condition, fullContext);
+
   // No worry, eval is safe here
   return eval(conditionToEval);
 }
