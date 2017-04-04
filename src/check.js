@@ -1,14 +1,7 @@
 const EventEmitter = require("eventemitter2").EventEmitter2;
 
 function runCheck (check) {
-  const onFulfilled = (res) => {
-    check.notification = res; // TODO: new Notification()
-    check.emit("done", res);
-  };
-  const onRejected = (err) => {
-    check.emit("error", err);
-  };
-  new Promise(check.action).then(onFulfilled, onRejected);
+  new Promise(check.action.bind(check)).then(check.resolve, check.reject);
   return check;
 }
 
@@ -27,6 +20,15 @@ class Check extends EventEmitter {
     if (testCheck(this)) {
       runCheck(this);
     }
+  }
+
+  reject (err) {
+    this.emit("error", err);
+  }
+
+  resolve (value) {
+    this.notification = value; // TODO: new Notification()
+    this.emit("done", value);
   }
 }
 

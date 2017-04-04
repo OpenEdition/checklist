@@ -18,9 +18,9 @@
             console.log("Condition is " + b);
             return b;
         },
-        action: function (resolve, reject) {
+        action: function () {
           console.log("Processing Test...");
-          resolve("Test result");
+          this.resolve("Test result");
         }
       }
     ]
