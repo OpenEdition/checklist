@@ -5,7 +5,7 @@ class Checker extends EventEmitter {
   constructor ({ rules, context }) {
     super();
     this.rules = rules;
-    this.context = context || [];
+    this.context = (typeof context === "function" ? context() : context) || [];
   }
 
   run () {

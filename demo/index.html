@@ -10,10 +10,12 @@
   <!-- Custom rules -->
   <script>
     window.checklist = {};
-    window.checklist.context = {
-        "article": true,
-        "textes": true,
-        "motsclesfr": 5
+    window.checklist.context = function () {
+      return {
+          "article": true,
+          "textes": true,
+          "motsclesfr": $(".motsclesfr .entry").length
+      }
     };
     window.checklist.rules = [
       {
@@ -37,6 +39,13 @@
 <body>
   <article id="container">
     <h1>Demo page</h1>
+    <p class="motsclesfr">Mots-cles :
+      <span class="entry">test</span>
+      <span class="entry">essai</span>
+      <span class="entry">simulation</span>
+      <span class="entry">lorem</span>
+      <span class="entry">ispum</span>
+    </p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
