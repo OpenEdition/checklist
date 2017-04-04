@@ -1,11 +1,11 @@
 const EventEmitter = require("eventemitter2").EventEmitter2;
 const Check = require("./check.js");
 
-
 class Checker extends EventEmitter {
-  constructor ({ rules }) {
+  constructor ({ rules, context }) {
     super();
     this.rules = rules;
+    this.context = context || [];
   }
 
   run () {
