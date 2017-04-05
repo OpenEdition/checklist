@@ -13,7 +13,7 @@ class Checker extends EventEmitter {
       return new Promise ((resolve, reject) => {
         const check = new Check({
           checker: this,
-          rule 
+          rule
         });
         check.once("done", resolve);
         check.once("error", reject);
