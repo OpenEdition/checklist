@@ -13,6 +13,7 @@ function evalStringCondition (condition, context) {
 
   const conditionToEval = replaceAttributes(condition, context);
   // No worry, eval is safe here
+  // jshint evil: true
   return eval(conditionToEval);
 }
 
