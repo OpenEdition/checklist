@@ -7,38 +7,16 @@ function runCheck (check) {
 
 // Eval a condition defined as a string
 function evalStringCondition (condition, context) {
-  // Parse condition to get keys
-  function getKeys (condition, context) {
-    const keys = condition.match(/\b[^!&|()]*\b/g);
-    if (keys === "null") return [];
-    // Remove empty
-    return keys.filter((key) => key.trim().length > 0);
-  }
-
-  // Add missing keys to context in order to avoid ReferenceError when using eval
-  function addKeys (context, evaledKeys) {
-    const fullContext = {};
-    evaledKeys.forEach((key) => {
-      fullContext[key] = typeof context[key] !== "undefined" ? context[key] : false;
-    });
-    return fullContext;
-  }
-
-  // Replace context keys by their values in string
+  // Replace context keys by their values in string (false if undefined)
   function replaceAttributes (condition, context) {
-    const contextKeys = Object.getOwnPropertyNames(context);
-    contextKeys.forEach(function(key) {
-      const re = new RegExp(`\\b${key}\\b` ,"g");
-      const stringValue = context[key].toString();
-      condition = condition.replace(re, stringValue);
+    const regex = /\b[^!&|()]*\b/g;
+    return condition.replace(regex, (key) => {
+      if (key.trim().length === 0) return key;
+      return typeof context[key] !== "undefined" ? context[key] : false;
     });
-    return condition;
   }
 
-  const evaledKeys = getKeys(condition, context);
-  const fullContext = addKeys(context, evaledKeys);
-  const conditionToEval = replaceAttributes(condition, fullContext);
-
+  const conditionToEval = replaceAttributes(condition, context);
   // No worry, eval is safe here
   return eval(conditionToEval);
 }
