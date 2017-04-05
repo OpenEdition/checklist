@@ -12,7 +12,11 @@ class UI extends EventEmitter {
   attach (parent) {
     parent = parent || "body";
     // TODO: placer ça dans un fichier séparé et utiliser un langage de template
-    const html = "<div class='checklist-ui'>Test</div>";
+    const html = `
+      <div id="checklist-ui" class="checklist-ui">
+        <ul id="checklist-statements" class="checklist-statements"></ul>
+      </div>
+    `;
 
     let $parent = $(parent);
     if ($parent.length !== 1) {
@@ -20,6 +24,19 @@ class UI extends EventEmitter {
     }
     this.element = $(html).appendTo(parent);
     this.emit("attached");
+    return this;
+  }
+
+  inject (statement) {
+    const injectStatement = (statement) => {
+      const li = `<li>${statement.name}</li>`;
+      this.element.children("#checklist-statements").append(li);
+    };
+    if (statement instanceof Array) {
+      statement.forEach(injectStatement);
+    } else if (statement != null) {
+      injectStatement(statement);
+    }
     return this;
   }
 

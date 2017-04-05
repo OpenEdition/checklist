@@ -16,6 +16,8 @@ $(function () {
   const rules = window.checklist.rules;
   const context = window.checklist.context;
   const checker = new Checker({ rules, context });
-  checker.on("done", () => console.log("Checker is done", checker.statements));
+  checker.on("done", () => {
+    ui.inject(checker.statements);
+  });
   checker.run();
 });
