@@ -32,6 +32,7 @@ class Check extends EventEmitter {
   constructor ({ checker, rule }) {
     super();
     this.checker = checker;
+    this.name = rule.name;
     this.action = rule.action;
     this.condition = rule.condition;
     this.statements = [];
@@ -39,6 +40,9 @@ class Check extends EventEmitter {
   }
 
   notify (value) {
+    if (value == null || value === true || value.name == null) {
+      value = this.name;
+    }
     const statement = new Statement(value);
     this.statements.push(statement);
     this.emit("statement", statement);

@@ -19,10 +19,11 @@
     };
     window.checklist.rules = [
       {
-        name: "Test",
+        name: "Rule Test",
         condition: "article && textes",
         action: function () {
           console.log("Processing Test...");
+          this.notify();
           this.notify({
             name: "First statement",
             description: "This is a first statement for testing purpose..."
