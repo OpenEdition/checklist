@@ -17,6 +17,7 @@ class Checker extends EventEmitter {
         });
         check.once("done", resolve);
         check.once("error", reject);
+        check.run();
       });
     };
 
