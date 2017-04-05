@@ -1,4 +1,5 @@
 const EventEmitter = require("eventemitter2").EventEmitter2;
+const Statement = require("./statement.js");
 
 // Eval a condition defined as a string
 function evalStringCondition (condition, context) {
@@ -33,7 +34,15 @@ class Check extends EventEmitter {
     this.checker = checker;
     this.action = rule.action;
     this.condition = rule.condition;
+    this.statements = [];
     this.active = false;
+  }
+
+  notify (value) {
+    const statement = new Statement(value);
+    this.statements.push(statement);
+    this.emit("statement", statement);
+    return this;
   }
 
   reject (err) {
@@ -42,7 +51,9 @@ class Check extends EventEmitter {
   }
 
   resolve (value) {
-    this.notification = value; // TODO: new Notification()
+    if (value) {
+      this.notify(value);
+    }
     this.emit("done", value);
     return this;
   }

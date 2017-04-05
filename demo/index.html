@@ -23,6 +23,10 @@
         condition: "article && textes",
         action: function () {
           console.log("Processing Test...");
+          this.notify({
+            name: "First statement",
+            description: "This is a first statement for testing purpose..."
+          });
           this.resolve("Test result");
         }
       }

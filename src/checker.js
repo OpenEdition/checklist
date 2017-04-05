@@ -6,6 +6,7 @@ class Checker extends EventEmitter {
     super();
     this.rules = rules;
     this.context = (typeof context === "function" ? context() : context) || [];
+    this.statements = [];
   }
 
   run () {
@@ -17,6 +18,10 @@ class Checker extends EventEmitter {
         });
         check.once("done", resolve);
         check.once("error", reject);
+        check.on("statement", (statement) => {
+          this.statements.push(statement);
+          this.emit("statement", statement);
+        });
         check.run();
       });
     };
