@@ -40,7 +40,7 @@ class Check extends EventEmitter {
   }
 
   notify (value) {
-    if (value == null || value === true || value.name == null) {
+    if (value == null || value === true || (typeof value !== "string" && value.name == null)) {
       value = this.name;
     }
     const statement = new Statement(value);
