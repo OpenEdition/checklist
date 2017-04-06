@@ -15,6 +15,10 @@ class Statement {
     }
     this.count = this.count || 1;
   }
+
+  is (statement) {
+    return this.id === statement.id;
+  }
 }
 
 module.exports = Statement;

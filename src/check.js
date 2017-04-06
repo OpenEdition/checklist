@@ -43,9 +43,20 @@ class Check extends EventEmitter {
     if (value == null || value === true || (typeof value !== "string" && value.name == null)) {
       value = this.name;
     }
+
     const statement = new Statement(value);
-    this.statements.push(statement);
-    this.emit("statement", statement);
+
+    // Increase count if this statement already exists in Check
+    const duplicate = this.statements.find((el) => {
+      return statement.is(el);
+    });
+    if (duplicate) {
+      duplicate.count++;
+    } else {
+      // Otherwise register it in Check
+      this.statements.push(statement);
+      this.emit("statement", statement);
+    }
     return this;
   }
 
