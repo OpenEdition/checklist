@@ -1,19 +1,17 @@
 class Statement {
-  constructor (infos) {
-    if (typeof infos === "undefined") {
+  constructor ({check, infos}) {
+    this.check = check;
+
+    this.name = typeof infos === "string" ? infos : ((infos && infos.name) || check.name);
+
+    if (this.name == null) {
       throw Error("Statement constructor requires a name at least");
-    } else if (typeof infos === "string") {
-      this.name = infos;
-    } else {
-      const {name, description, id, count} = infos;
-      Object.assign(this, {name, description, id, count});
     }
 
     // Create id from name if null
-    if (this.id == null) {
-      this.id = this.name.replace(/\W/gi, "-").toLowerCase();
-    }
-    this.count = this.count || 1;
+    this.id = (infos && infos.id) || this.name.replace(/\W/gi, "-").toLowerCase();
+    this.description = (infos && infos.description) || check.description;
+    this.count = typeof infos === "number" ? infos : ((infos && infos.count) || 1);
   }
 
   is (statement) {
