@@ -14,6 +14,10 @@ class Statement {
     this.count = typeof infos === "number" ? infos : ((infos && infos.count) || 1);
   }
 
+  add (nb = 1) {
+    this.count += nb;
+  }
+
   getDuplicate () {
     return this.check.statements.find((el) => {
       return this.is(el);

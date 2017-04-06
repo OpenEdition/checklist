@@ -45,7 +45,7 @@ class Check extends EventEmitter {
     // Increase count if this statement already exists in Check
     const duplicate = statement.getDuplicate();
     if (duplicate) {
-      duplicate.count++;
+      duplicate.add();
     } else {
       // Otherwise register it in Check
       this.statements.push(statement);
