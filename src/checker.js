@@ -17,7 +17,6 @@ class Checker extends EventEmitter {
           rule
         });
         check.once("done", resolve);
-        check.once("error", reject);
         check.on("statement", (statement) => {
           this.statements.push(statement);
           this.emit("statement", statement);
@@ -29,6 +28,8 @@ class Checker extends EventEmitter {
     const promises = this.rules.map(getCheckPromises);
     Promise.all(promises).then(() => {
       this.emit("done");
+    }).catch((err) => {
+      throw Error(err);
     });
 
     return this;

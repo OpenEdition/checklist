@@ -60,9 +60,9 @@ class Check extends EventEmitter {
     return this;
   }
 
+  // TODO: Check exception should not raise errors. Use resolve with a specific attribute instead.
   reject (err) {
-    this.emit("error", err);
-    return this;
+    throw Error(err);
   }
 
   resolve (value) {
