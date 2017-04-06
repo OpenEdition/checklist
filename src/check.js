@@ -43,9 +43,7 @@ class Check extends EventEmitter {
     const statement = new Statement({check: this, infos: value});
 
     // Increase count if this statement already exists in Check
-    const duplicate = this.statements.find((el) => {
-      return statement.is(el);
-    });
+    const duplicate = statement.getDuplicate();
     if (duplicate) {
       duplicate.count++;
     } else {
