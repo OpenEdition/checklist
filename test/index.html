@@ -12,7 +12,8 @@
    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
   <!-- Core app -->
-   <script src="../dist/app.bundle.js"></script>
+  <script src="../dist/app.bundle.js"></script>
+  <script src="config.js"></script>
 
   <!-- Tests -->
   <script src="../node_modules/chai/chai.js"></script>
@@ -20,7 +21,10 @@
   <script>mocha.setup("bdd");</script>
   <script src="tests.js"></script>
   <script>
-    $(mocha.run);
+    $(function () {
+      mocha.run();
+      checklist.run();
+    });
   </script>
 </head>
 <body>
