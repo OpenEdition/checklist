@@ -1,6 +1,9 @@
 {
     "undef": true,
     "unused": "vars",
+    "globals": {
+        "checklist": true
+    },
     "browser": true,
     "node": true,
     "eqnull": true,
