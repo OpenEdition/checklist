@@ -10,8 +10,7 @@ checklist.setConfig({
   context: function () {
     return {
       yes: true,
-      no: false,
-      maybe: function () { return true; }
+      no: false
     };
   },
   rules: [
@@ -19,6 +18,16 @@ checklist.setConfig({
       name: "Context is true (function)",
       condition: (context) => context.yes && !context.no,
       action: () => setFlag("context-true-function")
+    },
+    {
+      name: "Context is true (string)",
+      condition: "yes && !no",
+      action: () => setFlag("context-true-string")
+    },
+    {
+      name: "Context is false",
+      condition: "no",
+      action: () => setFlag("context-false")
     }
   ]
 });
