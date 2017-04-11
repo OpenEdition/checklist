@@ -1,23 +1,19 @@
 const UI = require("./ui.js");
 const Checker = require("./checker.js");
 
-if (typeof jQuery === "undefined") {
-  throw Error ("Checklist requires jQuery");
-}
+window.checklist = function ({rules, context, parent = "#container"}) {
+  if (typeof jQuery === "undefined") {
+    throw Error ("Checklist requires jQuery");
+  }
 
-$(function () {
   // UI
-  const ui = new UI({
-    parent: "#container"
-  });
+  const ui = new UI({parent});
   ui.show();
 
   // Checker
-  const rules = window.checklist.rules;
-  const context = window.checklist.context;
   const checker = new Checker({ rules, context });
   checker.on("done", () => {
     ui.inject(checker.statements);
   });
   checker.run();
-});
+};
