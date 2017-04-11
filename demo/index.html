@@ -7,9 +7,14 @@
   <!-- jQuery -->
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
-  <!-- Init core app & launch it -->
+  <!-- Init core app + config & launch it -->
   <script src="../dist/app.bundle.js"></script>
   <script src="demo.js"></script>
+  <script>
+    $(function () {
+      checklist.run();
+    });
+  </script>
 </head>
 <body>
   <article id="container">
