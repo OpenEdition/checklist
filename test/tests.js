@@ -17,7 +17,7 @@ function getFlag (name) {
 describe("Checklist initialization", function () {
   it("Should return a Checker instance", function () {
     var checker = checklist.start({
-      ui: false,
+      parent: false,
       context: {},
       rules: []
     });
@@ -28,7 +28,7 @@ describe("Checklist initialization", function () {
 describe("Context and conditions", function () {
   before(function() {
     checklist.start({
-      ui: false,
+      parent: false,
       context: {
         yes: true,
         no: false
@@ -70,7 +70,7 @@ describe("Context and conditions", function () {
 
   it("Should compute context when it's a function", function (done) {
     checklist.start({
-      ui: false,
+      parent: false,
       context: function () {
         return {
           yes: $("body").length === 1,

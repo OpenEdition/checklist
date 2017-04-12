@@ -15,12 +15,12 @@ window.checklist = {
     if (config) {
       this.setConfig(config);
     }
-    const {rules, context, parent, ui} = this.config;
+    const {rules, context, parent} = this.config;
 
     const checker = new Checker({ rules, context });
 
     // Init optional UI
-    if (ui === true) {
+    if (parent !== false) {
       const ui = new UI({parent});
       ui.show();
       checker.on("done", (statements) => {
@@ -33,7 +33,7 @@ window.checklist = {
   },
 
   // TODO: 1. merge config, 2. add an "override" parameter
-  setConfig: function ({rules, context, parent = "#container", ui = true}) {
-    this.config = {rules, context, parent, ui};
+  setConfig: function ({rules, context, parent = "#container"}) {
+    this.config = {rules, context, parent};
   }
 };
