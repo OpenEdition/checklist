@@ -22,6 +22,7 @@ window.checklist = {
       ui.inject(checker.statements);
     });
     checker.run();
+    return checker;
   },
 
   // TODO: 1. merge config, 2. add an "override" parameter
