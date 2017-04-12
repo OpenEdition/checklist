@@ -7,7 +7,7 @@ window.checklist = {
   UI,
 
   // checklist methods
-  run: function (config) {
+  start: function (config) {
     if (typeof jQuery === "undefined") {
       throw Error ("Checklist requires jQuery");
     }
