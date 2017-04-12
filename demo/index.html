@@ -12,7 +12,13 @@
   <script src="config.js"></script>
   <script>
     $(function () {
-      checklist.run();
+      var checker = checklist.run();
+      checker.run({
+        name: "An extra Check",
+        action: function () {
+          this.resolve(true);
+        }
+      });
     });
   </script>
 </head>

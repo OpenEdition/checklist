@@ -23,8 +23,8 @@ window.checklist = {
     if (ui === true) {
       const ui = new UI({parent});
       ui.show();
-      checker.on("done", () => {
-        ui.inject(checker.statements);
+      checker.on("done", (statements) => {
+        ui.inject(statements);
       });
     }
 

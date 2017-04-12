@@ -9,7 +9,19 @@ class Checker extends EventEmitter {
     this.statements = [];
   }
 
-  run () {
+  // FIXME: update this.rules by merging rules when running this.run(rules) (but this must be optionnal). NOTE: this.statements is already updated
+  run (rules) {
+    const currentStatements = [];
+
+    const getRules = (rules) => {
+      if (rules instanceof Array) {
+        return rules;
+      } else if (typeof rules === "object") {
+        return [rules];
+      }
+      return this.rules;
+    };
+
     const getCheckPromises = (rule) => {
       return new Promise ((resolve, reject) => {
         const check = new Check({
@@ -18,6 +30,7 @@ class Checker extends EventEmitter {
         });
         check.once("done", resolve);
         check.on("statement", (statement) => {
+          currentStatements.push(statement);
           this.statements.push(statement);
           this.emit("statement", statement);
         });
@@ -25,9 +38,10 @@ class Checker extends EventEmitter {
       });
     };
 
-    const promises = this.rules.map(getCheckPromises);
+    rules = getRules(rules);
+    const promises = rules.map(getCheckPromises);
     Promise.all(promises).then(() => {
-      this.emit("done");
+      this.emit("done", currentStatements);
     }).catch((err) => {
       throw Error(err);
     });
