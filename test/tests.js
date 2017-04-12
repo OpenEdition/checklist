@@ -14,6 +14,16 @@ function getFlag (name) {
 }
 
 // Tests
+describe("Checklist initialization", function () {
+  it("Should return a Checker instance", function () {
+    var checker = checklist.run({
+      context: {},
+      rules: []
+    });
+    expect(checker).to.be.an.instanceof(checklist.Checker);
+  });
+});
+
 describe("Context and conditions", function () {
   before(function() {
     checklist.run({
