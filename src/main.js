@@ -2,6 +2,11 @@ const UI = require("./ui.js");
 const Checker = require("./checker.js");
 
 window.checklist = {
+  // Expose high level classes
+  Checker,
+  UI,
+
+  // checklist methods
   run: function (config) {
     if (typeof jQuery === "undefined") {
       throw Error ("Checklist requires jQuery");
