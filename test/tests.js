@@ -27,11 +27,9 @@ describe("Checklist initialization", function () {
 describe("Context and conditions", function () {
   before(function() {
     checklist.run({
-      context: function () {
-        return {
-          yes: true,
-          no: false
-        };
+      context: {
+        yes: true,
+        no: false
       },
       rules: [
         {
@@ -66,5 +64,23 @@ describe("Context and conditions", function () {
   it("Should not run action() when condition is false", function () {
     var flag = getFlag("context-false");
     expect(flag).to.equal(undefined);
+  });
+
+  it("Should compute context when it's a function", function (done) {
+    checklist.run({
+      context: function () {
+        return {
+          yes: $("body").length === 1,
+          no: $("body").length === 0
+        };
+      },
+      rules: [
+        {
+          name: "Context is computed from a function",
+          condition: "yes && !no",
+          action: () => done()
+        }
+      ]
+    });
   });
 });
