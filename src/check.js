@@ -19,7 +19,7 @@ function evalStringCondition (condition, context) {
 }
 
 function testCheck (check) {
-  const context = check.checker.context;
+  const context = check.context;
   if (typeof check.condition === "function") {
     return check.condition(context);
   } else if (typeof check.condition === "string") {
@@ -29,9 +29,9 @@ function testCheck (check) {
 }
 
 class Check extends EventEmitter {
-  constructor ({ checker, rule }) {
+  constructor ({ context, rule }) {
     super();
-    this.checker = checker;
+    this.context = context;
     this.name = rule.name;
     this.action = rule.action;
     this.condition = rule.condition;
