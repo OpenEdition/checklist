@@ -63,7 +63,7 @@ class Check extends EventEmitter {
     if (value) {
       this.notify(value);
     }
-    this.emit("done", value);
+    this.emit("done");
     return this;
   }
 

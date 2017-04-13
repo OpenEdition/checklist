@@ -28,7 +28,10 @@ class Checker extends EventEmitter {
           context: this.context,
           rule
         });
-        check.once("done", resolve);
+        check.once("done", () => {
+          resolve();
+          this.emit("check-done", check);
+        });
         check.on("statement", (statement) => {
           currentStatements.push(statement);
           this.statements.push(statement);
