@@ -36,6 +36,32 @@ describe("Initialization and execution", function () {
       ]
     });
   });
+
+  it("Should run check with run() (array)", function (done) {
+    var checker = checklist.start({
+      parent: false,
+      context: {},
+      rules: []
+    });
+    var arr = [{
+      name: "This should run",
+      action: () => done()
+    }];
+    checker.run(arr);
+  });
+
+  it("Should run check with run() (object)", function (done) {
+    var checker = checklist.start({
+      parent: false,
+      context: {},
+      rules: []
+    });
+    var obj = {
+      name: "This should run",
+      action: () => done()
+    };
+    checker.run(obj);
+  });
 });
 
 describe("Context and conditions", function () {
