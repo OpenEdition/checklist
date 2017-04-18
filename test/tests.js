@@ -86,4 +86,17 @@ describe("Context and conditions", function () {
       ]
     });
   });
+
+  it("Should run the check when the rule doesn't mention a condition", function (done) {
+    checklist.start({
+      parent: false,
+      context: {},
+      rules: [
+        {
+          name: "This should run",
+          action: () => done()
+        }
+      ]
+    });
+  });
 });
