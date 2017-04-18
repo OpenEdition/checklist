@@ -14,7 +14,7 @@ function getFlag (name) {
 }
 
 // Tests
-describe("Checklist initialization", function () {
+describe("Initialization and execution", function () {
   it("Should return a Checker instance", function () {
     var checker = checklist.start({
       parent: false,
@@ -22,6 +22,19 @@ describe("Checklist initialization", function () {
       rules: []
     });
     expect(checker).to.be.an.instanceof(checklist.Checker);
+  });
+
+  it("Should run checks on start()", function (done) {
+    checklist.start({
+      parent: false,
+      context: {},
+      rules: [
+        {
+          name: "This should run",
+          action: () => done()
+        }
+      ]
+    });
   });
 });
 
@@ -81,19 +94,6 @@ describe("Context and conditions", function () {
         {
           name: "Context is computed from a function",
           condition: "yes && !no",
-          action: () => done()
-        }
-      ]
-    });
-  });
-
-  it("Should run the check when the rule doesn't mention a condition", function (done) {
-    checklist.start({
-      parent: false,
-      context: {},
-      rules: [
-        {
-          name: "This should run",
           action: () => done()
         }
       ]
