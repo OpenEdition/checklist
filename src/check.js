@@ -18,16 +18,6 @@ function evalStringCondition (condition, context) {
   return eval(conditionToEval);
 }
 
-function testCheck (check) {
-  const context = check.context;
-  if (typeof check.condition === "function") {
-    return check.condition(context);
-  } else if (typeof check.condition === "string") {
-    return evalStringCondition(check.condition, context);
-  }
-  return true;
-}
-
 class Check extends EventEmitter {
   constructor ({ context, rule }) {
     super();
@@ -71,7 +61,7 @@ class Check extends EventEmitter {
   }
 
   run () {
-    if (this.state < 1 && testCheck(this)) {
+    if (this.state < 1 && this.test(this)) {
       // TODO: move delay in config
       const delay = 1000;
       this.state = 1;
@@ -79,6 +69,16 @@ class Check extends EventEmitter {
       this.action.call(this);
       return this;
     }
+  }
+
+  test () {
+    const context = this.context;
+    if (typeof this.condition === "function") {
+      return this.condition(context);
+    } else if (typeof this.condition === "string") {
+      return evalStringCondition(this.condition, context);
+    }
+    return true;
   }
 }
 
