@@ -12,17 +12,17 @@ Then call jQuery and OpenEdition Checklist into the `<head>` and use it:
 
   <!-- Include the core -->
   <script src="../dist/app.bundle.js"></script>
-  
+
   <!-- Call your Checklist custom configuration -->  
   <script src="config.js"></script>
-  
+
   <!-- Run Checklist when the page is ready -->  
   <script>
     $(function () {
 	  checklist.start();
     });
   </script>
-``` 
+```
 
 `checklist.start()` returns a instance of `Checker` that you can manipulate later:
 
@@ -32,7 +32,7 @@ Then call jQuery and OpenEdition Checklist into the `<head>` and use it:
     const someNewRules = [...] // array containing new rules to execute
     checker.run(someNewRules); // run the new checks
   });
-``` 
+```
 
 ## Configuration overview
 
@@ -40,7 +40,7 @@ Use `checklist.setConfig(config)` to register your custom configuration (you can
 
 Configuration is a JavaScript object which may contain the following keys:
 
-* `context`: an JavaScript object which describes the context where to run the checker. 
+* `context`: an JavaScript object which describes the context where to run the checker.
 * `rules`: an array which contains the rules to test and run with the checker.
 * `parent`: the CSS selector which describe the element where to append the UI (default is `#container`). Set this to `false` to disable UI (for testing purpose).
 
@@ -54,13 +54,13 @@ Configuration is a JavaScript object which may contain the following keys:
     resume: false,
     keywords: 5
   }
-``` 
+```
 
 If a function is given then it will be evaluated during checker instantiation and the returned value will be used as `context`.
 
 ## Rules
 
-`rules` is an array of rules which will be executed when `checklist.start()` or `checker.run()` are called. 
+`rules` is an array of rules which will be executed when `checklist.start()` or `checker.run()` are called.
 
 Each rule is supposed to have a `condition` and an `action`. When the check is launched, the `action` is executed if the rule `condition` matches the `context`. Depending on the check results, `action` can trigger user notifications by creating statements which are sent to the checker once all the checks are done.
 
@@ -85,21 +85,21 @@ Assuming the context is:
     resume: false,
     keywords: 5
   }
-``` 
+```
 
 Then the following conditions will evaluate to `true`:
 
 ```javascript
   condition: "article && !resume && keywords > 0"
-``` 
+```
 
 ```javascript
   condition: (context) => context.article && !context.resume && context.keywords > 0
-``` 
+```
 
 ### `action`
 
-`action` is the function triggered when `condition` is `true`. 
+`action` is the function triggered when `condition` is `true`.
 
 The following methods are available in this context:
 
