@@ -61,7 +61,11 @@ class Check extends EventEmitter {
   }
 
   run () {
-    if (this.state < 1 && this.test(this)) {
+    if (!this.test()) {
+      this.resolve();
+      return this;
+    }
+    if (this.state < 1) {
       // TODO: move delay in config
       const delay = 1000;
       this.state = 1;
