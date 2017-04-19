@@ -37,6 +37,13 @@ describe("Initialization and execution", function () {
     };
     checker.run(obj);
   });
+
+  it("Should run callback when checker is done", function (done) {
+    checklist.start({
+      parent: false,
+      callback: () => done()
+    });
+  });
 });
 
 describe("Context and conditions", function () {
