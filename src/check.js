@@ -36,7 +36,8 @@ class Check extends EventEmitter {
     this.action = rule.action;
     this.condition = rule.condition;
     this.statements = [];
-    this.active = false;
+    // states: 0 = not started yet, 1 = ongoing, 2 = done
+    this.state = 0;
   }
 
   notify (value) {
@@ -60,6 +61,8 @@ class Check extends EventEmitter {
   }
 
   resolve (value) {
+    if (this.state > 1) return this;
+    this.state = 2;
     if (value) {
       this.notify(value);
     }
@@ -68,9 +71,12 @@ class Check extends EventEmitter {
   }
 
   run () {
-    if (!this.active && testCheck(this)) {
-      this.active = true;
-      new Promise(this.action.bind(this)).then(this.resolve, this.reject);
+    if (this.state < 1 && testCheck(this)) {
+      // TODO: move delay in config
+      const delay = 1000;
+      this.state = 1;
+      setTimeout(this.resolve.bind(this), delay);
+      this.action.call(this);
       return this;
     }
   }
