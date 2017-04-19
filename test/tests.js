@@ -81,7 +81,7 @@ describe("Context and conditions", function () {
     });
   });
 
-  it("Should not run action() when condition is false", function () {
+  it("Should not run action() when condition is false", function (done) {
     var flag = false;
     checklist.start({
       parent: false,
@@ -95,10 +95,12 @@ describe("Context and conditions", function () {
           condition: "no",
           action: () => flag = true
         }
-      ]
+      ],
+      callback: function () {
+        var arg = flag ? Error("flag should be false") : null;
+        done(arg);
+      }
     });
-    // FIXME: this test should be async
-    expect(flag).to.equal(false);
   });
 
   it("Should compute context when it's a function", function (done) {
