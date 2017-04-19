@@ -4,7 +4,7 @@ const Check = require("./check.js");
 class Checker extends EventEmitter {
   constructor ({ rules, context }) {
     super();
-    this.rules = rules;
+    this.rules = rules || [];
     this.context = (typeof context === "function" ? context() : context) || [];
     this.statements = [];
   }
