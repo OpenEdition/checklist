@@ -31,7 +31,7 @@ class UI extends EventEmitter {
   inject (statement) {
     const injectStatement = (statement) => {
       const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
-      const li = `<li>${statement.name} ${countSpan}</li>`;
+      const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
       this.element.children("#checklist-statements").append(li);
     };
     if (statement instanceof Array) {
