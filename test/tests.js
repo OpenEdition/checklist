@@ -37,10 +37,56 @@ describe("Initialization and execution", function () {
     };
     checker.run(obj);
   });
+});
 
+describe("Events and callbacks", function (){
   it("Should run callback when checker is done", function (done) {
     var callback = () => done();
     checklist.start({ parent: false }, callback);
+  });
+
+  it("Should emit the 'done' event", function (done) {
+    var checker = checklist.init({ parent: false });
+    checker.on("done", () => done());
+    checker.run();
+  });
+
+  it("Should emit the 'check-done' event with an argument", function (done) {
+    var checker = checklist.init({
+      parent: false,
+      rules: [
+        {
+          name: "This should run",
+          action: function () {
+            this.resolve();
+          }
+        }
+      ]
+    });
+    checker.on("check-done", function(check) {
+      var arg = typeof check === "undefined" ? Error("check is undefined") : null;
+      done(arg);
+    });
+    checker.run();
+  });
+
+  it("Should emit the 'statement' event with an argument", function (done) {
+    var checker = checklist.init({
+      parent: false,
+      rules: [
+        {
+          name: "This should run",
+          action: function () {
+            this.resolve(true);
+          }
+        }
+      ]
+    });
+    checker.on("statement", function(statement) {
+      var arg = typeof statement === "undefined" ? Error("statement is undefined") : null;
+      done(arg);
+    });
+    checker.run();
   });
 });
 
