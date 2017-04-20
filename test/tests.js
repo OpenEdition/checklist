@@ -277,3 +277,12 @@ describe("Statements", function () {
     checker.run();
   });
 });
+
+describe("UI", function () {
+  it("Should init UI and show panel", function () {
+    it("Should return a Checker instance", function () {
+      checklist.start({ parent: "#container" });
+      expect($("#checklist-ui").length).to.equal(1);
+    });
+  });
+});
