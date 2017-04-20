@@ -9,7 +9,7 @@ class Statement {
     // Get values from check, otherwise default values are inherited from check
     this.name = infos.name || check.name;
     this.description = infos.description || check.description;
-    this.id = infos.id || check.id;
+    this.id = infos.id || check.id || getIdFromName(this.name);
     this.count = 1;
 
     // If infos is a string, then use it as the name
