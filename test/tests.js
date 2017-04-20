@@ -250,4 +250,25 @@ describe("Statements", function () {
     });
     checker.run();
   });
+
+  it("Should increment count", function (done) {
+    var checker = checklist.init({
+      parent: false,
+      rules: [
+        {
+          name: "Some rule",
+          id: "some-rule",
+          action: function () {
+            this.notify(true);
+            this.resolve(true);
+          }
+        }
+      ]
+    });
+    checker.on("duplicate", function(statement) {
+      var arg = statement.count !== 2 ? Error(`count is ${statement.count} instead of 2`) : null;
+      done(arg);
+    });
+    checker.run();
+  });
 });
