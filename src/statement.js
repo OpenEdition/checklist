@@ -1,17 +1,32 @@
+function getIdFromName (name) {
+  return name.replace(/\W/gi, "-").toLowerCase();
+}
+
 class Statement {
   constructor ({check, infos}) {
     this.check = check;
 
-    this.name = typeof infos === "string" ? infos : ((infos && infos.name) || check.name);
+    // Get values from check, otherwise default values are inherited from check
+    this.name = infos.name || check.name;
+    this.description = infos.description || check.description;
+    this.id = infos.id || check.id;
+    this.count = 1;
 
+    // If infos is a string, then use it as the name
+    if (typeof infos === "string") {
+      this.name = infos;
+      this.id = getIdFromName(this.name);
+    }
+
+    // Do we have a name here?
     if (this.name == null) {
       throw Error("Statement constructor requires a name at least");
     }
 
-    // Create id from name if null
-    this.id = (infos && infos.id) || this.name.replace(/\W/gi, "-").toLowerCase();
-    this.description = (infos && infos.description) || check.description;
-    this.count = typeof infos === "number" ? infos : ((infos && infos.count) || 1);
+    // Generate an new id from name if only the name was specified
+    if (infos.name && infos.id == null) {
+      this.id = getIdFromName(this.name);
+    }
   }
 
   add (nb = 1) {
