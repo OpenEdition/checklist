@@ -166,3 +166,39 @@ describe("Context and conditions", function () {
     });
   });
 });
+
+describe("Statements", function () {
+  it("Should create a statement using default rule values", function (done) {
+    var defaultValues = {
+      name: "Default name",
+      id: "default-id",
+      description: "Default description"
+    };
+
+    var checker = checklist.init({
+      parent: false,
+      rules: [
+        {
+          name: defaultValues.name,
+          id: defaultValues.id,
+          description: defaultValues.description,
+          action: function () {
+            this.resolve(true);
+          }
+        }
+      ]
+    });
+    checker.on("statement", function(statement) {
+      var keys = Object.keys(defaultValues);
+      var badKeys = keys.filter((key) => statement[key] !== defaultValues[key]);
+      if (badKeys.length > 0) {
+        var badValues = [];
+        badKeys.forEach((key) => badValues.push(`'${key}' is '${statement[key]}' but should be '${defaultValues[key]}'`));
+        done(Error(`Default statement values are not used: ${badValues.toString()}`));
+      } else {
+        done();
+      }
+    });
+    checker.run();
+  });
+});
