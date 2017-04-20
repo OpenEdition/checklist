@@ -39,10 +39,8 @@ describe("Initialization and execution", function () {
   });
 
   it("Should run callback when checker is done", function (done) {
-    checklist.start({
-      parent: false,
-      callback: () => done()
-    });
+    var callback = () => done();
+    checklist.start({ parent: false }, callback);
   });
 });
 
@@ -83,6 +81,10 @@ describe("Context and conditions", function () {
 
   it("Should not run action() when condition is false", function (done) {
     var flag = false;
+    var callback = function () {
+      var arg = flag ? Error("flag should be false") : null;
+      done(arg);
+    };
     checklist.start({
       parent: false,
       context: {
@@ -95,12 +97,8 @@ describe("Context and conditions", function () {
           condition: "no",
           action: () => flag = true
         }
-      ],
-      callback: function () {
-        var arg = flag ? Error("flag should be false") : null;
-        done(arg);
-      }
-    });
+      ]
+    }, callback);
   });
 
   it("Should compute context when it's a function", function (done) {
