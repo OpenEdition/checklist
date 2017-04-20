@@ -279,10 +279,35 @@ describe("Statements", function () {
 });
 
 describe("UI", function () {
+  var checker;
+
+  before(function () {
+    checker = checklist.init({ parent: "#container" });
+  });
+
   it("Should init UI and show panel", function () {
-    it("Should return a Checker instance", function () {
-      checklist.start({ parent: "#container" });
-      expect($("#checklist-ui").length).to.equal(1);
+    expect($("#checklist-ui").length).to.equal(1);
+  });
+
+  it("Should display notifications into the panel", function (done) {
+    checker.on("done", function () {
+      var flag = $(".checklist-statement").length === 2;
+      var arg = flag ? null : Error("Expected number of .checklist-statement elements not found");
+      done(arg);
     });
+    checker.run([
+      {
+        name: "First rule",
+        action: function () {
+          this.resolve(true);
+        }
+      },
+      {
+        name: "Second rule",
+        action: function () {
+          this.resolve(true);
+        }
+      }
+    ]);
   });
 });
