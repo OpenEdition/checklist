@@ -168,13 +168,31 @@ describe("Context and conditions", function () {
 });
 
 describe("Statements", function () {
-  it("Should create a statement using default rule values", function (done) {
-    var defaultValues = {
-      name: "Default name",
-      id: "default-id",
-      description: "Default description"
-    };
+  var defaultValues = {
+    name: "Default name",
+    id: "default-id",
+    description: "Default description"
+  };
 
+  var otherValues = {
+    name: "Other name",
+    id: "other-id",
+    description: "Other description"
+  };
+
+  function checkStatement (statement, expectedValues, done) {
+    var keys = Object.keys(expectedValues);
+    var badKeys = keys.filter((key) => statement[key] !== expectedValues[key]);
+    if (badKeys.length > 0) {
+      var badValues = [];
+      badKeys.forEach((key) => badValues.push(`'${key}' is '${statement[key]}' but should be '${expectedValues[key]}'`));
+      done(Error(`Default statement values are not used: ${badValues.toString()}`));
+    } else {
+      done();
+    }
+  }
+
+  it("Should create a statement using default rule values", function (done) {
     var checker = checklist.init({
       parent: false,
       rules: [
@@ -189,15 +207,27 @@ describe("Statements", function () {
       ]
     });
     checker.on("statement", function(statement) {
-      var keys = Object.keys(defaultValues);
-      var badKeys = keys.filter((key) => statement[key] !== defaultValues[key]);
-      if (badKeys.length > 0) {
-        var badValues = [];
-        badKeys.forEach((key) => badValues.push(`'${key}' is '${statement[key]}' but should be '${defaultValues[key]}'`));
-        done(Error(`Default statement values are not used: ${badValues.toString()}`));
-      } else {
-        done();
-      }
+      checkStatement(statement, defaultValues, done);
+    });
+    checker.run();
+  });
+
+  it("Should create a statement using values given in resolve()/notify()", function (done) {
+    var checker = checklist.init({
+      parent: false,
+      rules: [
+        {
+          name: defaultValues.name,
+          id: defaultValues.id,
+          description: defaultValues.description,
+          action: function () {
+            this.resolve(otherValues);
+          }
+        }
+      ]
+    });
+    checker.on("statement", function(statement) {
+      checkStatement(statement, otherValues, done);
     });
     checker.run();
   });
