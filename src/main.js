@@ -23,6 +23,7 @@ window.checklist = {
 
     const {rules, context, parent} = this.config;
     const checker = new Checker({ rules, context });
+    this.checker = checker;
 
     // Init optional UI
     if (parent) {
