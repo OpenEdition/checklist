@@ -24,7 +24,7 @@ describe("Initialization and execution", function () {
   });
 
   it("Should run check with run() (array)", function (done) {
-    var checker = checklist.start();
+    var checker = checklist.init();
     var arr = [{
       name: "This should run",
       action: () => done()
@@ -33,7 +33,7 @@ describe("Initialization and execution", function () {
   });
 
   it("Should run check with run() (object)", function (done) {
-    var checker = checklist.start();
+    var checker = checklist.init();
     var obj = {
       name: "This should run",
       action: () => done()
