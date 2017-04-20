@@ -231,4 +231,23 @@ describe("Statements", function () {
     });
     checker.run();
   });
+
+  it("Should generate an id from name", function (done) {
+    var checker = checklist.init({
+      parent: false,
+      rules: [
+        {
+          name: "Rule without id",
+          action: function () {
+            this.resolve(true);
+          }
+        }
+      ]
+    });
+    checker.on("statement", function(statement) {
+      var arg = statement.id !== "rule-without-id" ? Error(`Unexpected id: ${statement.id}`) : null;
+      done(arg);
+    });
+    checker.run();
+  });
 });
