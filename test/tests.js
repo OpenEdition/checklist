@@ -10,7 +10,6 @@ describe("Initialization and execution", function () {
 
   it("Should run checks on start()", function (done) {
     checklist.start({
-      parent: false,
       rules: [
         {
           name: "This should run",
@@ -21,7 +20,7 @@ describe("Initialization and execution", function () {
   });
 
   it("Should run check with run() (array)", function (done) {
-    var checker = checklist.start({ parent: false });
+    var checker = checklist.start();
     var arr = [{
       name: "This should run",
       action: () => done()
@@ -30,7 +29,7 @@ describe("Initialization and execution", function () {
   });
 
   it("Should run check with run() (object)", function (done) {
-    var checker = checklist.start({ parent: false });
+    var checker = checklist.start();
     var obj = {
       name: "This should run",
       action: () => done()
@@ -42,18 +41,17 @@ describe("Initialization and execution", function () {
 describe("Events and callbacks", function (){
   it("Should run callback when checker is done", function (done) {
     var callback = () => done();
-    checklist.start({ parent: false }, callback);
+    checklist.start({}, callback);
   });
 
   it("Should emit the 'done' event", function (done) {
-    var checker = checklist.init({ parent: false });
+    var checker = checklist.init();
     checker.on("done", () => done());
     checker.run();
   });
 
   it("Should emit the 'check-done' event with an argument", function (done) {
     var checker = checklist.init({
-      parent: false,
       rules: [
         {
           name: "This should run",
@@ -72,7 +70,6 @@ describe("Events and callbacks", function (){
 
   it("Should emit the 'statement' event with an argument", function (done) {
     var checker = checklist.init({
-      parent: false,
       rules: [
         {
           name: "This should run",
@@ -93,7 +90,6 @@ describe("Events and callbacks", function (){
 describe("Context and conditions", function () {
   it("Should run action() when condition (function) is true", function (done) {
     checklist.start({
-      parent: false,
       context: {
         yes: true,
         no: false
@@ -110,7 +106,6 @@ describe("Context and conditions", function () {
 
   it("Should run action() when condition (string) is true", function (done) {
     checklist.start({
-      parent: false,
       context: {
         yes: true,
         no: false
@@ -132,7 +127,6 @@ describe("Context and conditions", function () {
       done(arg);
     };
     checklist.start({
-      parent: false,
       context: {
         yes: true,
         no: false
@@ -149,7 +143,6 @@ describe("Context and conditions", function () {
 
   it("Should compute context when it's a function", function (done) {
     checklist.start({
-      parent: false,
       context: function () {
         return {
           yes: $("body").length === 1,
@@ -194,7 +187,6 @@ describe("Statements", function () {
 
   it("Should create a statement using default rule values", function (done) {
     var checker = checklist.init({
-      parent: false,
       rules: [
         {
           name: defaultValues.name,
@@ -214,7 +206,6 @@ describe("Statements", function () {
 
   it("Should create a statement using values given in resolve()/notify()", function (done) {
     var checker = checklist.init({
-      parent: false,
       rules: [
         {
           name: defaultValues.name,
@@ -234,7 +225,6 @@ describe("Statements", function () {
 
   it("Should generate an id from name", function (done) {
     var checker = checklist.init({
-      parent: false,
       rules: [
         {
           name: "Rule without id",
@@ -253,7 +243,6 @@ describe("Statements", function () {
 
   it("Should increment count", function (done) {
     var checker = checklist.init({
-      parent: false,
       rules: [
         {
           name: "Some rule",

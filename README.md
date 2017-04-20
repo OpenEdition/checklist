@@ -61,7 +61,7 @@ Configuration is a JavaScript object which may contain the following keys:
 
 * `context`: an JavaScript object which describes the context where to run the checker.
 * `rules`: an array which contains the rules to test and run with the checker.
-* `parent`: the CSS selector which describe the element where to append the UI (default is `#container`). Set this to `false` to disable UI (for testing purpose).
+* `parent`: the CSS selector which describe the element where to append the UI. Ignore this option to disable UI.
 
 ## Context
 
