@@ -24,15 +24,34 @@ Then call jQuery and OpenEdition Checklist into the `<head>` and use it:
   </script>
 ```
 
-`checklist.start()` returns a instance of `Checker` that you can manipulate later:
+## `checklist` methods
+
+### `setConfig(config)`
+
+Use `checklist.setConfig(config)` to register your custom configuration (further information about configuration below).
+
+### `init(config)`
+
+Initialize checklist, set the configuration if provided and return an instance of checker that you can manipulate.
+
+This example will log statements names and total count in the console:
 
 ```javascript
-  $(function () {
-    const checker = checklist.start(); // execute a first batch of checks
-    const someNewRules = [...] // array containing new rules to execute
-    checker.run(someNewRules); // run the new checks
-  });
+  var checker = checklist.init(myConfig);
+  checker.on("statement", (statement) => console.log(statement.name));
+  checker.on("done", (statements) => console.log(`Total: ${statements.length} statements`));
+  checker.run();
+
+  // Note that you can run checker more than once
+  const someNewRules = [...]
+  checker.run(someNewRules);
 ```
+
+### `start(config, callback)`
+
+`checklist.start(config, callback)` is an alias for `checklist.init(config).on("done", callback).run()`;
+
+`callback` is an optional function that is executed once the checker is done. It takes two parameters: `checker` and `statements`.
 
 ## Configuration overview
 
@@ -43,7 +62,6 @@ Configuration is a JavaScript object which may contain the following keys:
 * `context`: an JavaScript object which describes the context where to run the checker.
 * `rules`: an array which contains the rules to test and run with the checker.
 * `parent`: the CSS selector which describe the element where to append the UI (default is `#container`). Set this to `false` to disable UI (for testing purpose).
-* `callback`: a function to execute once the checker is done. It takes two parameters: `checker` and `statements`.
 
 ## Context
 
