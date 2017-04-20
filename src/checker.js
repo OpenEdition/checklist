@@ -37,6 +37,11 @@ class Checker extends EventEmitter {
           this.statements.push(statement);
           this.emit("statement", statement);
         });
+        check.on("duplicate", (statement) => {
+          // FIXME: what about currentStatement here?
+          // TODO: document this event
+          this.emit("duplicate", statement);
+        });
         check.run();
       });
     };

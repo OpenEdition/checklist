@@ -35,6 +35,8 @@ class Check extends EventEmitter {
     const duplicate = statement.getDuplicate();
     if (duplicate) {
       duplicate.add();
+      // TODO: review event names
+      this.emit("duplicate", duplicate);
     } else {
       // Otherwise register it in Check
       this.statements.push(statement);
