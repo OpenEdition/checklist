@@ -21,10 +21,8 @@ function evalStringCondition (condition, context) {
 class Check extends EventEmitter {
   constructor ({ context, rule }) {
     super();
+    Object.assign(this, rule);
     this.context = context;
-    this.name = rule.name;
-    this.action = rule.action;
-    this.condition = rule.condition;
     this.statements = [];
     // states: 0 = not started yet, 1 = ongoing, 2 = done
     this.state = 0;
