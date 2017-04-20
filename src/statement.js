@@ -4,6 +4,7 @@ function getIdFromName (name) {
 
 class Statement {
   constructor ({check, infos}) {
+    this.classname = "Statement";
     this.check = check;
 
     // Get values from check, otherwise default values are inherited from check

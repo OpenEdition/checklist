@@ -6,6 +6,7 @@ require("./css/ui.css");
 class UI extends EventEmitter {
   constructor ({ parent = "body" }) {
     super();
+    this.classname = "UI";
     this.attach(parent);
   }
 

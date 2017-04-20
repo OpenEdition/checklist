@@ -21,6 +21,7 @@ function evalStringCondition (condition, context) {
 class Check extends EventEmitter {
   constructor ({ context, rule }) {
     super();
+    this.classname = "Check";
     Object.assign(this, rule);
     this.context = context;
     this.statements = [];
