@@ -3,6 +3,10 @@ var expect = window.chai.expect;
 
 // Tests
 describe("Initialization and execution", function () {
+  beforeEach(function () {
+    checklist.clear();
+  });
+
   it("Should return a Checker instance", function () {
     var checker = checklist.start({ parent: false });
     expect(checker).to.be.an.instanceof(checklist.Checker);
@@ -39,6 +43,10 @@ describe("Initialization and execution", function () {
 });
 
 describe("Events and callbacks", function (){
+  beforeEach(function () {
+    checklist.clear();
+  });
+
   it("Should run callback when checker is done", function (done) {
     var callback = () => done();
     checklist.start({}, callback);
@@ -88,6 +96,10 @@ describe("Events and callbacks", function (){
 });
 
 describe("Context and conditions", function () {
+  beforeEach(function () {
+    checklist.clear();
+  });
+
   it("Should run action() when condition (function) is true", function (done) {
     checklist.start({
       context: {
@@ -184,6 +196,10 @@ describe("Statements", function () {
       done();
     }
   }
+
+  beforeEach(function () {
+    checklist.clear();
+  });
 
   it("Should create a statement using default rule values", function (done) {
     var checker = checklist.init({
