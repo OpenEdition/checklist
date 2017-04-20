@@ -47,5 +47,9 @@ window.checklist = {
 
     checker.run();
     return checker;
+  },
+
+  clear: function () {
+    this.setConfig({});
   }
 };
