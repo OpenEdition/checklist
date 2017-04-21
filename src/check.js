@@ -22,11 +22,22 @@ class Check extends EventEmitter {
   constructor ({ context, rule }) {
     super();
     this.classname = "Check";
+
     Object.assign(this, rule);
     this.context = context;
     this.statements = [];
-    // states: 0 = not started yet, 1 = ongoing, 2 = done
-    this.state = 0;
+    // states: -1 = not ready, 0 = not started yet, 1 = ongoing, 2 = done
+    this.state = -1;
+
+    const getSource = () => {
+      const loader = window.checklist.loader;
+      loader.getSource(this.url, (source) => {
+        this.source = source;
+        this.state = 0;
+        this.emit("ready");
+      });
+    };
+    getSource(this);
   }
 
   notify (value) {
@@ -62,10 +73,17 @@ class Check extends EventEmitter {
   }
 
   run () {
+    // Wait for source to be ready
+    if (this.state < 0) {
+      this.once("ready", this.run);
+      return;
+    }
+
     if (!this.test()) {
       this.resolve();
       return this;
     }
+
     if (this.state < 1) {
       // TODO: move delay in config
       const delay = 1000;
