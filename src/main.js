@@ -12,8 +12,8 @@ window.checklist = {
 
   // checklist methods
   // TODO: 1. merge config, 2. add an "override" parameter
-  setConfig: function ({rules, context, parent, callback}) {
-    this.config = {rules, context, parent, callback};
+  setConfig: function ({rules, context, parent}) {
+    this.config = {rules, context, parent};
   },
 
   init: function (config) {
