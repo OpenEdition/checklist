@@ -18,7 +18,7 @@
     "books"
   ],
   "author": "brrd",
-  "license": "UNLICENSED",
+  "license": "GPL-3.0",
   "private": true,
   "devDependencies": {
     "babel-core": "^6.24.0",
