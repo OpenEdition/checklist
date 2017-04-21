@@ -3,22 +3,29 @@ var expect = window.chai.expect;
 
 // Tests
 describe("Configuration", function () {
+  var myConfig = {
+    parent: "#container",
+    context: { hello: "world" },
+    rules: [
+      {
+        name: "Hello world!",
+        action: () => this.resolve()
+      }
+    ]
+  };
+
   it("Should set config", function () {
-    var myConfig = {
-      parent: "#container",
-      context: {
-        hello: "world"
-      },
-      rules: [
-        {
-          name: "Hello world!",
-          action: () => this.resolve()
-        }
-      ]
-    };
     checklist.setConfig(myConfig);
     expect(checklist.config).to.have.deep.property("parent", myConfig.parent);
     expect(checklist.config).to.have.deep.property("context", myConfig.context);
+    expect(checklist.config).to.have.deep.property("rules", myConfig.rules);
+  });
+
+  it("Should override a property of the config", function () {
+    var newContext = { foo: "bar" };
+    checklist.setConfig({ context: newContext });
+    expect(checklist.config).to.have.deep.property("context", newContext);
+    expect(checklist.config).to.have.deep.property("parent", myConfig.parent);
     expect(checklist.config).to.have.deep.property("rules", myConfig.rules);
   });
 
