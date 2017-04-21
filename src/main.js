@@ -11,7 +11,7 @@ window.checklist = {
   UI,
 
   // checklist properties
-  config: {},
+  config: window.checklistUserConfig || {},
 
   // checklist methods
   // TODO: 1. merge config, 2. add an "override" parameter
