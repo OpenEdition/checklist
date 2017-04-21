@@ -1,3 +1,7 @@
+body.checklist-visible {
+    margin-right: 0 !important;
+}
+
 #container {
     display: none;
 }
