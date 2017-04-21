@@ -89,7 +89,8 @@ class Check extends EventEmitter {
       const delay = 1000;
       this.state = 1;
       setTimeout(this.resolve.bind(this), delay);
-      this.action.call(this);
+      const selectFunc = this.source.get$();
+      this.action.call(this, selectFunc);
       return this;
     }
   }

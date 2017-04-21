@@ -11,6 +11,10 @@ class Source extends EventEmitter {
     // TODO: do stuff...
     this.emit("ready");
   }
+
+  get$ () {
+    return (selector, arg) => $(selector, arg || this.root);
+  }
 }
 
 module.exports = Source;
