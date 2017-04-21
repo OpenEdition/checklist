@@ -2,6 +2,27 @@
 var expect = window.chai.expect;
 
 // Tests
+describe("Configuration", function () {
+  it("Should set config", function () {
+    var myConfig = {
+      parent: "#container",
+      context: {
+        hello: "world"
+      },
+      rules: [
+        {
+          name: "Hello world!",
+          action: () => this.resolve()
+        }
+      ]
+    };
+    checklist.setConfig(myConfig);
+    expect(checklist.config.parent).to.deep.equal(myConfig.parent);
+    expect(checklist.config.context).to.deep.equal(myConfig.context);
+    expect(checklist.config.rules).to.deep.equal(myConfig.rules);
+  });
+});
+
 describe("Initialization and execution", function () {
   beforeEach(function () {
     checklist.clear();
