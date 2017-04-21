@@ -53,6 +53,6 @@ window.checklist = {
   },
 
   clear: function () {
-    this.setConfig({});
+    this.config = {};
   }
 };
