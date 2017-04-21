@@ -14,6 +14,11 @@ describe("Configuration", function () {
     ]
   };
 
+  it("Should load optional user config from window.checklistUserConfig", function () {
+    expect(checklist.config).to.not.be.empty;
+    expect(checklist.config).to.deep.equal(window.checklistUserConfig);
+  });
+
   it("Should set config", function () {
     checklist.setConfig(myConfig);
     expect(checklist.config).to.have.deep.property("parent", myConfig.parent);

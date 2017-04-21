@@ -8,6 +8,20 @@
   <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
   <link rel="stylesheet" href="styles.css" />
 
+  <!-- User config -->
+  <script>
+    window.checklistUserConfig = {
+      rules: [
+        {
+          name: "User defined check",
+          action: function () {
+            this.resolve();
+          }
+        }
+      ]
+    };
+  </script>
+
   <!-- jQuery -->
    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
