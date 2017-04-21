@@ -10,10 +10,17 @@ window.checklist = {
   Checker,
   UI,
 
+  // checklist properties
+  config: {},
+
   // checklist methods
   // TODO: 1. merge config, 2. add an "override" parameter
-  setConfig: function ({rules, context, parent}) {
-    this.config = {rules, context, parent};
+  setConfig: function (options) {
+    const config = {};
+    config.context = options.context || this.config.context;
+    config.rules = options.rules || this.config.rules;
+    config.parent = options.parent || this.config.parent;
+    this.config = config;
   },
 
   init: function (config) {
