@@ -1,4 +1,4 @@
-// jshint mocha: true
+// jshint mocha: true, expr: true
 var expect = window.chai.expect;
 
 // Tests
@@ -21,7 +21,13 @@ describe("Configuration", function () {
     expect(checklist.config).to.have.deep.property("context", myConfig.context);
     expect(checklist.config).to.have.deep.property("rules", myConfig.rules);
   });
+
+  it("Should clear config", function () {
+    checklist.clear();
+    expect(checklist.config).to.be.empty;
+  });
 });
+
 
 describe("Initialization and execution", function () {
   beforeEach(function () {
