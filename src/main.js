@@ -1,5 +1,6 @@
-const UI = require("./ui.js");
 const Checker = require("./checker.js");
+const Loader = require("./loader.js");
+const UI = require("./ui.js");
 
 if (typeof jQuery === "undefined") {
   throw Error ("Checklist requires jQuery");
@@ -8,6 +9,7 @@ if (typeof jQuery === "undefined") {
 window.checklist = {
   // Expose high level classes
   Checker,
+  Loader,
   UI,
 
   // checklist properties
@@ -29,6 +31,11 @@ window.checklist = {
     }
 
     const {rules, context, parent} = this.config;
+
+    if (!this.loader) {
+      this.loader = new Loader();
+    }
+
     const checker = new Checker({ rules, context });
     this.checker = checker;
 
