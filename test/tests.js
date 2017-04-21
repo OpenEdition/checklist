@@ -17,9 +17,9 @@ describe("Configuration", function () {
       ]
     };
     checklist.setConfig(myConfig);
-    expect(checklist.config.parent).to.deep.equal(myConfig.parent);
-    expect(checklist.config.context).to.deep.equal(myConfig.context);
-    expect(checklist.config.rules).to.deep.equal(myConfig.rules);
+    expect(checklist.config).to.have.deep.property("parent", myConfig.parent);
+    expect(checklist.config).to.have.deep.property("context", myConfig.context);
+    expect(checklist.config).to.have.deep.property("rules", myConfig.rules);
   });
 });
 
