@@ -27,10 +27,12 @@ window.checklist = {
 
     // Init optional UI
     if (parent) {
-      const ui = new UI({parent});
-      ui.show();
+      if (!this.ui) {
+        this.ui = new UI({parent});
+        this.ui.show();
+      }
       checker.on("done", (statements) => {
-        ui.inject(statements);
+        this.ui.inject(statements);
       });
     }
 
