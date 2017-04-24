@@ -1,7 +1,7 @@
 const EventEmitter = require("eventemitter2").EventEmitter2;
 
 function isSelf (url) {
-  return url == null || url === window.location.href;
+  return !url || url === window.location.href;
 }
 
 class Source extends EventEmitter {
