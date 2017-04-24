@@ -34,7 +34,7 @@ class Loader extends EventEmitter {
 
   sourceExists (url) {
     return this.sources.find((source) => {
-      return source.url === url;
+      return source.hasUrl(url);
     });
   }
 }

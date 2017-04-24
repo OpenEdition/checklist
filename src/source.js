@@ -1,10 +1,19 @@
 const EventEmitter = require("eventemitter2").EventEmitter2;
 
+function isSelf (url) {
+  return url == null || url === window.location.href;
+}
+
 class Source extends EventEmitter {
   constructor (url) {
     super();
     this.classname = "Source";
     this.url = url;
+    this.self = isSelf(url);
+  }
+
+  hasUrl (url) {
+    return (this.self && isSelf(url)) || this.url === url;
   }
 
   load () {
