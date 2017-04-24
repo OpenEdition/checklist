@@ -348,6 +348,22 @@ describe("Loader", function () {
     var source = loader.getSource("bad-url");
     expect(source).to.be.undefined;
   });
+
+  it("Should request a new source and store it in loader", function (done) {
+    checklist.init({});
+    loader.requestSource("another-source", (source) => {
+      try {
+        expect(source).to.have.property("classname", "Source");
+        expect(loader.sources).to.include(source);
+        expect(loader.sources).to.have.lengthOf(2);
+      } catch (err) {
+        done(err);
+        return;
+      }
+      done();
+    });
+
+  });
 });
 
 describe("UI", function () {
