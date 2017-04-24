@@ -31,7 +31,7 @@ class Check extends EventEmitter {
 
     const getSource = () => {
       const loader = window.checklist.loader;
-      loader.getSource(this.url, (source) => {
+      loader.requestSource(this.url, (source) => {
         this.source = source;
         this.state = 0;
         this.emit("ready");

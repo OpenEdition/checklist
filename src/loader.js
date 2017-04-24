@@ -22,8 +22,8 @@ class Loader extends EventEmitter {
     return this;
   }
 
-  getSource (url, callback) {
-    const found = this.sourceExists(url);
+  requestSource (url, callback) {
+    const found = this.getSource(url);
     if (found) {
       callback(found);
       return this;
@@ -32,7 +32,7 @@ class Loader extends EventEmitter {
     return this;
   }
 
-  sourceExists (url) {
+  getSource (url) {
     return this.sources.find((source) => {
       return source.hasUrl(url);
     });
