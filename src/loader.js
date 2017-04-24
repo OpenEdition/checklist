@@ -23,15 +23,19 @@ class Loader extends EventEmitter {
   }
 
   getSource (url, callback) {
-    const found = this.sources.find((source) => {
-      return source.url === url;
-    });
+    const found = this.sourceExists(url);
     if (found) {
       callback(found);
       return this;
     }
     this.addSource(url, callback);
     return this;
+  }
+
+  sourceExists (url) {
+    return this.sources.find((source) => {
+      return source.url === url;
+    });
   }
 }
 
