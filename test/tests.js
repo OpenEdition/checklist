@@ -317,6 +317,19 @@ describe("Statements", function () {
   });
 });
 
+describe("Loader", function () {
+  var loader;
+
+  before(function () {
+    checklist.init({});
+    loader = window.checklist.loader;
+  });
+
+  it("Should create an instance of Loader", function () {
+    expect(loader).to.be.instanceof(window.checklist.Loader);
+  });
+});
+
 describe("UI", function () {
   var checker;
 
