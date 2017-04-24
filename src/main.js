@@ -32,6 +32,7 @@ window.checklist = {
 
     const {rules, context, parent} = this.config;
 
+    // TODO: provide a way to reset Loader
     if (!this.loader) {
       this.loader = new Loader();
     }
