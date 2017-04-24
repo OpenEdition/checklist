@@ -328,6 +328,26 @@ describe("Loader", function () {
   it("Should create an instance of Loader", function () {
     expect(loader).to.be.instanceof(window.checklist.Loader);
   });
+
+  it("Should get an instance of Source with getSource()", function () {
+    var source = loader.getSource("");
+    expect(source).to.have.property("classname", "Source");
+  });
+
+  it("Should get the 'self' source (with empty string)", function () {
+    var source = loader.getSource("");
+    expect(source).to.have.property("self", true);
+  });
+
+  it("Should get the 'self' source (with actual url)", function () {
+    var source = loader.getSource(window.location.href);
+    expect(source).to.have.property("self", true);
+  });
+
+  it("Should not get a source which doesn't exist", function () {
+    var source = loader.getSource("bad-url");
+    expect(source).to.be.undefined;
+  });
 });
 
 describe("UI", function () {
