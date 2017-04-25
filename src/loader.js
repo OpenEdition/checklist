@@ -10,8 +10,8 @@ class Loader extends EventEmitter {
     this.addSource();
   }
 
-  addSource (url, callback) {
-    const source = new Source(url);
+  addSource (href, callback) {
+    const source = new Source(href);
     this.sources.push(source);
     if (typeof callback === "function") {
       source.on("ready", () => {
@@ -22,19 +22,19 @@ class Loader extends EventEmitter {
     return this;
   }
 
-  requestSource (url, callback) {
-    const found = this.getSource(url);
+  requestSource (href, callback) {
+    const found = this.getSource(href);
     if (found) {
       callback(found);
       return this;
     }
-    this.addSource(url, callback);
+    this.addSource(href, callback);
     return this;
   }
 
-  getSource (url) {
+  getSource (href) {
     return this.sources.find((source) => {
-      return source.hasUrl(url);
+      return source.is(href);
     });
   }
 }
