@@ -1,6 +1,15 @@
 // jshint mocha: true, expr: true
 var expect = window.chai.expect;
 
+function expectAsync (done, expectation) {
+  try {
+    expectation();
+  } catch (err) {
+    return done(err);
+  }
+  done();
+}
+
 // Tests
 describe("Configuration", function () {
   var myConfig = {
@@ -109,12 +118,7 @@ describe("Events and callbacks", function (){
       ]
     });
     checker.on("check-done", function(check) {
-      try {
-        expect(check).to.not.be.undefined;
-      } catch (err) {
-        return done(err);
-      }
-      done();
+      expectAsync(done, () => expect(check).to.not.be.undefined);
     });
     checker.run();
   });
@@ -131,12 +135,7 @@ describe("Events and callbacks", function (){
       ]
     });
     checker.on("statement", function(statement) {
-      try {
-        expect(statement).to.not.be.undefined;
-      } catch (err) {
-        return done(err);
-      }
-      done();
+      expectAsync(done, () => expect(statement).to.not.be.undefined);
     });
     checker.run();
   });
@@ -182,12 +181,7 @@ describe("Context and conditions", function () {
   it("Should not run action() when condition is false", function (done) {
     var flag = false;
     var callback = function () {
-      try {
-        expect(flag).to.be.false;
-      } catch (err) {
-        return done(err);
-      }
-      done();
+      expectAsync(done, () => expect(flag).to.be.false);
     };
     checklist.start({
       context: {
@@ -302,12 +296,7 @@ describe("Statements", function () {
       ]
     });
     checker.on("statement", function(statement) {
-      try {
-        expect(statement).to.have.property("id", "rule-without-id");
-      } catch (err) {
-        return done(err);
-      }
-      done();
+      expectAsync(done, () => expect(statement).to.have.property("id", "rule-without-id"));
     });
     checker.run();
   });
@@ -326,12 +315,7 @@ describe("Statements", function () {
       ]
     });
     checker.on("duplicate", function(statement) {
-      try {
-        expect(statement.count).to.equal(2);
-      } catch (err) {
-        return done(err);
-      }
-      done();
+      expectAsync(done, () => expect(statement.count).to.equal(2));
     });
     checker.run();
   });
@@ -372,14 +356,11 @@ describe("Loader", function () {
   it("Should request a new source and store it in loader", function (done) {
     checklist.init({});
     loader.requestSource("another-source", (source) => {
-      try {
+      expectAsync(done, () => {
         expect(source).to.have.property("classname", "Source");
         expect(loader.sources).to.include(source);
         expect(loader.sources).to.have.lengthOf(2);
-      } catch (err) {
-        return done(err);
-      }
-      done();
+      });
     });
 
   });
@@ -398,12 +379,7 @@ describe("UI", function () {
 
   it("Should display notifications into the panel", function (done) {
     checker.on("done", function () {
-      try {
-        expect($(".checklist-statement")).to.have.lengthOf(2);
-      } catch (err) {
-        return done(err);
-      }
-      done();
+      expectAsync(done, () => expect($(".checklist-statement")).to.have.lengthOf(2));
     });
     checker.run([
       {
