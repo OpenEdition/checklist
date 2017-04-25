@@ -323,6 +323,7 @@ describe("Statements", function () {
 
 describe("Loader", function () {
   var loader;
+  var remoteUrl = "./pages/1.html";
 
   before(function () {
     checklist.init({});
@@ -354,15 +355,23 @@ describe("Loader", function () {
   });
 
   it("Should request a new source and store it in loader", function (done) {
-    checklist.init({});
-    loader.requestSource("another-source", (source) => {
+    checklist.init({}); // FIXME: ???
+    loader.requestSource(remoteUrl, (source) => {
       expectAsync(done, () => {
         expect(source).to.have.property("classname", "Source");
         expect(loader.sources).to.include(source);
         expect(loader.sources).to.have.lengthOf(2);
       });
     });
+  });
 
+  it("Should get the body classes from a remote source", function (done) {
+    loader.requestSource(remoteUrl, (source) => {
+      expectAsync(done, () =>  {
+        expect(source).to.have.property("bodyClasses");
+        expect(source.bodyClasses).to.include.members(["first-class", "second-class"]);
+      });
+    });
   });
 });
 
