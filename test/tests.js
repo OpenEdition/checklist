@@ -109,8 +109,12 @@ describe("Events and callbacks", function (){
       ]
     });
     checker.on("check-done", function(check) {
-      var arg = typeof check === "undefined" ? Error("check is undefined") : null;
-      done(arg);
+      try {
+        expect(check).to.not.be.undefined;
+      } catch (err) {
+        return done(err);
+      }
+      done();
     });
     checker.run();
   });
@@ -127,8 +131,12 @@ describe("Events and callbacks", function (){
       ]
     });
     checker.on("statement", function(statement) {
-      var arg = typeof statement === "undefined" ? Error("statement is undefined") : null;
-      done(arg);
+      try {
+        expect(statement).to.not.be.undefined;
+      } catch (err) {
+        return done(err);
+      }
+      done();
     });
     checker.run();
   });
@@ -174,8 +182,12 @@ describe("Context and conditions", function () {
   it("Should not run action() when condition is false", function (done) {
     var flag = false;
     var callback = function () {
-      var arg = flag ? Error("flag should be false") : null;
-      done(arg);
+      try {
+        expect(flag).to.be.false;
+      } catch (err) {
+        return done(err);
+      }
+      done();
     };
     checklist.start({
       context: {
@@ -290,8 +302,12 @@ describe("Statements", function () {
       ]
     });
     checker.on("statement", function(statement) {
-      var arg = statement.id !== "rule-without-id" ? Error(`Unexpected id: ${statement.id}`) : null;
-      done(arg);
+      try {
+        expect(statement).to.have.property("id", "rule-without-id");
+      } catch (err) {
+        return done(err);
+      }
+      done();
     });
     checker.run();
   });
@@ -310,8 +326,12 @@ describe("Statements", function () {
       ]
     });
     checker.on("duplicate", function(statement) {
-      var arg = statement.count !== 2 ? Error(`count is ${statement.count} instead of 2`) : null;
-      done(arg);
+      try {
+        expect(statement.count).to.equal(2);
+      } catch (err) {
+        return done(err);
+      }
+      done();
     });
     checker.run();
   });
@@ -357,8 +377,7 @@ describe("Loader", function () {
         expect(loader.sources).to.include(source);
         expect(loader.sources).to.have.lengthOf(2);
       } catch (err) {
-        done(err);
-        return;
+        return done(err);
       }
       done();
     });
@@ -379,9 +398,12 @@ describe("UI", function () {
 
   it("Should display notifications into the panel", function (done) {
     checker.on("done", function () {
-      var flag = $(".checklist-statement").length === 2;
-      var arg = flag ? null : Error("Expected number of .checklist-statement elements not found");
-      done(arg);
+      try {
+        expect($(".checklist-statement")).to.have.lengthOf(2);
+      } catch (err) {
+        return done(err);
+      }
+      done();
     });
     checker.run([
       {
