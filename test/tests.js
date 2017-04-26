@@ -355,14 +355,14 @@ describe("Loader and Sources", function () {
 });
 
 describe("Remote Sources", function () {
-  var remoteUrl = "./pages/1.html";
+  var remoteLocation = ["./pages/1.html", "#main"];
   var loader;
   var remoteSource;
 
   before(function (done) {
     checklist.init({});
     loader = window.checklist.loader;
-    loader.requestSource(remoteUrl, (source) => {
+    loader.requestSource(remoteLocation, (source) => {
       remoteSource = source;
       done();
     });
@@ -384,7 +384,7 @@ describe("Remote Sources", function () {
     expect(remoteSource.root).to.be.an.instanceof(Element);
   });
 
-  it("Should get a custom $() from the source", function () {
+  it("Should get a custom $() from the source with '#main' as root", function () {
     var $ = remoteSource.get$();
     var p = $("h1");
     expect(p).to.have.lengthOf(1);
