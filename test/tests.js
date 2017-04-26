@@ -321,9 +321,8 @@ describe("Statements", function () {
   });
 });
 
-describe("Loader", function () {
+describe("Loader and Sources", function () {
   var loader;
-  var remoteUrl = "./pages/1.html";
 
   before(function () {
     checklist.init({});
@@ -353,27 +352,34 @@ describe("Loader", function () {
     var source = loader.getSource("bad-url");
     expect(source).to.be.undefined;
   });
+});
 
-  it("Should request a new source and store it in loader", function (done) {
-    checklist.init({}); // FIXME: ???
+describe("Remote Sources", function () {
+  var remoteUrl = "./pages/1.html";
+  var loader;
+  var remoteSource;
+
+  before(function (done) {
+    checklist.init({});
+    loader = window.checklist.loader;
     loader.requestSource(remoteUrl, (source) => {
-      expectAsync(done, () => {
-        expect(source).to.have.property("classname", "Source");
-        expect(loader.sources).to.include(source);
-        expect(loader.sources).to.have.lengthOf(2);
-      });
+      remoteSource = source;
+      done();
     });
   });
 
-  it("Should get the body classes from a remote source", function (done) {
-    loader.requestSource(remoteUrl, (source) => {
-      expectAsync(done, () =>  {
-        expect(source).to.have.property("bodyClasses");
-        expect(source.bodyClasses).to.include.members(["first-class", "second-class"]);
-      });
-    });
+  it("Should request a new source and store it in loader", function () {
+    expect(remoteSource).to.have.property("classname", "Source");
+    expect(loader.sources).to.include(remoteSource);
+    expect(loader.sources).to.have.lengthOf(2);
+  });
+
+  it("Should get the body classes from a remote source", function () {
+    expect(remoteSource).to.have.property("bodyClasses");
+    expect(remoteSource.bodyClasses).to.include.members(["first-class", "second-class"]);
   });
 });
+
 
 describe("UI", function () {
   var checker;
