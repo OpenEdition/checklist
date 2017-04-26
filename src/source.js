@@ -1,4 +1,4 @@
-const EventEmitter = require("eventemitter2").EventEmitter2;
+const Base = require("./base.js");
 
 // Arg can be a href, an url or an instance of source
 function getUrl (arg = "") {
@@ -6,7 +6,7 @@ function getUrl (arg = "") {
   return new URL(hrefOrUrl, window.location.href);
 }
 
-class Source extends EventEmitter {
+class Source extends Base {
   constructor (location) {
     super();
     this.classname = "Source";

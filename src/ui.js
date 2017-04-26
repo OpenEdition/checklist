@@ -1,9 +1,9 @@
-const EventEmitter = require("eventemitter2").EventEmitter2;
+const Base = require("./base.js");
 
 // Load UI styles
 require("./css/ui.css");
 
-class UI extends EventEmitter {
+class UI extends Base {
   constructor ({ parent = "body" }) {
     super();
     this.classname = "UI";

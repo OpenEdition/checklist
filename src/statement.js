@@ -1,9 +1,12 @@
+const Base = require("./base.js");
+
 function getIdFromName (name) {
   return name.replace(/\W/gi, "-").toLowerCase();
 }
 
-class Statement {
+class Statement extends Base {
   constructor ({check, infos}) {
+    super();
     this.classname = "Statement";
     this.check = check;
 

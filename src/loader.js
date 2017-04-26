@@ -1,4 +1,4 @@
-const EventEmitter = require("eventemitter2").EventEmitter2;
+const Base = require("./base.js");
 const Source = require("./source.js");
 
 function addSource (loader, href, callback) {
@@ -12,7 +12,7 @@ function addSource (loader, href, callback) {
   source.load();
 }
 
-class Loader extends EventEmitter {
+class Loader extends Base {
   constructor () {
     super();
     this.classname = "Loader";

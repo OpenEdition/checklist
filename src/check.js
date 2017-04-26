@@ -1,4 +1,4 @@
-const EventEmitter = require("eventemitter2").EventEmitter2;
+const Base = require("./base.js");
 const Statement = require("./statement.js");
 
 // Eval a condition defined as a string
@@ -18,7 +18,7 @@ function evalStringCondition (condition, context) {
   return eval(conditionToEval);
 }
 
-class Check extends EventEmitter {
+class Check extends Base {
   constructor ({ context, rule }) {
     super();
     this.classname = "Check";
