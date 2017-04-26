@@ -383,6 +383,12 @@ describe("Remote Sources", function () {
     expect(remoteSource).to.have.property("root");
     expect(remoteSource.root).to.be.an.instanceof(Element);
   });
+
+  it("Should get a custom $() from the source", function () {
+    var $ = remoteSource.get$();
+    var p = $("h1");
+    expect(p).to.have.lengthOf(1);
+  });
 });
 
 
