@@ -378,6 +378,11 @@ describe("Remote Sources", function () {
     expect(remoteSource).to.have.property("bodyClasses");
     expect(remoteSource.bodyClasses).to.include.members(["first-class", "second-class"]);
   });
+
+  it("Should have a root element", function () {
+    expect(remoteSource).to.have.property("root");
+    expect(remoteSource.root).to.be.an.instanceof(Element);
+  });
 });
 
 
