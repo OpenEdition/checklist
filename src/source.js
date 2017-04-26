@@ -7,13 +7,17 @@ function getUrl (arg = "") {
 }
 
 class Source extends EventEmitter {
-  constructor (href) {
+  constructor (location) {
     super();
     this.classname = "Source";
+    let href = location;
+    // location can be an array [href, selector]
+    if (Array.isArray(location)) {
+      href = location[0];
+      this.selector = location[1];
+    }
     this.url = getUrl(href);
     this.self = this.isSelf();
-    // TODO: this must become a parameter
-    this.selector = "#main";
   }
 
   complete () {
@@ -53,7 +57,8 @@ class Source extends EventEmitter {
       const setContainer = (data) => {
         const body = data.match(/\n.*(<body.*)\n/i)[1].replace("body", "div");
         const bodyClasses = getBodyClasses(body);
-        const container = $(`<div>${data}</div>`).find(this.selector);
+        const $data = $(`<div>${data}</div>`);
+        const container = this.selector ? $data.find(this.selector) : $data;
         const root = container.get(0);
         return {root, bodyClasses};
       };
