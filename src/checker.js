@@ -18,6 +18,9 @@ class Checker extends EventEmitter {
       if (rules instanceof Array) {
         return rules;
       } else if (typeof rules === "object") {
+        if (rules.rules) {
+          throw Error("Checker.run() parameter must be rules (not a config object)");
+        }
         return [rules];
       }
       return this.rules;
