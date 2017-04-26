@@ -356,11 +356,12 @@ describe("Loader and Sources", function () {
 
 describe("Remote Sources", function () {
   var remoteLocation = ["./pages/1.html", "#main"];
+  var checker;
   var loader;
   var remoteSource;
 
   before(function (done) {
-    checklist.init({});
+    checker = checklist.init({});
     loader = window.checklist.loader;
     loader.requestSource(remoteLocation, (source) => {
       remoteSource = source;
@@ -386,11 +387,33 @@ describe("Remote Sources", function () {
 
   it("Should get a custom $() from the source with '#main' as root", function () {
     var $ = remoteSource.get$();
-    var p = $("h1");
-    expect(p).to.have.lengthOf(1);
+    var $el = $("h1");
+    expect($el).to.have.lengthOf(1);
+  });
+
+  it("Should run a check in the remote source", function (done) {
+    var id = "remote-source-is-ok";
+    checker.once("check-done", function(check) {
+      expectAsync(done, () => {
+        expect(check.statements).to.have.lengthOf(1);
+        const statement = check.statements[0];
+        expect(statement).to.have.property("id", id);
+      });
+    });
+    checker.run({
+      name: "Remote source is OK",
+      id: id,
+      href: remoteLocation,
+      action: function ($) {
+        var $el = $("h1");
+        if ($el.length === 1 && $el.eq(0).text() === "Remote Test Page") {
+          this.notify(true);
+        }
+        this.resolve();
+      }
+    });
   });
 });
-
 
 describe("UI", function () {
   var checker;
