@@ -1,6 +1,8 @@
 // jshint mocha: true, expr: true
 var expect = window.chai.expect;
 
+var remoteLocation = ["./pages/1.html", "#main"];
+
 function expectAsync (done, expectation) {
   try {
     expectation();
@@ -355,7 +357,6 @@ describe("Loader and Sources", function () {
 });
 
 describe("Remote Sources", function () {
-  var remoteLocation = ["./pages/1.html", "#main"];
   var checker;
   var loader;
   var remoteSource;
@@ -438,9 +439,11 @@ describe("UI", function () {
         }
       },
       {
-        name: "Second rule",
-        action: function () {
-          this.resolve(true);
+        name: "Second rule (ajax)",
+        href: remoteLocation,
+        action: function ($) {
+          var flag = $("h1").length === 1;
+          this.resolve(flag);
         }
       }
     ]);
