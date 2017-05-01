@@ -1,21 +1,20 @@
 const Base = require("./base.js");
 const Source = require("./source.js");
 
-function addSource (loader, href, callback) {
-  const source = new Source(href);
-  loader.sources.push(source);
-  if (typeof callback === "function") {
-    source.on("ready", () => {
-      callback(source);
-    });
-  }
-  source.load();
+function addSource (loader, href) {
+  return new Promise((resolve, reject) => {
+    const source = new Source(href);
+    loader.sources.push(source);
+    source.on("ready", () => resolve(source));
+    source.on("failed", (err)=> reject(err));
+    source.load();
+  });
 }
 
 class Loader extends Base {
   constructor () {
     super("Loader");
-    
+
     this.sources = [];
     // Add self
     addSource(this);
@@ -27,7 +26,7 @@ class Loader extends Base {
       callback(found);
       return this;
     }
-    addSource(this, href, callback);
+    addSource(this, href).then(callback);
     return this;
   }
 
