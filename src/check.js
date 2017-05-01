@@ -74,7 +74,7 @@ class Check extends Base {
     // Wait for source to be ready
     if (!this.hasState("ready")) {
       this.once("ready", this.run);
-      return;
+      return this;
     }
 
     if (!this.test()) {
