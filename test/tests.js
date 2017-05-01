@@ -143,6 +143,26 @@ describe("Events and callbacks", function (){
     checker.run();
   });
 
+  it("Should emit the 'check-rejected' event with two arguments", function (done) {
+    var checker = checklist.init({
+      rules: [
+        {
+          name: "This should be rejected",
+          action: function () {
+            this.reject("Rejection message");
+          }
+        }
+      ]
+    });
+    checker.on("check-rejected", function(err, check) {
+      expectAsync(done, () => {
+        expect(err).to.be.an("error");
+        expect(check).to.not.be.undefined;
+      });
+    });
+    checker.run();
+  });
+
   it("Should emit the 'statement' event with an argument", function (done) {
     var checker = checklist.init({
       rules: [
