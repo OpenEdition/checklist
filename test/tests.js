@@ -415,6 +415,16 @@ describe("Remote Sources", function () {
       }
     });
   });
+
+  it("Should return an error when the remote source doesn't exist", function (done) {
+    loader.requestSource("bad-remote-location")
+      .then((source) => {
+        done(Error("This should never happen because remoteSource doesn't exist"));
+      })
+      .catch((err) => {
+        expectAsync(done, () => expect(err).to.be.an("error"));
+      });
+  });
 });
 
 describe("UI", function () {
