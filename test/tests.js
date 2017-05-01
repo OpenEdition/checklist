@@ -125,6 +125,24 @@ describe("Events and callbacks", function (){
     checker.run();
   });
 
+  it("Should emit the 'check-success' event with an argument", function (done) {
+    // FIXME: same code than the previous test
+    var checker = checklist.init({
+      rules: [
+        {
+          name: "This should run",
+          action: function () {
+            this.resolve();
+          }
+        }
+      ]
+    });
+    checker.on("check-success", function(check) {
+      expectAsync(done, () => expect(check).to.not.be.undefined);
+    });
+    checker.run();
+  });
+
   it("Should emit the 'statement' event with an argument", function (done) {
     var checker = checklist.init({
       rules: [
