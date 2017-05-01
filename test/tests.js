@@ -120,7 +120,10 @@ describe("Events and callbacks", function (){
       ]
     });
     checker.on("check-done", function(check) {
-      expectAsync(done, () => expect(check).to.not.be.undefined);
+      expectAsync(done, () => {
+        expect(check).to.not.be.undefined;
+        expect(check).to.have.property("classname", "Check");
+      });
     });
     checker.run();
   });
@@ -138,7 +141,10 @@ describe("Events and callbacks", function (){
       ]
     });
     checker.on("check-success", function(check) {
-      expectAsync(done, () => expect(check).to.not.be.undefined);
+      expectAsync(done, () => {
+        expect(check).to.not.be.undefined;
+        expect(check).to.have.property("classname", "Check");
+      });
     });
     checker.run();
   });
@@ -158,6 +164,7 @@ describe("Events and callbacks", function (){
       expectAsync(done, () => {
         expect(err).to.be.an("error");
         expect(check).to.not.be.undefined;
+        expect(check).to.have.property("classname", "Check");
       });
     });
     checker.run();
@@ -175,7 +182,10 @@ describe("Events and callbacks", function (){
       ]
     });
     checker.on("statement", function(statement) {
-      expectAsync(done, () => expect(statement).to.not.be.undefined);
+      expectAsync(done, () => {
+        expect(statement).to.not.be.undefined;
+        expect(statement).to.have.property("classname", "Statement");
+      });
     });
     checker.run();
   });
