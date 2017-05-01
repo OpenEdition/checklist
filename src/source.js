@@ -6,16 +6,23 @@ function getUrl (arg = "") {
   return new URL(hrefOrUrl, window.location.href);
 }
 
+// location can be an array [href, selector]
+function splitLocation (location) {
+  let href = location;
+  if (Array.isArray(location)) {
+    href = location[0];
+    selector = location[1];
+  }
+  return {href, selector};
+}
+
 class Source extends Base {
   constructor (location) {
     super("Source");
 
-    let href = location;
-    // location can be an array [href, selector]
-    if (Array.isArray(location)) {
-      href = location[0];
-      this.selector = location[1];
-    }
+    const {href, selector} = splitLocation(location);
+    Object.assign(this, {href, selector});
+
     this.url = getUrl(href);
     this.self = this.isSelf();
   }
