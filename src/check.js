@@ -26,14 +26,12 @@ class Check extends Base {
     Object.assign(this, rule);
     this.context = context;
     this.statements = [];
-    // states: -1 = not ready, 0 = not started yet, 1 = ongoing, 2 = done
-    this.state = -1;
 
     const getSource = () => {
       const loader = window.checklist.loader;
       loader.requestSource(this.href, (source) => {
         this.source = source;
-        this.state = 0;
+        this.setState({"ready": true});
         this.emit("ready");
       });
     };
@@ -63,8 +61,8 @@ class Check extends Base {
   }
 
   resolve (value) {
-    if (this.state > 1) return this;
-    this.state = 2;
+    if (this.hasState("done")) return this;
+    this.setState({"done": true});
     if (value) {
       this.notify(value);
     }
@@ -74,7 +72,7 @@ class Check extends Base {
 
   run () {
     // Wait for source to be ready
-    if (this.state < 0) {
+    if (!this.hasState("ready")) {
       this.once("ready", this.run);
       return;
     }
@@ -84,10 +82,10 @@ class Check extends Base {
       return this;
     }
 
-    if (this.state < 1) {
+    if (!this.hasState("started")) {
       // TODO: move delay in config
       const delay = 1000;
-      this.state = 1;
+      this.setState({"started": true});
       setTimeout(this.resolve.bind(this), delay);
       const selectFunc = this.source.get$();
       this.action.call(this, selectFunc);
