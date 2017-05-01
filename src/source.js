@@ -25,6 +25,11 @@ class Source extends Base {
     this.emit("ready");
   }
 
+  done () {
+    this.setState({"done": true});
+    this.emit("done");
+  }
+
   error (err) {
     this.setState({"failed": true});
     this.emit("failed", err);
