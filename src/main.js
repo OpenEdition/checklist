@@ -7,11 +7,6 @@ if (typeof jQuery === "undefined") {
 }
 
 window.checklist = {
-  // Expose high level classes
-  Checker,
-  Loader,
-  UI,
-
   // checklist properties
   config: window.checklistUserConfig || {},
 

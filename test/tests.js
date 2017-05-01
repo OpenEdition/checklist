@@ -59,7 +59,7 @@ describe("Initialization and execution", function () {
 
   it("Should return a Checker instance", function () {
     var checker = checklist.start({ parent: false });
-    expect(checker).to.be.an.instanceof(checklist.Checker);
+    expect(checker).to.have.property("classname", "Checker");
   });
 
   it("Should run checks on start()", function (done) {
@@ -332,7 +332,7 @@ describe("Loader and Sources", function () {
   });
 
   it("Should create an instance of Loader", function () {
-    expect(loader).to.be.instanceof(window.checklist.Loader);
+    expect(loader).to.have.property("classname", "Loader");
   });
 
   it("Should get an instance of Source with getSource()", function () {
