@@ -33,28 +33,32 @@ class Checker extends Base {
           context: this.context,
           rule
         });
-        check.once("done", () => {
-          resolve();
-          this.emit("check-done", check);
-        });
-        check.on("success", () => this.emit("check-success", check));
-        check.on("rejected", (error) => {
-          // FIXME: should also use currentRejections (like currentStatements) for using with checker.run()?..... or maybe API is bad and we should create a new Checker each time new tests are runned.
-          // FIXME: maybe error should be a simple message instead of an Error()
-          this.rejections.push({check, error});
-          this.emit("check-rejected", error, check);
-        });
-        check.on("statement", (statement) => {
-          currentStatements.push(statement);
-          this.statements.push(statement);
-          this.emit("statement", statement);
-        });
-        check.on("duplicate", (statement) => {
-          // FIXME: what about currentStatement here?
-          // TODO: document this event
-          this.emit("duplicate", statement);
-        });
+        initEvents(check, resolve, reject);
         check.run();
+      });
+    };
+
+    const initEvents = (check, resolve, reject) => {
+      check.once("done", () => {
+        resolve();
+        this.emit("check-done", check);
+      });
+      check.on("success", () => this.emit("check-success", check));
+      check.on("rejected", (error) => {
+        // FIXME: should also use currentRejections (like currentStatements) for using with checker.run()?..... or maybe API is bad and we should create a new Checker each time new tests are runned.
+        // FIXME: maybe error should be a simple message instead of an Error()
+        this.rejections.push({check, error});
+        this.emit("check-rejected", error, check);
+      });
+      check.on("statement", (statement) => {
+        currentStatements.push(statement);
+        this.statements.push(statement);
+        this.emit("statement", statement);
+      });
+      check.on("duplicate", (statement) => {
+        // FIXME: what about currentStatement here?
+        // TODO: document this event
+        this.emit("duplicate", statement);
       });
     };
 
