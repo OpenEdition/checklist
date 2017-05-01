@@ -9,6 +9,8 @@ function getUrl (arg = "") {
 // location can be an array [href, selector]
 function splitLocation (location) {
   let href = location;
+  // TODO: add default selector in config
+  let selector = "body";
   if (Array.isArray(location)) {
     href = location[0];
     selector = location[1];
