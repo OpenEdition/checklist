@@ -21,18 +21,19 @@ function evalStringCondition (condition, context) {
 class Check extends Base {
   constructor ({ context, rule }) {
     super("Check");
-    
+
     Object.assign(this, rule);
     this.context = context;
     this.statements = [];
 
     const getSource = () => {
       const loader = window.checklist.loader;
-      loader.requestSource(this.href, (source) => {
-        this.source = source;
-        this.setState({"ready": true});
-        this.emit("ready");
-      });
+      loader.requestSource(this.href)
+        .then((source) => {
+          this.source = source;
+          this.setState({"ready": true});
+          this.emit("ready");
+        });
     };
     getSource(this);
   }

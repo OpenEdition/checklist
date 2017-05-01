@@ -364,10 +364,11 @@ describe("Remote Sources", function () {
   before(function (done) {
     checker = checklist.init({});
     loader = window.checklist.loader;
-    loader.requestSource(remoteLocation, (source) => {
-      remoteSource = source;
-      done();
-    });
+    loader.requestSource(remoteLocation)
+      .then((source) => {
+        remoteSource = source;
+        done();
+      });
   });
 
   it("Should request a new source and store it in loader", function () {

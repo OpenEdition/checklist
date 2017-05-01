@@ -20,14 +20,15 @@ class Loader extends Base {
     addSource(this);
   }
 
-  requestSource (href, callback) {
-    const found = this.getSource(href);
-    if (found) {
-      callback(found);
-      return this;
-    }
-    addSource(this, href).then(callback);
-    return this;
+  requestSource (href) {
+    return new Promise((resolve, reject) => {
+      const found = this.getSource(href);
+      if (found) {
+        resolve(found);
+        return;
+      }
+      addSource(this, href).then(resolve, reject);
+    });
   }
 
   getSource (href) {
