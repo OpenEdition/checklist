@@ -21,11 +21,13 @@ class Source extends Base {
   }
 
   complete () {
+    this.setState({"ready": true});
     this.emit("ready");
   }
 
   error (err) {
-    this.emit("load-failed", err);
+    this.setState({"failed": true});
+    this.emit("failed", err);
   }
 
   get$ () {
