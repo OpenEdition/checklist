@@ -5,8 +5,7 @@ require("./css/ui.css");
 
 class UI extends Base {
   constructor ({ parent = "body" }) {
-    super();
-    this.classname = "UI";
+    super("UI");
     this.attach(parent);
   }
 

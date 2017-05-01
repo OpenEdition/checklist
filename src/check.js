@@ -20,9 +20,8 @@ function evalStringCondition (condition, context) {
 
 class Check extends Base {
   constructor ({ context, rule }) {
-    super();
-    this.classname = "Check";
-
+    super("Check");
+    
     Object.assign(this, rule);
     this.context = context;
     this.statements = [];

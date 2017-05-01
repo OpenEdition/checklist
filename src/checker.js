@@ -3,8 +3,8 @@ const Check = require("./check.js");
 
 class Checker extends Base {
   constructor ({ rules, context }) {
-    super();
-    this.classname = "Checker";
+    super("Checker");
+    
     this.rules = rules || [];
     this.context = (typeof context === "function" ? context() : context) || [];
     this.statements = [];

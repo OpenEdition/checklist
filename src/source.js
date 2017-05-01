@@ -8,8 +8,8 @@ function getUrl (arg = "") {
 
 class Source extends Base {
   constructor (location) {
-    super();
-    this.classname = "Source";
+    super("Source");
+    
     let href = location;
     // location can be an array [href, selector]
     if (Array.isArray(location)) {

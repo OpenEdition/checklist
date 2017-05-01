@@ -14,8 +14,8 @@ function addSource (loader, href, callback) {
 
 class Loader extends Base {
   constructor () {
-    super();
-    this.classname = "Loader";
+    super("Loader");
+    
     this.sources = [];
     // Add self
     addSource(this);
