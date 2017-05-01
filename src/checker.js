@@ -36,6 +36,10 @@ class Checker extends Base {
           resolve();
           this.emit("check-done", check);
         });
+        check.on("success", () => this.emit("check-success", check));
+        check.on("rejected", (err) => {
+          this.emit("check-rejected", err, check);
+        });
         check.on("statement", (statement) => {
           currentStatements.push(statement);
           this.statements.push(statement);

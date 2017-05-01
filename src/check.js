@@ -18,6 +18,12 @@ function evalStringCondition (condition, context) {
   return eval(conditionToEval);
 }
 
+function setDone (check) {
+  if (check.hasState("done")) return;
+  check.setState({"done": true});
+  check.emit("done");
+}
+
 class Check extends Base {
   constructor ({ context, rule }) {
     super("Check");
@@ -34,6 +40,7 @@ class Check extends Base {
           this.setState({"ready": true});
           this.emit("ready");
         });
+      // TODO: catch
     };
     getSource(this);
   }
@@ -55,18 +62,23 @@ class Check extends Base {
     return this;
   }
 
-  // TODO: Check exception should not raise errors. Use resolve with a specific attribute instead.
-  reject (err) {
-    throw Error(err);
+  reject (errMsg) {
+    if (this.hasState("done") || this.hasState("rejected")) return this;
+    const err = Error(errMsg);
+    this.emit("rejected", err);
+    this.setState({"rejected" : true});
+    setDone(this);
+    return this;
   }
 
   resolve (value) {
-    if (this.hasState("done")) return this;
-    this.setState({"done": true});
+    if (this.hasState("done") || this.hasState("success")) return this;
     if (value) {
       this.notify(value);
     }
-    this.emit("done");
+    this.setState({"success": true});
+    this.emit("success");
+    setDone(this);
     return this;
   }
 
