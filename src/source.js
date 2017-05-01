@@ -9,7 +9,7 @@ function getUrl (arg = "") {
 class Source extends Base {
   constructor (location) {
     super("Source");
-    
+
     let href = location;
     // location can be an array [href, selector]
     if (Array.isArray(location)) {
@@ -72,23 +72,27 @@ class Source extends Base {
 
       const ajaxSuccess = (data) => {
         if (!bodyExists(data)) {
-          return this.error();
+          return this.error(Error("body element not found"));
         }
 
         const {root, bodyClasses} = setContainer(data);
         if (!root) {
-          return this.error();
+          return this.error(Error("root element not found"));
         }
 
         this.root = root;
         this.bodyClasses = bodyClasses;
       };
 
+      const href = this.url.href;
       const ajaxOptions = {
-        url: this.url.href,
+        url: href,
         timeout: 20000, // TODO: add this timeout value to config
         success: ajaxSuccess,
-        error: this.error.bind(this),
+        error: (jqXHR, textStatus, errorThrown) => {
+          const msg = `Could not load URL ${href} (${textStatus}: ${errorThrown})`;
+          this.error(Error(msg));
+        },
         complete: this.complete.bind(this)
       };
       $.ajax(ajaxOptions);
