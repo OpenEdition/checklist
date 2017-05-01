@@ -4,10 +4,11 @@ const Check = require("./check.js");
 class Checker extends Base {
   constructor ({ rules, context }) {
     super("Checker");
-    
+
     this.rules = rules || [];
     this.context = (typeof context === "function" ? context() : context) || [];
     this.statements = [];
+    this.rejections = [];
   }
 
   // FIXME: update this.rules by merging rules when running this.run(rules) (but this must be optionnal). NOTE: this.statements is already updated
@@ -37,8 +38,11 @@ class Checker extends Base {
           this.emit("check-done", check);
         });
         check.on("success", () => this.emit("check-success", check));
-        check.on("rejected", (err) => {
-          this.emit("check-rejected", err, check);
+        check.on("rejected", (error) => {
+          // FIXME: should also use currentRejections (like currentStatements) for using with checker.run()?..... or maybe API is bad and we should create a new Checker each time new tests are runned.
+          // FIXME: maybe error should be a simple message instead of an Error()
+          this.rejections.push({check, error});
+          this.emit("check-rejected", error, check);
         });
         check.on("statement", (statement) => {
           currentStatements.push(statement);
