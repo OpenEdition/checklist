@@ -27,7 +27,6 @@ window.checklist = {
 
     const {rules, context, parent} = this.config;
 
-    // TODO: provide a way to reset Loader
     if (!this.loader) {
       this.loader = new Loader();
     }
@@ -64,5 +63,6 @@ window.checklist = {
 
   clear: function () {
     this.config = {};
+    this.loader = new Loader();
   }
 };
