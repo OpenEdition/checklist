@@ -1,3 +1,4 @@
+const Batch = require("./batch.js");
 const Checker = require("./checker.js");
 const Loader = require("./loader.js");
 const UI = require("./ui.js");
@@ -64,5 +65,10 @@ window.checklist = {
   clear: function () {
     this.config = {};
     this.loader = new Loader();
+  },
+
+  batch: function (hrefs) {
+    const batch = new Batch(hrefs);
+    return batch;
   }
 };
