@@ -39,8 +39,9 @@ class Check extends Base {
           this.source = source;
           this.setState({"ready": true});
           this.emit("ready");
+        }).catch((msg) => {
+          this.reject(msg);
         });
-      // TODO: catch
     };
     getSource(this);
   }
