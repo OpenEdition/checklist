@@ -2,6 +2,7 @@
 var expect = window.chai.expect;
 
 var remoteLocation = ["./pages/1.html", "#main"];
+var remoteLocation2 = ["./pages/2.html", "#main"];
 
 function expectAsync (done, expectation) {
   try {
@@ -548,6 +549,19 @@ describe("Batch", function () {
   // TODO: rename events in a consistant way and move this test to the "events" section
   it("Should emit the 'ready' event", function (done) {
     batch.on("ready", () => done());
+    batch.init();
+  });
+
+  it("Should get and store Sources", function (done) {
+    batch = checklist.batch([remoteLocation, remoteLocation2]);
+    batch.on("ready", () => {
+      expectAsync(done, () => {
+        expect(batch).to.have.property("sources");
+        expect(batch.sources).to.be.an("array");
+        expect(batch.sources).to.have.lengthOf(2);
+        expect(batch.sources[0]).to.have.property("classname", "Source");
+      });
+    });
     batch.init();
   });
 });
