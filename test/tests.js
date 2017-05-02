@@ -534,6 +534,13 @@ describe("Remote Sources", function () {
   });
 });
 
+describe("Batch", function () {
+  it("Should return an instance of Batch", function () {
+    var batch = checklist.batch();
+    expect(batch).to.have.property("classname", "Batch");
+  });
+});
+
 describe("UI", function () {
   var checker;
 
