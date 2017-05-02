@@ -399,6 +399,23 @@ describe("Rejections", function () {
     };
     checklist.start({rules}, callback);
   });
+
+  it("Should create a rejection when Source is not found", function (done){
+    var checker = checklist.init({
+      rules: [
+        {
+          name: "This should be rejected",
+          href: "bad-remote-location",
+          action: function () {
+            done(Error("This action should never be executed"));
+            this.resolve();
+          }
+        }
+      ]
+    });
+    checker.on("check-rejected", () => done());
+    checker.run();
+  });
 });
 
 describe("Loader and Sources", function () {
