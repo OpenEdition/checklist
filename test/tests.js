@@ -457,6 +457,7 @@ describe("Remote Sources", function () {
   var remoteSource;
 
   before(function (done) {
+    checklist.clear();
     checker = checklist.init({});
     loader = window.checklist.loader;
     loader.requestSource(remoteLocation)
