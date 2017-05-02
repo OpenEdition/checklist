@@ -43,7 +43,7 @@ class Check extends Base {
           this.reject(msg);
         });
     };
-    getSource(this);
+    getSource();
   }
 
   notify (value) {
