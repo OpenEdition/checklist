@@ -535,9 +535,20 @@ describe("Remote Sources", function () {
 });
 
 describe("Batch", function () {
+  var batch;
+
+  before(function () {
+    batch = checklist.batch();
+  });
+
   it("Should return an instance of Batch", function () {
-    var batch = checklist.batch();
     expect(batch).to.have.property("classname", "Batch");
+  });
+
+  // TODO: rename events in a consistant way and move this test to the "events" section
+  it("Should emit the 'ready' event", function (done) {
+    batch.on("ready", () => done());
+    batch.init();
   });
 });
 
