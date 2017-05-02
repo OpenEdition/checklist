@@ -67,6 +67,7 @@ class Checker extends Base {
     Promise.all(promises).then(() => {
       this.emit("done", currentStatements);
     }).catch((err) => {
+      // TODO: error handling ok ?
       throw Error(err);
     });
 
