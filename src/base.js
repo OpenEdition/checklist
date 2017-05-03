@@ -20,16 +20,14 @@ class Base extends EventEmitter {
     return this.getState(state) === true;
   }
 
-  when (state) {
-    const then = (fn) => {
-      const hasState = this.hasState(state);
-      fn = fn.bind(this);
-      if (hasState) {
-        return fn();
-      }
-      this.once(state, fn);
-    };
-    return {then};
+  whenState (state) {
+    const hasState = this.hasState(state);
+    if (hasState) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      this.once(state, resolve);
+    });
   }
 }
 
