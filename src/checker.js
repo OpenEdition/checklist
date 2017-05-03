@@ -1,12 +1,23 @@
 const Base = require("./base.js");
 const Check = require("./check.js");
 
+function getContext (source, contextCreator) {
+  if (typeof contextCreator === "object") {
+    return contextCreator;
+  }
+  const selectFunc = source.get$();
+  return contextCreator(selectFunc);
+}
+
 class Checker extends Base {
-  constructor ({ rules = [], context = [] }) {
+  constructor ({ rules = [], context = [], source }) {
     super("Checker");
 
+    const loader = window.checklist.loader;
+    this.source = source || loader.getSelfSource();
+    // TODO: rename context in constructor (contextCreator?)
+    this.context = getContext(this.source, context);
     this.rules = rules;
-    this.context = typeof context === "function" ? context() : context;
     this.statements = [];
     this.rejections = [];
   }
