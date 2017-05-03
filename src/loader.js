@@ -17,7 +17,10 @@ class Loader extends Base {
 
     this.sources = [];
     // Add self
-    addSource(this);
+    addSource(this)
+      .then((source) => {
+        this.selfSource = source;
+      });
   }
 
   requestSource (href) {
@@ -35,6 +38,10 @@ class Loader extends Base {
     return this.sources.find((source) => {
       return source.is(href);
     });
+  }
+
+  getSelfSource () {
+    return this.selfSource;
   }
 }
 
