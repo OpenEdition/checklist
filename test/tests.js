@@ -251,7 +251,8 @@ describe("Context and conditions", function () {
 
   it("Should compute context when it's a function", function (done) {
     checklist.start({
-      context: function () {
+      // FIXME: This test fails because checker runs before the loader is ready
+      context: function ($) {
         return {
           yes: $("body").length === 1,
           no: $("body").length === 0
