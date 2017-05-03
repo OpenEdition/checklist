@@ -2,11 +2,11 @@ const Base = require("./base.js");
 const Check = require("./check.js");
 
 class Checker extends Base {
-  constructor ({ rules, context }) {
+  constructor ({ rules = [], context = [] }) {
     super("Checker");
 
-    this.rules = rules || [];
-    this.context = (typeof context === "function" ? context() : context) || [];
+    this.rules = rules;
+    this.context = typeof context === "function" ? context() : context;
     this.statements = [];
     this.rejections = [];
   }
