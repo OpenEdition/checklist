@@ -19,6 +19,18 @@ class Base extends EventEmitter {
   hasState (state) {
     return this.getState(state) === true;
   }
+
+  when (state) {
+    const then = (fn) => {
+      const hasState = this.hasState(state);
+      fn = fn.bind(this);
+      if (hasState) {
+        return fn();
+      }
+      this.once(state, fn);
+    };
+    return {then};
+  }
 }
 
 module.exports = Base;
