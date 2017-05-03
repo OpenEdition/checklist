@@ -13,8 +13,7 @@ class Batch extends Base {
     Promise.all(promises).then((sources) => {
       // TODO: remove possible duplicates in sources
       this.sources = sources;
-      this.setState({"ready": true});
-      this.emit("ready");
+      this.triggerState("ready");
     }).catch((err) => {
       // TODO: error handling ok ?
       throw Error(err);

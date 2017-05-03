@@ -20,8 +20,7 @@ function evalStringCondition (condition, context) {
 
 function setDone (check) {
   if (check.hasState("done")) return;
-  check.setState({"done": true});
-  check.emit("done");
+  check.triggerState("done");
 }
 
 class Check extends Base {
@@ -37,8 +36,7 @@ class Check extends Base {
       loader.requestSource(this.href)
         .then((source) => {
           this.source = source;
-          this.setState({"ready": true});
-          this.emit("ready");
+          this.triggerState("ready");
         }).catch((msg) => {
           this.reject(msg);
         });
@@ -66,8 +64,7 @@ class Check extends Base {
   reject (errMsg) {
     if (this.hasState("done") || this.hasState("rejected")) return this;
     const err = Error(errMsg);
-    this.emit("rejected", err);
-    this.setState({"rejected" : true});
+    this.triggerState("rejected", err);
     setDone(this);
     return this;
   }
@@ -77,8 +74,7 @@ class Check extends Base {
     if (value) {
       this.notify(value);
     }
-    this.setState({"success": true});
-    this.emit("success");
+    this.triggerState("success");
     setDone(this);
     return this;
   }
@@ -98,7 +94,7 @@ class Check extends Base {
     if (!this.hasState("started")) {
       // TODO: move delay in config
       const delay = 1000;
-      this.setState({"started": true});
+      this.triggerState("started");
       setTimeout(this.resolve.bind(this), delay);
       const selectFunc = this.source.get$();
       this.action.call(this, selectFunc);

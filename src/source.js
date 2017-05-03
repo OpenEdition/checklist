@@ -30,18 +30,15 @@ class Source extends Base {
   }
 
   complete () {
-    this.setState({"ready": true});
-    this.emit("ready");
+    this.triggerState("ready");
   }
 
   done () {
-    this.setState({"done": true});
-    this.emit("done");
+    this.triggerState("done");
   }
 
   error (err) {
-    this.setState({"failed": true});
-    this.emit("failed", err);
+    this.triggerState("failed", err);
   }
 
   get$ () {
