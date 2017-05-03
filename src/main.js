@@ -22,6 +22,16 @@ window.checklist = {
   },
 
   init: function (config) {
+    const initUi = (ui) => {
+      if (!ui) {
+        ui = new UI({parent});
+        ui.show();
+      }
+      checker.on("done", (statements) => {
+        ui.inject(statements);
+      });
+    };
+
     if (config) {
       this.setConfig(config);
     }
@@ -37,13 +47,7 @@ window.checklist = {
 
     // Init optional UI
     if (parent) {
-      if (!this.ui) {
-        this.ui = new UI({parent});
-        this.ui.show();
-      }
-      checker.on("done", (statements) => {
-        this.ui.inject(statements);
-      });
+      initUi(this.ui);
     }
 
     return checker;
