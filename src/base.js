@@ -7,15 +7,13 @@ class Base extends EventEmitter {
     this.states = {};
   }
 
-  setState (states) {
-    Object.assign(this.states, states);
+  setState (state, value) {
+    this.states[state] = value;
     return this;
   }
 
   triggerState (state, msg, flag = true) {
-    const states = {};
-    states[state] = flag;
-    this.setState(states);
+    this.setState(state, flag);
     this.emit(state, msg);
     return this;
   }
