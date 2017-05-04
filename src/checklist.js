@@ -25,7 +25,7 @@ class Checklist extends Base {
     initChecklist(this);
   }
 
-  check (rules = this.config.rules) {
+  check (rules) {
     const transferEvents = (checker) => {
       const transferableEvents = [ "check-done", "check-success", "check-rejected", "statement", "duplicate"];
       const isTransferableEvent = (eventName) => transferableEvents.includes(eventName);
@@ -57,7 +57,7 @@ class Checklist extends Base {
     }
     return new Promise((resolve, reject) => {
       setCheckerHandlers(checker, resolve, reject);
-      checker.run(rules);
+      checker.run();
     });
   }
 
