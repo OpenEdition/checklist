@@ -1,36 +1,28 @@
 const Base = require("./base.js");
 const Batch = require("./batch.js");
 const Checker = require("./checker.js");
+const Config = require("./config.js");
 const Loader = require("./loader.js");
 const UI = require("./ui.js");
 
+function initChecklist (checklist) {
+  const config = new Config();
+  const loader = new Loader();
+  Object.assign(checklist, {config, loader});
+
+  const parent = config.get("parent");
+  if (parent) {
+    const ui = new UI({parent});
+    ui.show();
+    checklist.ui = ui;
+  }
+  // TODO: return promise in order to trigger a state when ready
+}
+
 class Checklist extends Base {
-  constructor (userConfig) {
+  constructor () {
     super("Checklist");
-
-    this.createConfig(userConfig);
-    // TODO: init stuffs here
-    // this.createLoader();
-    // this.createUi();
-  }
-
-  createConfig (config) {
-    this.config = {};
-    this.setConfig(config);
-  }
-
-  createLoader (force = false) {
-    if (this.loader && !force) return;
-    this.loader = new Loader();
-    // TODO: return promise
-  }
-
-  // FIXME: missing parent
-  createUi (force = false) {
-    if (this.ui && !force) return;
-    this.ui = new UI({parent})
-      .show();
-    // TODO: return promise
+    initChecklist(this);
   }
 
   check (rules = this.config.rules) {
@@ -69,26 +61,13 @@ class Checklist extends Base {
     });
   }
 
-  // TODO: 1. merge config, 2. add an "override" parameter
-  setConfig (options) {
-    if (!options) return;
-    const config = {};
-    config.context = options.context || this.config.context;
-    config.rules = options.rules || this.config.rules;
-    config.parent = options.parent || this.config.parent;
-    this.config = config;
-    return this;
-  }
-
-  clear () {
-    this.config = {};
-    this.createLoader(true);
-    // TODO: Ui ?
-  }
-
   batch (hrefs) {
     const batch = new Batch(hrefs);
     return batch;
+  }
+
+  reset () {
+    initChecklist(this);
   }
 }
 
