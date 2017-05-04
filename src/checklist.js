@@ -29,7 +29,7 @@ class Checklist extends Base {
     // TODO: return promise
   }
 
-  check (rules = this.userConfig.rules) {
+  check (rules = this.config.rules) {
     // TODO: rename context in contextCreator
     const {context, ui} = this;
     const checker = new Checker({ rules, context });
@@ -40,6 +40,7 @@ class Checklist extends Base {
       checker.on("done", () => resolve(checker));
       // TODO: handle error
       // checker.on("err", () => reject());
+      checker.run();
     });
   }
 
