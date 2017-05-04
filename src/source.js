@@ -60,7 +60,7 @@ class Source extends Base {
 
     const loadLocal = () => {
       this.root = $(this.selector).get(0);
-      if (this.root.length === 0) {
+      if (!this.root) {
         return this.error(Error("root element not found"));
       }
       this.bodyClasses = getBodyClasses();
