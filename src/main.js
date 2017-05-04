@@ -4,4 +4,6 @@ if (typeof jQuery === "undefined") {
   throw Error ("Checklist requires jQuery");
 }
 
-window.checklist = new Checklist();
+$(function () {
+    window.checklist = new Checklist();
+});
