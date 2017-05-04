@@ -34,12 +34,12 @@ class Checklist extends Base {
     const {context, ui} = this;
     const checker = new Checker({ rules, context });
     if (ui) {
-      checker.on("done", (statements) => ui.inject(statements));
+      checker.once("done", (statements) => ui.inject(statements));
     }
     return new Promise((resolve, reject) => {
-      checker.on("done", () => resolve(checker));
+      checker.once("done", () => resolve(checker));
       // TODO: handle error
-      // checker.on("err", () => reject());
+      // checker.once("err", () => reject());
       checker.run();
     });
   }
