@@ -37,10 +37,10 @@ class Checklist extends Base {
     });
   }
 
-  check (rules) {
+  run (rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
-      const fn = this.batch.apply(this, arguments);
+      const fn = this.run.apply(this, arguments);
       return this.once("ready", fn);
     }
 
@@ -79,10 +79,10 @@ class Checklist extends Base {
     });
   }
 
-  batch (hrefs) {
+  runBatch (hrefs) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
-      const fn = this.batch.apply(this, arguments);
+      const fn = this.runBatch.apply(this, arguments);
       return this.once("ready", fn);
     }
 
