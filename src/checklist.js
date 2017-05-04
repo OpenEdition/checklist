@@ -7,7 +7,11 @@ const UI = require("./ui.js");
 class Checklist extends Base {
   constructor (userConfig) {
     super("Checklist");
+
     this.createConfig(userConfig);
+    // TODO: init stuffs here
+    // this.createLoader();
+    // this.createUi();
   }
 
   createConfig (config) {
