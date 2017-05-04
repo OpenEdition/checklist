@@ -40,7 +40,7 @@ class Checklist extends Base {
       checker.once("done", () => resolve(checker));
       // TODO: handle error
       // checker.once("err", () => reject());
-      checker.run();
+      checker.run(rules);
     });
   }
 
