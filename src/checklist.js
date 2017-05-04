@@ -38,6 +38,12 @@ class Checklist extends Base {
   }
 
   check (rules) {
+    // Wait for the 'ready' event
+    if (!this.hasState("ready")) {
+      const fn = this.batch.apply(this, arguments);
+      return this.once("ready", fn);
+    }
+
     const transferEvents = (checker) => {
       const transferableEvents = [ "check-done", "check-success", "check-rejected", "statement", "duplicate"];
       const isTransferableEvent = (eventName) => transferableEvents.includes(eventName);
@@ -74,6 +80,12 @@ class Checklist extends Base {
   }
 
   batch (hrefs) {
+    // Wait for the 'ready' event
+    if (!this.hasState("ready")) {
+      const fn = this.batch.apply(this, arguments);
+      return this.once("ready", fn);
+    }
+
     const batch = new Batch(hrefs);
     return batch;
   }
