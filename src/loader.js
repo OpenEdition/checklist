@@ -20,6 +20,7 @@ class Loader extends Base {
     addSource(this)
       .then((source) => {
         this.selfSource = source;
+        this.triggerState("ready");
       });
   }
 

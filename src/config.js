@@ -4,6 +4,7 @@ class Config extends Base {
   constructor () {
     super("Config");
     this.entries = {};
+    this.triggerState("ready");
   }
 
   set (key, value) {

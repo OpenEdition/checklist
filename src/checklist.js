@@ -5,24 +5,36 @@ const Config = require("./config.js");
 const Loader = require("./loader.js");
 const UI = require("./ui.js");
 
-function initChecklist (checklist) {
-  const config = new Config();
-  const loader = new Loader();
-  Object.assign(checklist, {config, loader});
-
-  const parent = config.get("parent");
-  if (parent) {
-    const ui = new UI({parent});
-    ui.show();
-    checklist.ui = ui;
+function initComponents (checklist) {
+  function setChecklistProperty (checklist, component) {
+    const name = component.classname.toLowerCase();
+    checklist[name] = component;
   }
-  // TODO: return promise in order to trigger a state when ready
+
+  function getComponentPromise (componentClass) {
+    return new Promise((resolve, reject) => {
+      const component = new componentClass();
+      component.whenState("ready")
+      .then(() => {
+        setChecklistProperty(checklist, component);
+        resolve(component);
+      });
+    });
+  }
+
+  const componentClasses = [Config, Loader, UI];
+  const promises = componentClasses.map(getComponentPromise);
+  return Promise.all(promises);
+
 }
 
 class Checklist extends Base {
   constructor () {
     super("Checklist");
-    initChecklist(this);
+    initComponents(this)
+    .then(() => {
+      this.triggerState("ready");
+    });
   }
 
   check (rules) {
@@ -67,7 +79,7 @@ class Checklist extends Base {
   }
 
   reset () {
-    initChecklist(this);
+    initComponents(this);
   }
 }
 

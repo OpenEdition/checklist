@@ -4,9 +4,9 @@ const Base = require("./base.js");
 require("./css/ui.css");
 
 class UI extends Base {
-  constructor ({ parent = "body" }) {
+  constructor () {
     super("UI");
-    this.attach(parent);
+    this.triggerState("ready");
   }
 
   attach (parent) {
