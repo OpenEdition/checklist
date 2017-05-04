@@ -34,6 +34,29 @@ class Checklist extends Base {
   }
 
   check (rules = this.config.rules) {
+    const transferEvents = (checker) => {
+      const transferableEvents = [ "check-done", "check-success", "check-rejected", "statement", "duplicate"];
+      const isTransferableEvent = (eventName) => transferableEvents.includes(eventName);
+      checker.onAny((eventName, ...values) => {
+        if (isTransferableEvent(eventName)) {
+          this.emit(eventName, ...values);
+        }
+      });
+    };
+
+    const setCheckerHandlers = (checker, resolve, reject) => {
+      checker.once("done", () => {
+        resolve(checker);
+        this.emit("checker-done", checker);
+      });
+      // TODO: handle error
+      checker.once("err", (err) => {
+        reject(err);
+        this.emit("checker-error", err, checker);
+      });
+      transferEvents(checker);
+    };
+
     // TODO: rename context in contextCreator
     const {context, ui} = this;
     const checker = new Checker({ rules, context });
@@ -41,9 +64,7 @@ class Checklist extends Base {
       checker.once("done", (statements) => ui.inject(statements));
     }
     return new Promise((resolve, reject) => {
-      checker.once("done", () => resolve(checker));
-      // TODO: handle error
-      // checker.once("err", () => reject());
+      setCheckerHandlers(checker, resolve, reject);
       checker.run(rules);
     });
   }
