@@ -23,7 +23,7 @@ class UI extends Base {
       throw Error("UI: parent is required and must be unique");
     }
     this.element = $(html).appendTo(parent);
-    this.emit("attached");
+    this.triggerState("attached");
     return this;
   }
 
@@ -43,13 +43,14 @@ class UI extends Base {
 
   hide () {
     $(document.body).removeClass("checklist-visible");
+    this.setState("visible", false);
     this.emit("hidden");
     return this;
   }
 
   show () {
     $(document.body).addClass("checklist-visible");
-    this.emit("visible");
+    this.triggerState("visible");
     return this;
   }
 }
