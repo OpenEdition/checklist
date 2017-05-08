@@ -1,0 +1,9 @@
+{
+  "extends": "../.jshintrc",
+  "mocha": true,
+  "expr": true,
+  "globals": {
+    "expect": false,
+    "expectAsync": false
+  }
+}
