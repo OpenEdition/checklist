@@ -5,5 +5,6 @@ if (typeof jQuery === "undefined") {
 }
 
 $(function () {
-    window.checklist = new Checklist();
+    const userConfig = window.checklistUserConfig;
+    window.checklist = new Checklist(userConfig);
 });
