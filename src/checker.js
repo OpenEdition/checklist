@@ -20,19 +20,29 @@ function getRules (rules) {
 }
 
 class Checker extends Base {
-  constructor ({ rules = [], context = [], source }) {
+  constructor ({ rules = [], context = [], location }) {
     super("Checker");
 
-    const loader = window.checklist.loader;
-    this.source = source || loader.getSelfSource();
-    // TODO: rename context in constructor (contextCreator?)
-    this.context = getContext(this.source, context);
     this.rules = getRules(rules);
     this.statements = [];
     this.rejections = [];
+
+    const loader = window.checklist.loader;
+    loader.requestSource(location)
+    .then((source) => {
+      this.source = source;
+      // TODO: rename context in constructor (contextCreator?)
+      this.context = getContext(source, context);
+      this.triggerState("ready");
+    });
   }
 
   run () {
+    // Wait for the 'ready' event
+    if (!this.hasState("ready")) {
+      return this.postpone("ready", "run", arguments);
+    }
+
     const getCheckPromises = (rule) => {
       return new Promise ((resolve, reject) => {
         const check = new Check({
