@@ -80,10 +80,15 @@ class Checklist extends Base {
     };
 
     // TODO: rename context in contextCreator
-    const {context, ui} = this;
+    const context = this.config.get("context");
+    const ui = this.ui;
     const checker = new Checker({ rules, context });
-    if (ui) {
-      checker.once("done", (statements) => ui.inject(statements));
+    if (ui.hasState("attached")) {
+      checker.once("done", (statements) => {
+        ui.inject(statements);
+        // TODO: doc + move test in Events
+        this.emit("injected", statements);
+      });
     }
     return new Promise((resolve, reject) => {
       setCheckerHandlers(checker, resolve, reject);
