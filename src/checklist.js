@@ -25,16 +25,28 @@ function initComponents (checklist) {
   const componentClasses = [Config, Loader, UI];
   const promises = componentClasses.map(getComponentPromise);
   return Promise.all(promises);
+}
 
+function initChecklist (checklist, userConfig) {
+  return initComponents(checklist)
+  .then(() => {
+    userConfig = userConfig || checklist.userConfig;
+    checklist.config.extend(userConfig);
+
+    const parent = checklist.config.get("parent");
+    if (parent) {
+      checklist.ui.attach(parent);
+    }
+
+    checklist.triggerState("ready");
+  });
 }
 
 class Checklist extends Base {
-  constructor () {
+  constructor (userConfig) {
     super("Checklist");
-    initComponents(this)
-    .then(() => {
-      this.triggerState("ready");
-    });
+    this.userConfig = userConfig;
+    initChecklist(this, userConfig);
   }
 
   run (rules) {
@@ -90,8 +102,8 @@ class Checklist extends Base {
     return batch;
   }
 
-  reset () {
-    initComponents(this);
+  reset (userConfig) {
+    return initChecklist(this, userConfig);
   }
 }
 
