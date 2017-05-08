@@ -7,13 +7,30 @@ class Config extends Base {
     this.triggerState("ready");
   }
 
+  get (key, defaultValue) {
+    return this.entries[key] || defaultValue;
+  }
+
+  getAll () {
+    return this.entries;
+  }
+
   set (key, value) {
+    if (typeof key === "object" && value == null) {
+      return this.extend(key);
+    }
     this.entries[key] = value;
     return this;
   }
 
-  get (key, defaultValue) {
-    return this.entries[key] || defaultValue;
+  extend (newConfig) {
+    $.extend(true, this.entries, newConfig);
+    return this;
+  }
+
+  clear () {
+    this.entries = {};
+    return this;
   }
 }
 
