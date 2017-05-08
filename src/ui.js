@@ -28,6 +28,10 @@ class UI extends Base {
   }
 
   inject (statement) {
+    if (!this.hasState("attached")) {
+      throw Error("UI is not attached");
+    }
+
     const injectStatement = (statement) => {
       const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
       const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
