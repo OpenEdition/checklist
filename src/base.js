@@ -35,6 +35,15 @@ class Base extends EventEmitter {
       this.once(state, resolve);
     });
   }
+
+  getMethod (methodName, ...args) {
+    return this[methodName].bind(this, ...args);
+  }
+
+  postpone (state, methodName, ...arg) {
+    const fn = this.getMethod(methodName, ...arg);
+    return this.once(state, fn);
+  }
 }
 
 module.exports = Base;
