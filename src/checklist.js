@@ -52,8 +52,7 @@ class Checklist extends Base {
   run (rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
-      const fn = this.run.apply(this, arguments);
-      return this.once("ready", fn);
+      return this.postpone("ready", "run", arguments);
     }
 
     const transferEvents = (checker) => {
@@ -99,8 +98,7 @@ class Checklist extends Base {
   runBatch (hrefs) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
-      const fn = this.runBatch.apply(this, arguments);
-      return this.once("ready", fn);
+      return this.postpone("ready", "runBatch", arguments);
     }
 
     const batch = new Batch(hrefs);
