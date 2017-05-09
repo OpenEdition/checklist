@@ -13,7 +13,7 @@ class Batch extends Base {
     const promises = locations.map((location) => {
       return new Checker({rules, context, location});
     });
-    Promise.all(promises).then((checkers) => {
+    return Promise.all(promises).then((checkers) => {
       this.checkers = checkers;
       this.triggerState("ready");
     }).catch((err) => {
