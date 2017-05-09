@@ -13,13 +13,13 @@ describe("Batch", function () {
 
   // TODO: rename events in a consistant way and move this test to the "events" section
   it("Should emit the 'ready' event", function (done) {
-    batch.on("ready", () => done());
+    batch.once("ready", () => done());
     batch.init();
   });
 
   it("Should get and store checkers", function (done) {
     batch = checklist.runBatch([remoteLocation, remoteLocation2]);
-    batch.on("ready", () => {
+    batch.once("ready", () => {
       expectAsync(done, () => {
         expect(batch).to.have.property("checkers");
         expect(batch.checkers).to.be.an("array");
