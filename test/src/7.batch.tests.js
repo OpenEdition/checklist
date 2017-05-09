@@ -3,8 +3,12 @@ describe("Batch", function () {
   const remoteLocation = window.remoteLocation;
   const remoteLocation2 = window.remoteLocation2;
 
-  before(function () {
-    batch = checklist.runBatch();
+  before(function (done) {
+    const locations = [remoteLocation, remoteLocation2];
+    checklist.runBatch(locations).then((res) => {
+      batch = res;
+      done();
+    });
   });
 
   it("Should return an instance of Batch", function () {
