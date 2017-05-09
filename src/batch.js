@@ -1,18 +1,20 @@
 const Base = require("./base.js");
+const Checker = require("./checker.js");
 
 class Batch extends Base {
-  constructor (hrefs = []) {
+  constructor ({rules = [], context = [], locations = []}) {
     super("Batch");
-    this.hrefs = hrefs;
+    this.locations = locations;
   }
 
   init () {
-    const loader = window.checklist.loader;
-    const hrefs = this.hrefs;
-    const promises = hrefs.map((href) => loader.requestSource(href));
-    Promise.all(promises).then((sources) => {
-      // TODO: remove possible duplicates in sources
-      this.sources = sources;
+    // TODO: remove possible duplicates in sources/locations
+    const {rules, context, locations} = this;
+    const promises = locations.map((location) => {
+      return new Checker({rules, context, location});
+    });
+    Promise.all(promises).then((checkers) => {
+      this.checkers = checkers;
       this.triggerState("ready");
     }).catch((err) => {
       // TODO: error handling ok ?

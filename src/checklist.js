@@ -49,6 +49,7 @@ class Checklist extends Base {
     initChecklist(this, userConfig);
   }
 
+  // TODO: put rules in the config (like context)
   run (rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
@@ -95,13 +96,14 @@ class Checklist extends Base {
     });
   }
 
-  runBatch (hrefs) {
+  // TODO: put rules in the config (like context)
+  runBatch (locations, rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
       return this.postpone("ready", "runBatch", arguments);
     }
-
-    const batch = new Batch(hrefs);
+    const context = this.config.get("context");
+    const batch = new Batch({ rules, context, locations });
     return batch;
   }
 
