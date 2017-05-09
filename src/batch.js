@@ -11,8 +11,12 @@ class Batch extends Base {
     // TODO: remove possible duplicates in sources/locations
     const {rules, context, locations} = this;
     const promises = locations.map((location) => {
-      return new Checker({rules, context, location});
+      return new Promise((resolve, reject) => {
+        const checker = new Checker({rules, context, location});
+        checker.whenState("ready").then(() => resolve(checker));
+      });
     });
+
     return Promise.all(promises).then((checkers) => {
       this.checkers = checkers;
       this.triggerState("ready");
