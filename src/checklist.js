@@ -56,14 +56,9 @@ class Checklist extends Base {
       return this.postpone("ready", "run", arguments);
     }
 
-    const transferEvents = (checker) => {
-      const transferableEvents = [ "check-done", "check-success", "check-rejected", "statement", "duplicate"];
-      const isTransferableEvent = (eventName) => transferableEvents.includes(eventName);
-      checker.onAny((eventName, ...values) => {
-        if (isTransferableEvent(eventName)) {
-          this.emit(eventName, ...values);
-        }
-      });
+    const forwardCheckerEvents = (checker) => {
+      const events = [ "check-done", "check-success", "check-rejected", "statement", "duplicate"];
+      this.forwardEvents(checker, events);
     };
 
     const setCheckerHandlers = (checker, resolve, reject) => {
@@ -76,7 +71,7 @@ class Checklist extends Base {
         reject(err);
         this.emit("checker-error", err, checker);
       });
-      transferEvents(checker);
+      forwardCheckerEvents(checker);
     };
 
     // TODO: rename context in contextCreator

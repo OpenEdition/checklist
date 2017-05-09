@@ -44,6 +44,15 @@ class Base extends EventEmitter {
     const fn = this.getMethod(methodName, ...arg);
     return this.once(state, fn);
   }
+
+  forwardEvents (source, eventsToForward) {
+    const isForwardable = (eventName) => eventsToForward.includes(eventName);
+    source.onAny((eventName, ...values) => {
+      if (isForwardable(eventName)) {
+        this.emit(eventName, ...values);
+      }
+    });
+  }
 }
 
 module.exports = Base;
