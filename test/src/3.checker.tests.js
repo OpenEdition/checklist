@@ -2,9 +2,9 @@ describe("Checker and .run()", function () {
 
   describe("Execution", function () {
 
-    it("Should return a promise", function (done) {
-      checklist.run()
-      .then(() => done());
+    it("Should return a promise", function () {
+      const res = checklist.run();
+      expect(res).to.be.a("promise");
     });
 
     it("Should pass a Checker instance in then()", function (done) {
