@@ -11,6 +11,11 @@ describe("Batch", function () {
     expect(batch).to.have.property("classname", "Batch");
   });
 
+  it("Should return a promise", function () {
+    const res = batch.init();
+    expect(res).to.be.a("promise");
+  });
+
   // TODO: rename events in a consistant way and move this test to the "events" section
   it("Should emit the 'ready' event", function (done) {
     batch.once("ready", () => done());
