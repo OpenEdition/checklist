@@ -17,14 +17,14 @@ describe("Batch", function () {
     batch.init();
   });
 
-  it("Should get and store Sources", function (done) {
+  it("Should get and store checkers", function (done) {
     batch = checklist.runBatch([remoteLocation, remoteLocation2]);
     batch.on("ready", () => {
       expectAsync(done, () => {
-        expect(batch).to.have.property("sources");
-        expect(batch.sources).to.be.an("array");
-        expect(batch.sources).to.have.lengthOf(2);
-        expect(batch.sources[0]).to.have.property("classname", "Source");
+        expect(batch).to.have.property("checkers");
+        expect(batch.checkers).to.be.an("array");
+        expect(batch.checkers).to.have.lengthOf(2);
+        expect(batch.checkers[0]).to.have.property("classname", "Checker");
       });
     });
     batch.init();
