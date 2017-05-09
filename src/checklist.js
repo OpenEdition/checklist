@@ -99,7 +99,7 @@ class Checklist extends Base {
     }
     const context = this.config.get("context");
     const batch = new Batch({ rules, context, locations });
-    return batch;
+    return batch.init().then(batch.run());
   }
 
   reset (userConfig) {
