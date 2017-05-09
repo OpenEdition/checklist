@@ -25,6 +25,27 @@ class Batch extends Base {
       throw Error(err);
     });
   }
+
+  run () {
+    const checkers = this.checkers;
+    if (!checkers || checkers.length === 0) {
+      return Promise.reject("No checkers defined in Batch");
+    }
+
+    const promises = checkers.map((checker) => {
+      const eventsToForward = ["check-done", "check-success", "check-rejected", "statement", "duplicate"];
+      this.forwardEvents(checker, eventsToForward);
+      return checker.run();
+    });
+
+    return Promise.all(promises).then((checkers) => {
+      this.triggerState("done");
+      return this;
+    }).catch((err) => {
+      // TODO: error handling ok ?
+      throw Error(err);
+    });
+  }
 }
 
 module.exports = Batch;
