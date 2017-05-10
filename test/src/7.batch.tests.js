@@ -11,24 +11,20 @@ describe("Batch", function () {
     });
   });
 
-  describe("Execution", function () {
-
-    it("Should return an instance of Batch", function () {
-      expect(batch).to.have.property("classname", "Batch");
-    });
-
-    it("Should get and store checkers", function (done) {
-      checklist.runBatch([remoteLocation, remoteLocation2])
-      .then((batch) => {
-        expectAsync(done, () => {
-          expect(batch).to.have.property("checkers");
-          expect(batch.checkers).to.be.an("array");
-          expect(batch.checkers).to.have.lengthOf(2);
-          expect(batch.checkers[0]).to.have.property("classname", "Checker");
-        });
-      });
-    });
-
+  it("Should return an instance of Batch", function () {
+    expect(batch).to.have.property("classname", "Batch");
   });
 
+  it("Should get and store checkers", function (done) {
+    checklist.runBatch([remoteLocation, remoteLocation2])
+    .then((batch) => {
+      expectAsync(done, () => {
+        expect(batch).to.have.property("checkers");
+        expect(batch.checkers).to.be.an("array");
+        expect(batch.checkers).to.have.lengthOf(2);
+        expect(batch.checkers[0]).to.have.property("classname", "Checker");
+      });
+    });
+  });
+  
 });
