@@ -104,7 +104,7 @@ describe("Loader and Sources", function () {
     });
 
     it("Should create a rejection when Source is not found", function (done) {
-      checklist.on("check-rejected", () => done());
+      checklist.once("check-rejected", () => done());
       checklist.run({
         name: "This should be rejected",
         href: "bad-remote-location",
