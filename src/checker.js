@@ -40,7 +40,7 @@ class Checker extends Base {
   run () {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
-      return this.postpone("ready", "run", arguments);
+      return this.postponePromise("ready", "run", arguments);
     }
 
     const getCheckPromises = (rule) => {

@@ -53,7 +53,7 @@ class Checklist extends Base {
   run (rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
-      return this.postpone("ready", "run", arguments);
+      return this.postponePromise("ready", "run", arguments);
     }
 
     const forwardCheckerEvents = (checker) => {
@@ -95,7 +95,7 @@ class Checklist extends Base {
   runBatch (locations, rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
-      return this.postpone("ready", "runBatch", arguments);
+      return this.postponePromise("ready", "runBatch", arguments);
     }
     const context = this.config.get("context");
     const batch = new Batch({ rules, context, locations });

@@ -40,9 +40,13 @@ class Base extends EventEmitter {
     return this[methodName].bind(this, ...args);
   }
 
-  postpone (state, methodName, ...arg) {
+  postponePromise (state, methodName, ...arg) {
     const fn = this.getMethod(methodName, ...arg);
-    return this.once(state, fn);
+    return new Promise((resolve, reject) => {
+      this.once(state, () => {
+        fn().then(resolve);
+      });
+    });
   }
 
   forwardEvents (source, eventsToForward) {
