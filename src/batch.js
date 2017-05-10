@@ -1,28 +1,42 @@
 const Base = require("./base.js");
 const Checker = require("./checker.js");
 
+// TODO: remove possible duplicates in sources/locations
+function getCheckers (batch) {
+
+  function getCheckerPromise (checkerOptions) {
+    const promise = new Promise((resolve, reject) => {
+      const checker = new Checker(checkerOptions);
+      checker.whenState("ready").then(() => resolve(checker));
+    });
+    return promise;
+  }
+
+  function getCheckerAllPromises ({rules, context, locations}) {
+    const promises = locations.map((location) => {
+      const checkerOptions = {rules, context, location};
+      return getCheckerPromise(checkerOptions);
+    });
+    return promises;
+  }
+
+  const {rules, context, locations} = batch;
+  const promises = getCheckerAllPromises({rules, context, locations});
+
+  // TODO: err
+  return Promise.all(promises);
+}
+
 class Batch extends Base {
   constructor ({rules = [], context = [], locations = []}) {
     super("Batch");
+
     this.locations = locations;
-  }
 
-  init () {
-    // TODO: remove possible duplicates in sources/locations
-    const {rules, context, locations} = this;
-    const promises = locations.map((location) => {
-      return new Promise((resolve, reject) => {
-        const checker = new Checker({rules, context, location});
-        checker.whenState("ready").then(() => resolve(checker));
-      });
-    });
-
-    return Promise.all(promises).then((checkers) => {
+    getCheckers(this)
+    .then((checkers) => {
       this.checkers = checkers;
       this.triggerState("ready");
-    }).catch((err) => {
-      // TODO: error handling ok ?
-      throw Error(err);
     });
   }
 
