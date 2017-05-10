@@ -41,6 +41,11 @@ class Batch extends Base {
   }
 
   run () {
+    // Wait for the 'ready' event
+    if (!this.hasState("ready")) {
+      return this.postponePromise("ready", "run", arguments);
+    }
+
     const checkers = this.checkers;
     if (!checkers || checkers.length === 0) {
       return Promise.reject("No checkers defined in Batch");
