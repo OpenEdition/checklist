@@ -62,7 +62,7 @@ describe("Events", function () {
     });
 
     it("Should emit the 'check.success' event with an argument", function (done) {
-      checklist.once("check.done", getHandler("check.done+success", done));
+      checklist.once("check.success", getHandler("check.done+success", done));
       checklist.run(rules.done);
     });
 
