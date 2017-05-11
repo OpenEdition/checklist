@@ -42,6 +42,11 @@ function initChecklist (checklist, userConfig) {
   });
 }
 
+function forwardCheckerEvents (checklist, checker) {
+  const events = [ "check.done", "check.success", "check.rejected", "statement", "duplicate"];
+  checklist.forwardEvents(checker, events);
+}
+
 class Checklist extends Base {
   constructor (userConfig) {
     super("Checklist");
@@ -56,11 +61,6 @@ class Checklist extends Base {
       return this.postponePromise("ready", "run", arguments);
     }
 
-    const forwardCheckerEvents = (checker) => {
-      const events = [ "check.done", "check.success", "check.rejected", "statement", "duplicate"];
-      this.forwardEvents(checker, events);
-    };
-
     const setCheckerHandlers = (checker, resolve, reject) => {
       checker.once("done", () => {
         resolve(checker);
@@ -71,7 +71,7 @@ class Checklist extends Base {
         reject(err);
         this.emit("checker.error", err, checker);
       });
-      forwardCheckerEvents(checker);
+      forwardCheckerEvents(this, checker);
     };
 
     // TODO: rename context in contextCreator
@@ -99,6 +99,7 @@ class Checklist extends Base {
     }
     const context = this.config.get("context");
     const batch = new Batch({ rules, context, locations, caller: this });
+    forwardCheckerEvents(this, batch);
     return batch.run();
   }
 
