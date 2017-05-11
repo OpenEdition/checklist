@@ -12,9 +12,9 @@ class Base extends EventEmitter {
     return this;
   }
 
-  triggerState (state, msg, flag = true) {
-    this.setState(state, flag);
-    this.emit(state, msg);
+  triggerState (state, ...args) {
+    this.setState(state, true);
+    this.emit(state, ...args);
     return this;
   }
 
