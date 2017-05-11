@@ -12,24 +12,24 @@ function getCheckers (batch) {
     return promise;
   }
 
-  function getCheckerAllPromises ({rules, context, locations}) {
+  function getCheckerAllPromises (checkerOptions) {
     const promises = locations.map((location) => {
-      const checkerOptions = {rules, context, location};
       return getCheckerPromise(checkerOptions);
     });
     return promises;
   }
 
   const {rules, context, locations} = batch;
-  const promises = getCheckerAllPromises({rules, context, locations});
+  const checkerOptions = {rules, context, locations, caller: batch};
+  const promises = getCheckerAllPromises(checkerOptions);
 
   // TODO: err
   return Promise.all(promises);
 }
 
 class Batch extends Base {
-  constructor ({rules = [], context = [], locations = []}) {
-    super("Batch");
+  constructor ({ rules = [], context = [], locations = [], caller }) {
+    super("Batch", caller);
 
     this.locations = locations;
 

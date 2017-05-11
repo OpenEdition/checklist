@@ -24,8 +24,8 @@ function setDone (check) {
 }
 
 class Check extends Base {
-  constructor ({ context, rule }) {
-    super("Check");
+  constructor ({ context, rule, caller }) {
+    super("Check", caller);
 
     Object.assign(this, rule);
     this.context = context;
@@ -45,7 +45,7 @@ class Check extends Base {
   }
 
   notify (value) {
-    const statement = new Statement({check: this, infos: value});
+    const statement = new Statement({check: this, infos: value, caller: this});
 
     // Increase count if this statement already exists in Check
     const duplicate = statement.getDuplicate();

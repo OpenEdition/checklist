@@ -1,8 +1,8 @@
 const Base = require("./base.js");
 
 class Config extends Base {
-  constructor () {
-    super("Config");
+  constructor ({ caller }) {
+    super("Config", caller);
     this.entries = {};
     this.triggerState("ready");
   }

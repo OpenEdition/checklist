@@ -1,9 +1,9 @@
 const Base = require("./base.js");
 const Source = require("./source.js");
 
-function addSource (loader, href) {
+function addSource (loader, location) {
   return new Promise((resolve, reject) => {
-    const source = new Source(href);
+    const source = new Source({ location, caller: this });
     loader.sources.push(source);
     source.on("ready", () => resolve(source));
     source.on("failed", (err)=> reject(err));
@@ -12,8 +12,8 @@ function addSource (loader, href) {
 }
 
 class Loader extends Base {
-  constructor () {
-    super("Loader");
+  constructor ({ caller }) {
+    super("Loader", caller);
 
     this.sources = [];
     // Add self

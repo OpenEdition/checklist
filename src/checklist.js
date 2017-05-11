@@ -13,7 +13,7 @@ function initComponents (checklist) {
 
   function getComponentPromise (componentClass) {
     return new Promise((resolve, reject) => {
-      const component = new componentClass();
+      const component = new componentClass({caller: checklist});
       component.whenState("ready")
       .then(() => {
         setChecklistProperty(checklist, component);
@@ -77,7 +77,7 @@ class Checklist extends Base {
     // TODO: rename context in contextCreator
     const context = this.config.get("context");
     const ui = this.ui;
-    const checker = new Checker({ rules, context });
+    const checker = new Checker({ rules, context, caller: this });
     if (ui.hasState("attached")) {
       checker.once("done", (statements) => {
         ui.inject(statements);
@@ -98,7 +98,7 @@ class Checklist extends Base {
       return this.postponePromise("ready", "runBatch", arguments);
     }
     const context = this.config.get("context");
-    const batch = new Batch({ rules, context, locations });
+    const batch = new Batch({ rules, context, locations, caller: this });
     return batch.run();
   }
 

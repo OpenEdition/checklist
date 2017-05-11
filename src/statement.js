@@ -5,8 +5,8 @@ function getIdFromName (name) {
 }
 
 class Statement extends Base {
-  constructor ({check, infos}) {
-    super("Statement");
+  constructor ({check, infos, caller}) {
+    super("Statement", caller);
     this.check = check;
 
     // Get values from check, otherwise default values are inherited from check

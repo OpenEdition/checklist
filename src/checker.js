@@ -20,8 +20,8 @@ function getRules (rules) {
 }
 
 class Checker extends Base {
-  constructor ({ rules = [], context = [], location }) {
-    super("Checker");
+  constructor ({ rules = [], context = [], location, caller }) {
+    super("Checker", caller);
 
     this.rules = getRules(rules);
     this.statements = [];
@@ -47,7 +47,8 @@ class Checker extends Base {
       return new Promise ((resolve, reject) => {
         const check = new Check({
           context: this.context,
-          rule
+          rule,
+          caller: this
         });
         initEvents(check, resolve, reject);
         check.run();

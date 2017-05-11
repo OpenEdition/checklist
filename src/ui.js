@@ -4,8 +4,8 @@ const Base = require("./base.js");
 require("./css/ui.css");
 
 class UI extends Base {
-  constructor () {
-    super("UI");
+  constructor ({ caller }) {
+    super("UI", caller);
     this.triggerState("ready");
   }
 

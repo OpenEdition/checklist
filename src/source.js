@@ -19,8 +19,8 @@ function splitLocation (location) {
 }
 
 class Source extends Base {
-  constructor (location) {
-    super("Source");
+  constructor ({ location, caller }) {
+    super("Source", caller);
 
     const {href, selector} = splitLocation(location);
     Object.assign(this, {href, selector});
