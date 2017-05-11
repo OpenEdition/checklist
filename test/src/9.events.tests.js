@@ -79,4 +79,33 @@ describe("Events", function () {
 
   });
 
+  describe("Batch", function () {
+
+    const remoteLocation = window.remoteLocation;
+    const remoteLocation2 = window.remoteLocation2;
+    const locations = [remoteLocation, remoteLocation2];
+
+    it("Should emit the 'checker.done' event", function (done) {
+      checklist.once("checker.done", getHandler("checker.done", done));
+      checklist.runBatch(locations, rules.done);
+    });
+
+    it("Should emit the 'check.success' event with an argument", function (done) {
+      checklist.once("check.done", getHandler("check.done+success", done));
+      checklist.runBatch(locations, rules.done);
+    });
+
+    // FIXME: this test leads to an error message in the browser console
+    it("Should emit the 'check.rejected' event with two arguments", function (done) {
+      checklist.once("check.rejected", getHandler("check.rejected", done));
+      checklist.runBatch(locations, rules.rejected);
+    });
+
+    it("Should emit the 'statement' event with an argument", function (done) {
+      checklist.once("statement", getHandler("statement", done));
+      checklist.runBatch(locations, rules.statement);
+    });
+
+  });
+
 });
