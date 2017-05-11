@@ -1,9 +1,10 @@
 const EventEmitter = require("eventemitter2").EventEmitter2;
 
 class Base extends EventEmitter {
-  constructor (classname) {
+  constructor (classname, caller) {
     super();
     this.classname = classname;
+    this.caller = caller;
     this.states = {};
   }
 
