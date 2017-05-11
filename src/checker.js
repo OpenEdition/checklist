@@ -55,23 +55,20 @@ class Checker extends Base {
     };
 
     const initEvents = (check, resolve, reject) => {
-      check.once("done", () => {
-        resolve();
-        this.emit("check-done", check);
-      });
-      check.on("success", () => this.emit("check-success", check));
+      check.once("done", () => resolve());
+      this.forwardEvents(check, [
+        {"done": "check-done"},
+        {"success": "check-success"},
+        {"rejected": "check-rejected"},
+        "statement",
+        "duplicate"
+      ]);
       check.on("rejected", (error) => {
         // FIXME: maybe error should be a simple message instead of an Error()
         this.rejections.push({check, error});
-        this.emit("check-rejected", error, check);
       });
       check.on("statement", (statement) => {
         this.statements.push(statement);
-        this.emit("statement", statement);
-      });
-      check.on("duplicate", (statement) => {
-        // TODO: document this event
-        this.emit("duplicate", statement);
       });
     };
 
