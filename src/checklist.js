@@ -57,19 +57,19 @@ class Checklist extends Base {
     }
 
     const forwardCheckerEvents = (checker) => {
-      const events = [ "check-done", "check-success", "check-rejected", "statement", "duplicate"];
+      const events = [ "check.done", "check.success", "check.rejected", "statement", "duplicate"];
       this.forwardEvents(checker, events);
     };
 
     const setCheckerHandlers = (checker, resolve, reject) => {
       checker.once("done", () => {
         resolve(checker);
-        this.emit("checker-done", checker);
+        this.emit("checker.done", checker);
       });
       // TODO: handle error
       checker.once("err", (err) => {
         reject(err);
-        this.emit("checker-error", err, checker);
+        this.emit("checker.error", err, checker);
       });
       forwardCheckerEvents(checker);
     };

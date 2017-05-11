@@ -57,9 +57,9 @@ class Checker extends Base {
     const initEvents = (check, resolve, reject) => {
       check.once("done", () => resolve());
       this.forwardEvents(check, [
-        {"done": "check-done"},
-        {"success": "check-success"},
-        {"rejected": "check-rejected"},
+        {"done": "check.done"},
+        {"success": "check.success"},
+        {"rejected": "check.rejected"},
         "statement",
         "duplicate"
       ]);

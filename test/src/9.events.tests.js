@@ -1,7 +1,7 @@
 describe("Events", function () {
 
-  it("Should emit the 'checker-done' event", function (done) {
-    checklist.once("checker-done", (checker) => {
+  it("Should emit the 'checker.done' event", function (done) {
+    checklist.once("checker.done", (checker) => {
       expectAsync(done, () => {
         expect(checker).to.have.property("classname", "Checker");
       });
@@ -9,8 +9,8 @@ describe("Events", function () {
     checklist.run();
   });
 
-  it("Should emit the 'check-done' event with an argument", function (done) {
-    checklist.once("check-done", (check) => {
+  it("Should emit the 'check.done' event with an argument", function (done) {
+    checklist.once("check.done", (check) => {
       expectAsync(done, () => {
         expect(check).to.have.property("classname", "Check");
       });
@@ -23,9 +23,9 @@ describe("Events", function () {
     });
   });
 
-  it("Should emit the 'check-success' event with an argument", function (done) {
+  it("Should emit the 'check.success' event with an argument", function (done) {
     // FIXME: same code than the previous test
-    checklist.once("check-success", (check) => {
+    checklist.once("check.success", (check) => {
       expectAsync(done, () => {
         expect(check).to.have.property("classname", "Check");
       });
@@ -39,8 +39,8 @@ describe("Events", function () {
   });
 
   // FIXME: this test leads to an error message in the browser console
-  it("Should emit the 'check-rejected' event with two arguments", function (done) {
-    checklist.once("check-rejected", (err, check) => {
+  it("Should emit the 'check.rejected' event with two arguments", function (done) {
+    checklist.once("check.rejected", (err, check) => {
       expectAsync(done, () => {
         expect(err).to.be.an("error");
         expect(check).to.have.property("classname", "Check");

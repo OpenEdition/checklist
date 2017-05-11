@@ -72,7 +72,7 @@ describe("Loader and Sources", function () {
 
     it("Should run a check in the remote source", function (done) {
       var id = "remote-source-is-ok";
-      checklist.once("check-done", function(check) {
+      checklist.once("check.done", function(check) {
         expectAsync(done, () => {
           expect(check.statements).to.have.lengthOf(1);
           const statement = check.statements[0];
@@ -104,7 +104,7 @@ describe("Loader and Sources", function () {
     });
 
     it("Should create a rejection when Source is not found", function (done) {
-      checklist.once("check-rejected", () => done());
+      checklist.once("check.rejected", () => done());
       checklist.run({
         name: "This should be rejected",
         href: "bad-remote-location",
