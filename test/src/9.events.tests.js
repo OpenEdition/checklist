@@ -90,8 +90,13 @@ describe("Events", function () {
       checklist.runBatch(locations, rules.done);
     });
 
-    it("Should emit the 'check.success' event with an argument", function (done) {
+    it("Should emit the 'check.done' event with an argument", function (done) {
       checklist.once("check.done", getHandler("check.done+success", done));
+      checklist.runBatch(locations, rules.done);
+    });
+
+    it("Should emit the 'check.success' event with an argument", function (done) {
+      checklist.once("check.success", getHandler("check.done+success", done));
       checklist.runBatch(locations, rules.done);
     });
 
