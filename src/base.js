@@ -49,11 +49,19 @@ class Base extends EventEmitter {
     });
   }
 
-  forwardEvents (source, eventsToForward) {
-    const isForwardable = (eventName) => eventsToForward.includes(eventName);
+  // events = ["eventNameNotRenamed", {name: newName}]
+  forwardEvents (source, events) {
+    function getForwardName (eventName) {
+      for (let element of events) {
+        const name = element === eventName ? element : element[eventName];
+        if (name) return name;
+      }
+    }
+
     source.onAny((eventName, ...values) => {
-      if (isForwardable(eventName)) {
-        this.emit(eventName, ...values);
+      const forwardName = getForwardName(eventName);
+      if (forwardName) {
+        this.emit(forwardName, ...values);
       }
     });
   }
