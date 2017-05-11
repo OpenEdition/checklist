@@ -28,6 +28,27 @@ describe("Events", function () {
     return handlers[eventName];
   }
 
+  const rules = {
+    done: {
+      name: "This should run",
+      action: function () {
+        this.resolve();
+      }
+    },
+    rejected: {
+      name: "This should be rejected",
+      action: function () {
+        this.reject("Rejection message");
+      }
+    },
+    statement: {
+      name: "This should run",
+      action: function () {
+        this.resolve(true);
+      }
+    }
+  };
+
   describe("Checker", function () {
 
     it("Should emit the 'checker.done' event", function (done) {
@@ -37,43 +58,23 @@ describe("Events", function () {
 
     it("Should emit the 'check.done' event with an argument", function (done) {
       checklist.once("check.done", getHandler("check.done+success", done));
-      checklist.run({
-        name: "This should run",
-        action: function () {
-          this.resolve();
-        }
-      });
+      checklist.run(rules.done);
     });
 
     it("Should emit the 'check.success' event with an argument", function (done) {
       checklist.once("check.done", getHandler("check.done+success", done));
-      checklist.run({
-        name: "This should run",
-        action: function () {
-          this.resolve();
-        }
-      });
+      checklist.run(rules.done);
     });
 
     // FIXME: this test leads to an error message in the browser console
     it("Should emit the 'check.rejected' event with two arguments", function (done) {
       checklist.once("check.rejected", getHandler("check.rejected", done));
-      checklist.run({
-        name: "This should be rejected",
-        action: function () {
-          this.reject("Rejection message");
-        }
-      });
+      checklist.run(rules.rejected);
     });
 
     it("Should emit the 'statement' event with an argument", function (done) {
       checklist.once("statement", getHandler("statement", done));
-      checklist.run({
-        name: "This should run",
-        action: function () {
-          this.resolve(true);
-        }
-      });
+      checklist.run(rules.statement);
     });
 
   });
