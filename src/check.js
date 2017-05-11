@@ -20,7 +20,7 @@ function evalStringCondition (condition, context) {
 
 function setDone (check) {
   if (check.hasState("done")) return;
-  check.triggerState("done");
+  check.triggerState("done", check);
 }
 
 class Check extends Base {
@@ -64,7 +64,7 @@ class Check extends Base {
   reject (errMsg) {
     if (this.hasState("done") || this.hasState("rejected")) return this;
     const err = Error(errMsg);
-    this.triggerState("rejected", err);
+    this.triggerState("rejected", err, this);
     setDone(this);
     return this;
   }
@@ -74,7 +74,7 @@ class Check extends Base {
     if (value) {
       this.notify(value);
     }
-    this.triggerState("success");
+    this.triggerState("success", this);
     setDone(this);
     return this;
   }
