@@ -10,7 +10,7 @@ describe("UI", function () {
   });
 
   it("Should display notifications into the panel", function (done) {
-    checklist.once("injected", function () {
+    checklist.once("ui.injected.statements", function () {
       expectAsync(done, () => expect($(".checklist-statement")).to.have.lengthOf(2));
     });
     checklist.run([

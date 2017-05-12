@@ -35,7 +35,9 @@ function initChecklist (checklist, userConfig) {
 
     const parent = checklist.config.get("parent");
     if (parent) {
-      checklist.ui.attach(parent);
+      const ui = checklist.ui;
+      ui.attach(parent);
+      checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
     }
 
     checklist.triggerState("ready");
@@ -82,8 +84,6 @@ class Checklist extends Base {
       checker.once("done", (checker) => {
         const statements = checker.statements;
         ui.inject(statements);
-        // TODO: doc + move test in Events
-        this.emit("injected", statements);
       });
     }
     return new Promise((resolve, reject) => {
