@@ -31,7 +31,7 @@ class Batch extends Base {
   constructor ({ rules = [], context = [], locations = [], caller }) {
     super("Batch", caller);
 
-    this.locations = locations;
+    Object.assign(this, { rules, context, locations });
 
     getCheckers(this)
     .then((checkers) => {

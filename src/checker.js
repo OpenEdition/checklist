@@ -56,7 +56,6 @@ class Checker extends Base {
     };
 
     const initEvents = (check, resolve, reject) => {
-      check.once("done", () => resolve());
       this.forwardEvents(check, [
         {"done": "check.done"},
         {"success": "check.success"},
@@ -64,6 +63,7 @@ class Checker extends Base {
         "statement",
         "duplicate"
       ]);
+      check.once("done", () => resolve());
       check.on("rejected", (error) => {
         // FIXME: maybe error should be a simple message instead of an Error()
         this.rejections.push({check, error});
