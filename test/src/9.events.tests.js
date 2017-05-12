@@ -49,6 +49,13 @@ describe("Events", function () {
     }
   };
 
+  before(function (done) {
+    checklist.reset()
+    .then(() => {
+      done();
+    });
+  });
+
   describe("Checker", function () {
 
     it("Should emit the 'checker.done' event", function (done) {
