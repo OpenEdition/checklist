@@ -75,7 +75,7 @@ class Checker extends Base {
 
     const promises = this.rules.map(getCheckPromises);
     return Promise.all(promises).then(() => {
-      this.emit("done", this.statements);
+      this.emit("done", this);
     }).catch((err) => {
       // TODO: error handling ok ?
       throw Error(err);

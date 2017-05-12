@@ -52,7 +52,7 @@ class Batch extends Base {
     }
 
     const promises = checkers.map((checker) => {
-      const eventsToForward = ["check.done", "check.success", "check.rejected", "statement", "duplicate"];
+      const eventsToForward = ["check.done", "check.success", "check.rejected", "statement", "duplicate", {"done": "checker.done"}];
       this.forwardEvents(checker, eventsToForward);
       return checker.run();
     });
