@@ -54,7 +54,12 @@ describe("Events", function () {
     }
   };
 
-  describe("Components", function () {
+  describe("Checklist and components", function () {
+
+    it("Should emit the ready event", function (done) {
+      checklist.once("ready", () => done());
+      checklist.reset();
+    });
 
     it("Should emit the config.ready event", function (done) {
       checklist.once("config.ready", (config) => {
