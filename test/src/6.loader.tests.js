@@ -72,13 +72,16 @@ describe("Loader and Sources", function () {
 
     it("Should run a check in the remote source", function (done) {
       var id = "remote-source-is-ok";
-      checklist.once("check.done", function(check) {
+      const listener = function(check) {
+        if (check.id !== id) return;
+        checklist.off("check.done", listener);
         expectAsync(done, () => {
           expect(check.statements).to.have.lengthOf(1);
           const statement = check.statements[0];
           expect(statement).to.have.property("id", id);
         });
-      });
+      };
+      checklist.on("check.done", listener);
       checklist.run({
         name: "Remote source is OK",
         id: id,
