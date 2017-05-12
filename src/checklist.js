@@ -79,7 +79,8 @@ class Checklist extends Base {
     const ui = this.ui;
     const checker = new Checker({ rules, context, caller: this });
     if (ui.hasState("attached")) {
-      checker.once("done", (statements) => {
+      checker.once("done", (checker) => {
+        const statements = checker.statements;
         ui.inject(statements);
         // TODO: doc + move test in Events
         this.emit("injected", statements);
