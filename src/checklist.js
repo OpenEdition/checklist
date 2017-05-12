@@ -6,17 +6,15 @@ const Loader = require("./loader.js");
 const UI = require("./ui.js");
 
 function initComponents (checklist) {
-  function setChecklistProperty (checklist, component) {
-    const name = component.classname.toLowerCase();
-    checklist[name] = component;
-  }
 
   function getComponentPromise (componentClass) {
     return new Promise((resolve, reject) => {
       const component = new componentClass({caller: checklist});
+      const componentName = component.classname.toLowerCase();
       component.whenState("ready")
       .then(() => {
-        setChecklistProperty(checklist, component);
+        checklist[componentName] = component;
+        checklist.emit(`${componentName}.ready`, component);
         resolve(component);
       });
     });
