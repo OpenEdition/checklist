@@ -18,7 +18,7 @@ describe("Events", function () {
           expect(check).to.have.property("classname", "Check");
         });
       },
-      "statement": (statement) => {
+      "statement.new": (statement) => {
         expectAsync(done, () => {
           expect(statement).to.not.be.undefined;
           expect(statement).to.have.property("classname", "Statement");
@@ -79,8 +79,8 @@ describe("Events", function () {
       checklist.run(rules.rejected);
     });
 
-    it("Should emit the 'statement' event with an argument", function (done) {
-      checklist.once("statement", getHandler("statement", done));
+    it("Should emit the 'statement.new' event with an argument", function (done) {
+      checklist.once("statement.new", getHandler("statement.new", done));
       checklist.run(rules.statement);
     });
 
@@ -113,8 +113,8 @@ describe("Events", function () {
       checklist.runBatch(locations, rules.rejected);
     });
 
-    it("Should emit the 'statement' event with an argument", function (done) {
-      checklist.once("statement", getHandler("statement", done));
+    it("Should emit the 'statement.new' event with an argument", function (done) {
+      checklist.once("statement.new", getHandler("statement.new", done));
       checklist.runBatch(locations, rules.statement);
     });
 

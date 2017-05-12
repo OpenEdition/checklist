@@ -51,12 +51,11 @@ class Check extends Base {
     const duplicate = statement.getDuplicate();
     if (duplicate) {
       duplicate.add();
-      // TODO: review event names
-      this.emit("duplicate", duplicate);
+      this.emit("statement.update", duplicate);
     } else {
       // Otherwise register it in Check
       this.statements.push(statement);
-      this.emit("statement", statement);
+      this.emit("statement.new", statement);
     }
     return this;
   }

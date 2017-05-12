@@ -43,7 +43,7 @@ function initChecklist (checklist, userConfig) {
 }
 
 function forwardCheckerEvents (checklist, checker) {
-  const events = [ "check.done", "check.success", "check.rejected", "statement", "duplicate", "checker.done"];
+  const events = [ "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.done"];
   checklist.forwardEvents(checker, events);
 }
 

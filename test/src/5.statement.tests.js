@@ -29,7 +29,7 @@ describe("Statement", function () {
   });
 
   it("Should create a statement using default rule values", function (done) {
-    checklist.once("statement", function(statement) {
+    checklist.once("statement.new", function(statement) {
       checkStatement(statement, defaultValues, done);
     });
     checklist.run({
@@ -43,7 +43,7 @@ describe("Statement", function () {
   });
 
   it("Should create a statement using values given in resolve()/notify()", function (done) {
-    checklist.once("statement", function(statement) {
+    checklist.once("statement.new", function(statement) {
       checkStatement(statement, otherValues, done);
     });
     checklist.run({
@@ -57,7 +57,7 @@ describe("Statement", function () {
   });
 
   it("Should generate an id from name", function (done) {
-    checklist.once("statement", function(statement) {
+    checklist.once("statement.new", function(statement) {
       expectAsync(done, () => expect(statement).to.have.property("id", "rule-without-id"));
     });
     checklist.run({
@@ -69,7 +69,7 @@ describe("Statement", function () {
   });
 
   it("Should increment count", function (done) {
-    checklist.once("duplicate", function(statement) {
+    checklist.once("statement.update", function(statement) {
       expectAsync(done, () => expect(statement.count).to.equal(2));
     });
     checklist.run({
