@@ -23,6 +23,11 @@ describe("Events", function () {
           expect(statement).to.not.be.undefined;
           expect(statement).to.have.property("classname", "Statement");
         });
+      },
+      "batch.done": (batch) => {
+        expectAsync(done, () => {
+          expect(batch).to.have.property("classname", "Batch");
+        });
       }
     };
     return handlers[eventName];
@@ -91,6 +96,11 @@ describe("Events", function () {
     const remoteLocation = window.remoteLocation;
     const remoteLocation2 = window.remoteLocation2;
     const locations = [remoteLocation, remoteLocation2];
+
+    it("Should emit the 'batch.done' event", function (done) {
+      checklist.once("batch.done", getHandler("batch.done", done));
+      checklist.runBatch(locations, rules.done);
+    });
 
     it("Should emit the 'checker.done' event", function (done) {
       checklist.once("checker.done", getHandler("checker.done", done));
