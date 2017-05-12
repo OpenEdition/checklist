@@ -54,14 +54,45 @@ describe("Events", function () {
     }
   };
 
-  before(function (done) {
-    checklist.reset()
-    .then(() => {
-      done();
+  describe("Components", function () {
+
+    it("Should emit the config.ready event", function (done) {
+      checklist.once("config.ready", (config) => {
+        expectAsync(done, () => {
+          expect(config).to.have.property("classname", "Config");
+        });
+      });
+      checklist.reset();
     });
+
+    it("Should emit the loader.ready event", function (done) {
+      checklist.once("loader.ready", (loader) => {
+        expectAsync(done, () => {
+          expect(loader).to.have.property("classname", "Loader");
+        });
+      });
+      checklist.reset();
+    });
+
+    it("Should emit the ui.ready event", function (done) {
+      checklist.once("ui.ready", (ui) => {
+        expectAsync(done, () => {
+          expect(ui).to.have.property("classname", "UI");
+        });
+      });
+      checklist.reset();
+    });
+
   });
 
   describe("Checker", function () {
+
+    before(function (done) {
+      checklist.reset()
+      .then(() => {
+        done();
+      });
+    });
 
     it("Should emit the 'checker.done' event", function (done) {
       checklist.once("checker.done", getHandler("checker.done", done));
@@ -96,6 +127,13 @@ describe("Events", function () {
     const remoteLocation = window.remoteLocation;
     const remoteLocation2 = window.remoteLocation2;
     const locations = [remoteLocation, remoteLocation2];
+
+    before(function (done) {
+      checklist.reset()
+      .then(() => {
+        done();
+      });
+    });
 
     it("Should emit the 'batch.done' event", function (done) {
       checklist.once("batch.done", getHandler("batch.done", done));
