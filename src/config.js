@@ -24,6 +24,7 @@ class Config extends Base {
   }
 
   extend (newConfig) {
+    // FIXME: extend will override the user config
     $.extend(true, this.entries, newConfig);
     return this;
   }
