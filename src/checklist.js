@@ -79,8 +79,16 @@ class Checklist extends Base {
     const ui = this.ui;
     const checker = new Checker({ rules, context, caller: this });
     if (ui.hasState("attached")) {
+      const getPercentage = (function () {
+        const total = rules.length;
+        let count = 0;
+        return () => (++count / total) * 100;
+      })();
+
       checker.on("check.done", (check) => {
         const statements = check.statements;
+        const percentage = getPercentage();
+        ui.setProgress(percentage);
         ui.inject(statements);
       });
     }

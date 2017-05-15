@@ -1,4 +1,5 @@
 const Base = require("./base.js");
+const Nanobar = require("nanobar");
 
 // Load UI styles
 require("./css/ui.css");
@@ -26,7 +27,13 @@ class UI extends Base {
     if ($parent.length !== 1) {
       throw Error("UI: parent is required and must be unique");
     }
-    this.element = $(html).appendTo(parent);
+    this.$element = $(html).appendTo(parent);
+    this.element = this.$element.get(0);
+
+    this.progressBar = new Nanobar({
+      target: this.element
+    });
+
     this.triggerState("attached");
     return this;
   }
@@ -39,7 +46,7 @@ class UI extends Base {
     const injectStatement = (statement) => {
       const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
       const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
-      this.element.children("#checklist-statements").append(li);
+      this.$element.children("#checklist-statements").append(li);
       this.emit("injected.statement", statement);
     };
 
@@ -64,6 +71,10 @@ class UI extends Base {
     $(document.body).addClass("checklist-visible");
     this.triggerState("visible");
     return this;
+  }
+
+  setProgress (percentage) {
+    this.progressBar.go(percentage);
   }
 }
 
