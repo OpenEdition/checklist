@@ -4,6 +4,8 @@ $(function () {
   // TODO: first checklist instanciation is useless. We need an init() method.
   checklist.reset({parent: "#container"})
   .then(function () {
+    // TODO: show the panel automatically
+    checklist.ui.show();
     checklist.config.set({
       context: function () {
         return {
@@ -45,8 +47,6 @@ $(function () {
           this.resolve("This should never happen");
         }
       }
-    ]).then(function () {
-      checklist.ui.show();
-    });
+    ]);
   });
 });
