@@ -17,6 +17,7 @@ $(function () {
       {
         name: "First rule",
         action: function () {
+          this.notify(true);
           this.resolve(true);
         }
       },
@@ -26,6 +27,22 @@ $(function () {
         action: function ($) {
           var flag = $("h1").length === 1;
           this.resolve(flag);
+        }
+      },
+      {
+        name: "Timeout rule",
+        action: function ($) {
+          var that = this;
+          setTimeout(function () {
+            that.resolve(true);
+          }, 2000);
+        }
+      },
+      {
+        name: "False condition",
+        condition: "rubrique",
+        action: function ($) {
+          this.resolve("This should never happen");
         }
       }
     ]).then(function () {
