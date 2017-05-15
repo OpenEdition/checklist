@@ -92,7 +92,8 @@ class Check extends Base {
 
     if (!this.hasState("started")) {
       // TODO: move delay in config
-      const delay = 1000;
+      // TODO: do something/run event when timeout
+      const delay = 3000;
       this.triggerState("started");
       setTimeout(this.resolve.bind(this), delay);
       const selectFunc = this.source.get$();
