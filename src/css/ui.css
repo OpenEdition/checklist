@@ -1,19 +1,31 @@
 body.checklist-visible {
-    margin-right: 240px;
-    position: relative;
+  margin-right: 240px;
+  position: relative;
 }
 
 .checklist-ui {
-    width: 200px;
-    padding: 20px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: #eee;
-    display: none;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #eee;
+  display: none;
+  min-width: 200px;
+  width: 0%;
+  transition: width .8s ease;
 }
 
 .checklist-visible .checklist-ui {
-    display: block;
+  display: block;
+}
+
+.checklist-ui.expanded {
+  width:100% !important;
+}
+
+.checklist-buttons {
+  margin-bottom: 20px;
+  position: absolute;
+  bottom: 0;
 }

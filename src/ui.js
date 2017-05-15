@@ -14,7 +14,11 @@ class UI extends Base {
     // TODO: placer ça dans un fichier séparé et utiliser un langage de template
     const html = `
       <div id="checklist-ui" class="checklist-ui">
-        <ul id="checklist-statements" class="checklist-statements"></ul>
+        <ul id="checklist-statements" class="checklist-statements">
+        </ul>
+        <div class="checklist-buttons">
+  				<button>Button</button>
+  			</div>
       </div>
     `;
 
