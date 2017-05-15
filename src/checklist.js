@@ -79,8 +79,8 @@ class Checklist extends Base {
     const ui = this.ui;
     const checker = new Checker({ rules, context, caller: this });
     if (ui.hasState("attached")) {
-      checker.once("done", (checker) => {
-        const statements = checker.statements;
+      checker.on("check.done", (check) => {
+        const statements = check.statements;
         ui.inject(statements);
       });
     }
