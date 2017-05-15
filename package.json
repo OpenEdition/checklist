@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack",
     "dev": "npm-run-all --parallel watch test",
-    "demo": "browser-sync start --server '.' --startPath 'demo' --files 'dist' 'demo'",
-    "test": "browser-sync start --server '.' --startPath 'test' --files 'dist' 'test/dist'",
+    "demo": "browser-sync start --server '.' --startPath 'demo' --files 'dist' 'demo' --no-notify",
+    "test": "browser-sync start --server '.' --startPath 'test' --files 'dist' 'test/dist' --no-notify",
     "watch": "webpack --progress --watch"
   },
   "keywords": [
