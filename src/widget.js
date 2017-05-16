@@ -31,6 +31,13 @@ class Widget extends Base {
     return this;
   }
 
+  detach () {
+    this.$element.remove();
+    this.element = null;
+    this.setState("attached", false);
+    this.emit("detached");
+  }
+
   setProgress (percentage) {
     this.progressBar.go(percentage);
   }
