@@ -108,13 +108,16 @@ class Checklist extends Base {
     const context = this.config.get("context");
     const batch = new Batch({ rules, context, locations, caller: this });
     forwardCheckerEvents(this, batch);
-    return batch.run().then((batch) => {
-      const ui = this.ui;
-      const toc = this.config.get("toc");
-      if (toc && ui.hasState("initialized")) {
-        ui.setToc(toc);
-      }
 
+    const ui = this.ui;
+    if (ui.hasState("initialized")) {
+      batch.on("check.done", (check) => {
+        const statements = check.statements;
+        ui.injectStatement(statements);
+      });
+    }
+
+    return batch.run().then((batch) => {
       this.emit("batch.done", batch);
       return batch;
     });
@@ -122,6 +125,11 @@ class Checklist extends Base {
 
   runBatchFromToc (rules) {
     const toc = this.config.get("toc");
+    const ui = this.ui;    
+    if (ui.hasState("initialized")) {
+      ui.setToc(toc);
+    }
+
     const locations = toc.map((entry) => {
       return entry.location;
     });
