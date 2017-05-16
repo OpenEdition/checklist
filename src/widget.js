@@ -57,8 +57,9 @@ class Widget extends Base {
         }
 
         const html = `
-          <li class="checklist-toc-entry" data-checklist-doc-id=${docId}>
+          <li class="checklist-toc-entry">
             ${metadatas.join("\n")}
+            <ul class="checklist-statements" data-checklist-doc-id=${docId}></ul>
           </li>
         `;
         return html;
