@@ -51,7 +51,9 @@ class Source extends Base {
   }
 
   get$ () {
-    return (selector, arg) => $(selector, arg || this.root);
+    const fn = (selector, arg) => $(selector, arg || this.root);
+    fn.root = this.root;
+    return fn;
   }
 
   is (arg) {
