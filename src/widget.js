@@ -31,28 +31,6 @@ class Widget extends Base {
     return this;
   }
 
-  inject (statement, targetSelector) {
-    if (!this.hasState("attached")) {
-      throw Error("Widget is not attached");
-    }
-
-    const injectStatement = (statement) => {
-      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
-      const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
-      this.$element.children(targetSelector).append(li);
-      this.emit("injected.statement", statement);
-    };
-
-    if (statement instanceof Array) {
-      statement.forEach(injectStatement);
-      this.emit("injected.statements", statement);
-    } else if (statement != null) {
-      injectStatement(statement);
-    }
-
-    return this;
-  }
-
   setProgress (percentage) {
     this.progressBar.go(percentage);
   }

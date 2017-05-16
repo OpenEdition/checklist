@@ -28,7 +28,27 @@ class UI extends Base {
   }
 
   injectStatement (statement) {
-    this.widgets.pane.inject(statement, "#checklist-statements");
+    const get$Target = (statement) => {
+      const docId  = statement.docId;
+      return $(`[data-checklist-doc-id='${docId}']`);
+    };
+
+    const injectStatement = (statement) => {
+      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
+      const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
+      const $target = get$Target(statement);
+      $target.append(li);
+      this.emit("injected.statement", statement);
+    };
+
+    if (statement instanceof Array) {
+      statement.forEach(injectStatement);
+      this.emit("injected.statements", statement);
+    } else if (statement != null) {
+      injectStatement(statement);
+    }
+
+    return this;
   }
 
   hide () {
