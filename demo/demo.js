@@ -54,11 +54,12 @@ $(function () {
     // This is specific to the plateform
     const toc = [];
     $("#toc").find(".toc-entry").each(function () {
+      const pathname = $(this).find("a").get(0).pathname;
       const entry = {
         title: $(this).find("h3").text(),
         subtitle: $(this).find(".subtitle").text(),
         author: $(this).find(".author").text(),
-        location: [$(this).find("a").attr("href"), "#main"]
+        location: [pathname, "#main"]
       };
       toc.push(entry);
     });
