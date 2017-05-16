@@ -1,5 +1,5 @@
 const Base = require("./base.js");
-const Nanobar = require("nanobar");
+const Widget = require("./widget.js");
 
 // Load UI styles
 require("./css/ui.css");
@@ -7,57 +7,28 @@ require("./css/ui.css");
 class UI extends Base {
   constructor ({ caller }) {
     super("UI", caller);
+    this.widgets = {};
     this.triggerState("ready");
   }
 
-  attach (parent) {
-    parent = parent || "body";
-    // TODO: placer ça dans un fichier séparé et utiliser un langage de template
-    const html = `
-      <div id="checklist-ui" class="checklist-ui">
-        <ul id="checklist-statements" class="checklist-statements">
-        </ul>
-        <div class="checklist-buttons">
-  				<button>Button</button>
-  			</div>
-      </div>
-    `;
-
-    let $parent = $(parent);
-    if ($parent.length !== 1) {
-      throw Error("UI: parent is required and must be unique");
-    }
-    this.$element = $(html).appendTo(parent);
-    this.element = this.$element.get(0);
-
-    this.progressBar = new Nanobar({
-      target: this.element
+  // FIXME: not consistent with other checklist components
+  init (parent) {
+    this.createWidget({
+      templateName: "pane",
+      parentSelector: parent
     });
-
-    this.triggerState("attached");
-    return this;
+    this.triggerState("initialized");
   }
 
-  inject (statement) {
-    if (!this.hasState("attached")) {
-      throw Error("UI is not attached");
-    }
+  createWidget (options) {
+    const widget = new Widget(options);
+    this.widgets[options.templateName] = widget;
+    widget.attach();
+    return widget;
+  }
 
-    const injectStatement = (statement) => {
-      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
-      const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
-      this.$element.children("#checklist-statements").append(li);
-      this.emit("injected.statement", statement);
-    };
-
-    if (statement instanceof Array) {
-      statement.forEach(injectStatement);
-      this.emit("injected.statements", statement);
-    } else if (statement != null) {
-      injectStatement(statement);
-    }
-
-    return this;
+  injectStatement (statement) {
+    this.widgets.pane.inject(statement, "#checklist-statements");
   }
 
   hide () {
@@ -71,10 +42,6 @@ class UI extends Base {
     $(document.body).addClass("checklist-visible");
     this.triggerState("visible");
     return this;
-  }
-
-  setProgress (percentage) {
-    this.progressBar.go(percentage);
   }
 }
 

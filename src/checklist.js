@@ -34,7 +34,7 @@ function initChecklist (checklist, userConfig) {
     const parent = checklist.config.get("parent");
     if (parent) {
       const ui = checklist.ui;
-      ui.attach(parent);
+      ui.init(parent);
       checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
     }
 
@@ -78,18 +78,19 @@ class Checklist extends Base {
     const context = this.config.get("context");
     const ui = this.ui;
     const checker = new Checker({ rules, context, caller: this });
-    if (ui.hasState("attached")) {
-      const getPercentage = (function () {
-        const total = rules.length;
-        let count = 0;
-        return () => (++count / total) * 100;
-      })();
+    if (ui.hasState("initialized")) {
+      // const getPercentage = (function () {
+      //   const total = rules.length;
+      //   let count = 0;
+      //   return () => (++count / total) * 100;
+      // })();
 
       checker.on("check.done", (check) => {
         const statements = check.statements;
-        const percentage = getPercentage();
-        ui.setProgress(percentage);
-        ui.inject(statements);
+        // TODO: move this somewhere else
+        // const percentage = getPercentage();
+        // ui.setProgress(percentage);
+        ui.injectStatement(statements);
       });
     }
     return new Promise((resolve, reject) => {
