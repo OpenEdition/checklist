@@ -3,7 +3,7 @@ const Source = require("./source.js");
 
 function addSource (loader, location) {
   return new Promise((resolve, reject) => {
-    const source = new Source({ location, caller: this });
+    const source = new Source({ location, caller: loader });
     loader.sources.push(source);
     source.on("ready", () => resolve(source));
     source.on("failed", (err)=> reject(err));
