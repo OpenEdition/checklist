@@ -50,6 +50,7 @@ class Checker extends Base {
         const check = new Check({
           context: this.context,
           docId: this.docId,
+          source: this.source,
           rule,
           caller: this
         });

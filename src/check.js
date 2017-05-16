@@ -1,6 +1,15 @@
 const Base = require("./base.js");
 const Statement = require("./statement.js");
 
+function getSource (check) {
+  // If rule.href is not found then use the checker source (in case of runBatch)
+  if (!check.href && check.source) {
+    return Promise.resolve(check.source);
+  }
+  const loader = window.checklist.loader;
+  return loader.requestSource(check.href);
+}
+
 // Eval a condition defined as a string
 function evalStringCondition (condition, context) {
   // Replace context keys by their values in string (false if undefined)
@@ -24,23 +33,20 @@ function setDone (check) {
 }
 
 class Check extends Base {
-  constructor ({ context, docId, rule, caller }) {
+  constructor ({ context, docId, rule, source, caller }) {
     super("Check", caller);
 
-    Object.assign(this, rule, {context, docId});
+    Object.assign(this, rule, {context, docId, source});
     this.statements = [];
 
-    const getSource = () => {
-      const loader = window.checklist.loader;
-      loader.requestSource(this.href)
-        .then((source) => {
-          this.source = source;
-          this.triggerState("ready");
-        }).catch((msg) => {
-          this.reject(msg);
-        });
-    };
-    getSource();
+    getSource(this)
+    .then((source) => {
+      this.source = source;
+      this.triggerState("ready");
+    })
+    .catch((msg) => {
+      this.reject(msg);
+    });
   }
 
   notify (value) {
