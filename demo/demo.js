@@ -26,6 +26,7 @@ $(function () {
       },
       {
         name: "Second rule (ajax)",
+        // TODO: href must be a function (variable)
         href: ["./pages/1.html", "#main"],
         action: function ($) {
           var flag = $("h1").length === 1;
