@@ -114,6 +114,14 @@ class Checklist extends Base {
     });
   }
 
+  runBatchFromToc (rules) {
+    const toc = this.config.get("toc");
+    const locations = toc.map((entry) => {
+      return entry.location;
+    });
+    return this.runBatch(locations, rules);
+  }
+
   reset (userConfig) {
     return initChecklist(this, userConfig);
   }
