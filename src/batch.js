@@ -12,16 +12,17 @@ function getCheckers (batch) {
     return promise;
   }
 
-  function getCheckerAllPromises (checkerOptions) {
+  function getCheckerAllPromises (locations, checkerOptions) {
     const promises = locations.map((location) => {
+      checkerOptions.location = location;
       return getCheckerPromise(checkerOptions);
     });
     return promises;
   }
 
   const {rules, context, locations} = batch;
-  const checkerOptions = {rules, context, locations, caller: batch};
-  const promises = getCheckerAllPromises(checkerOptions);
+  const checkerOptions = {rules, context, caller: batch};
+  const promises = getCheckerAllPromises(locations, checkerOptions);
 
   // TODO: err
   return Promise.all(promises);
