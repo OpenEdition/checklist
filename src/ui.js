@@ -13,6 +13,8 @@ class UI extends Base {
 
   // FIXME: not consistent with other checklist components
   init (parent) {
+    // FIXME: is it relevant to set this.parent here?
+    this.parent = parent;
     this.createWidget({
       templateName: "pane",
       parentSelector: parent
@@ -25,6 +27,13 @@ class UI extends Base {
     this.widgets[options.templateName] = widget;
     widget.attach();
     return widget;
+  }
+
+  setToc (toc) {
+    const report = this.createWidget({
+      templateName: "report",
+      parentSelector: this.parent
+    });
   }
 
   injectStatement (statement) {

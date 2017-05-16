@@ -11,6 +11,12 @@ const templates = {
         <button>Button</button>
       </div>
     </div>
+  `,
+  report: `
+    <div id="checklist-report" class="checklist-report">
+      <ul id="checklist-toc" class="checklist-toc">
+      <ul>
+    </div>
   `
 };
 

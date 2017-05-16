@@ -109,6 +109,12 @@ class Checklist extends Base {
     const batch = new Batch({ rules, context, locations, caller: this });
     forwardCheckerEvents(this, batch);
     return batch.run().then((batch) => {
+      const ui = this.ui;
+      const toc = this.config.get("toc");
+      if (toc && ui.hasState("initialized")) {
+        ui.setToc(toc);
+      }
+
       this.emit("batch.done", batch);
       return batch;
     });
