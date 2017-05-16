@@ -8,6 +8,7 @@ class Statement extends Base {
   constructor ({check, infos, caller}) {
     super("Statement", caller);
     this.check = check;
+    this.docId = check.docId;
 
     // Get values from check, otherwise default values are inherited from check
     this.name = infos.name || check.name;

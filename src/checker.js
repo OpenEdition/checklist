@@ -31,6 +31,7 @@ class Checker extends Base {
     loader.requestSource(location)
     .then((source) => {
       this.source = source;
+      this.docId = source.url.pathname;
       // TODO: rename context in constructor (contextCreator?)
       this.context = getContext(source, context);
       this.triggerState("ready");
@@ -47,6 +48,7 @@ class Checker extends Base {
       return new Promise ((resolve, reject) => {
         const check = new Check({
           context: this.context,
+          docId: this.docId,
           rule,
           caller: this
         });

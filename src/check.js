@@ -24,11 +24,10 @@ function setDone (check) {
 }
 
 class Check extends Base {
-  constructor ({ context, rule, caller }) {
+  constructor ({ context, docId, rule, caller }) {
     super("Check", caller);
 
-    Object.assign(this, rule);
-    this.context = context;
+    Object.assign(this, rule, {context, docId});
     this.statements = [];
 
     const getSource = () => {
