@@ -48,6 +48,15 @@ $(function () {
         action: function ($) {
           this.resolve("This should never happen");
         }
+      },
+      {
+        name: "Page 1 only",
+        action: function ($) {
+          const text = $("p").text();
+          if (text === "This is the page 1.") {
+            this.resolve(true);
+          }
+        }
       }
     ];
     checklist.run(rules);
