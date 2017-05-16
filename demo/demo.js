@@ -6,6 +6,7 @@ $(function () {
   .then(function () {
     // TODO: show the panel automatically
     checklist.ui.show();
+    // Prepare .run()
     checklist.config.set({
       context: function () {
         return {
@@ -15,7 +16,7 @@ $(function () {
         };
       }
     });
-    checklist.run([
+    const rules = [
       {
         name: "First rule",
         action: function () {
@@ -47,6 +48,21 @@ $(function () {
           this.resolve("This should never happen");
         }
       }
-    ]);
+    ];
+    checklist.run(rules);
+    // Prepare runBatch();
+    // This is specific to the plateform
+    const toc = [];
+    $("#toc").find(".toc-entry").each(function () {
+      const entry = {
+        title: $(this).find("h3").text(),
+        subtitle: $(this).find(".subtitle").text(),
+        author: $(this).find(".author").text(),
+        location: [$(this).find("a").attr("href"), "#main"]
+      };
+      toc.push(entry);
+    });
+    checklist.config.set("toc", toc);
+    checklist.runBatchFromToc(rules);
   });
 });
