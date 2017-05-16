@@ -34,6 +34,7 @@ class UI extends Base {
       templateName: "report",
       parentSelector: this.parent
     });
+    report.setToc(toc);
   }
 
   injectStatement (statement) {
