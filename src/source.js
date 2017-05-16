@@ -2,8 +2,17 @@ const Base = require("./base.js");
 
 // Arg can be a href, an url or an instance of source
 function getUrl (arg = "") {
-  const hrefOrUrl = arg instanceof Source ? arg.url.href : arg;
-  return new URL(hrefOrUrl, window.location.href);
+  function getHref (arg) {
+    if (arg instanceof Source) {
+      return arg.url.href;
+    } else if (Array.isArray(arg)) {
+      return arg[0];
+    }
+    return arg;
+  }
+
+  const href = getHref(arg);
+  return new URL(href, window.location.href);
 }
 
 // location can be an array [href, selector]
