@@ -85,7 +85,7 @@ class Checklist extends Base {
       //   return () => (++count / total) * 100;
       // })();
 
-      checker.on("check.done", (check) => {
+      checker.on("check.success", (check) => {
         const statements = check.statements;
         // TODO: move this somewhere else
         // const percentage = getPercentage();
@@ -111,7 +111,7 @@ class Checklist extends Base {
 
     const ui = this.ui;
     if (ui.hasState("initialized")) {
-      batch.on("check.done", (check) => {
+      batch.on("check.success", (check) => {
         const statements = check.statements;
         ui.injectStatement(statements);
       });
