@@ -27,7 +27,7 @@ $(function () {
       {
         name: "Second rule (ajax)",
         // TODO: href must be a function (variable)
-        href: ["./pages/1.html", "#main"],
+        href: "./pages/1.html",
         action: function ($) {
           var flag = $("h1").length === 1;
           this.resolve(flag);
@@ -57,7 +57,14 @@ $(function () {
             this.resolve(true);
           }
         }
-      }
+      },
+      {
+        name: "Bad href",
+        href: "bad",
+        action: function () {
+          this.resolve(true);
+        }
+      },
     ];
     checklist.run(rules);
     // Prepare runBatch();
