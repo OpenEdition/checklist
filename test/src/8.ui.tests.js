@@ -10,9 +10,6 @@ describe("UI", function () {
   });
 
   it("Should display notifications into the panel", function (done) {
-    checklist.once("ui.injected.statements", function () {
-      expectAsync(done, () => expect($(".checklist-statement")).to.have.lengthOf(2));
-    });
     checklist.run([
       {
         name: "First rule",
@@ -28,7 +25,10 @@ describe("UI", function () {
           this.resolve(flag);
         }
       }
-    ]);
+    ])
+    .then(() => {
+      expectAsync(done, () => expect($(".checklist-statement")).to.have.lengthOf(2));
+    });
   });
 
 });
