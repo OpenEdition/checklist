@@ -46,7 +46,7 @@ class Widget extends Base {
   setToc (toc) {
     const getHtml = (toc) => {
       const lines = toc.map((entry) => {
-        const href = entry.location[0];
+        const href = entry.location;
         const docId = getDocIdFromPathname(href);
 
         const metadatas = [];

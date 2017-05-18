@@ -69,7 +69,7 @@ $(function () {
         title: $(this).find("h3").text(),
         subtitle: $(this).find(".subtitle").text(),
         author: $(this).find(".author").text(),
-        location: [pathname, "#main"]
+        location: pathname
       };
       toc.push(entry);
     });

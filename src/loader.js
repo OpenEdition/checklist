@@ -1,9 +1,9 @@
 const Base = require("./base.js");
 const Source = require("./source.js");
 
-function addSource (loader, location) {
+function addSource (loader, href) {
   return new Promise((resolve, reject) => {
-    const source = new Source({ location, caller: loader });
+    const source = new Source({ href, caller: loader });
     loader.sources.push(source);
     source.on("ready", () => resolve(source));
     source.on("failed", (err)=> reject(err));

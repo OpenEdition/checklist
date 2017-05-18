@@ -1,39 +1,14 @@
 const Base = require("./base.js");
 
-// Arg can be a href, an url or an instance of source
-function getUrl (arg = "") {
-  function getHref (arg) {
-    if (arg instanceof Source) {
-      return arg.url.href;
-    } else if (Array.isArray(arg)) {
-      return arg[0];
-    }
-    return arg;
-  }
-
-  const href = getHref(arg);
+function getUrl (href = "") {
   return new URL(href, window.location.href);
 }
 
-// location can be an array [href, selector]
-function splitLocation (location) {
-  let href = location;
-  // TODO: add default selector in config
-  let selector = "body";
-  if (Array.isArray(location)) {
-    href = location[0];
-    selector = location[1];
-  }
-  return {href, selector};
-}
-
 class Source extends Base {
-  constructor ({ location, caller }) {
+  constructor ({ href, caller }) {
     super("Source", caller);
 
-    const {href, selector} = splitLocation(location);
-    Object.assign(this, {href, selector});
-
+    this.href = href;
     this.url = getUrl(href);
     this.self = this.isSelf();
   }
@@ -57,6 +32,7 @@ class Source extends Base {
   }
 
   is (arg) {
+    arg = arg instanceof Source ? arg.url.href : arg;
     const url = getUrl(arg);
     return this.url.href === url.href;
   }
@@ -70,10 +46,7 @@ class Source extends Base {
     const getBodyClasses = (body = "body") => $(body).get(0).className.split(/\s+/);
 
     const loadLocal = () => {
-      this.root = $(this.selector).get(0);
-      if (!this.root) {
-        return this.error(Error("root element not found"));
-      }
+      this.root = document.body;
       this.bodyClasses = getBodyClasses();
       this.complete();
     };
@@ -85,8 +58,7 @@ class Source extends Base {
         const body = data.match(/\n.*(<body.*)\n/i)[1].replace("body", "div");
         const bodyClasses = getBodyClasses(body);
         const $data = $(`<div>${data}</div>`);
-        const container = this.selector ? $data.find(this.selector) : $data;
-        const root = container.get(0);
+        const root = $data.get(0);
         return {root, bodyClasses};
       };
 
