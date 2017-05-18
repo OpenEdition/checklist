@@ -15,14 +15,18 @@ class Source extends Base {
 
   complete () {
     this.triggerState("ready");
+    return this;
   }
 
-  done () {
-    this.triggerState("done");
+  success () {
+    this.triggerState("success");
+    return this;
   }
 
   error (err) {
+    this.error = err;
     this.triggerState("failed", err);
+    return this;
   }
 
   get$ () {
@@ -48,7 +52,7 @@ class Source extends Base {
     const loadLocal = () => {
       this.root = document.body;
       this.bodyClasses = getBodyClasses();
-      this.complete();
+      this.success().complete();
     };
 
     const loadRemote = () => {
@@ -74,6 +78,7 @@ class Source extends Base {
 
         this.root = root;
         this.bodyClasses = bodyClasses;
+        this.success();
       };
 
       const href = this.url.href;
