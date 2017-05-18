@@ -118,17 +118,6 @@ describe("Loader and Sources", function () {
       });
     });
 
-    it("Should return an error when the remote selector is not found", function (done) {
-      var locationWithBadSelector = [remoteLocation[0], "#this-id-does-not-exist"];
-      loader.requestSource(locationWithBadSelector)
-        .then((source) => {
-          done(Error("This should never happen because target element doesn't exist"));
-        })
-        .catch((err) => {
-          expectAsync(done, () => expect(err).to.be.an("error"));
-        });
-    });
-
   });
 
 });
