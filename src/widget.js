@@ -46,12 +46,12 @@ class Widget extends Base {
   setToc (toc) {
     const getHtml = (toc) => {
       const lines = toc.map((entry) => {
-        const href = entry.location;
+        const href = entry.href;
         const docId = getDocIdFromPathname(href);
 
         const metadatas = [];
         for (let metadata in entry) {
-          if (metadata === "location" || !entry[metadata]) continue;
+          if (metadata === "href" || !entry[metadata]) continue;
           const line = `<p class="checklist-entry-${metadata}">${entry[metadata]}</p>`;
           metadatas.push(line);
         }

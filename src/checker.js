@@ -21,7 +21,7 @@ function getRules (rules) {
 }
 
 class Checker extends Base {
-  constructor ({ rules = [], context = [], location, caller }) {
+  constructor ({ rules = [], context = [], href, caller }) {
     super("Checker", caller);
 
     this.rules = getRules(rules);
@@ -29,7 +29,7 @@ class Checker extends Base {
     this.rejections = [];
 
     const loader = window.checklist.loader;
-    loader.requestSource(location)
+    loader.requestSource(href)
     .then((source) => {
       this.source = source;
       this.docId = utils.getDocIdFromPathname(source.url.pathname);

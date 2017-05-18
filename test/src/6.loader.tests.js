@@ -34,14 +34,14 @@ describe("Loader and Sources", function () {
   });
 
   describe("Remote Sources", function () {
-    const remoteLocation = window.remoteLocation;
+    const remoteHref = window.remoteHref;
     let loader;
     let remoteSource;
 
     before(function (done) {
       checklist.reset();
       loader = window.checklist.loader;
-      loader.requestSource(remoteLocation)
+      loader.requestSource(remoteHref)
       .then((source) => {
         remoteSource = source;
         done();
@@ -85,7 +85,7 @@ describe("Loader and Sources", function () {
       checklist.run({
         name: "Remote source is OK",
         id: id,
-        href: remoteLocation,
+        href: remoteHref,
         action: function ($) {
           var $el = $("h1");
           if ($el.length === 1 && $el.eq(0).text() === "Remote Test Page") {
@@ -97,7 +97,7 @@ describe("Loader and Sources", function () {
     });
 
     it("Should return an error when the remote source doesn't exist", function (done) {
-      loader.requestSource("bad-remote-location")
+      loader.requestSource("bad-remote-href")
         .then((source) => {
           done(Error("This should never happen because remoteSource doesn't exist"));
         })
@@ -110,7 +110,7 @@ describe("Loader and Sources", function () {
       checklist.once("check.rejected", () => done());
       checklist.run({
         name: "This should be rejected",
-        href: "bad-remote-location",
+        href: "bad-remote-href",
         action: function () {
           done(Error("This action should never be executed"));
           this.resolve();

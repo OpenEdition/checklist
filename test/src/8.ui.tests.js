@@ -19,7 +19,7 @@ describe("UI", function () {
       },
       {
         name: "Second rule (ajax)",
-        href: window.remoteLocation,
+        href: window.remoteHref,
         action: function ($) {
           var flag = $("h1").length === 1;
           this.resolve(flag);

@@ -129,9 +129,9 @@ describe("Events", function () {
 
   describe("Batch", function () {
 
-    const remoteLocation = window.remoteLocation;
-    const remoteLocation2 = window.remoteLocation2;
-    const locations = [remoteLocation, remoteLocation2];
+    const remoteHref = window.remoteHref;
+    const remoteHref2 = window.remoteHref2;
+    const hrefs = [remoteHref, remoteHref2];
 
     before(function (done) {
       checklist.reset()
@@ -142,33 +142,33 @@ describe("Events", function () {
 
     it("Should emit the 'batch.done' event", function (done) {
       checklist.once("batch.done", getHandler("batch.done", done));
-      checklist.runBatch(locations, rules.done);
+      checklist.runBatch(hrefs, rules.done);
     });
 
     it("Should emit the 'checker.done' event", function (done) {
       checklist.once("checker.done", getHandler("checker.done", done));
-      checklist.runBatch(locations, rules.done);
+      checklist.runBatch(hrefs, rules.done);
     });
 
     it("Should emit the 'check.done' event with an argument", function (done) {
       checklist.once("check.done", getHandler("check.done+success", done));
-      checklist.runBatch(locations, rules.done);
+      checklist.runBatch(hrefs, rules.done);
     });
 
     it("Should emit the 'check.success' event with an argument", function (done) {
       checklist.once("check.success", getHandler("check.done+success", done));
-      checklist.runBatch(locations, rules.done);
+      checklist.runBatch(hrefs, rules.done);
     });
 
     // FIXME: this test leads to an error message in the browser console
     it("Should emit the 'check.rejected' event with two arguments", function (done) {
       checklist.once("check.rejected", getHandler("check.rejected", done));
-      checklist.runBatch(locations, rules.rejected);
+      checklist.runBatch(hrefs, rules.rejected);
     });
 
     it("Should emit the 'statement.new' event with an argument", function (done) {
       checklist.once("statement.new", getHandler("statement.new", done));
-      checklist.runBatch(locations, rules.statement);
+      checklist.runBatch(hrefs, rules.statement);
     });
 
   });

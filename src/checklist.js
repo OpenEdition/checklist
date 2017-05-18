@@ -100,13 +100,13 @@ class Checklist extends Base {
   }
 
   // TODO: put rules in the config (like context)
-  runBatch (locations, rules) {
+  runBatch (hrefs, rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
       return this.postponePromise("ready", "runBatch", arguments);
     }
     const context = this.config.get("context");
-    const batch = new Batch({ rules, context, locations, caller: this });
+    const batch = new Batch({ rules, context, hrefs, caller: this });
     forwardCheckerEvents(this, batch);
 
     const ui = this.ui;
@@ -125,15 +125,15 @@ class Checklist extends Base {
 
   runBatchFromToc (rules) {
     const toc = this.config.get("toc");
-    const ui = this.ui;    
+    const ui = this.ui;
     if (ui.hasState("initialized")) {
       ui.setToc(toc);
     }
 
-    const locations = toc.map((entry) => {
-      return entry.location;
+    const hrefs = toc.map((entry) => {
+      return entry.href;
     });
-    return this.runBatch(locations, rules);
+    return this.runBatch(hrefs, rules);
   }
 
   reset (userConfig) {

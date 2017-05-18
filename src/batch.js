@@ -1,7 +1,7 @@
 const Base = require("./base.js");
 const Checker = require("./checker.js");
 
-// TODO: remove possible duplicates in sources/locations
+// TODO: remove possible duplicates in sources/hrefs
 function getCheckers (batch) {
 
   function getCheckerPromise (checkerOptions) {
@@ -12,27 +12,27 @@ function getCheckers (batch) {
     return promise;
   }
 
-  function getCheckerAllPromises (locations, checkerOptions) {
-    const promises = locations.map((location) => {
-      checkerOptions.location = location;
+  function getCheckerAllPromises (hrefs, checkerOptions) {
+    const promises = hrefs.map((href) => {
+      checkerOptions.href = href;
       return getCheckerPromise(checkerOptions);
     });
     return promises;
   }
 
-  const {rules, context, locations} = batch;
+  const {rules, context, hrefs} = batch;
   const checkerOptions = {rules, context, caller: batch};
-  const promises = getCheckerAllPromises(locations, checkerOptions);
+  const promises = getCheckerAllPromises(hrefs, checkerOptions);
 
   // TODO: err
   return Promise.all(promises);
 }
 
 class Batch extends Base {
-  constructor ({ rules = [], context = [], locations = [], caller }) {
+  constructor ({ rules = [], context = [], hrefs = [], caller }) {
     super("Batch", caller);
 
-    Object.assign(this, { rules, context, locations });
+    Object.assign(this, { rules, context, hrefs });
 
     getCheckers(this)
     .then((checkers) => {

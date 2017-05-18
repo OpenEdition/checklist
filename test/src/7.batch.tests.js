@@ -1,11 +1,11 @@
 describe("Batch", function () {
   let batch;
-  const remoteLocation = window.remoteLocation;
-  const remoteLocation2 = window.remoteLocation2;
+  const remoteHref = window.remoteHref;
+  const remoteHref2 = window.remoteHref2;
 
   before(function (done) {
-    const locations = [remoteLocation, remoteLocation2];
-    checklist.runBatch(locations).then((res) => {
+    const hrefs = [remoteHref, remoteHref2];
+    checklist.runBatch(hrefs).then((res) => {
       batch = res;
       done();
     });
@@ -16,7 +16,7 @@ describe("Batch", function () {
   });
 
   it("Should get and store checkers", function (done) {
-    checklist.runBatch([remoteLocation, remoteLocation2])
+    checklist.runBatch([remoteHref, remoteHref2])
     .then((batch) => {
       expectAsync(done, () => {
         expect(batch).to.have.property("checkers");
@@ -26,5 +26,5 @@ describe("Batch", function () {
       });
     });
   });
-  
+
 });
