@@ -1,7 +1,15 @@
+body {
+  font-family: sans-serif;
+}
+
 body.checklist-visible {
-    margin-right: 0 !important;
+  margin-right: 0 !important;
 }
 
 #container {
     display: none;
+}
+
+#links {
+  padding: 20px;
 }

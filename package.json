@@ -5,10 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "demo": "browser-sync start --server \".\" --startPath \"demo\" --files \"dist\" \"demo\" --no-notify",
     "dev": "npm-run-all --parallel watch test",
-    "dev-demo": "npm-run-all --parallel watch demo",
-    "test": "browser-sync start --server \".\" --startPath \"test\" --files \"dist\" \"test/dist\" --no-notify",
+    "test": "browser-sync start --server \".\" --startPath \"test\" --files \"dist\" \"test/dist\" \"demo\" --no-notify",
     "watch": "webpack --progress --watch"
   },
   "keywords": [
