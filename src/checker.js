@@ -11,7 +11,7 @@ function getContext (source, contextCreator) {
 }
 
 function getRules (rules) {
-  if (rules instanceof Array) {
+  if (Array.isArray(rules)) {
     return rules;
   }
   if (rules.rules) {

@@ -51,7 +51,7 @@ class UI extends Base {
       this.emit("injected.statement", statement);
     };
 
-    if (statement instanceof Array) {
+    if (Array.isArray(statement)) {
       statement.forEach(injectStatement);
       this.emit("injected.statements", statement);
     } else if (statement != null) {
