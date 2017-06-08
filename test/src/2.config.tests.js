@@ -14,6 +14,16 @@ describe("Config", function () {
       });
     });
 
+    it("Should inject custom styles", function () {
+      checklist.reset({customStyles: `
+        body {
+          margin-bottom: 42px;
+        }
+      `});
+      const marginBottom = $("body").css("margin-bottom");
+      expect(marginBottom).to.equal("42px");
+    });
+
   });
 
   describe("Config manipulation", function () {
