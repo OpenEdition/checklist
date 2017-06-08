@@ -6,7 +6,6 @@ const Loader = require("./loader.js");
 const UI = require("./ui.js");
 
 function initComponents (checklist) {
-
   function getComponentPromise (componentClass) {
     return new Promise((resolve, reject) => {
       const component = new componentClass({caller: checklist});
@@ -26,6 +25,19 @@ function initComponents (checklist) {
 }
 
 function initChecklist (checklist, userConfig) {
+  const injectStyles = (function () {
+    const $styleTag = $("<style>").appendTo("head");
+    return function (styles) {
+      if (styles == null) return;
+      $styleTag.html(styles);
+    };
+  })();
+
+  // Inject custom styles
+  const customStyles = userConfig && userConfig.customStyles;
+  injectStyles(customStyles);
+
+  // Init components
   return initComponents(checklist)
   .then(() => {
     userConfig = userConfig || checklist.userConfig;
