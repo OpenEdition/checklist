@@ -69,7 +69,7 @@ class UI extends Base {
       return $(`[data-checklist-doc-id='${docId}']`);
     };
 
-    const injectStatement = (statement) => {
+    const injectSingleStatement = (statement) => {
       const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
       const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
       const $target = get$Target(statement);
@@ -78,10 +78,10 @@ class UI extends Base {
     };
 
     if (Array.isArray(statement)) {
-      statement.forEach(injectStatement);
+      statement.forEach(injectSingleStatement);
       this.emit("injected.statements", statement);
     } else if (statement != null) {
-      injectStatement(statement);
+      injectSingleStatement(statement);
     }
 
     return this;
