@@ -1,5 +1,5 @@
 body.checklist-visible {
-  margin-right: 240px;
+  margin-right: 240px !important;
   position: relative;
 }
 
@@ -14,6 +14,7 @@ body.checklist-visible {
   min-width: 200px;
   width: 0%;
   transition: width .8s ease;
+  z-index: 10000;
 }
 
 .checklist-visible .checklist-ui {
