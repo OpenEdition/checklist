@@ -19,7 +19,7 @@ function initHtml (docId, element) {
       <ul class="checklist-statements"></ul>
     </div>
   `;
-  $(element).html(html);
+  $(element).append(html);
 }
 
 class Report extends Base {

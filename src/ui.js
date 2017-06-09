@@ -52,32 +52,28 @@ class UI extends Base {
   }
 
   copyToc (toc) {
-    const getHtml = (toc) => {
-      const lines = toc.map((entry) => {
-        const href = entry.href;
-        const docId = getDocIdFromPathname(href);
-
-        const metadatas = [];
-        for (let metadata in entry) {
-          if (metadata === "href" || !entry[metadata]) continue;
-          const line = `<p class="checklist-entry-${metadata}">${entry[metadata]}</p>`;
-          metadatas.push(line);
-        }
-
-        const html = `
-          <li class="checklist-toc-entry">
-            ${metadatas.join("\n")}
-            <ul class="checklist-statements" data-checklist-doc-id=${docId}></ul>
-          </li>
-        `;
-        return html;
-      });
-      return lines.join("\n");
-    };
-
-    const html = getHtml(toc);
     const $toc = $("#checklist-toc");
-    $toc.append(html);
+    toc.forEach((entry) => {
+      const href = entry.href;
+      const docId = getDocIdFromPathname(href);
+
+      const metadatas = [];
+      for (let metadata in entry) {
+        if (metadata === "href" || !entry[metadata]) continue;
+        const line = `<p class="checklist-entry-${metadata}">${entry[metadata]}</p>`;
+        metadatas.push(line);
+      }
+
+      const html = `
+        <li class="checklist-toc-entry">
+          ${metadatas.join("\n")}
+        </li>
+      `;
+      const $element = $(html);
+      $toc.append($element);
+      const element = $element.get(0);
+      this.createReport({element, docId});
+    });
   }
 
   connectChecker (checker) {
