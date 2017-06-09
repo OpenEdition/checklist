@@ -2,7 +2,7 @@ $(function () {
   // checklist.onAny(console.log);
   // TODO: rename/alias "reset" => "init"
   // TODO: first checklist instanciation is useless. We need an init() method.
-  checklist.reset({parent: "#container"})
+  checklist.reset({parent: "body"})
   .then(function () {
     // TODO: show the panel automatically
     checklist.ui.show();
