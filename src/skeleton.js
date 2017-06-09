@@ -3,7 +3,7 @@ const { getDocIdFromPathname } = require("./utils.js");
 const currentDocId = getDocIdFromPathname(window.location.pathname);
 
 const html = `
-  <div id="checklist-ui" class="checklist-ui">
+  <div id="checklist-pane" class="checklist-pane">
     <ul class="checklist-statements" data-checklist-doc-id=${currentDocId}>
     </ul>
     <div class="checklist-buttons">
