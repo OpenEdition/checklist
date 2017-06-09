@@ -21,10 +21,6 @@ body.checklist-visible {
   display: block;
 }
 
-.checklist-ui.expanded {
-  width:100% !important;
-}
-
 .checklist-buttons {
   margin-bottom: 20px;
   position: absolute;
