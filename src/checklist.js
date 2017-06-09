@@ -90,21 +90,19 @@ class Checklist extends Base {
     const context = this.config.get("context");
     const ui = this.ui;
     const checker = new Checker({ rules, context, caller: this });
+
     if (ui.hasState("initialized")) {
-      // const getPercentage = (function () {
-      //   const total = rules.length;
-      //   let count = 0;
-      //   return () => (++count / total) * 100;
-      // })();
+      const total = rules.length;
+      let count = 0;
 
       checker.on("check.success", (check) => {
-        const statements = check.statements;
-        // TODO: move this somewhere else
-        // const percentage = getPercentage();
-        // ui.setProgress(percentage);
-        ui.injectStatement(statements);
+        count++;
+        const percentage = (count / total) * 100;
+        ui.setProgress(percentage);
+        ui.injectStatement(check.statements);
       });
     }
+
     return new Promise((resolve, reject) => {
       setCheckerHandlers(checker, resolve, reject);
       checker.run();

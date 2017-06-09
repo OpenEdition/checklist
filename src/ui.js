@@ -1,4 +1,5 @@
 const Base = require("./base.js");
+const Nanobar = require("nanobar");
 const skeleton = require("./skeleton.js");
 const { getDocIdFromPathname } = require("./utils.js");
 
@@ -14,9 +15,22 @@ class UI extends Base {
 
   // FIXME: not consistent with other checklist components
   init (parent) {
+    const injectSkeleton = (parent) => {
+      this.$skeleton = skeleton.inject(parent);
+    };
+
+    const createProgressBar = () => {
+      // TODO: create and use this.pane
+      const pane = $("#checklist-ui").get(0);
+      this.progressBar = new Nanobar({
+        target: pane
+      });
+    };
+
     // FIXME: is it relevant to set this.parent here?
     this.parent = parent;
-    this.$skeleton = skeleton.inject(parent);
+    injectSkeleton(parent);
+    createProgressBar();
     this.triggerState("initialized");
   }
 
@@ -84,6 +98,10 @@ class UI extends Base {
     $(document.body).addClass("checklist-visible");
     this.triggerState("visible");
     return this;
+  }
+
+  setProgress (percentage) {
+    this.progressBar.go(percentage);
   }
 }
 
