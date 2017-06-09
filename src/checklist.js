@@ -139,7 +139,7 @@ class Checklist extends Base {
     const toc = this.config.get("toc");
     const ui = this.ui;
     if (ui.hasState("initialized")) {
-      ui.setToc(toc);
+      ui.copyToc(toc);
     }
 
     const hrefs = toc.map((entry) => {

@@ -1,5 +1,6 @@
 const Base = require("./base.js");
-const Widget = require("./widget.js");
+const skeleton = require("./skeleton.js");
+const { getDocIdFromPathname } = require("./utils.js");
 
 // Load UI styles
 require("./css/ui.css");
@@ -15,26 +16,37 @@ class UI extends Base {
   init (parent) {
     // FIXME: is it relevant to set this.parent here?
     this.parent = parent;
-    this.createWidget({
-      templateName: "pane",
-      parentSelector: parent
-    });
+    this.$skeleton = skeleton.inject(parent);
     this.triggerState("initialized");
   }
 
-  createWidget (options) {
-    const widget = new Widget(options);
-    this.widgets[options.templateName] = widget;
-    widget.attach();
-    return widget;
-  }
+  copyToc (toc) {
+    const getHtml = (toc) => {
+      const lines = toc.map((entry) => {
+        const href = entry.href;
+        const docId = getDocIdFromPathname(href);
 
-  setToc (toc) {
-    const report = this.createWidget({
-      templateName: "report",
-      parentSelector: this.parent
-    });
-    report.setToc(toc);
+        const metadatas = [];
+        for (let metadata in entry) {
+          if (metadata === "href" || !entry[metadata]) continue;
+          const line = `<p class="checklist-entry-${metadata}">${entry[metadata]}</p>`;
+          metadatas.push(line);
+        }
+
+        const html = `
+          <li class="checklist-toc-entry">
+            ${metadatas.join("\n")}
+            <ul class="checklist-statements" data-checklist-doc-id=${docId}></ul>
+          </li>
+        `;
+        return html;
+      });
+      return lines.join("\n");
+    };
+
+    const html = getHtml(toc);
+    const $toc = $("#checklist-toc");
+    $toc.append(html);
   }
 
   injectStatement (statement) {
