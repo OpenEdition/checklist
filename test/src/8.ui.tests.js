@@ -6,7 +6,7 @@ describe("UI", function () {
   });
 
   it("Should init UI and show panel", function () {
-    expect($("#checklist-ui").length).to.equal(1);
+    expect($("#checklist-pane").length).to.equal(1);
   });
 
   it("Should display notifications into the panel", function (done) {

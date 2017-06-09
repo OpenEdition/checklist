@@ -3,7 +3,7 @@ body.checklist-visible {
   position: relative;
 }
 
-.checklist-ui {
+.checklist-pane {
   padding: 20px;
   position: fixed;
   right: 0;
@@ -17,7 +17,7 @@ body.checklist-visible {
   z-index: 10000;
 }
 
-.checklist-visible .checklist-ui {
+.checklist-visible .checklist-pane {
   display: block;
 }
 
