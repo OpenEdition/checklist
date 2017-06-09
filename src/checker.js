@@ -7,7 +7,8 @@ function getContext (source, contextCreator) {
     return contextCreator;
   }
   const selectFunc = source.get$();
-  return contextCreator(selectFunc);
+  const bodyClasses = source.bodyClasses;
+  return contextCreator(selectFunc, bodyClasses);
 }
 
 function getRules (rules) {

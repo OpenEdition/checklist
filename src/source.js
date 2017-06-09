@@ -46,7 +46,6 @@ class Source extends Base {
   }
 
   load () {
-    // TODO: do we really need bodyClasses? (=> remember to check this at the end of dev)
     const getBodyClasses = (body = "body") => $(body).get(0).className.split(/\s+/);
 
     const loadLocal = () => {
