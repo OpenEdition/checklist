@@ -1,6 +1,5 @@
 const Base = require("./base.js");
-const Nanobar = require("nanobar");
-const skeleton = require("./skeleton.js");
+const Report = require("./report.js");
 const { getDocIdFromPathname } = require("./utils.js");
 
 // Load UI styles
@@ -9,28 +8,47 @@ require("./css/ui.css");
 class UI extends Base {
   constructor ({ caller }) {
     super("UI", caller);
+    this.reports = {};
     this.triggerState("ready");
   }
 
   // FIXME: not consistent with other checklist components
   init (parent) {
-    const injectSkeleton = (parent) => {
-      this.$skeleton = skeleton.inject(parent);
+    const createPane = (parent) => {
+      const html = `<div id="checklist-pane" class="checklist-pane"></div>`;
+      const element = $(html).appendTo(parent).get(0);
+      const docId = getDocIdFromPathname(window.location.pathname);
+      this.createReport({element, docId});
+      return element;
     };
 
-    const createProgressBar = () => {
-      // TODO: create and use this.pane
-      const pane = $("#checklist-ui").get(0);
-      this.progressBar = new Nanobar({
-        target: pane
-      });
+    const createTocView = (parent) => {
+      const html = `
+        <div id="checklist-toc-view" class="checklist-toc-view">
+          <ul id="checklist-toc" class="checklist-toc">
+          <ul>
+        </div>
+      `;
+      const element = $(html).appendTo(parent).get(0);
+      return element;
     };
 
     // FIXME: is it relevant to set this.parent here?
     this.parent = parent;
-    injectSkeleton(parent);
-    createProgressBar();
+    this.pane = createPane(parent);
+    this.tocView = createTocView(parent);
     this.triggerState("initialized");
+  }
+
+  createReport (options) {
+    const optionsCopy = Object.assign({}, options, {caller: this});
+    const report = new Report(optionsCopy);
+    this.reports[options.docId] = report;
+    return report;
+  }
+
+  getReport (docId) {
+    return this.reports[docId];
   }
 
   copyToc (toc) {
@@ -62,27 +80,15 @@ class UI extends Base {
     $toc.append(html);
   }
 
-  injectStatement (statement) {
-    const get$Target = (statement) => {
-      const docId  = statement.docId;
-      return $(`[data-checklist-doc-id='${docId}']`);
-    };
-
-    const injectSingleStatement = (statement) => {
-      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
-      const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
-      const $target = get$Target(statement);
-      $target.append(li);
-      this.emit("injected.statement", statement);
-    };
-
-    if (Array.isArray(statement)) {
-      statement.forEach(injectSingleStatement);
-      this.emit("injected.statements", statement);
-    } else if (statement != null) {
-      injectSingleStatement(statement);
+  connectChecker (checker) {
+    const docId = checker.docId;
+    const report = this.getReport(docId);
+    if (!report) {
+      // FIXME: what to do here? which use case?
+      console.log(this.reports);
+      console.error(`Report not found for ${docId}`);
     }
-
+    report.connect(checker);
     return this;
   }
 
@@ -97,10 +103,6 @@ class UI extends Base {
     $(document.body).addClass("checklist-visible");
     this.triggerState("visible");
     return this;
-  }
-
-  setProgress (percentage) {
-    this.progressBar.go(percentage);
   }
 }
 

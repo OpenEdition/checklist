@@ -59,6 +59,12 @@ function forwardCheckerEvents (checklist, checker) {
   checklist.forwardEvents(checker, events);
 }
 
+function connectCheckerToUi (checker, ui) {
+  checker.whenState("ready").then(() => {
+    ui.connectChecker(checker);
+  });
+}
+
 class Checklist extends Base {
   constructor (userConfig) {
     super("Checklist");
@@ -92,18 +98,7 @@ class Checklist extends Base {
     const checker = new Checker({ rules, context, caller: this });
 
     if (ui.hasState("initialized")) {
-      const total = rules.length;
-      let count = 0;
-
-      checker.on("check.done", (check) => {
-        count++;
-        const percentage = (count / total) * 100;
-        ui.setProgress(percentage);
-      });
-
-      checker.on("check.success", (check) => {
-        ui.injectStatement(check.statements);
-      });
+      connectCheckerToUi(checker, ui);
     }
 
     return new Promise((resolve, reject) => {
@@ -124,9 +119,10 @@ class Checklist extends Base {
 
     const ui = this.ui;
     if (ui.hasState("initialized")) {
-      batch.on("check.success", (check) => {
-        const statements = check.statements;
-        ui.injectStatement(statements);
+      batch.on("ready", () => {
+        batch.checkers.forEach((checker) => {
+          connectCheckerToUi(checker, ui);
+        });
       });
     }
 
