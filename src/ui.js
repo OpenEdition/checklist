@@ -9,7 +9,6 @@ require("./css/ui.css");
 class UI extends Base {
   constructor ({ caller }) {
     super("UI", caller);
-    this.widgets = {};
     this.triggerState("ready");
   }
 
