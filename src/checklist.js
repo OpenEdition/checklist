@@ -95,10 +95,13 @@ class Checklist extends Base {
       const total = rules.length;
       let count = 0;
 
-      checker.on("check.success", (check) => {
+      checker.on("check.done", (check) => {
         count++;
         const percentage = (count / total) * 100;
         ui.setProgress(percentage);
+      });
+
+      checker.on("check.success", (check) => {
         ui.injectStatement(check.statements);
       });
     }
