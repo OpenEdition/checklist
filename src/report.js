@@ -104,7 +104,8 @@ class Report extends Base {
     };
 
     addToProgressView(check);
-    injectStatements(check.statements, this.element);
+    const target = this.find(".checklist-statements");
+    injectStatements(check.statements, target);
   }
 
   updateIndicator (key, value) {
