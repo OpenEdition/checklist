@@ -26,6 +26,7 @@ class Checker extends Base {
     super("Checker", caller);
 
     this.rules = getRules(rules);
+    this.checks = [];
     this.statements = [];
     this.rejections = [];
 
@@ -56,6 +57,7 @@ class Checker extends Base {
           caller: this
         });
         initEvents(check, resolve, reject);
+        this.checks.push(check);
         check.run();
       });
     };
