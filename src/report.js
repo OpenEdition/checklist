@@ -52,12 +52,17 @@ class Report extends Base {
   }
 
   connect (checker) {
-    // TODO: reprendre ici. Ici il faut handle les events du checker et mettre à jour le report en fonction
     this.checker = checker;
     const total = checker.rules.length;
     this.setTotalProgress(total);
 
-    // TODO: make sure checker is connected before it runs! (especially in runBatch, not sure since it relies on batch.on("ready"))
+    // Connect checks that are already done
+    checker.checks.forEach((check) => {
+      if (!check.hasState("done")) return;
+      this.addCheck(check);
+    });
+
+    // Connect future checks
     checker.on("check.done", (check) => {
       this.addCheck(check);
     });
