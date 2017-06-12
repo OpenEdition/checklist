@@ -1,7 +1,7 @@
 const Base = require("./base.js");
 const Nanobar = require("nanobar");
 
-function createProgressBar (element) {
+function createProgressbar (element) {
   return new Nanobar({
     target: element
   });
@@ -57,9 +57,9 @@ class Report extends Base {
     this.element = element;
     initHtml(this.docId, this.element);
 
-    const progressBarDiv = this.find(".checklist-progressbar").get(0);
-    this.progressBar = createProgressBar(progressBarDiv);
-    this.toolBar = createToolbar({docId, element, buttonsCreator});
+    const progressbarDiv = this.find(".checklist-progressbar").get(0);
+    this.progressbar = createProgressbar(progressbarDiv);
+    this.toolbar = createToolbar({docId, element, buttonsCreator});
 
     this.clearProgress();
     this.triggerState("ready");
@@ -152,7 +152,7 @@ class Report extends Base {
     const progress = this.progress;
     const {count, total} = progress;
     const percentage = (count / total) * 100;
-    this.progressBar.go(percentage);
+    this.progressbar.go(percentage);
     for (let key in progress) {
       this.updateIndicator(key, progress[key]);
     }
