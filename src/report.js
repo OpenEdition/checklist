@@ -83,7 +83,7 @@ class Report extends Base {
   connect (checker) {
     this.checker = checker;
     const total = checker.rules.length;
-    this.setTotalIndicator(total);
+    this.setIndicator("total", total);
 
     // Connect checks that are already done
     checker.checks.forEach((check) => {
@@ -97,8 +97,13 @@ class Report extends Base {
     });
   }
 
-  setTotalIndicator (total) {
-    this.indicators.total = total;
+  setIndicator (key, value) {
+    this.indicators[key] = value;
+    return this;
+  }
+
+  incrementIndicator (key) {
+    this.indicators[key]++;
     return this;
   }
 
@@ -114,8 +119,8 @@ class Report extends Base {
       };
 
       const state = getState(check);
-      this.indicators[state]++;
-      this.indicators.count++;
+      this.incrementIndicator(state);
+      this.incrementIndicator("count");
       this.updateIndicatorsView();
     };
 
