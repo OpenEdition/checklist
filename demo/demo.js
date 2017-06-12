@@ -1,8 +1,22 @@
 $(function () {
   // checklist.onAny(console.log);
   // TODO: rename/alias "reset" => "init"
-  // TODO: first checklist instanciation is useless. We need an init() method.
-  checklist.reset({parent: "body"})
+  // TODO: first checklist instanciation is useless. We need an init() method. + config is splitted in different functions (reset() and config.set());
+  checklist.reset({
+    parent: "body",
+    buttonsCreator: function (docId) {
+      return [
+        {
+          title: "Éditer",
+          href: `${docId}/editer`
+        },
+        {
+          title: "Test",
+          onclick: "console.log('Hello world!')"
+        }
+      ];
+    }
+  })
   .then(function () {
     // TODO: show the panel automatically
     checklist.ui.show();
