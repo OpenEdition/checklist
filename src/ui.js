@@ -13,12 +13,15 @@ class UI extends Base {
   }
 
   // FIXME: not consistent with other checklist components
-  init (parent) {
+  init ({parent, buttonsCreator}) {
     const createPane = (parent) => {
       const html = `<div id="checklist-pane" class="checklist-pane"></div>`;
       const element = $(html).appendTo(parent).get(0);
       const docId = getDocIdFromPathname(window.location.pathname);
+      // TODO: harmo arguments createReport et createToolbar
+      // FIXME: ou alors il faut que ce soit dans le report ? => surement
       this.createReport({element, docId});
+      this.createToolbar(docId, element);
       return element;
     };
 
@@ -33,8 +36,8 @@ class UI extends Base {
       return element;
     };
 
-    // FIXME: is it relevant to set this.parent here?
-    this.parent = parent;
+    // FIXME: is it relevant to set this.parent here? And buttonsCreator?
+    Object.assign(this, {parent, buttonsCreator});
     this.pane = createPane(parent);
     this.tocView = createTocView(parent);
     this.triggerState("initialized");
@@ -49,6 +52,33 @@ class UI extends Base {
 
   getReport (docId) {
     return this.reports[docId];
+  }
+
+  createToolbar (docId, target) {
+    const buttonsCreator = this.buttonsCreator;
+    if (typeof buttonsCreator !== "function") return;
+
+    const getAttributes = (buttonInfos) => {
+      const attributes = [];
+      for (let attrName in buttonInfos) {
+        attributes.push(`${attrName}="${buttonInfos[attrName]}"`);
+      }
+      return attributes.join(" ");
+    };
+
+    const getButtonsHtml = (buttonsInfos) => {
+      const buttons = buttonsInfos.map((buttonInfos) => {
+        const attributes = getAttributes(buttonInfos);
+        return `<a class="checklist-toolbar-button" ${attributes}>${buttonInfos.title}</a>`;
+      });
+      const html = buttons.join("\n");
+      return html;
+    };
+
+    const buttonsInfos = buttonsCreator(docId);
+    const html = getButtonsHtml(buttonsInfos);
+    const $toolbar = $(html).appendTo(target);
+    return $toolbar;
   }
 
   copyToc (toc) {
@@ -70,6 +100,7 @@ class UI extends Base {
         </li>
       `;
       const $element = $(html);
+      this.createToolbar(docId, $element);
       $toc.append($element);
       const element = $element.get(0);
       this.createReport({element, docId});

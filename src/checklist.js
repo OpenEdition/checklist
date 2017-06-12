@@ -46,7 +46,8 @@ function initChecklist (checklist, userConfig) {
     const parent = checklist.config.get("parent");
     if (parent) {
       const ui = checklist.ui;
-      ui.init(parent);
+      const buttonsCreator = checklist.config.get("buttonsCreator");
+      ui.init({parent, buttonsCreator});
       checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
     }
 
