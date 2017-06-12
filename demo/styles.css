@@ -5,3 +5,9 @@ body {
 #links {
   padding: 20px;
 }
+
+#toc {
+  border: 1px #000 solid;
+  padding: 2em;
+  margin: 2em;
+}
