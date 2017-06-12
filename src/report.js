@@ -38,11 +38,11 @@ function initHtml (docId, element) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-progressbar"></div>
-      <div class="checklist-progress">
-        <span class="checklist-progress-count"></span>
-        <span class="checklist-progress-total"></span>
-        <span class="checklist-progress-success"></span>
-        <span class="checklist-progress-rejected"></span>
+      <div class="checklist-indicators">
+        <span class="checklist-indicator-count"></span>
+        <span class="checklist-indicator-total"></span>
+        <span class="checklist-indicator-success"></span>
+        <span class="checklist-indicator-rejected"></span>
       </div>
       <ul class="checklist-statements"></ul>
     </div>
@@ -61,7 +61,7 @@ class Report extends Base {
     this.progressbar = createProgressbar(progressbarDiv);
     this.toolbar = createToolbar({docId, element, buttonsCreator});
 
-    this.clearProgress();
+    this.clearIndicators();
     this.triggerState("ready");
   }
 
@@ -69,21 +69,21 @@ class Report extends Base {
     return $(this.element).find(selector);
   }
 
-  clearProgress () {
-    this.progress = {
+  clearIndicators () {
+    this.indicators = {
       count: 0,
       success: 0,
       rejected: 0,
       total: 0
     };
-    this.updateProgressView();
+    this.updateIndicatorsView();
     return this;
   }
 
   connect (checker) {
     this.checker = checker;
     const total = checker.rules.length;
-    this.setTotalProgress(total);
+    this.setTotalIndicator(total);
 
     // Connect checks that are already done
     checker.checks.forEach((check) => {
@@ -97,13 +97,13 @@ class Report extends Base {
     });
   }
 
-  setTotalProgress (total) {
-    this.progress.total = total;
+  setTotalIndicator (total) {
+    this.indicators.total = total;
     return this;
   }
 
   addCheck (check) {
-    const addToProgressView = (check) => {
+    const addToIndicatorsView = (check) => {
       const getState = (check) => {
         const done = check.hasState("done");
         const success = check.hasState("success");
@@ -114,9 +114,9 @@ class Report extends Base {
       };
 
       const state = getState(check);
-      this.progress[state]++;
-      this.progress.count++;
-      this.updateProgressView();
+      this.indicators[state]++;
+      this.indicators.count++;
+      this.updateIndicatorsView();
     };
 
     const injectStatements = (statements, target) => {
@@ -137,24 +137,24 @@ class Report extends Base {
       statements.forEach(injectStatement);
     };
 
-    addToProgressView(check);
+    addToIndicatorsView(check);
     const target = this.find(".checklist-statements");
     injectStatements(check.statements, target);
   }
 
   updateIndicator (key, value) {
-    const span = this.find(`.checklist-progress-${key}`);
+    const span = this.find(`.checklist-indicator-${key}`);
     span.text(value);
     return this;
   }
 
-  updateProgressView () {
-    const progress = this.progress;
-    const {count, total} = progress;
+  updateIndicatorsView () {
+    const indicators = this.indicators;
+    const {count, total} = indicators;
     const percentage = (count / total) * 100;
     this.progressbar.go(percentage);
-    for (let key in progress) {
-      this.updateIndicator(key, progress[key]);
+    for (let key in indicators) {
+      this.updateIndicator(key, indicators[key]);
     }
     return this;
   }
