@@ -7,6 +7,33 @@ function createProgressBar (element) {
   });
 }
 
+function createToolbar ({docId, element, buttonsCreator}) {
+  if (typeof buttonsCreator !== "function") return;
+
+  const getAttributes = (buttonInfos) => {
+    const attributes = [];
+    for (let attrName in buttonInfos) {
+      attributes.push(`${attrName}="${buttonInfos[attrName]}"`);
+    }
+    return attributes.join(" ");
+  };
+
+  const getButtonsHtml = (buttonsInfos) => {
+    const buttons = buttonsInfos.map((buttonInfos) => {
+      const attributes = getAttributes(buttonInfos);
+      return `<a class="checklist-toolbar-button" ${attributes}>${buttonInfos.title}</a>`;
+    });
+    const html = buttons.join("\n");
+    return html;
+  };
+
+  const buttonsInfos = buttonsCreator(docId);
+  const html = getButtonsHtml(buttonsInfos);
+  const $toolbar = $(html).appendTo(element);
+  const toolbar = $toolbar.get(0);
+  return toolbar;
+}
+
 function initHtml (docId, element) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
@@ -23,7 +50,7 @@ function initHtml (docId, element) {
 }
 
 class Report extends Base {
-  constructor ({ caller, docId, element }) {
+  constructor ({ caller, docId, element, buttonsCreator }) {
     super("Report", caller);
     this.docId = docId; // TODO: self ?
     this.element = element;
@@ -31,6 +58,7 @@ class Report extends Base {
 
     const progressDiv = this.find(".checklist-progress");
     this.progressBar = createProgressBar(progressDiv);
+    this.toolBar = createToolbar({docId, element, buttonsCreator});
 
     this.clearProgress();
     this.triggerState("ready");
