@@ -37,6 +37,7 @@ function createToolbar ({docId, element, buttonsCreator}) {
 function initHtml (docId, element) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
+      <div class="checklist-progressbar"></div>
       <div class="checklist-progress">
         <span class="checklist-progress-count"></span>
         <span class="checklist-progress-total"></span>
@@ -56,8 +57,8 @@ class Report extends Base {
     this.element = element;
     initHtml(this.docId, this.element);
 
-    const progressDiv = this.find(".checklist-progress");
-    this.progressBar = createProgressBar(progressDiv);
+    const progressBarDiv = this.find(".checklist-progressbar").get(0);
+    this.progressBar = createProgressBar(progressBarDiv);
     this.toolBar = createToolbar({docId, element, buttonsCreator});
 
     this.clearProgress();
