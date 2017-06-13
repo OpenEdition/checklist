@@ -55,6 +55,16 @@ function initHtml (docId, element) {
   $(element).append(html);
 }
 
+// TODO: Add to documentation:
+// types = danger, warning, info
+// ratings = bad, good, perfect
+function computeRating (indicators) {
+  const {statementwarning, statementdanger} = indicators;
+  if (statementdanger > 0) return "bad";
+  if (statementwarning > 0) return "good";
+  return "perfect";
+}
+
 class Report extends Base {
   constructor ({ caller, docId, element, buttonsCreator }) {
     super("Report", caller);
@@ -103,6 +113,11 @@ class Report extends Base {
     // Connect future checks
     checker.on("check.done", (check) => {
       this.addCheck(check);
+    });
+
+    // Display rating when checker done
+    checker.on("done", () => {
+      this.updateRating();
     });
   }
 
@@ -162,27 +177,22 @@ class Report extends Base {
     injectStatements(check.statements, target);
   }
 
-  // TODO: Add to documentation:
-  // types = danger, warning, info
-  // ratings = bad, good, perfect
-  computeRating () {
-    const {statementwarning, statementdanger} = this.indicators;
-    if (statementdanger > 0) return "bad";
-    if (statementwarning > 0) return "good";
-    return "perfect";
-  }
-
   setIndicatorView (key, value) {
     const $el = this.find(`.checklist-indicator-${key}`);
     $el.text(value);
     return this;
   }
 
-  setRatingView (rating) {
-    const $el = this.find(".checklist-rating");
-    const html = svg[`rating-${rating}`];
-    $el.html(html);
-    return this;
+  updateRating () {
+    const setRatingView = (rating) => {
+      const $el = this.find(".checklist-rating");
+      const html = svg[`rating-${rating}`];
+      $el.html(html);
+      return this;
+    };
+
+    const rating = computeRating(this.indicators);
+    setRatingView(rating);
   }
 
   updateIndicatorsView () {
@@ -200,14 +210,8 @@ class Report extends Base {
       }
     };
 
-    const updateRating = () => {
-      const rating = this.computeRating();
-      this.setRatingView(rating);
-    };
-
     updateProgressbar();
     updateIndicators();
-    updateRating();
     return this;
   }
 
