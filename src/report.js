@@ -37,13 +37,12 @@ function createToolbar ({docId, element, buttonsCreator}) {
 function initHtml (docId, element) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
-      <div class="checklist-progressbar"></div>
       <div class="checklist-indicators">
-        <span class="checklist-indicator-count"></span>
-        <span class="checklist-indicator-total"></span>
-        <span class="checklist-indicator-success"></span>
-        <span class="checklist-indicator-rejected"></span>
+        <span class="checklist-indicator-checkcount"></span>
+        <span class="checklist-indicator-checksuccess"></span>
+        <span class="checklist-indicator-checkrejected"></span>
       </div>
+      <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
     </div>
   `;
@@ -71,10 +70,10 @@ class Report extends Base {
 
   clearIndicators () {
     this.indicators = {
-      count: 0,
-      success: 0,
-      rejected: 0,
-      total: 0
+      checkcount: 0,
+      checktotal: 0,
+      checksuccess: 0,
+      checkrejected: 0
     };
     this.updateIndicatorsView();
     return this;
@@ -82,8 +81,8 @@ class Report extends Base {
 
   connect (checker) {
     this.checker = checker;
-    const total = checker.rules.length;
-    this.setIndicator("total", total);
+    const checktotal = checker.rules.length;
+    this.setIndicator("checktotal", checktotal);
 
     // Connect checks that are already done
     checker.checks.forEach((check) => {
@@ -115,12 +114,12 @@ class Report extends Base {
         const rejected = check.hasState("rejected");
         if (!done) throw Error("Check is not done");
         if (success === rejected) throw Error("Check state is not valid");
-        return success ? "success" : "rejected";
+        return success ? "checksuccess" : "checkrejected";
       };
 
       const state = getState(check);
       this.incrementIndicator(state);
-      this.incrementIndicator("count");
+      this.incrementIndicator("checkcount");
       this.updateIndicatorsView();
     };
 
@@ -155,8 +154,8 @@ class Report extends Base {
 
   updateIndicatorsView () {
     const indicators = this.indicators;
-    const {count, total} = indicators;
-    const percentage = (count / total) * 100;
+    const {checkcount, checktotal} = indicators;
+    const percentage = (checkcount / checktotal) * 100;
     this.progressbar.go(percentage);
     for (let key in indicators) {
       this.updateIndicator(key, indicators[key]);
