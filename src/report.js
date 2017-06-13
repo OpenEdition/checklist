@@ -42,6 +42,9 @@ function initHtml (docId, element) {
         <span class="checklist-indicator-checksuccess"></span>
         <span class="checklist-indicator-checkrejected"></span>
         <span class="checklist-indicator-statementcount"></span>
+        <span class="checklist-indicator-statementinfo"></span>
+        <span class="checklist-indicator-statementwarning"></span>
+        <span class="checklist-indicator-statementdanger"></span>
       </div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
@@ -75,7 +78,10 @@ class Report extends Base {
       checktotal: 0,
       checksuccess: 0,
       checkrejected: 0,
-      statementcount: 0
+      statementcount: 0,
+      statementinfo: 0,
+      statementwarning: 0,
+      statementdanger: 0
     };
     this.updateIndicatorsView();
     return this;
@@ -104,7 +110,7 @@ class Report extends Base {
   }
 
   incrementIndicator (key, nb = 1) {
-    this.indicators[key] += nb;
+    this.indicators[key] = (this.indicators[key] || 0) + nb;
     return this;
   }
 
@@ -128,7 +134,9 @@ class Report extends Base {
     const injectStatements = (statements, target) => {
       const getStatementHtml = (statement) => {
         const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
-        const li = `<li class="checklist-statement">${statement.name} ${countSpan}</li>`;
+        const type = statement.type;
+        const typeClass = type ? `checklist-statement-type-${type}` : "";
+        const li = `<li class="checklist-statement ${typeClass}">${statement.name} ${countSpan}</li>`;
         return li;
       };
 
@@ -137,6 +145,7 @@ class Report extends Base {
         $(target).append(html);
         const count = statement.count || 1;
         this.incrementIndicator("statementcount", count);
+        this.incrementIndicator(`statement${statement.type}`, count);
         this.updateIndicatorsView();
       };
 
