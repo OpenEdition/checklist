@@ -18,7 +18,7 @@ class Statement extends Base {
     this.docId = check.docId;
 
     assignAttributes({
-      attributes: ["name", "description", "id"],
+      attributes: ["name", "description", "id", "type"],
       statement: this,
       infos,
       check
