@@ -177,12 +177,6 @@ class Report extends Base {
     injectStatements(check.statements, target);
   }
 
-  setIndicatorView (key, value) {
-    const $el = this.find(`.checklist-indicator-${key}`);
-    $el.text(value);
-    return this;
-  }
-
   updateRating () {
     const setRatingView = (rating) => {
       const $el = this.find(".checklist-rating");
@@ -204,9 +198,15 @@ class Report extends Base {
       this.progressbar.go(percentage);
     };
 
+    const setIndicatorView = (key, value) => {
+      const $el = this.find(`.checklist-indicator-${key}`);
+      $el.text(value);
+      return this;
+    };
+
     const updateIndicators = () => {
       for (let key in indicators) {
-        this.setIndicatorView(key, indicators[key]);
+        setIndicatorView(key, indicators[key]);
       }
     };
 
