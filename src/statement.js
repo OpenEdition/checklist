@@ -30,6 +30,12 @@ class Statement extends Base {
       this.id = getIdFromName(this.name);
     }
 
+    // Use a default type is no type defined
+    if (this.type == null) {
+      const defaultType = "info";
+      this.type = defaultType;
+    }
+
     // If infos is a string, then use it as the name
     if (typeof infos === "string") {
       this.name = infos;
