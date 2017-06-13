@@ -38,7 +38,7 @@ function createToolbar ({docId, element, buttonsCreator}) {
 function initHtml (docId, element) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
-      <div class="checklist-rating"></div>
+      <div class="checklist-rating">${svg["rating-none"]}</div>
       <div class="checklist-indicators">
         <span class="checklist-indicator-checkcount"></span>
         <span class="checklist-indicator-checksuccess"></span>
