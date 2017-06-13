@@ -1,5 +1,6 @@
 const Base = require("./base.js");
 const Nanobar = require("nanobar");
+const svg = require("./svg.json");
 
 function createProgressbar (element) {
   return new Nanobar({
@@ -37,6 +38,7 @@ function createToolbar ({docId, element, buttonsCreator}) {
 function initHtml (docId, element) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
+      <div class="checklist-rating"></div>
       <div class="checklist-indicators">
         <span class="checklist-indicator-checkcount"></span>
         <span class="checklist-indicator-checksuccess"></span>
@@ -160,20 +162,52 @@ class Report extends Base {
     injectStatements(check.statements, target);
   }
 
-  updateIndicator (key, value) {
-    const span = this.find(`.checklist-indicator-${key}`);
-    span.text(value);
+  // TODO: Add to documentation:
+  // types = danger, warning, info
+  // ratings = bad, good, perfect
+  computeRating () {
+    const {statementwarning, statementdanger} = this.indicators;
+    if (statementdanger > 0) return "bad";
+    if (statementwarning > 0) return "good";
+    return "perfect";
+  }
+
+  setIndicatorView (key, value) {
+    const $el = this.find(`.checklist-indicator-${key}`);
+    $el.text(value);
+    return this;
+  }
+
+  setRatingView (rating) {
+    const $el = this.find(".checklist-rating");
+    const html = svg[`rating-${rating}`];
+    $el.html(html);
     return this;
   }
 
   updateIndicatorsView () {
     const indicators = this.indicators;
-    const {checkcount, checktotal} = indicators;
-    const percentage = (checkcount / checktotal) * 100;
-    this.progressbar.go(percentage);
-    for (let key in indicators) {
-      this.updateIndicator(key, indicators[key]);
-    }
+
+    const updateProgressbar = () => {
+      const {checkcount, checktotal} = indicators;
+      const percentage = (checkcount / checktotal) * 100;
+      this.progressbar.go(percentage);
+    };
+
+    const updateIndicators = () => {
+      for (let key in indicators) {
+        this.setIndicatorView(key, indicators[key]);
+      }
+    };
+
+    const updateRating = () => {
+      const rating = this.computeRating();
+      this.setRatingView(rating);
+    };
+
+    updateProgressbar();
+    updateIndicators();
+    updateRating();
     return this;
   }
 
