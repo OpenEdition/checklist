@@ -41,6 +41,7 @@ function initHtml (docId, element) {
         <span class="checklist-indicator-checkcount"></span>
         <span class="checklist-indicator-checksuccess"></span>
         <span class="checklist-indicator-checkrejected"></span>
+        <span class="checklist-indicator-statementcount"></span>
       </div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
@@ -73,7 +74,8 @@ class Report extends Base {
       checkcount: 0,
       checktotal: 0,
       checksuccess: 0,
-      checkrejected: 0
+      checkrejected: 0,
+      statementcount: 0
     };
     this.updateIndicatorsView();
     return this;
@@ -101,8 +103,8 @@ class Report extends Base {
     return this;
   }
 
-  incrementIndicator (key) {
-    this.indicators[key]++;
+  incrementIndicator (key, nb = 1) {
+    this.indicators[key] += nb;
     return this;
   }
 
@@ -133,6 +135,9 @@ class Report extends Base {
       const injectStatement = (statement) => {
         const html = getStatementHtml(statement);
         $(target).append(html);
+        const count = statement.count || 1;
+        this.incrementIndicator("statementcount", count);
+        this.updateIndicatorsView();
       };
 
       if (!Array.isArray(statements)) {
