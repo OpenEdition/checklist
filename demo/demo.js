@@ -49,6 +49,7 @@ $(function () {
       },
       {
         name: "Timeout rule",
+        type: "warning",
         action: function ($) {
           var that = this;
           setTimeout(function () {
@@ -65,6 +66,7 @@ $(function () {
       },
       {
         name: "Page 1 only",
+        type: "danger",
         action: function ($) {
           const text = $("p").text();
           if (text === "This is the page 1.") {
