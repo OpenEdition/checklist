@@ -89,15 +89,27 @@ class UI extends Base {
     return this;
   }
 
+  addBodyClass (classname) {
+    $(document.body).addClass(classname);
+  }
+
+  removeBodyClass (classname) {
+    $(document.body).removeClass(classname);
+  }
+
+  toggleBodyClass (classname, state) {
+    $(document.body).toggleClass(classname, state);
+  }
+
   hide () {
-    $(document.body).removeClass("checklist-visible");
+    this.removeBodyClass("checklist-visible");
     this.setState("visible", false);
     this.emit("hidden");
     return this;
   }
 
   show () {
-    $(document.body).addClass("checklist-visible");
+    this.addBodyClass("checklist-visible");
     this.triggerState("visible");
     return this;
   }
