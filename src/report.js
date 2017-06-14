@@ -1,6 +1,7 @@
 const Base = require("./base.js");
 const Nanobar = require("nanobar");
 const svg = require("./svg.json");
+const {escapeDoubleQuotes} = require("./utils.js");
 
 function createProgressbar (element) {
   return new Nanobar({
@@ -187,11 +188,21 @@ class Report extends Base {
 
     const addToRejectionsView = (check) => {
       if (!check.hasState("rejected")) return;
+
+      const isDuplicateRejection = (msg) => {
+        const escapedMsg = escapeDoubleQuotes(msg);
+        const found = $ul.find(`li:contains("${escapedMsg}")`);
+        return found.length > 0;
+      };
+
       const $container = this.find(".checklist-rejections");
       $container.addClass("visible");
 
       const $ul = this.find(".checklist-rejections-list");
       const errMsg = check.errMsg;
+      // TODO: add count sapn to count duplicate rejections
+      if(isDuplicateRejection(errMsg)) return;
+
       const html = `<li class="checklist-rejection">${errMsg}</li>`;
       $ul.append(html);
     };

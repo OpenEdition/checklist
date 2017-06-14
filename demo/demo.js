@@ -81,6 +81,13 @@ $(function () {
           this.resolve(true);
         }
       },
+      {
+        name: "Bad href (duplicate)",
+        href: "bad",
+        action: function () {
+          this.resolve(true);
+        }
+      }
     ];
     checklist.run(rules);
     // Prepare runBatch();

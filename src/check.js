@@ -67,7 +67,7 @@ class Check extends Base {
 
   reject (errMsg) {
     if (this.hasState("done") || this.hasState("rejected")) return this;
-    this.errMsg = errMsg;
+    this.errMsg = errMsg instanceof Error ? errMsg.message : errMsg;
     const err = Error(errMsg);
     this.triggerState("rejected", err, this);
     setDone(this);
