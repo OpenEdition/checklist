@@ -41,13 +41,17 @@ function initHtml (docId, element) {
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-rating">${svg["rating-none"]}</div>
       <div class="checklist-indicators">
-        <span class="checklist-indicator-checkcount"></span>
-        <span class="checklist-indicator-checksuccess"></span>
-        <span class="checklist-indicator-checkrejected"></span>
-        <span class="checklist-indicator-statementcount"></span>
-        <span class="checklist-indicator-statementinfo"></span>
-        <span class="checklist-indicator-statementwarning"></span>
-        <span class="checklist-indicator-statementdanger"></span>
+        <p>
+          <span class="checklist-indicator-checkcount"></span>&nbsp;vérification(s) effectuée(s), dont
+          <span class="checklist-indicator-checksuccess"></span>&nbsp;réussie(s) et
+          <span class="checklist-indicator-checkrejected"></span>&nbsp;abandonnée(s).
+        </p>
+        <p>
+          <span class="checklist-indicator-statementcount"></span>&nbsp;notification(s) affichée(s), dont
+          <span class="checklist-indicator-statementinfo"></span>&nbsp;information(s),
+          <span class="checklist-indicator-statementwarning"></span>&nbsp;recommandation(s) et
+          <span class="checklist-indicator-statementdanger"></span>&nbsp;alerte(s).
+        </p>
       </div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>

@@ -21,6 +21,10 @@ body.checklist-visible {
   display: block;
 }
 
+.checklist-indicators span {
+  font-weight: bold;
+}
+
 .checklist-buttons {
   margin-bottom: 20px;
   position: absolute;
