@@ -47,7 +47,8 @@ function initChecklist (checklist, userConfig) {
     if (parent) {
       const ui = checklist.ui;
       const buttonsCreator = checklist.config.get("buttonsCreator");
-      ui.init({parent, buttonsCreator});
+      const toc = checklist.config.get("toc");
+      ui.init({parent, buttonsCreator, toc});
       checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
     }
 
@@ -135,11 +136,6 @@ class Checklist extends Base {
 
   runBatchFromToc (rules) {
     const toc = this.config.get("toc");
-    const ui = this.ui;
-    if (ui.hasState("initialized")) {
-      ui.copyToc(toc);
-    }
-
     const hrefs = toc.map((entry) => {
       return entry.href;
     });

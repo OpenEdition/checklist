@@ -2,6 +2,19 @@ $(function () {
   // checklist.onAny(console.log);
   // TODO: rename/alias "reset" => "init"
   // TODO: first checklist instanciation is useless. We need an init() method. + config is splitted in different functions (reset() and config.set());
+
+  // Prepare toc
+  const toc = [];
+  $("#toc").find(".toc-entry").each(function () {
+    const pathname = $(this).find("a").get(0).pathname;
+    const entry = {
+      title: $(this).find("h3").text(),
+      subtitle: $(this).find(".subtitle").text(),
+      author: $(this).find(".author").text(),
+      href: pathname
+    };
+    toc.push(entry);
+  });
   checklist.reset({
     parent: "body",
     buttonsCreator: function (docId) {
@@ -15,21 +28,19 @@ $(function () {
           onclick: "console.log('Hello world!')"
         }
       ];
-    }
+    },
+    context: function () {
+      return {
+        "article": true,
+        "textes": true,
+        "motsclesfr": $(".motsclesfr .entry").length
+      };
+    },
+    toc: toc
   })
   .then(function () {
     // TODO: show the panel automatically
     checklist.ui.show();
-    // Prepare .run()
-    checklist.config.set({
-      context: function () {
-        return {
-          "article": true,
-          "textes": true,
-          "motsclesfr": $(".motsclesfr .entry").length
-        };
-      }
-    });
     const rules = [
       {
         name: "First rule",
@@ -90,20 +101,7 @@ $(function () {
       }
     ];
     checklist.run(rules);
-    // Prepare runBatch();
-    // This is specific to the plateform
-    const toc = [];
-    $("#toc").find(".toc-entry").each(function () {
-      const pathname = $(this).find("a").get(0).pathname;
-      const entry = {
-        title: $(this).find("h3").text(),
-        subtitle: $(this).find(".subtitle").text(),
-        author: $(this).find(".author").text(),
-        href: pathname
-      };
-      toc.push(entry);
-    });
-    checklist.config.set("toc", toc);
+    // Run batch
     checklist.runBatchFromToc(rules);
   });
 });

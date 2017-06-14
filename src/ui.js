@@ -13,7 +13,7 @@ class UI extends Base {
   }
 
   // FIXME: not consistent with other checklist components
-  init ({parent, buttonsCreator}) {
+  init ({parent, buttonsCreator, toc}) {
     const createPane = (parent) => {
       const html = `<div id="checklist-pane" class="checklist-pane"></div>`;
       const element = $(html).appendTo(parent).get(0);
@@ -63,8 +63,11 @@ class UI extends Base {
     // FIXME: is it relevant to set this.parent here? And buttonsCreator?
     Object.assign(this, {parent, buttonsCreator});
     this.pane = createPane(parent);
-    this.tocView = createTocView(parent);
     this.configView = createConfigView(parent);
+    if (toc) {
+      this.tocView = createTocView(parent);
+      this.copyToc(toc);
+    }
     this.triggerState("initialized");
   }
 
