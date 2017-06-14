@@ -54,11 +54,15 @@ describe("Events", function () {
     }
   };
 
+  before((done) => {
+    checklist.init().then(() => done());
+  });
+
   describe("Checklist and components", function () {
 
     it("Should emit the ready event", function (done) {
       checklist.once("ready", () => done());
-      checklist.reset();
+      checklist.init();
     });
 
     it("Should emit the config.ready event", function (done) {
@@ -67,7 +71,7 @@ describe("Events", function () {
           expect(config).to.have.property("classname", "Config");
         });
       });
-      checklist.reset();
+      checklist.init();
     });
 
     it("Should emit the loader.ready event", function (done) {
@@ -76,7 +80,7 @@ describe("Events", function () {
           expect(loader).to.have.property("classname", "Loader");
         });
       });
-      checklist.reset();
+      checklist.init();
     });
 
     it("Should emit the ui.ready event", function (done) {
@@ -85,7 +89,7 @@ describe("Events", function () {
           expect(ui).to.have.property("classname", "UI");
         });
       });
-      checklist.reset();
+      checklist.init();
     });
 
   });
@@ -93,7 +97,7 @@ describe("Events", function () {
   describe("Checker", function () {
 
     before(function (done) {
-      checklist.reset()
+      checklist.init()
       .then(() => {
         done();
       });
@@ -134,7 +138,7 @@ describe("Events", function () {
     const hrefs = [remoteHref, remoteHref2];
 
     before(function (done) {
-      checklist.reset()
+      checklist.init()
       .then(() => {
         done();
       });

@@ -24,6 +24,10 @@ describe("Statement", function () {
     }
   }
 
+  before((done) => {
+    checklist.init().then(() => done());
+  });
+
   beforeEach(function () {
     checklist.config.clear();
   });

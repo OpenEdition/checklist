@@ -1,8 +1,4 @@
 $(function () {
-  // checklist.onAny(console.log);
-  // TODO: rename/alias "reset" => "init"
-  // TODO: first checklist instanciation is useless. We need an init() method. + config is splitted in different functions (reset() and config.set());
-
   // Prepare toc
   const toc = [];
   $("#toc").find(".toc-entry").each(function () {
@@ -15,7 +11,7 @@ $(function () {
     };
     toc.push(entry);
   });
-  checklist.reset({
+  checklist.init({
     parent: "body",
     buttonsCreator: function (docId) {
       return [

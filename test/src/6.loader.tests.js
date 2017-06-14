@@ -1,8 +1,12 @@
 describe("Loader and Sources", function () {
   let loader;
 
+  before((done) => {
+    checklist.init().then(() => done());
+  });
+
   beforeEach(function (done) {
-    checklist.reset()
+    checklist.init()
     .then(() => {
       loader = checklist.loader;
       done();
@@ -39,7 +43,7 @@ describe("Loader and Sources", function () {
     let remoteSource;
 
     before(function (done) {
-      checklist.reset();
+      checklist.init();
       loader = window.checklist.loader;
       loader.requestSource(remoteHref)
       .then((source) => {

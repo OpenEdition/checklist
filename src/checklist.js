@@ -24,38 +24,6 @@ function initComponents (checklist) {
   return Promise.all(promises);
 }
 
-function initChecklist (checklist, userConfig) {
-  const injectStyles = (function () {
-    const $styleTag = $("<style>").appendTo("head");
-    return function (styles) {
-      if (styles == null) return;
-      $styleTag.html(styles);
-    };
-  })();
-
-  // Inject custom styles
-  const customStyles = userConfig && userConfig.customStyles;
-  injectStyles(customStyles);
-
-  // Init components
-  return initComponents(checklist)
-  .then(() => {
-    userConfig = userConfig || checklist.userConfig;
-    checklist.config.extend(userConfig);
-
-    const parent = checklist.config.get("parent");
-    if (parent) {
-      const ui = checklist.ui;
-      const buttonsCreator = checklist.config.get("buttonsCreator");
-      const toc = checklist.config.get("toc");
-      ui.init({parent, buttonsCreator, toc});
-      checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
-    }
-
-    checklist.triggerState("ready");
-  });
-}
-
 function forwardCheckerEvents (checklist, checker) {
   const events = [ "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.done"];
   checklist.forwardEvents(checker, events);
@@ -71,7 +39,38 @@ class Checklist extends Base {
   constructor (userConfig) {
     super("Checklist");
     this.userConfig = userConfig;
-    initChecklist(this, userConfig);
+  }
+
+  init (siteConfig) {
+    const injectStyles = (function () {
+      const $styleTag = $("<style>").appendTo("head");
+      return function (styles) {
+        if (styles == null) return;
+        $styleTag.html(styles);
+      };
+    })();
+
+    // Init components
+    return initComponents(this)
+    .then(() => {
+      const userConfig = this.userConfig;
+      this.config.extend(siteConfig, userConfig);
+
+      // Inject custom styles
+      const customStyles = this.config.get("customStyles");
+      injectStyles(customStyles);
+
+      const parent = this.config.get("parent");
+      if (parent) {
+        const ui = this.ui;
+        const buttonsCreator = this.config.get("buttonsCreator");
+        const toc = this.config.get("toc");
+        ui.init({parent, buttonsCreator, toc});
+        this.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
+      }
+
+      this.triggerState("ready");
+    });
   }
 
   // TODO: put rules in the config (like context)
@@ -140,10 +139,6 @@ class Checklist extends Base {
       return entry.href;
     });
     return this.runBatch(hrefs, rules);
-  }
-
-  reset (userConfig) {
-    return initChecklist(this, userConfig);
   }
 }
 

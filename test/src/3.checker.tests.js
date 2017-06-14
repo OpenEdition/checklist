@@ -1,5 +1,9 @@
 describe("Checker and .run()", function () {
 
+  before((done) => {
+    checklist.init().then(() => done());
+  });
+
   it("Should return a promise", function () {
     const res = checklist.run();
     expect(res).to.be.a("promise");

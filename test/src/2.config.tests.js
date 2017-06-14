@@ -1,7 +1,7 @@
 describe("Config", function () {
 
   before((done) => {
-    checklist.whenState("ready").then(() => done());
+    checklist.init().then(() => done());
   });
 
   describe("User config", function () {
@@ -14,14 +14,18 @@ describe("Config", function () {
       });
     });
 
-    it("Should inject custom styles", function () {
-      checklist.reset({customStyles: `
+    it("Should inject custom styles", function (done) {
+      checklist.init({customStyles: `
         body {
           margin-bottom: 42px;
         }
-      `});
-      const marginBottom = $("body").css("margin-bottom");
-      expect(marginBottom).to.equal("42px");
+      `})
+      .then(() => {
+        expectAsync(done, () => {
+          const marginBottom = $("body").css("margin-bottom");
+          expect(marginBottom).to.equal("42px");
+        });
+      });
     });
 
   });

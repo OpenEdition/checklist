@@ -1,7 +1,7 @@
 describe("UI", function () {
 
   before(function (done) {
-    checklist.reset({ parent: "#container" })
+    checklist.init({ parent: "#container" })
     .then(() => done());
   });
 

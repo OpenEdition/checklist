@@ -4,10 +4,12 @@ describe("Batch", function () {
   const remoteHref2 = window.remoteHref2;
 
   before(function (done) {
-    const hrefs = [remoteHref, remoteHref2];
-    checklist.runBatch(hrefs).then((res) => {
-      batch = res;
-      done();
+    checklist.init().then(() => {
+      const hrefs = [remoteHref, remoteHref2];
+      checklist.runBatch(hrefs).then((res) => {
+        batch = res;
+        done();
+      });
     });
   });
 
