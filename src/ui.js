@@ -33,10 +33,38 @@ class UI extends Base {
       return element;
     };
 
+    const createConfigView = (parent) => {
+      const html = `
+        <div id="checklist-config-view" class="checklist-config-view">
+          <h1>Configuration</h1>
+          <h2>Filtres</h2>
+          <input type="checkbox" class="checklist-filter" value="info" checked>Informations</input>
+          <input type="checkbox" class="checklist-filter" value="warning" checked>Recommandations</input>
+          <input type="checkbox" class="checklist-filter" value="danger" checked>Alertes</input>
+        </div>
+      `;
+      const $element = $(html).appendTo(parent);
+
+      // Handlers
+      const updateDisplayedFilters = (type, state) => {
+        const classname = `checklist-hide-type-${type}`;
+        this.toggleBodyClass(classname, state);
+      };
+
+      $element.find(".checklist-filter").change(function () {
+        const type = $(this).prop("value");
+        const hidden = !$(this).prop("checked");
+        updateDisplayedFilters(type, hidden);
+      });
+
+      return $element.get(0);
+    };
+
     // FIXME: is it relevant to set this.parent here? And buttonsCreator?
     Object.assign(this, {parent, buttonsCreator});
     this.pane = createPane(parent);
     this.tocView = createTocView(parent);
+    this.configView = createConfigView(parent);
     this.triggerState("initialized");
   }
 

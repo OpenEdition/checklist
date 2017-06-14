@@ -56,3 +56,9 @@ body.checklist-visible {
 .open > .checklist-collapsed {
   display: block;
 }
+
+.checklist-hide-type-info .checklist-statement-type-info,
+.checklist-hide-type-warning .checklist-statement-type-warning,
+.checklist-hide-type-danger .checklist-statement-type-danger {
+  display: none;
+}
