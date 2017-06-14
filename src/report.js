@@ -50,9 +50,21 @@ function initHtml (docId, element) {
       </div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
+      <div class="checklist-rejections">
+        <a class="checklist-rejections-toggle"><span class="checklist-indicator-checkrejected"></span> erreur(s) rencontrée(s)</a>
+        <ul class="checklist-rejections-list"></ul>
+      </div>
     </div>
   `;
   $(element).append(html);
+}
+
+function initHandlers (report) {
+  const $btn = report.find(".checklist-rejections-toggle");
+  const $div = report.find(".checklist-rejections");
+  $btn.click(function () {
+    $div.toggleClass("open");
+  });
 }
 
 // TODO: Add to documentation:
@@ -71,6 +83,7 @@ class Report extends Base {
     this.docId = docId; // TODO: self ?
     this.element = element;
     initHtml(this.docId, this.element);
+    initHandlers(this);
 
     const progressbarDiv = this.find(".checklist-progressbar").get(0);
     this.progressbar = createProgressbar(progressbarDiv);
@@ -172,7 +185,19 @@ class Report extends Base {
       statements.forEach(injectStatement);
     };
 
+    const addToRejectionsView = (check) => {
+      if (!check.hasState("rejected")) return;
+      const $container = this.find(".checklist-rejections");
+      $container.addClass("visible");
+
+      const $ul = this.find(".checklist-rejections-list");
+      const errMsg = check.errMsg;
+      const html = `<li class="checklist-rejection">${errMsg}</li>`;
+      $ul.append(html);
+    };
+
     addToIndicatorsView(check);
+    addToRejectionsView(check);
     const target = this.find(".checklist-statements");
     injectStatements(check.statements, target);
   }
