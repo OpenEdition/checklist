@@ -40,24 +40,27 @@ function initHtml (docId, element) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-rating">${svg["rating-none"]}</div>
-      <div class="checklist-indicators">
-        <p>
-          <span class="checklist-indicator-checkcount"></span>&nbsp;vérification(s) effectuée(s), dont
-          <span class="checklist-indicator-checksuccess"></span>&nbsp;réussie(s) et
-          <span class="checklist-indicator-checkrejected"></span>&nbsp;abandonnée(s).
-        </p>
-        <p>
-          <span class="checklist-indicator-statementcount"></span>&nbsp;notification(s) affichée(s), dont
-          <span class="checklist-indicator-statementinfo"></span>&nbsp;information(s),
-          <span class="checklist-indicator-statementwarning"></span>&nbsp;recommandation(s) et
-          <span class="checklist-indicator-statementdanger"></span>&nbsp;alerte(s).
-        </p>
-      </div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
       <div class="checklist-rejections">
-        <a class="checklist-rejections-toggle"><span class="checklist-indicator-checkrejected"></span> erreur(s) rencontrée(s)</a>
-        <ul class="checklist-rejections-list"></ul>
+        <a class="checklist-rejections-toggle checklist-toggle-open-parent"><span class="checklist-indicator-checkrejected"></span> erreur(s) rencontrée(s)</a>
+        <ul class="checklist-rejections-list checklist-collapsed"></ul>
+      </div>
+      <div class="checklist-indicators">
+        <a class="checklist-rejections-toggle checklist-toggle-open-parent">Informations</a>
+        <div class="checklist-collapsed">
+          <p>
+            <span class="checklist-indicator-checkcount"></span>&nbsp;vérification(s) effectuée(s), dont
+            <span class="checklist-indicator-checksuccess"></span>&nbsp;réussie(s) et
+            <span class="checklist-indicator-checkrejected"></span>&nbsp;abandonnée(s).
+          </p>
+          <p>
+            <span class="checklist-indicator-statementcount"></span>&nbsp;notification(s) affichée(s), dont
+            <span class="checklist-indicator-statementinfo"></span>&nbsp;information(s),
+            <span class="checklist-indicator-statementwarning"></span>&nbsp;recommandation(s) et
+            <span class="checklist-indicator-statementdanger"></span>&nbsp;alerte(s).
+          </p>
+        </div>
       </div>
     </div>
   `;
@@ -65,10 +68,11 @@ function initHtml (docId, element) {
 }
 
 function initHandlers (report) {
-  const $btn = report.find(".checklist-rejections-toggle");
-  const $div = report.find(".checklist-rejections");
-  $btn.click(function () {
-    $div.toggleClass("open");
+  const $btn = report.find(".checklist-toggle-open-parent");
+  $btn.each(function () {
+    $(this).click(function () {
+      $(this).parent().toggleClass("open");
+    });
   });
 }
 

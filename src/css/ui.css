@@ -39,20 +39,19 @@ body.checklist-visible {
   display: block;
 }
 
-.checklist-rejections .checklist-rejections-toggle:after {
+.checklist-toggle-open-parent:after {
   content: " \25B6";
   font-size: .9em;
 }
 
-.checklist-rejections.open .checklist-rejections-toggle:after {
+.open > .checklist-toggle-open-parent:after {
   content: " \25BC";
-  font-size: .9em;
 }
 
-.checklist-rejections-list {
+.checklist-collapsed {
   display: none;
 }
 
-.checklist-rejections.open .checklist-rejections-list {
+.open > .checklist-collapsed {
   display: block;
 }
