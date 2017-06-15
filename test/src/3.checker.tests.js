@@ -4,6 +4,10 @@ describe("Checker and .run()", function () {
     checklist.init().then(() => done());
   });
 
+  beforeEach(function () {
+    checklist.config.clear();
+  });
+
   it("Should return a promise", function () {
     const res = checklist.run();
     expect(res).to.be.a("promise");
@@ -32,6 +36,15 @@ describe("Checker and .run()", function () {
       action: () => done()
     };
     checklist.run(obj);
+  });
+
+  it("Should load rules from config if not defined", function (done) {
+    const rules = [{
+      name: "This should run",
+      action: () => done()
+    }];
+    checklist.config.set("rules", rules);
+    checklist.run();
   });
 
   it("Should store rejections in Checker.rejections", function (done) {
