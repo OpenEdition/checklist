@@ -1,4 +1,5 @@
 const Base = require("./base.js");
+const cache = require("./cache.js");
 const Nanobar = require("nanobar");
 const svg = require("./svg.json");
 const {escapeDoubleQuotes} = require("./utils.js");
@@ -126,7 +127,7 @@ class Report extends Base {
   connect (checker) {
     this.checker = checker;
     checker.report = this;
-    
+
     const checktotal = checker.rules.length;
     this.setIndicator("checktotal", checktotal);
 
@@ -144,6 +145,7 @@ class Report extends Base {
     // Display rating when checker done
     checker.on("done", () => {
       this.updateRating();
+      this.toCache();
     });
   }
 
@@ -264,6 +266,12 @@ class Report extends Base {
       return statement.export();
     });
     return obj;
+  }
+
+  toCache () {
+    const data = this.export();
+    cache.set(this.docId, data);
+    return this;
   }
 }
 
