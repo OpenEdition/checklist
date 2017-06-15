@@ -1,4 +1,5 @@
 const Base = require("./base.js");
+const Marker = require("./marker.js");
 const {getIdFromName} = require("./utils.js");
 
 // Get values from check, otherwise default values are inherited from check
@@ -13,6 +14,7 @@ class Statement extends Base {
     super("Statement", caller);
     this.check = check;
     this.docId = check.docId;
+    this.markers = [];
 
     assignAttributes({
       attributes: ["name", "description", "id", "type"],
@@ -62,6 +64,15 @@ class Statement extends Base {
 
   is (statement) {
     return this.id === statement.id;
+  }
+
+  // In rules, set: label = { element, name[, position, id, type] }
+  addMarker (options) {
+    const markerOptions = Object.assign({}, options, {caller: this});
+    const marker = new Marker(markerOptions);
+    this.markers.push(marker);
+    this.emit("marker", marker);
+    return this;
   }
 }
 

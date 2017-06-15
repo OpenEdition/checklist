@@ -102,14 +102,15 @@ $(function () {
       {
         name: "With marker",
         action: function ($) {
-          this.addMarker({
+          const statement = this.notify(true);
+          statement.addMarker({
             name: "Hello",
             element: $("h1").get(0),
             position: "after"
           });
-          this.resolve(true);
+          this.resolve();
         }
-      },
+      }
     ]
   })
   .then(function () {
