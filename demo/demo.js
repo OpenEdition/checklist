@@ -104,8 +104,8 @@ $(function () {
         action: function ($) {
           const statement = this.notify(true);
           statement.addMarker({
-            name: "Hello",
-            element: $("h1").get(0),
+            name: "marker here",
+            target: $("h1").get(0),
             position: "after"
           });
           this.resolve();

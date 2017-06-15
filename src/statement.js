@@ -66,7 +66,7 @@ class Statement extends Base {
     return this.id === statement.id;
   }
 
-  // In rules, set: label = { element, name[, position, id, type] }
+  // In rules, set: label = { target, name[, position, type] }
   addMarker (options) {
     const markerOptions = Object.assign({}, options, {caller: this});
     const marker = new Marker(markerOptions);

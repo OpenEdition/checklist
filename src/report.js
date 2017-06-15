@@ -179,9 +179,18 @@ class Report extends Base {
         return li;
       };
 
+      const injectMarkers = (statement) => {
+        statement.markers.forEach((marker) => {
+          marker.inject();
+        });
+      };
+
       const injectStatement = (statement) => {
         const html = getStatementHtml(statement);
         $(target).append(html);
+
+        injectMarkers(statement);
+
         const count = statement.count || 1;
         this.incrementIndicator("statementcount", count);
         this.incrementIndicator(`statement${statement.type}`, count);

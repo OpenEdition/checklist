@@ -62,3 +62,8 @@ body.checklist-visible {
 .checklist-hide-type-danger .checklist-statement-type-danger {
   display: none;
 }
+
+.checklist-marker:before {
+  content: attr(data-checklist-marker-name);
+  background: #ccc;
+}
