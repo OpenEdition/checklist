@@ -12,15 +12,8 @@ class Marker extends Base {
     Object.assign(this, {target, name, position, type});
   }
 
-  inject () {
-    const html = `<span class="checklist-marker checklist-marker-type-${this.type}" data-checklist-marker-name="${this.name}"></span>`;
-    const $element = $(html);
-    if (this.position !== "after") {
-        $element.prependTo(this.target);
-    } else {
-        $element.appendTo(this.target);
-    }
-    this.element = $element.get(0);
+  setElement (element) {
+    this.element = element;
     return this;
   }
 }

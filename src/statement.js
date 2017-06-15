@@ -66,49 +66,6 @@ class Statement extends Base {
     return this.id === statement.id;
   }
 
-  inject (target) {
-    const injectMarkers = () => {
-      this.markers.forEach((marker) => {
-        marker.inject();
-      });
-    };
-
-    const getHtml = () => {
-      const countSpan = (this.count && this.count > 1) ? `<span class="checklist-count">${this.count}</span>` : "";
-      const type = this.type;
-      const typeClass = type ? `checklist-statement-type-${type}` : "";
-      const li = `<li class="checklist-statement ${typeClass}">${this.name} ${countSpan}</li>`;
-      return li;
-    };
-
-    injectMarkers();
-
-    const html = getHtml();
-    const $element = $(html);
-
-    const scrollToNextMarker = () => {
-      const markers = this.markers;
-      if (!markers || markers.length === 0) return;
-
-      const winPos = $(window).scrollTop();
-      const isBottomReached = winPos + $(window).height() > $(document).height() - 50;
-      const tops = markers.map((marker) => {
-        return $(marker.element).offset().top;
-      });
-      const nextTop = tops.find((top) => {
-        return top > winPos + 10;
-      });
-
-      if (!isBottomReached && nextTop) {
-        return $(window).scrollTop(nextTop);
-      }
-      $(window).scrollTop(tops[0]);
-    };
-
-    $element.click(scrollToNextMarker);
-    $(target).append($element);
-  }
-
   // In rules, set: label = { target, name[, position, type] }
   addMarker (options) {
     const createMarker = (singleTarget, options) => {
@@ -128,6 +85,7 @@ class Statement extends Base {
   }
 
   export () {
+    // We dont need markers in cache because they are not used in toc view
     const {name, description, id, type, count} = this;
     return {name, description, id, type, count};
   }

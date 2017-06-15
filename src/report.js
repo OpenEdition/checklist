@@ -160,8 +160,61 @@ class Report extends Base {
   }
 
   injectStatement (statement) {
+    const injectMarker = (marker) => {
+      const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${marker.name}"></span>`;
+      const $element = $(html);
+      if (marker.position !== "after") {
+          $element.prependTo(marker.target);
+      } else {
+          $element.appendTo(marker.target);
+      }
+      marker.setElement($element.get(0));
+    };
+
+    const injectMarkers = () => {
+      if (!statement.markers) return;
+      statement.markers.forEach((marker) => {
+        injectMarker(marker);
+      });
+    };
+
+    const getHtml = () => {
+      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
+      const type = statement.type;
+      const typeClass = type ? `checklist-statement-type-${type}` : "";
+      const li = `<li class="checklist-statement ${typeClass}">${statement.name} ${countSpan}</li>`;
+      return li;
+    };
+
+    const scrollToNextMarkerHandler = () => {
+      const markers = statement.markers;
+      if (!markers || markers.length === 0) return;
+
+      const winPos = $(window).scrollTop();
+      const isBottomReached = winPos + $(window).height() > $(document).height() - 50;
+      const tops = markers.map((marker) => {
+        return $(marker.element).offset().top;
+      });
+      const nextTop = tops.find((top) => {
+        return top > winPos + 10;
+      });
+
+      if (!isBottomReached && nextTop) {
+        return $(window).scrollTop(nextTop);
+      }
+      $(window).scrollTop(tops[0]);
+    };
+
+    const doInject = (statement, target) => {
+      injectMarkers();
+      const html = getHtml();
+      const $element = $(html);
+      $element.click(scrollToNextMarkerHandler);
+      $(target).append($element);
+    };
+
     const target = this.find(".checklist-statements");
-    statement.inject(target);
+    doInject(statement, target);
     const count = statement.count || 1;
     this.incrementIndicator("statementcount", count);
     this.incrementIndicator(`statement${statement.type}`, count);
@@ -293,7 +346,6 @@ class Report extends Base {
     const {errMsgs, indicators, states, statements} = data;
     // statements is a checker property (not report)
     Object.assign(this, {errMsgs, indicators, states});
-    // FIXME: statement.inject() doesn't exist here. But this method is not good, we should not render this stuff outside of ui/report...
     this.injectStatements(statements);
     this.injectRejections(errMsgs);
     this.updateIndicatorsView();
