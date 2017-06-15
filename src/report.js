@@ -247,7 +247,7 @@ class Report extends Base {
     // TODO: add count span to count duplicate rejections
     const $container = this.find(".checklist-rejections-list");
     if(isDuplicateRejection(errMsg, $container)) return;
-    doInject(errMsg);
+    doInject(errMsg, $container);
     return this;
   }
 
