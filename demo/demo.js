@@ -108,6 +108,16 @@ $(function () {
             target: $("h1").get(0),
             position: "after"
           });
+          statement.addMarker({
+            name: "marker here",
+            target: $("p").get(2),
+            position: "after"
+          });
+          statement.addMarker({
+            name: "marker here",
+            target: $("blockquote").get(0),
+            position: "after"
+          });
           this.resolve();
         }
       }
