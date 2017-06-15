@@ -98,7 +98,18 @@ $(function () {
         action: function () {
           this.resolve(true);
         }
-      }
+      },
+      {
+        name: "With marker",
+        action: function ($) {
+          this.addMarker({
+            name: "Hello",
+            element: $("h1").get(0),
+            position: "after"
+          });
+          this.resolve(true);
+        }
+      },
     ]
   })
   .then(function () {

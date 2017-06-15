@@ -1,4 +1,5 @@
 const Base = require("./base.js");
+const Marker = require("./marker.js");
 const Statement = require("./statement.js");
 
 function getSource (check) {
@@ -38,6 +39,7 @@ class Check extends Base {
 
     Object.assign(this, rule, {context, docId, source});
     this.statements = [];
+    this.markers = [];
 
     getSource(this)
     .then((source) => {
@@ -116,6 +118,15 @@ class Check extends Base {
       return evalStringCondition(this.condition, context);
     }
     return true;
+  }
+
+  // In rules, set: label = { element, name[, position, id, type] }
+  addMarker (options) {
+    const markerOptions = Object.assign({}, options, {caller: this});
+    const marker = new Marker(markerOptions);
+    this.markers.push(marker);
+    this.emit("marker", marker);
+    return this;
   }
 }
 

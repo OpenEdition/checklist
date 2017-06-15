@@ -68,7 +68,8 @@ class Checker extends Base {
         {"success": "check.success"},
         {"rejected": "check.rejected"},
         "statement.new",
-        "statement.update"
+        "statement.update",
+        "marker"
       ]);
       check.once("done", () => resolve());
       check.on("rejected", (error) => {

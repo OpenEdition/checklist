@@ -25,7 +25,7 @@ function initComponents (checklist) {
 }
 
 function forwardCheckerEvents (checklist, checker) {
-  const events = [ "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.done"];
+  const events = [ "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.done", "marker"];
   checklist.forwardEvents(checker, events);
 }
 
