@@ -159,7 +159,7 @@ class Report extends Base {
     return this;
   }
 
-  injectStatement (statement) {
+  injectStatement (statement, increment = true) {
     const injectMarker = (marker) => {
       const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${marker.name}"></span>`;
       const $element = $(html);
@@ -216,17 +216,21 @@ class Report extends Base {
     const target = this.find(".checklist-statements");
     doInject(statement, target);
     const count = statement.count || 1;
-    this.incrementIndicator("statementcount", count);
-    this.incrementIndicator(`statement${statement.type}`, count);
-    this.updateIndicatorsView();
+    if (increment) {
+      this.incrementIndicator("statementcount", count);
+      this.incrementIndicator(`statement${statement.type}`, count);
+      this.updateIndicatorsView();
+    }
     return this;
   }
 
-  injectStatements (statements) {
+  injectStatements (statements, increment) {
     if (!Array.isArray(statements)) {
       statements = [statements];
     }
-    statements.forEach(this.injectStatement.bind(this));
+    statements.forEach((statement) => {
+      this.injectStatement(statement, increment);
+    });
     return this;
   }
 
@@ -346,7 +350,7 @@ class Report extends Base {
     const {errMsgs, indicators, states, statements} = data;
     // statements is a checker property (not report)
     Object.assign(this, {errMsgs, indicators, states});
-    this.injectStatements(statements);
+    this.injectStatements(statements, false);
     this.injectRejections(errMsgs);
     this.updateIndicatorsView();
     this.updateRating();
