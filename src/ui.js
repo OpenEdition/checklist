@@ -104,7 +104,8 @@ class UI extends Base {
       $toc.append($element);
       const element = $element.get(0);
       const buttonsCreator = this.buttonsCreator;
-      this.createReport({element, docId, buttonsCreator});
+      const report = this.createReport({element, docId, buttonsCreator});
+      report.fromCache();
     });
   }
 

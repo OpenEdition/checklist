@@ -159,6 +159,53 @@ class Report extends Base {
     return this;
   }
 
+  injectStatement (statement) {
+    const target = this.find(".checklist-statements");
+    statement.inject(target);
+    const count = statement.count || 1;
+    this.incrementIndicator("statementcount", count);
+    this.incrementIndicator(`statement${statement.type}`, count);
+    this.updateIndicatorsView();
+    return this;
+  }
+
+  injectStatements (statements) {
+    if (!Array.isArray(statements)) {
+      statements = [statements];
+    }
+    statements.forEach(this.injectStatement.bind(this));
+    return this;
+  }
+
+  injectRejection (errMsg) {
+    const isDuplicateRejection = (msg, container) => {
+      const escapedMsg = escapeDoubleQuotes(msg);
+      const found = $(container).find(`li:contains("${escapedMsg}")`);
+      return found.length > 0;
+    };
+
+    const doInject = (errMsg, target) => {
+      const $container = this.find(".checklist-rejections");
+      $container.addClass("visible");
+      const html = `<li class="checklist-rejection">${errMsg}</li>`;
+      $(target).append(html);
+    };
+
+    // TODO: add count span to count duplicate rejections
+    const $container = this.find(".checklist-rejections-list");
+    if(isDuplicateRejection(errMsg, $container)) return;
+    doInject(errMsg);
+    return this;
+  }
+
+  injectRejections (errMsgs) {
+    if (!Array.isArray(errMsgs)) {
+      errMsgs = [errMsgs];
+    }
+    errMsgs.forEach(this.injectRejection.bind(this));
+    return this;
+  }
+
   addCheck (check) {
     const addToIndicatorsView = (check) => {
       const getState = (check) => {
@@ -176,49 +223,17 @@ class Report extends Base {
       this.updateIndicatorsView();
     };
 
-    const injectStatements = (statements, target) => {
-      const injectStatement = (statement) => {
-        statement.inject(target);
-        const count = statement.count || 1;
-        this.incrementIndicator("statementcount", count);
-        this.incrementIndicator(`statement${statement.type}`, count);
-        this.updateIndicatorsView();
-      };
-
-      if (!Array.isArray(statements)) {
-        statements = [statements];
-      }
-      statements.forEach(injectStatement);
-    };
-
     const addToRejectionsView = (check) => {
       if (!check.hasState("rejected")) return;
-
-      const isDuplicateRejection = (msg) => {
-        const escapedMsg = escapeDoubleQuotes(msg);
-        const found = $ul.find(`li:contains("${escapedMsg}")`);
-        return found.length > 0;
-      };
-
-      const $container = this.find(".checklist-rejections");
-      $container.addClass("visible");
-
-      const $ul = this.find(".checklist-rejections-list");
       const errMsg = check.errMsg;
-      // TODO: add count sapn to count duplicate rejections
-      if(isDuplicateRejection(errMsg)) return;
-
-      const html = `<li class="checklist-rejection">${errMsg}</li>`;
-      $ul.append(html);
-
+      this.injectRejection(errMsg);
       // Store errMsgs (without duplicates) in report
       this.errMsgs.push(errMsg);
     };
 
     addToIndicatorsView(check);
     addToRejectionsView(check);
-    const target = this.find(".checklist-statements");
-    injectStatements(check.statements, target);
+    this.injectStatements(check.statements);
   }
 
   updateRating () {
@@ -271,6 +286,25 @@ class Report extends Base {
   toCache () {
     const data = this.export();
     cache.set(this.docId, data);
+    return this;
+  }
+
+  import (data) {
+    const {errMsgs, indicators, states, statements} = data;
+    // statements is a checker property (not report)
+    Object.assign(this, {errMsgs, indicators, states});
+    // FIXME: statement.inject() doesn't exist here. But this method is not good, we should not render this stuff outside of ui/report...
+    this.injectStatements(statements);
+    this.injectRejections(errMsgs);
+    this.updateIndicatorsView();
+    this.updateRating();
+  }
+
+  fromCache() {
+    const data = cache.get(this.docId);
+    if (data != null) {
+      this.import(data);
+    }
     return this;
   }
 }
