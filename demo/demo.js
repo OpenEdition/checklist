@@ -1,16 +1,24 @@
 $(function () {
+  const isPublication = $(document.body).hasClass("publication");
+
   // Prepare toc
-  const toc = [];
-  $("#toc").find(".toc-entry").each(function () {
-    const pathname = $(this).find("a").get(0).pathname;
-    const entry = {
-      title: $(this).find("h3").text(),
-      subtitle: $(this).find(".subtitle").text(),
-      author: $(this).find(".author").text(),
-      href: pathname
-    };
-    toc.push(entry);
-  });
+  function getToc () {
+    if (!isPublication) return;
+
+    const toc = [];
+    $("#toc").find(".toc-entry").each(function () {
+      const pathname = $(this).find("a").get(0).pathname;
+      const entry = {
+        title: $(this).find("h3").text(),
+        subtitle: $(this).find(".subtitle").text(),
+        author: $(this).find(".author").text(),
+        href: pathname
+      };
+      toc.push(entry);
+    });
+    return toc;
+  }
+
   checklist.init({
     parent: "body",
     buttonsCreator: function (docId) {
@@ -32,7 +40,7 @@ $(function () {
         "motsclesfr": $(".motsclesfr .entry").length
       };
     },
-    toc: toc
+    toc: getToc()
   })
   .then(function () {
     // TODO: show the panel automatically
@@ -97,7 +105,10 @@ $(function () {
       }
     ];
     checklist.run(rules);
-    // Run batch
-    checklist.runBatchFromToc(rules);
+
+    // Run batch if publication
+    if (isPublication) {
+      checklist.runBatchFromToc(rules);
+    }
   });
 });
