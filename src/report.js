@@ -123,6 +123,8 @@ class Report extends Base {
 
   connect (checker) {
     this.checker = checker;
+    checker.report = this;
+    
     const checktotal = checker.rules.length;
     this.setIndicator("checktotal", checktotal);
 
