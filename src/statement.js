@@ -1,8 +1,5 @@
 const Base = require("./base.js");
-
-function getIdFromName (name) {
-  return name.replace(/\W/gi, "-").toLowerCase();
-}
+const {getIdFromName} = require("./utils.js");
 
 // Get values from check, otherwise default values are inherited from check
 function assignAttributes ({attributes, statement, infos, check}) {
