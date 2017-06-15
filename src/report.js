@@ -91,6 +91,8 @@ class Report extends Base {
     super("Report", caller);
     this.docId = docId; // TODO: self ?
     this.element = element;
+    this.errMsgs = [];
+
     initHtml(this.docId, this.element);
     initHandlers(this);
 
@@ -206,6 +208,9 @@ class Report extends Base {
 
       const html = `<li class="checklist-rejection">${errMsg}</li>`;
       $ul.append(html);
+
+      // Store errMsgs (without duplicates) in report
+      this.errMsgs.push(errMsg);
     };
 
     addToIndicatorsView(check);
