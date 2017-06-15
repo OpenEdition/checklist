@@ -93,6 +93,7 @@ class Checklist extends Base {
       forwardCheckerEvents(this, checker);
     };
 
+    rules = rules || this.config.get("rules");
     // TODO: rename context in contextCreator
     const context = this.config.get("context");
     const ui = this.ui;
@@ -108,12 +109,12 @@ class Checklist extends Base {
     });
   }
 
-  // TODO: put rules in the config (like context)
   runBatch (hrefs, rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
       return this.postponePromise("ready", "runBatch", arguments);
     }
+    rules = rules || this.config.get("rules");
     const context = this.config.get("context");
     const batch = new Batch({ rules, context, hrefs, caller: this });
     forwardCheckerEvents(this, batch);

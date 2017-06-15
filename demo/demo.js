@@ -40,12 +40,8 @@ $(function () {
         "motsclesfr": $(".motsclesfr .entry").length
       };
     },
-    toc: getToc()
-  })
-  .then(function () {
-    // TODO: show the panel automatically
-    checklist.ui.show();
-    const rules = [
+    toc: getToc(),
+    rules: [
       {
         name: "First rule",
         action: function () {
@@ -103,12 +99,16 @@ $(function () {
           this.resolve(true);
         }
       }
-    ];
-    checklist.run(rules);
+    ]
+  })
+  .then(function () {
+    // TODO: show the panel automatically
+    checklist.ui.show();
+    checklist.run();
 
     // Run batch if publication
     if (isPublication) {
-      checklist.runBatchFromToc(rules);
+      checklist.runBatchFromToc();
     }
   });
 });
