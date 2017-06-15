@@ -110,7 +110,7 @@ $(function () {
           });
           statement.addMarker({
             name: "marker here",
-            target: $("p").get(2),
+            target: $("p"),
             position: "after"
           });
           statement.addMarker({

@@ -111,10 +111,19 @@ class Statement extends Base {
 
   // In rules, set: label = { target, name[, position, type] }
   addMarker (options) {
-    const markerOptions = Object.assign({}, options, {caller: this});
-    const marker = new Marker(markerOptions);
-    this.markers.push(marker);
-    this.emit("marker", marker);
+    const createMarker = (singleTarget, options) => {
+      const overwriting = {target: singleTarget, caller: this};
+      const newOptions = Object.assign({}, options, overwriting);
+      const marker = new Marker(newOptions);
+      this.markers.push(marker);
+      this.emit("marker", marker);
+    };
+
+    // Make sure target is one single element
+    const $target = $(options.target);
+    $target.each(function () {
+      createMarker($(this), options);
+    });
     return this;
   }
 }
