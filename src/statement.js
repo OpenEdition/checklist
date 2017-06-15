@@ -66,6 +66,29 @@ class Statement extends Base {
     return this.id === statement.id;
   }
 
+  inject (target) {
+    const injectMarkers = () => {
+      this.markers.forEach((marker) => {
+        marker.inject();
+      });
+    };
+
+    const getHtml = () => {
+      const countSpan = (this.count && this.count > 1) ? `<span class="checklist-count">${this.count}</span>` : "";
+      const type = this.type;
+      const typeClass = type ? `checklist-statement-type-${type}` : "";
+      const li = `<li class="checklist-statement ${typeClass}">${this.name} ${countSpan}</li>`;
+      return li;
+    };
+
+    injectMarkers();
+
+    const html = getHtml();
+    const $element = $(html);
+
+    $(target).append($element);
+  }
+
   // In rules, set: label = { target, name[, position, type] }
   addMarker (options) {
     const markerOptions = Object.assign({}, options, {caller: this});

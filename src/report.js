@@ -171,26 +171,8 @@ class Report extends Base {
     };
 
     const injectStatements = (statements, target) => {
-      const getStatementHtml = (statement) => {
-        const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
-        const type = statement.type;
-        const typeClass = type ? `checklist-statement-type-${type}` : "";
-        const li = `<li class="checklist-statement ${typeClass}">${statement.name} ${countSpan}</li>`;
-        return li;
-      };
-
-      const injectMarkers = (statement) => {
-        statement.markers.forEach((marker) => {
-          marker.inject();
-        });
-      };
-
       const injectStatement = (statement) => {
-        const html = getStatementHtml(statement);
-        $(target).append(html);
-
-        injectMarkers(statement);
-
+        statement.inject(target);
         const count = statement.count || 1;
         this.incrementIndicator("statementcount", count);
         this.incrementIndicator(`statement${statement.type}`, count);
