@@ -126,6 +126,11 @@ class Statement extends Base {
     });
     return this;
   }
+
+  export () {
+    const {name, description, id, type, count} = this;
+    return {name, description, id, type, count};
+  }
 }
 
 module.exports = Statement;

@@ -257,6 +257,14 @@ class Report extends Base {
     return this;
   }
 
+  export () {
+    const {docId, indicators, states, errMsgs} = this;
+    const obj = {docId, indicators, states, errMsgs};
+    obj.statements = this.checker.statements.map((statement) => {
+      return statement.export();
+    });
+    return obj;
+  }
 }
 
 module.exports = Report;
