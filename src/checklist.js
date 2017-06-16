@@ -58,6 +58,9 @@ class Checklist extends Base {
       };
     })();
 
+    // Clear previous properties first
+    this.clear();
+
     // Init components
     return initComponents(this)
     .then(() => {
@@ -76,6 +79,17 @@ class Checklist extends Base {
 
       this.triggerState("ready");
     });
+  }
+
+  clear () {
+    Object.keys(this).forEach((propName) => {
+      const prop = this[propName];
+      if (typeof prop === "function") return;
+      this[prop] = undefined;
+    });
+    this.clearStates();
+    this.removeAllListeners();
+    return this;
   }
 
   run (rules) {

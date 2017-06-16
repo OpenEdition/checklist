@@ -51,6 +51,11 @@ class Base extends EventEmitter {
     });
   }
 
+  clearStates () {
+    this.states = {};
+    return this;
+  }
+
   getMethod (methodName, ...args) {
     return this[methodName].bind(this, ...args);
   }
