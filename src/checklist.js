@@ -24,6 +24,14 @@ function initComponents (checklist) {
   return Promise.all(promises);
 }
 
+function initUi (checklist, parent) {
+  const ui = checklist.ui;
+  const buttonsCreator = checklist.config.get("buttonsCreator");
+  const toc = checklist.config.get("toc");
+  ui.init({parent, buttonsCreator, toc});
+  checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
+}
+
 function forwardCheckerEvents (checklist, checker) {
   const events = [ "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.done", "marker"];
   checklist.forwardEvents(checker, events);
@@ -60,13 +68,10 @@ class Checklist extends Base {
       const customStyles = this.config.get("customStyles");
       injectStyles(customStyles);
 
+      // Init UI if parent is defined
       const parent = this.config.get("parent");
       if (parent) {
-        const ui = this.ui;
-        const buttonsCreator = this.config.get("buttonsCreator");
-        const toc = this.config.get("toc");
-        ui.init({parent, buttonsCreator, toc});
-        this.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
+        initUi(this, parent);
       }
 
       this.triggerState("ready");
