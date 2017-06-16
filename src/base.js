@@ -8,6 +8,20 @@ class Base extends EventEmitter {
     this.states = {};
   }
 
+  assign (props, ...objects) {
+    const filterOutUnallowedProps = (props, obj) => {
+      const filtered = {};
+      props.forEach((key) => {
+        filtered[key] = obj[key];
+      });
+      return filtered;
+    };
+
+    const merged = Object.assign({}, ...objects);
+    const filtered = filterOutUnallowedProps(props, merged);
+    Object.assign(this, filtered);
+  }
+
   setState (state, value) {
     this.states[state] = value;
     return this;
