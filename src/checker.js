@@ -74,9 +74,11 @@ class Checker extends Base {
       check.once("done", () => resolve());
       check.on("rejected", (error) => {
         // FIXME: maybe error should be a simple message instead of an Error()
+        // FIXME: this is probably useless and confusing. Or maybe just store a reference to rejected checks. Or maybe a function to find them.
         this.rejections.push({check, error});
       });
       check.on("statement.new", (statement) => {
+        // FIXME: this is also confusing and complicated?? The same than rejections: maybe use a function to find them.
         this.statements.push(statement);
       });
     };
