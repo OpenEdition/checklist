@@ -331,36 +331,25 @@ class Report extends Base {
     return this;
   }
 
-  export () {
-    const {docId, indicators, states, errMsgs} = this;
-    const obj = {docId, indicators, states, errMsgs};
-    obj.statements = this.checker.statements.map((statement) => {
-      return statement.export();
-    });
-    return obj;
-  }
-
   toCache () {
-    const data = this.export();
-    cache.set(this.docId, data);
+    cache.setRecord(this);
     return this;
   }
 
-  import (data) {
-    const {errMsgs, indicators, states, statements} = data;
-    // statements is a checker property (not report)
-    Object.assign(this, {errMsgs, indicators, states});
-    this.injectStatements(statements, false);
-    this.injectRejections(errMsgs);
-    this.updateIndicatorsView();
-    this.updateRating();
-  }
+  fromCache () {
+    const updateViewFromRecord = (record) => {
+      const {errMsgs, indicators, states, statements} = record;
+      Object.assign(this, {errMsgs, indicators, states});
+      this.injectStatements(statements, false);
+      this.injectRejections(errMsgs);
+      this.updateIndicatorsView();
+      this.updateRating();
+    };
 
-  fromCache() {
-    const data = cache.get(this.docId);
-    if (data != null) {
-      this.import(data);
-    }
+    const docId = this.docId;
+    const record = cache.getRecord(docId);
+    if (record == null) return;
+    updateViewFromRecord(record);
     return this;
   }
 }

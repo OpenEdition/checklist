@@ -72,12 +72,6 @@ class Statement extends Base {
     });
     return this;
   }
-
-  export () {
-    // We dont need markers in cache because they are not used in toc view
-    const {name, description, id, type, count} = this;
-    return {name, description, id, type, count};
-  }
 }
 
 module.exports = Statement;
