@@ -36,7 +36,8 @@ class Check extends Base {
   constructor ({ context, docId, rule, source, caller }) {
     super("Check", caller);
 
-    Object.assign(this, rule, {context, docId, source});
+    const allowedProps = ["context", "docId", "source", "name", "description", "id", "href", "type", "condition", "action"];
+    this.assign(allowedProps, rule, {context, docId, source});
     this.statements = [];
 
     getSource(this)
