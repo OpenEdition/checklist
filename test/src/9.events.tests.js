@@ -58,42 +58,6 @@ describe("Events", function () {
     checklist.init().then(() => done());
   });
 
-  describe("Checklist and components", function () {
-
-    it("Should emit the ready event", function (done) {
-      checklist.once("ready", () => done());
-      checklist.init();
-    });
-
-    it("Should emit the config.ready event", function (done) {
-      checklist.once("config.ready", (config) => {
-        expectAsync(done, () => {
-          expect(config).to.have.property("classname", "Config");
-        });
-      });
-      checklist.init();
-    });
-
-    it("Should emit the loader.ready event", function (done) {
-      checklist.once("loader.ready", (loader) => {
-        expectAsync(done, () => {
-          expect(loader).to.have.property("classname", "Loader");
-        });
-      });
-      checklist.init();
-    });
-
-    it("Should emit the ui.ready event", function (done) {
-      checklist.once("ui.ready", (ui) => {
-        expectAsync(done, () => {
-          expect(ui).to.have.property("classname", "UI");
-        });
-      });
-      checklist.init();
-    });
-
-  });
-
   describe("Checker", function () {
 
     before(function (done) {
