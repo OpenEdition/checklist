@@ -78,7 +78,6 @@ class Checklist extends Base {
     });
   }
 
-  // TODO: put rules in the config (like context)
   run (rules) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
