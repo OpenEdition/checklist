@@ -13,7 +13,6 @@ function initComponents (checklist) {
       component.whenState("ready")
       .then(() => {
         checklist[componentName] = component;
-        checklist.emit(`${componentName}.ready`, component);
         resolve(component);
       });
     });
