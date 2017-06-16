@@ -2,13 +2,6 @@ const Base = require("./base.js");
 const Marker = require("./marker.js");
 const {getIdFromName} = require("./utils.js");
 
-// Get values from check, otherwise default values are inherited from check
-function assignAttributes ({attributes, statement, infos, check}) {
-  attributes.forEach((attr) => {
-    statement[attr] = infos[attr] || check[attr];
-  });
-}
-
 class Statement extends Base {
   constructor ({check, infos, caller}) {
     super("Statement", caller);
@@ -16,12 +9,8 @@ class Statement extends Base {
     this.docId = check.docId;
     this.markers = [];
 
-    assignAttributes({
-      attributes: ["name", "description", "id", "type"],
-      statement: this,
-      infos,
-      check
-    });
+    // Get values from check, otherwise default values are inherited from check
+    this.assign(["name", "description", "id", "type"], check, infos);
     this.count = 1;
 
     // If no id then create it from name
