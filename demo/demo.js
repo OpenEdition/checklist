@@ -130,7 +130,7 @@ $(function () {
 
     // Run batch if publication
     if (isPublication) {
-      checklist.runBatchFromToc();
+      // checklist.runBatchFromToc();
     }
   });
 });
