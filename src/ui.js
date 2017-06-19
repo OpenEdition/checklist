@@ -1,4 +1,5 @@
 const Base = require("./base.js");
+const cache = require("./cache.js");
 const Report = require("./report.js");
 const { getDocIdFromPathname } = require("./utils.js");
 
@@ -36,13 +37,25 @@ class UI extends Base {
     };
 
     const createConfigView = (parent) => {
+      const getInputHtml = (filters) => {
+        const inputs = filters.map((filter) => {
+          const isHidden = cache.get(`filter-${filter.id}`, false);
+          const checkedAttr = isHidden ? "" : "checked";
+          return `<input type="checkbox" class="checklist-filter" value=".checklist-statement-${filter.id}" ${checkedAttr}>${filter.name}</input>`;
+        });
+        return inputs.join("\n");
+      };
+
+      const inputHtml = getInputHtml([
+        {id: "type-info", name: "Informations"},
+        {id: "type-warning", name: "Recommandations"},
+        {id: "type-danger", name: "Alertes"}
+      ]);
       const html = `
         <div id="checklist-config-view" class="checklist-config-view">
           <h1>Configuration</h1>
           <h2>Filtres</h2>
-          <input type="checkbox" class="checklist-filter" value=".checklist-statement-type-info" checked>Informations</input>
-          <input type="checkbox" class="checklist-filter" value=".checklist-statement-type-warning" checked>Recommandations</input>
-          <input type="checkbox" class="checklist-filter" value=".checklist-statement-type-danger" checked>Alertes</input>
+          ${inputHtml}
         </div>
       `;
       const $element = $(html).appendTo(parent);
