@@ -39,9 +39,9 @@ class UI extends Base {
     const createConfigView = (parent) => {
       const getInputHtml = (filters) => {
         const inputs = filters.map((filter) => {
-          const isHidden = cache.get(`filter-${filter.id}`, false);
+          const isHidden = this.getFilter(filter.id);
           const checkedAttr = isHidden ? "" : "checked";
-          return `<input type="checkbox" class="checklist-filter" value=".checklist-statement-${filter.id}" ${checkedAttr}>${filter.name}</input>`;
+          return `<input type="checkbox" class="checklist-filter" value="${filter.id}" ${checkedAttr}>${filter.name}</input>`;
         });
         return inputs.join("\n");
       };
@@ -61,14 +61,14 @@ class UI extends Base {
       const $element = $(html).appendTo(parent);
 
       // Handlers
-      const updateDisplayedFilters = (selector, hidden) => {
-        this.setStatementVisibility(selector, !hidden);
+      const inputHandler = (filterId, hidden) => {
+        this.setFilter(filterId, !hidden);
       };
 
       $element.find(".checklist-filter").change(function () {
-        const selector = $(this).prop("value");
+        const filterId = $(this).prop("value");
         const hidden = !$(this).prop("checked");
-        updateDisplayedFilters(selector, hidden);
+        inputHandler(filterId, hidden);
       });
 
       return $element.get(0);
@@ -85,10 +85,21 @@ class UI extends Base {
     this.triggerState("initialized");
   }
 
-  setStatementVisibility (selector, visible = true) {
-    const $elements = $(selector);
-    $elements.toggleClass("hidden", !visible);
+  setFilter (id, visible = false) {
+    const setStatementVisibility = (selector, visible = true) => {
+      const $elements = $(selector);
+      $elements.toggleClass("hidden", !visible);
+    };
+
+    const selector = `.checklist-statement-${id}`;
+    setStatementVisibility(selector, visible);
+    cache.set(`filter-${id}`, visible);
     return this;
+  }
+
+  // Return true if filter exists, i.e. statements must be hidden
+  getFilter (id) {
+    return cache.get(`filter-${id}`, false);
   }
 
   createReport (options) {
