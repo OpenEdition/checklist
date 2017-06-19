@@ -62,8 +62,7 @@ class UI extends Base {
 
       // Handlers
       const updateDisplayedFilters = (selector, hidden) => {
-        const $elements = $(selector);
-        $elements.toggleClass("hidden", hidden);
+        this.setStatementVisibility(selector, !hidden);
       };
 
       $element.find(".checklist-filter").change(function () {
@@ -84,6 +83,12 @@ class UI extends Base {
       this.copyToc(toc);
     }
     this.triggerState("initialized");
+  }
+
+  setStatementVisibility (selector, visible = true) {
+    const $elements = $(selector);
+    $elements.toggleClass("hidden", !visible);
+    return this;
   }
 
   createReport (options) {
