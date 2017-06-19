@@ -9,6 +9,8 @@ class UI extends Base {
   constructor ({ caller }) {
     super("UI", caller);
     this.reports = {};
+    // TODO: load filters from cache
+    this.filters = [];
     this.triggerState("ready");
   }
 
@@ -38,23 +40,23 @@ class UI extends Base {
         <div id="checklist-config-view" class="checklist-config-view">
           <h1>Configuration</h1>
           <h2>Filtres</h2>
-          <input type="checkbox" class="checklist-filter" value="info" checked>Informations</input>
-          <input type="checkbox" class="checklist-filter" value="warning" checked>Recommandations</input>
-          <input type="checkbox" class="checklist-filter" value="danger" checked>Alertes</input>
+          <input type="checkbox" class="checklist-filter" value=".checklist-statement-type-info" checked>Informations</input>
+          <input type="checkbox" class="checklist-filter" value=".checklist-statement-type-warning" checked>Recommandations</input>
+          <input type="checkbox" class="checklist-filter" value=".checklist-statement-type-danger" checked>Alertes</input>
         </div>
       `;
       const $element = $(html).appendTo(parent);
 
       // Handlers
-      const updateDisplayedFilters = (type, state) => {
-        const classname = `checklist-hide-type-${type}`;
-        this.toggleBodyClass(classname, state);
+      const updateDisplayedFilters = (selector, hidden) => {
+        const $elements = $(selector);
+        $elements.toggleClass("hidden", hidden);
       };
 
       $element.find(".checklist-filter").change(function () {
-        const type = $(this).prop("value");
+        const selector = $(this).prop("value");
         const hidden = !$(this).prop("checked");
-        updateDisplayedFilters(type, hidden);
+        updateDisplayedFilters(selector, hidden);
       });
 
       return $element.get(0);
