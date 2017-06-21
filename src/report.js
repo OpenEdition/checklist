@@ -182,7 +182,9 @@ class Report extends Base {
       const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
       const type = statement.type;
       const typeClass = type ? `checklist-statement-type-${type}` : "";
-      const li = `<li class="checklist-statement ${typeClass}">${statement.name} ${countSpan}</li>`;
+      const isFiltered = cache.isFiltered([`type-${type}`]);
+      const filterClass = isFiltered ? "hidden" : "";
+      const li = `<li class="checklist-statement ${typeClass} ${filterClass}">${statement.name} ${countSpan}</li>`;
       return li;
     };
 

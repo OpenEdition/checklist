@@ -55,6 +55,11 @@ const cache = {
   // Return true if filter exists, i.e. statements must be hidden
   getFilter: function (id) {
     return cache.get(`filter-${id}`, false);
+  },
+
+  // Return true if any filter exists
+  isFiltered: function (ids) {
+    return ids.some((id) => cache.getFilter(id));
   }
 };
 
