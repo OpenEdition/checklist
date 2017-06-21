@@ -61,6 +61,14 @@ body.checklist-visible {
   display: none;
 }
 
+.checklist-hidden-statements {
+  display: none;
+}
+
+.checklist-hidden-statements.visible {
+  display: block;
+}
+
 .checklist-marker:before {
   content: attr(data-checklist-marker-name);
   background: #ccc;
