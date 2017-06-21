@@ -85,8 +85,7 @@ class UI extends Base {
 
   filterStatements (id, hidden = true) {
     const reports = this.reports;
-    Object.keys(reports).forEach((docId) => {
-      const report = reports[docId];
+    this.forEachReport((report) => {
       report.filterStatements(id, hidden);
     });
     cache.setFilter(id, hidden);
@@ -102,6 +101,14 @@ class UI extends Base {
 
   getReport (docId) {
     return this.reports[docId];
+  }
+
+  forEachReport (fn) {
+    const reports = this.reports;
+    Object.keys(reports).forEach((docId) => {
+      fn(reports[docId], docId);
+    });
+    return this;
   }
 
   copyToc (toc) {
