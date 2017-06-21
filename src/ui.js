@@ -10,8 +10,6 @@ class UI extends Base {
   constructor ({ caller }) {
     super("UI", caller);
     this.reports = {};
-    // TODO: load filters from cache
-    this.filters = [];
     this.triggerState("ready");
   }
 
