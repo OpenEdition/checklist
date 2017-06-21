@@ -1,8 +1,11 @@
 const cache = {
-  get: function (id) {
+  get: function (id, defaultValue) {
     if (id == null) return;
     const key = `checklist-${id}`;
-    return JSON.parse(localStorage.getItem(key));
+    if (key != null) {
+      return JSON.parse(localStorage.getItem(key));
+    }
+    return defaultValue;
   },
 
   set: function (id, value) {
