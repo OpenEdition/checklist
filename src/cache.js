@@ -46,6 +46,15 @@ const cache = {
   getRecord: function (docId) {
     const record = cache.get(docId);
     return record;
+  },
+
+  setFilter: function (id, value) {
+    cache.set(`filter-${id}`, value);
+  },
+
+  // Return true if filter exists, i.e. statements must be hidden
+  getFilter: function (id) {
+    return cache.get(`filter-${id}`, false);
   }
 };
 

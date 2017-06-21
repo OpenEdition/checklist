@@ -37,7 +37,7 @@ class UI extends Base {
     const createConfigView = (parent) => {
       const getInputHtml = (filters) => {
         const inputs = filters.map((filter) => {
-          const isHidden = this.getFilter(filter.id);
+          const isHidden = cache.getFilter(filter.id);
           const checkedAttr = isHidden ? "" : "checked";
           return `<input type="checkbox" class="checklist-filter" value="${filter.id}" ${checkedAttr}>${filter.name}</input>`;
         });
@@ -60,7 +60,7 @@ class UI extends Base {
 
       // Handlers
       const inputHandler = (filterId, hidden) => {
-        this.setFilter(filterId, !hidden);
+        this.filterStatements(filterId, hidden);
       };
 
       $element.find(".checklist-filter").change(function () {
@@ -83,21 +83,16 @@ class UI extends Base {
     this.triggerState("initialized");
   }
 
-  setFilter (id, visible = false) {
-    const setStatementVisibility = (selector, visible = true) => {
+  filterStatements (id, hidden = true) {
+    const setStatementVisibility = (selector, hidden = false) => {
       const $elements = $(selector);
-      $elements.toggleClass("hidden", !visible);
+      $elements.toggleClass("hidden", hidden);
     };
 
     const selector = `.checklist-statement-${id}`;
-    setStatementVisibility(selector, visible);
-    cache.set(`filter-${id}`, visible);
+    setStatementVisibility(selector, hidden);
+    cache.setFilter(id, hidden);
     return this;
-  }
-
-  // Return true if filter exists, i.e. statements must be hidden
-  getFilter (id) {
-    return cache.get(`filter-${id}`, false);
   }
 
   createReport (options) {
