@@ -120,7 +120,14 @@ $(function () {
           });
           this.resolve();
         }
-      }
+      },
+      {
+        name: "Paper rule",
+        tags: ["paper"],
+        action: function () {
+          this.resolve(true);
+        }
+      },
     ]
   })
   .then(function () {

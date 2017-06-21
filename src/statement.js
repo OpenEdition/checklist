@@ -10,7 +10,7 @@ class Statement extends Base {
     this.markers = [];
 
     // Get values from check, otherwise default values are inherited from check
-    this.assign(["name", "description", "id", "type"], check, infos);
+    this.assign(["name", "description", "id", "type", "tags"], check, infos);
     this.count = 1;
 
     // If no id then create it from name
