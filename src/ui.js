@@ -90,7 +90,6 @@ class UI extends Base {
   }
 
   filterStatements (id, hidden = true) {
-    const reports = this.reports;
     this.forEachReport((report) => {
       report.filterStatements(id, hidden);
     });
