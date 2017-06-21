@@ -43,7 +43,7 @@ function initHtml (docId, element) {
       <div class="checklist-rating">${svg["rating-none"]}</div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
-      <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)</div>
+      <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)<a class="checklist-clear-filters">[Supprimer les filtres]</a></div>
       <div class="checklist-rejections">
         <a class="checklist-rejections-toggle checklist-toggle-open-parent"><span class="checklist-indicator-checkrejected"></span> erreur(s) rencontrée(s)</a>
         <ul class="checklist-rejections-list checklist-collapsed"></ul>
@@ -357,6 +357,12 @@ class Report extends Base {
 
     const selector = `.checklist-statement-${id}`;
     setStatementVisibility(selector, hidden);
+    this.updateHiddenCount();
+    return this;
+  }
+
+  clearFilters () {
+    this.find(".checklist-statement.hidden").removeClass("hidden");
     this.updateHiddenCount();
     return this;
   }

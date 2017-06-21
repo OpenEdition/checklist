@@ -15,8 +15,7 @@ const cache = {
     return this;
   },
 
-  clear: function () {
-    const regex = /^checklist-/;
+  clear: function (regex = /^checklist-/) {
     Object.keys(localStorage).forEach((key) => {
       if (!regex.test(key)) return;
       localStorage.removeItem(key);
@@ -60,6 +59,10 @@ const cache = {
   // Return true if any filter exists
   isFiltered: function (ids) {
     return ids.some((id) => cache.getFilter(id));
+  },
+
+  clearFilters: function () {
+    cache.clear(/^checklist-filter-/);
   }
 };
 

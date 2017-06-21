@@ -72,6 +72,11 @@ class UI extends Base {
       return $element.get(0);
     };
 
+    const setMiscEventHandlers = () => {
+      // TODO: move this somewhere else whith other buttons fonctions?
+      $(document).on("click", ".checklist-clear-filters", () => this.clearFilters());
+    };
+
     // FIXME: is it relevant to set this.parent here? And buttonsCreator?
     Object.assign(this, {parent, buttonsCreator});
     this.pane = createPane(parent);
@@ -80,6 +85,7 @@ class UI extends Base {
       this.tocView = createTocView(parent);
       this.copyToc(toc);
     }
+    setMiscEventHandlers();
     this.triggerState("initialized");
   }
 
@@ -89,6 +95,17 @@ class UI extends Base {
       report.filterStatements(id, hidden);
     });
     cache.setFilter(id, hidden);
+    return this;
+  }
+
+  clearFilters () {
+    this.forEachReport((report) => report.clearFilters());
+    // TODO: configView should be an object and this should be its method
+    $(this.configView).find("input.checklist-filter")
+    .each(function () {
+      $(this).prop("checked", true);
+    });
+    cache.clearFilters();
     return this;
   }
 
