@@ -333,6 +333,16 @@ class Report extends Base {
     return this;
   }
 
+  filterStatements (id, hidden = true) {
+    const setStatementVisibility = (selector, hidden = false) => {
+      const $elements = this.find(selector);
+      $elements.toggleClass("hidden", hidden);
+    };
+
+    const selector = `.checklist-statement-${id}`;
+    setStatementVisibility(selector, hidden);
+  }
+
   toCache () {
     cache.setRecord(this);
     return this;

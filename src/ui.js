@@ -84,13 +84,11 @@ class UI extends Base {
   }
 
   filterStatements (id, hidden = true) {
-    const setStatementVisibility = (selector, hidden = false) => {
-      const $elements = $(selector);
-      $elements.toggleClass("hidden", hidden);
-    };
-
-    const selector = `.checklist-statement-${id}`;
-    setStatementVisibility(selector, hidden);
+    const reports = this.reports;
+    Object.keys(reports).forEach((docId) => {
+      const report = reports[docId];
+      report.filterStatements(id, hidden);
+    });
     cache.setFilter(id, hidden);
     return this;
   }
