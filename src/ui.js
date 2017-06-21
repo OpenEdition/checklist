@@ -47,7 +47,8 @@ class UI extends Base {
       const inputHtml = getInputHtml([
         {id: "type-info", name: "Informations"},
         {id: "type-warning", name: "Recommandations"},
-        {id: "type-danger", name: "Alertes"}
+        {id: "type-danger", name: "Alertes"},
+        {id: "tag-paper", name: "Papier"}
       ]);
       const html = `
         <div id="checklist-config-view" class="checklist-config-view">
