@@ -49,7 +49,7 @@ function initHtml (docId, element) {
         <ul class="checklist-rejections-list checklist-collapsed"></ul>
       </div>
       <div class="checklist-indicators">
-        <a class="checklist-rejections-toggle checklist-toggle-open-parent">Informations</a>
+        <a class="checklist-indicators-toggle checklist-toggle-open-parent">Informations</a>
         <div class="checklist-collapsed">
           <p>
             <span class="checklist-indicator-checkcount"></span>&nbsp;vérification(s) effectuée(s), dont
