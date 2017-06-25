@@ -203,6 +203,12 @@ class Report extends Base {
       return li;
     };
 
+    const addNextMarkerButton = ($element) => {
+      const html = `<button class="checklist-btn-nextmarker">Marqueur suivant</button>`;
+      const $btn = $(html).appendTo($element);
+      $btn.click(scrollToNextMarkerHandler);
+    };
+
     const scrollToNextMarkerHandler = () => {
       const markers = statement.markers;
       if (!markers || markers.length === 0) return;
@@ -226,7 +232,9 @@ class Report extends Base {
       injectMarkers();
       const html = getHtml();
       const $element = $(html);
-      $element.click(scrollToNextMarkerHandler);
+      if (statement.markers && statement.markers.length > 0) {
+        addNextMarkerButton($element);
+      }
       $(target).append($element);
     };
 
