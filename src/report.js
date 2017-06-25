@@ -203,10 +203,10 @@ class Report extends Base {
       return li;
     };
 
-    const addNextMarkerButton = ($element) => {
-      const html = `<button class="checklist-btn-nextmarker">Marqueur suivant</button>`;
+    const addButton = ({$element, classname, name, onClick}) => {
+      const html = `<button class="${classname}">${name}</button>`;
       const $btn = $(html).appendTo($element);
-      $btn.click(scrollToNextMarkerHandler);
+      $btn.click(onClick);
     };
 
     const scrollToNextMarkerHandler = () => {
@@ -233,7 +233,12 @@ class Report extends Base {
       const html = getHtml();
       const $element = $(html);
       if (statement.markers && statement.markers.length > 0) {
-        addNextMarkerButton($element);
+        addButton({
+          $element,
+          classname: "checklist-btn-nextmarker",
+          name: "Marqueur suivant",
+          onClick: scrollToNextMarkerHandler
+        });
       }
       $(target).append($element);
     };
