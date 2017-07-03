@@ -228,10 +228,14 @@ class Report extends Base {
       $(window).scrollTop(tops[0]);
     };
 
-    const doInject = (statement, target) => {
-      injectMarkers();
-      const html = getHtml();
-      const $element = $(html);
+    const showDescriptionHandler = () => {
+      const description = statement.description;
+      if (!description) return;
+      const ui = this.caller;
+      ui.showInfo(description);
+    };
+
+    const addStatementButtons = (statement, $element) => {
       if (statement.markers && statement.markers.length > 0) {
         addButton({
           $element,
@@ -240,6 +244,22 @@ class Report extends Base {
           onClick: scrollToNextMarkerHandler
         });
       }
+
+      if (statement.description) {
+        addButton({
+          $element,
+          classname: "checklist-btn-showdescription",
+          name: "Infos",
+          onClick: showDescriptionHandler
+        });
+      }
+    };
+
+    const doInject = (statement, target) => {
+      injectMarkers();
+      const html = getHtml();
+      const $element = $(html);
+      addStatementButtons(statement, $element);
       $(target).append($element);
     };
 

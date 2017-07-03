@@ -203,6 +203,13 @@ class UI extends Base {
     this.triggerState("visible");
     return this;
   }
+
+  showInfo (info) {
+    const $parent = $(this.infosView).find("#checklist-infos-view-contents");
+    $parent.html(info);
+    // TODO: hide/show
+    return this;
+  }
 }
 
 module.exports = UI;
