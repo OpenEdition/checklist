@@ -73,6 +73,17 @@ class UI extends Base {
       return $element.get(0);
     };
 
+    const createInfosView = (parent) => {
+      const html = `
+        <div id="checklist-infos-view" class="checklist-infos-view">
+          <h1>Informations</h1>
+          <div id="checklist-infos-view-contents"></div>
+        </div>
+      `;
+      const $element = $(html).appendTo(parent);
+      return $element.get(0);
+    };
+
     const setMiscEventHandlers = () => {
       // TODO: move this somewhere else whith other buttons fonctions?
       $(document).on("click", ".checklist-clear-filters", () => this.clearFilters());
@@ -82,6 +93,7 @@ class UI extends Base {
     Object.assign(this, {parent, buttonsCreator});
     this.pane = createPane(parent);
     this.configView = createConfigView(parent);
+    this.infosView = createInfosView(parent);
     if (toc) {
       this.tocView = createTocView(parent);
       this.copyToc(toc);
