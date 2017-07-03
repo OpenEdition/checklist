@@ -44,6 +44,7 @@ $(function () {
     rules: [
       {
         name: "First rule",
+        description: "Hello world",
         action: function () {
           this.notify(true);
           this.resolve(true);
@@ -51,6 +52,7 @@ $(function () {
       },
       {
         name: "Second rule (ajax)",
+        description: "Foo bar",
         // TODO: href must be a function (variable)
         href: "./pages/1.html",
         action: function ($) {
@@ -60,6 +62,7 @@ $(function () {
       },
       {
         name: "Timeout rule",
+        description: "Lorem ipsum",
         type: "warning",
         action: function ($) {
           var that = this;
@@ -70,6 +73,7 @@ $(function () {
       },
       {
         name: "False condition",
+        description: "Obladi oblada!",
         condition: "rubrique",
         action: function ($) {
           this.resolve("This should never happen");
