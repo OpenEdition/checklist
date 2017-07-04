@@ -102,6 +102,7 @@ class UI extends Base {
       this.copyToc(toc);
     }
     setMiscEventHandlers();
+    this.show();
     this.triggerState("initialized");
   }
 

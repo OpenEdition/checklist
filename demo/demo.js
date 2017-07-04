@@ -135,8 +135,6 @@ $(function () {
     ]
   })
   .then(function () {
-    // TODO: show the panel automatically
-    checklist.ui.show();
     checklist.run();
 
     // Run batch if publication
