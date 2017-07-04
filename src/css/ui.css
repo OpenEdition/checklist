@@ -73,3 +73,11 @@ body.checklist-visible {
   content: attr(data-checklist-marker-name);
   background: #ccc;
 }
+
+.checklist-infos-view {
+  display: none;
+}
+
+.checklist-infos-view.visible {
+  display: block;
+}

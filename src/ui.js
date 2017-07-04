@@ -78,9 +78,12 @@ class UI extends Base {
         <div id="checklist-infos-view" class="checklist-infos-view">
           <h1>Informations</h1>
           <div id="checklist-infos-view-contents"></div>
+          <button class="checklist-infos-view-close">Fermer</button>
         </div>
       `;
       const $element = $(html).appendTo(parent);
+      const closeHandler = this.hideInfo.bind(this);
+      $element.find(".checklist-infos-view-close").click(closeHandler);
       return $element.get(0);
     };
 
@@ -205,9 +208,18 @@ class UI extends Base {
   }
 
   showInfo (info) {
-    const $parent = $(this.infosView).find("#checklist-infos-view-contents");
-    $parent.html(info);
-    // TODO: hide/show
+    const $view = $(this.infosView);
+    const $container = $view.find("#checklist-infos-view-contents");
+    $container.html(info);
+    $view.addClass("visible");
+    return this;
+  }
+
+  hideInfo () {
+    const $view = $(this.infosView);
+    const $container = $view.find("#checklist-infos-view-contents");
+    $container.empty();
+    $view.removeClass("visible");
     return this;
   }
 }
