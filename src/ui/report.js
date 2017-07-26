@@ -1,7 +1,7 @@
-const Base = require("../base.js");
 const cache = require("./cache.js");
 const Nanobar = require("nanobar");
 const svg = require("./svg.json");
+const View = require("./view.js");
 const {escapeDoubleQuotes} = require("../utils.js");
 
 // Base HTML injection
@@ -37,7 +37,7 @@ function initReportHtml (docId, element) {
   $(element).append(html);
 }
 
-class Report extends Base {
+class Report extends View {
   constructor ({ caller, docId, element, buttonsCreator }) {
     super("Report", caller);
     this.docId = docId; // TODO: self ?
@@ -422,6 +422,20 @@ class Report extends Base {
     return this;
   }
 
+  updateHiddenCount () {
+    const hiddenCount = this.find(".checklist-statement.hidden").length;
+    const $div = this.find(".checklist-hidden-statements");
+    const $span = this.find(".checklist-hidden-count");
+    if (hiddenCount === 0) {
+      $div.removeClass("visible");
+      $span.empty();
+      return;
+    }
+    $div.addClass("visible");
+    $span.text(hiddenCount);
+    return this;
+  }
+
   // CACHE
   // =====
 
@@ -444,27 +458,6 @@ class Report extends Base {
     const record = cache.getRecord(docId);
     if (record == null) return;
     updateViewFromRecord(record);
-    return this;
-  }
-
-  // MISC
-  // ====
-
-  find (selector) {
-    return $(this.element).find(selector);
-  }
-
-  updateHiddenCount () {
-    const hiddenCount = this.find(".checklist-statement.hidden").length;
-    const $div = this.find(".checklist-hidden-statements");
-    const $span = this.find(".checklist-hidden-count");
-    if (hiddenCount === 0) {
-      $div.removeClass("visible");
-      $span.empty();
-      return;
-    }
-    $div.addClass("visible");
-    $span.text(hiddenCount);
     return this;
   }
 }
