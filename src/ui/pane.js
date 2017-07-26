@@ -5,7 +5,7 @@ class Pane extends View {
   constructor ({ ui, parent }) {
     super("Pane", ui, parent);
 
-    const html = `<div id="checklist-pane" class="checklist-pane"></div>`;
+    const html = `<div id="checklist-pane" class="checklist-pane checklist-component"></div>`;
     this.createView(html);
     this.showReport();
   }

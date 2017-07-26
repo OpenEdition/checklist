@@ -115,13 +115,30 @@ class UI extends Base {
     return this;
   }
 
+  showChildpane (name) {
+    const components = this.components;
+    for (let key in components) {
+      const component = components[key];
+      if (!component.childpane) continue;
+      component.toggle(key === name);
+    }
+    return this;
+  }
+
+  hideChildpanes () {
+    this.showChildpane();
+    return this;
+  }
+
   showInfo (info) {
     this.components.help.setContent(info);
+    this.showChildpane("help");
     return this;
   }
 
   hideInfo () {
     this.components.help.empty();
+    this.hideChildpanes();
     return this;
   }
 }

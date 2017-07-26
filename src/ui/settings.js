@@ -19,7 +19,7 @@ function getViewHtml () {
   ]);
 
   const html = `
-    <div id="checklist-settings" class="checklist-settings">
+    <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
       <h1>Configuration</h1>
       <h2>Filtres</h2>
       ${inputHtml}
@@ -31,6 +31,7 @@ function getViewHtml () {
 class Settings extends View {
   constructor ({ ui, parent }) {
     super("Settings", ui, parent);
+    this.childpane = true;
 
     const html = getViewHtml();
     this.createView(html);

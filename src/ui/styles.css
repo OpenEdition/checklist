@@ -3,14 +3,21 @@ body.checklist-visible {
   position: relative;
 }
 
-.checklist-pane {
+.checklist-component {
+  display: none;
+}
+
+.checklist-visible .checklist-pane, .checklist-visible .checklist-component.visible {
+  display: block;
+}
+
+.checklist-pane, .checklist-childpane {
   padding: 20px;
   position: fixed;
   right: 0;
   top: 0;
   bottom: 0;
   background: #eee;
-  display: none;
   min-width: 200px;
   width: 0%;
   transition: width .8s ease;
@@ -18,8 +25,8 @@ body.checklist-visible {
   overflow-y: auto;
 }
 
-.checklist-visible .checklist-pane {
-  display: block;
+.checklist-childpane {
+  z-index: 10001;
 }
 
 .checklist-indicators span {
