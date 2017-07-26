@@ -1,6 +1,7 @@
 const Base = require("../base.js");
 const cache = require("./cache.js");
 const Help = require("./help.js");
+const initActions = require("./actions.js");
 const Pane = require("./pane.js");
 const Report = require("./report.js");
 const Settings = require("./settings.js");
@@ -19,14 +20,9 @@ class UI extends Base {
 
   // FIXME: not consistent with other checklist components
   init ({parent, buttonsCreator, toc}) {
-    const setMiscEventHandlers = () => {
-      // TODO: move this somewhere else whith other buttons fonctions?
-      $(document).on("click", ".checklist-clear-filters", () => this.clearFilters());
-    };
-
     Object.assign(this, {parent, buttonsCreator});
     this.createComponents(toc);
-    setMiscEventHandlers();
+    initActions(this);
     this.show();
     this.triggerState("initialized");
   }
@@ -54,7 +50,7 @@ class UI extends Base {
 
   clearFilters () {
     this.forEachReport((report) => report.clearFilters());
-    this.settings.clearFilters();
+    this.components.settings.clearFilters();
     cache.clearFilters();
     return this;
   }
@@ -121,6 +117,11 @@ class UI extends Base {
 
   showInfo (info) {
     this.components.help.setContent(info);
+    return this;
+  }
+
+  hideInfo () {
+    this.components.help.empty();
     return this;
   }
 }

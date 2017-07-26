@@ -8,17 +8,10 @@ class Help extends View {
       <div id="checklist-help" class="checklist-help">
         <h1>Informations</h1>
         <div id="checklist-help-contents"></div>
-        <button class="checklist-help-close">Fermer</button>
+        <button class="checklist-help-hide" data-checklist-action="help-hide">Fermer</button>
       </div>
     `;
     this.createView(html);
-    this.initEventHandlers();
-  }
-
-  initEventHandlers () {
-    const closeHandler = this.empty.bind(this);
-    this.find(".checklist-help-close").click(closeHandler);
-    return this;
   }
 
   setContent (info) {

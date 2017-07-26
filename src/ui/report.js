@@ -10,13 +10,13 @@ function getHtml (docId) {
       <div class="checklist-rating">${svg["rating-none"]}</div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
-      <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)<a class="checklist-clear-filters">[Supprimer les filtres]</a></div>
+      <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)<a data-checklist-action="filters-clear">[Supprimer les filtres]</a></div>
       <div class="checklist-rejections">
-        <a class="checklist-rejections-toggle checklist-toggle-open-parent"><span class="checklist-indicator-checkrejected"></span> erreur(s) rencontrée(s)</a>
+        <a class="checklist-rejections-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent"><span class="checklist-indicator-checkrejected"></span> erreur(s) rencontrée(s)</a>
         <ul class="checklist-rejections-list checklist-collapsed"></ul>
       </div>
       <div class="checklist-indicators">
-        <a class="checklist-indicators-toggle checklist-toggle-open-parent">Informations</a>
+        <a class="checklist-indicators-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent">Informations</a>
         <div class="checklist-collapsed">
           <p>
             <span class="checklist-indicator-checkcount"></span>&nbsp;vérification(s) effectuée(s), dont
@@ -45,7 +45,6 @@ class Report extends View {
 
     const html = getHtml(docId, parent);
     this.createView(html);
-    this.initEventHandlers();
 
     this.progressbar = this.createProgressbar();
     this.toolbar = this.createToolbar();
@@ -56,15 +55,6 @@ class Report extends View {
 
   // CONSTRUCTOR METHODS
   // ===================
-
-  initEventHandlers () {
-    const $btn = this.find(".checklist-toggle-open-parent");
-    $btn.each(function () {
-      $(this).click(function () {
-        $(this).parent().toggleClass("open");
-      });
-    });
-  }
 
   createProgressbar () {
     const progressbarDiv = this.find(".checklist-progressbar").get(0);
@@ -186,54 +176,27 @@ class Report extends View {
       return li;
     };
 
-    const addButton = ({$element, classname, name, onClick}) => {
-      const html = `<button class="${classname}">${name}</button>`;
-      const $btn = $(html).appendTo($element);
-      $btn.click(onClick);
+    const addButton = ({element, classname, name, action}) => {
+      const html = `<button class="${classname}" data-checklist-action="${action}">${name}</button>`;
+      $(html).appendTo(element);
     };
 
-    const scrollToNextMarkerHandler = () => {
-      const markers = statement.markers;
-      if (!markers || markers.length === 0) return;
-
-      const winPos = $(window).scrollTop();
-      const isBottomReached = winPos + $(window).height() > $(document).height() - 50;
-      const tops = markers.map((marker) => {
-        return $(marker.element).offset().top;
-      });
-      const nextTop = tops.find((top) => {
-        return top > winPos + 10;
-      });
-
-      if (!isBottomReached && nextTop) {
-        return $(window).scrollTop(nextTop);
-      }
-      $(window).scrollTop(tops[0]);
-    };
-
-    const showDescriptionHandler = () => {
-      const description = statement.description;
-      if (!description) return;
-      const ui = this.caller;
-      ui.showInfo(description);
-    };
-
-    const addStatementButtons = (statement, $element) => {
+    const addStatementButtons = (statement, element) => {
       if (statement.markers && statement.markers.length > 0) {
         addButton({
-          $element,
-          classname: "checklist-btn-nextmarker",
+          element,
+          classname: "checklist-btn-goto-next-marker",
           name: "Marqueur suivant",
-          onClick: scrollToNextMarkerHandler
+          action: "goto-next-marker"
         });
       }
 
       if (statement.description) {
         addButton({
-          $element,
-          classname: "checklist-btn-showdescription",
+          element,
+          classname: "checklist-btn-help-show",
           name: "Infos",
-          onClick: showDescriptionHandler
+          action: "help-show"
         });
       }
     };
@@ -241,9 +204,11 @@ class Report extends View {
     const doInjectStatement = (statement, target) => {
       this.injectMarkers(statement.markers);
       const html = getStatementHtml();
-      const $element = $(html);
-      addStatementButtons(statement, $element);
-      $(target).append($element);
+      const element = $(html).get(0);
+      addStatementButtons(statement, element);
+      // Attach statement to element to use it in events
+      element.statement = statement;
+      $(target).append(element);
     };
 
     const target = this.find(".checklist-statements");
