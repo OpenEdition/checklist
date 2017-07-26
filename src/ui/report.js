@@ -4,8 +4,7 @@ const svg = require("./svg.json");
 const View = require("./view.js");
 const {escapeDoubleQuotes} = require("../utils.js");
 
-// Base HTML injection
-function initReportHtml (docId, element) {
+function getHtml (docId) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-rating">${svg["rating-none"]}</div>
@@ -34,23 +33,22 @@ function initReportHtml (docId, element) {
       </div>
     </div>
   `;
-  $(element).append(html);
+  return html;
 }
 
 class Report extends View {
-  constructor ({ caller, docId, element, buttonsCreator }) {
-    super("Report", caller);
-    this.docId = docId; // TODO: self ?
-    this.element = element;
+  constructor ({ ui, docId, parent, buttonsCreator }) {
+    super("Report", ui, parent);
+    this.docId = docId;
     this.buttonsCreator = buttonsCreator;
     this.errMsgs = [];
 
-    initReportHtml(this.docId, this.element);
-    this.initHandlers();
+    const html = getHtml(docId, parent);
+    this.createView(html);
+    this.initEventHandlers();
 
-    const progressbarDiv = this.find(".checklist-progressbar").get(0);
-    this.progressbar = this.createProgressbar(progressbarDiv);
-    this.toolbar = this.createToolbar({docId, element, buttonsCreator});
+    this.progressbar = this.createProgressbar();
+    this.toolbar = this.createToolbar();
 
     this.clearIndicators();
     this.triggerState("ready");
@@ -59,9 +57,19 @@ class Report extends View {
   // CONSTRUCTOR METHODS
   // ===================
 
-  createProgressbar (element) {
+  initEventHandlers () {
+    const $btn = this.find(".checklist-toggle-open-parent");
+    $btn.each(function () {
+      $(this).click(function () {
+        $(this).parent().toggleClass("open");
+      });
+    });
+  }
+
+  createProgressbar () {
+    const progressbarDiv = this.find(".checklist-progressbar").get(0);
     return new Nanobar({
-      target: element
+      target: progressbarDiv
     });
   }
 
@@ -90,15 +98,6 @@ class Report extends View {
     const $toolbar = $(html).appendTo(this.element);
     const toolbar = $toolbar.get(0);
     return toolbar;
-  }
-
-  initHandlers () {
-    const $btn = this.find(".checklist-toggle-open-parent");
-    $btn.each(function () {
-      $(this).click(function () {
-        $(this).parent().toggleClass("open");
-      });
-    });
   }
 
   // CHECKER & CHECKS

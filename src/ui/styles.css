@@ -74,10 +74,10 @@ body.checklist-visible {
   background: #ccc;
 }
 
-.checklist-infos-view {
+.checklist-help {
   display: none;
 }
 
-.checklist-infos-view.visible {
+.checklist-help.visible {
   display: block;
 }
