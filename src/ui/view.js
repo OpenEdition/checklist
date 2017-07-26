@@ -27,14 +27,18 @@ class View extends Base {
   }
 
   show () {
-    const $element = this.get$element();
-    $element.addClass("visible");
+    this.toggle(true);
     return this;
   }
 
   hide () {
+    this.toggle(false);
+    return this;
+  }
+
+  toggle (flag) {
     const $element = this.get$element();
-    $element.removeClass("visible");
+    $element.toggleClass("visible", flag);
     return this;
   }
 }
