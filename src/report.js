@@ -161,24 +161,6 @@ class Report extends Base {
   }
 
   injectStatement (statement, increment = true) {
-    const injectMarker = (marker) => {
-      const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${marker.name}"></span>`;
-      const $element = $(html);
-      if (marker.position !== "after") {
-          $element.prependTo(marker.target);
-      } else {
-          $element.appendTo(marker.target);
-      }
-      marker.setElement($element.get(0));
-    };
-
-    const injectMarkers = () => {
-      if (!statement.markers) return;
-      statement.markers.forEach((marker) => {
-        injectMarker(marker);
-      });
-    };
-
     const getHtml = () => {
       const getTagsClasses = (tags = []) => {
         return tags.map((tag) => `checklist-statement-tag-${tag}`).join(" ");
@@ -256,7 +238,7 @@ class Report extends Base {
     };
 
     const doInject = (statement, target) => {
-      injectMarkers();
+      this.injectMarkers(statement.markers);
       const html = getHtml();
       const $element = $(html);
       addStatementButtons(statement, $element);
@@ -282,6 +264,24 @@ class Report extends Base {
       this.injectStatement(statement, increment);
     });
     return this;
+  }
+
+  injectMarker (marker) {
+    const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${marker.name}"></span>`;
+    const $element = $(html);
+    if (marker.position !== "after") {
+        $element.prependTo(marker.target);
+    } else {
+        $element.appendTo(marker.target);
+    }
+    marker.setElement($element.get(0));
+  }
+
+  injectMarkers (markers) {
+    if (!markers) return;
+    markers.forEach((marker) => {
+      this.injectMarker(marker);
+    });
   }
 
   injectRejection (errMsg) {
