@@ -1,8 +1,8 @@
-const Base = require("./base.js");
+const Base = require("../base.js");
 const cache = require("./cache.js");
 const Nanobar = require("nanobar");
 const svg = require("./svg.json");
-const {escapeDoubleQuotes} = require("./utils.js");
+const {escapeDoubleQuotes} = require("../utils.js");
 
 // Base HTML injection
 function initReportHtml (docId, element) {

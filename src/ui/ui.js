@@ -1,10 +1,10 @@
-const Base = require("./base.js");
+const Base = require("../base.js");
 const cache = require("./cache.js");
 const Report = require("./report.js");
-const { getDocIdFromPathname } = require("./utils.js");
+const { getDocIdFromPathname } = require("../utils.js");
 
 // Load UI styles
-require("./css/ui.css");
+require("./styles.css");
 
 class UI extends Base {
   constructor ({ caller }) {

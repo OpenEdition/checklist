@@ -3,7 +3,7 @@ const Batch = require("./batch.js");
 const Checker = require("./checker.js");
 const Config = require("./config.js");
 const Loader = require("./loader.js");
-const UI = require("./ui.js");
+const UI = require("./ui/ui.js");
 
 function initComponents (checklist) {
   function getComponentPromise (componentClass) {
