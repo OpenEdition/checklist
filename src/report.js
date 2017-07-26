@@ -68,7 +68,7 @@ class Report extends Base {
   createToolbar () {
     if (typeof this.uttonsCreator !== "function") return;
 
-    const getAttributes = (buttonInfos) => {
+    const getButtonAttributes = (buttonInfos) => {
       const attributes = [];
       for (let attrName in buttonInfos) {
         attributes.push(`${attrName}="${buttonInfos[attrName]}"`);
@@ -78,7 +78,7 @@ class Report extends Base {
 
     const getButtonsHtml = (buttonsInfos) => {
       const buttons = buttonsInfos.map((buttonInfos) => {
-        const attributes = getAttributes(buttonInfos);
+        const attributes = getButtonAttributes(buttonInfos);
         return `<a class="checklist-toolbar-button" ${attributes}>${buttonInfos.title}</a>`;
       });
       const html = buttons.join("\n");
@@ -130,17 +130,17 @@ class Report extends Base {
   }
 
   addCheck (check) {
-    const addToIndicatorsView = (check) => {
-      const getState = (check) => {
-        const done = check.hasState("done");
-        const success = check.hasState("success");
-        const rejected = check.hasState("rejected");
-        if (!done) throw Error("Check is not done");
-        if (success === rejected) throw Error("Check state is not valid");
-        return success ? "checksuccess" : "checkrejected";
-      };
+    const getCheckState = (check) => {
+      const done = check.hasState("done");
+      const success = check.hasState("success");
+      const rejected = check.hasState("rejected");
+      if (!done) throw Error("Check is not done");
+      if (success === rejected) throw Error("Check state is not valid");
+      return success ? "checksuccess" : "checkrejected";
+    };
 
-      const state = getState(check);
+    const addToIndicatorsView = (check) => {
+      const state = getCheckState(check);
       this.incrementIndicator(state);
       this.incrementIndicator("checkcount");
       this.updateIndicatorsView();
@@ -163,15 +163,15 @@ class Report extends Base {
   // ==========
 
   injectStatement (statement, increment = true) {
-    const getHtml = () => {
-      const getTagsClasses = (tags = []) => {
-        return tags.map((tag) => `checklist-statement-tag-${tag}`).join(" ");
-      };
+    const getTagsClasses = (tags = []) => {
+      return tags.map((tag) => `checklist-statement-tag-${tag}`).join(" ");
+    };
 
-      const getTagsFilters = (tags = []) => {
-        return tags.map((tag) => `tag-${tag}`);
-      };
+    const getTagsFilters = (tags = []) => {
+      return tags.map((tag) => `tag-${tag}`);
+    };
 
+    const getStatementHtml = () => {
       const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
       const type = statement.type;
       const typeClass = type ? `checklist-statement-type-${type}` : "";
@@ -239,16 +239,16 @@ class Report extends Base {
       }
     };
 
-    const doInject = (statement, target) => {
+    const doInjectStatement = (statement, target) => {
       this.injectMarkers(statement.markers);
-      const html = getHtml();
+      const html = getStatementHtml();
       const $element = $(html);
       addStatementButtons(statement, $element);
       $(target).append($element);
     };
 
     const target = this.find(".checklist-statements");
-    doInject(statement, target);
+    doInjectStatement(statement, target);
     const count = statement.count || 1;
     if (increment) {
       this.incrementIndicator("statementcount", count);
