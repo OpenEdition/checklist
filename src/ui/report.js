@@ -12,24 +12,8 @@ function getHtml (docId) {
       <ul class="checklist-statements"></ul>
       <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)<a data-checklist-action="filters-clear">[Supprimer les filtres]</a></div>
       <div class="checklist-rejections">
-        <a class="checklist-rejections-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent"><span class="checklist-indicator-checkrejected"></span> erreur(s) rencontrée(s)</a>
+        <a class="checklist-rejections-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent">Des erreurs ont été rencontrées</a>
         <ul class="checklist-rejections-list checklist-collapsed"></ul>
-      </div>
-      <div class="checklist-indicators">
-        <a class="checklist-indicators-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent">Informations</a>
-        <div class="checklist-collapsed">
-          <p>
-            <span class="checklist-indicator-checkcount"></span>&nbsp;vérification(s) effectuée(s), dont
-            <span class="checklist-indicator-checksuccess"></span>&nbsp;réussie(s) et
-            <span class="checklist-indicator-checkrejected"></span>&nbsp;abandonnée(s).
-          </p>
-          <p>
-            <span class="checklist-indicator-statementcount"></span>&nbsp;notification(s) affichée(s), dont
-            <span class="checklist-indicator-statementinfo"></span>&nbsp;information(s),
-            <span class="checklist-indicator-statementwarning"></span>&nbsp;recommandation(s) et
-            <span class="checklist-indicator-statementdanger"></span>&nbsp;alerte(s).
-          </p>
-        </div>
       </div>
     </div>
   `;
@@ -314,28 +298,13 @@ class Report extends View {
   }
 
   updateIndicatorsView () {
-    const indicators = this.indicators;
-
     const updateProgressbar = () => {
-      const {checkcount, checktotal} = indicators;
+      const {checkcount, checktotal} = this.indicators;
       const percentage = (checkcount / checktotal) * 100;
       this.progressbar.go(percentage);
     };
 
-    const setIndicatorView = (key, value) => {
-      const $el = this.find(`.checklist-indicator-${key}`);
-      $el.text(value);
-      return this;
-    };
-
-    const updateIndicators = () => {
-      for (let key in indicators) {
-        setIndicatorView(key, indicators[key]);
-      }
-    };
-
     updateProgressbar();
-    updateIndicators();
     this.updateHiddenCount();
     return this;
   }
@@ -414,7 +383,6 @@ class Report extends View {
       Object.assign(this, {errMsgs, indicators, states});
       this.injectStatements(statements, false);
       this.injectRejections(errMsgs);
-      this.updateIndicatorsView();
       this.updateRating();
     };
 
