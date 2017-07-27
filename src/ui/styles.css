@@ -12,7 +12,7 @@ body.checklist-visible {
 }
 
 .checklist-pane, .checklist-childpane {
-  padding: 20px;
+  padding: 10px 20px;
   position: fixed;
   right: 0;
   top: 0;
@@ -27,6 +27,14 @@ body.checklist-visible {
 
 .checklist-childpane {
   z-index: 10001;
+}
+
+.checklist-pane h1, .checklist-childpane h1 {
+  font-size: 16px;
+  color: #999;
+  border-bottom: 1px solid #999;
+  padding: 6px 0 6px 0;
+  margin: 0 0 6px 0;
 }
 
 .checklist-close-btn {

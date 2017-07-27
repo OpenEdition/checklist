@@ -1,3 +1,4 @@
+const svg = require("./svg.json");
 const View = require("./view.js");
 
 class Help extends View {
@@ -7,9 +8,9 @@ class Help extends View {
 
     const html = `
       <div id="checklist-help" class="checklist-help checklist-component checklist-childpane">
-        <h1>Informations</h1>
-        <div id="checklist-help-contents"></div>
       <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
+        <h1>${svg.help} Aide</h1>
+        <div id="checklist-help-contents"></div>
       </div>
     `;
     this.createView(html);

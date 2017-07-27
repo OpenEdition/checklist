@@ -14,9 +14,9 @@ function initActions (ui) {
     "help-show": function () {
       const parent = $(this).parent(".checklist-statement").get(0);
       const statement = parent.statement;
-      const description = statement.description;
-      if (!description) return;
-      ui.showInfo(description);
+      const {name, description} = statement;
+      if (!name || !description) return;
+      ui.showInfo(`<h2>${name}</h2> <p>${description}</p>`);
     },
 
     "goto-next-marker": function () {
