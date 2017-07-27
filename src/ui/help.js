@@ -9,7 +9,7 @@ class Help extends View {
       <div id="checklist-help" class="checklist-help checklist-component checklist-childpane">
         <h1>Informations</h1>
         <div id="checklist-help-contents"></div>
-        <button class="checklist-help-hide" data-checklist-action="help-hide">Fermer</button>
+      <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
       </div>
     `;
     this.createView(html);
@@ -26,6 +26,10 @@ class Help extends View {
     $container.empty();
     this.hide();
     return this;
+  }
+
+  close () {
+    this.empty();
   }
 }
 

@@ -20,6 +20,7 @@ function getViewHtml () {
 
   const html = `
     <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
+      <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
       <h1>Configuration</h1>
       <h2>Filtres</h2>
       ${inputHtml}

@@ -10,6 +10,7 @@ class View extends Base {
   createView (html) {
     this.$element = $(html).appendTo(this.parent);
     this.element = this.$element.get(0);
+    this.element.view = this;
     return this;
   }
 
@@ -40,6 +41,10 @@ class View extends Base {
     const $element = this.get$element();
     $element.toggleClass("visible", flag);
     return this;
+  }
+
+  close () {
+    this.hide();
   }
 }
 

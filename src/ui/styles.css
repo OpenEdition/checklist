@@ -29,6 +29,16 @@ body.checklist-visible {
   z-index: 10001;
 }
 
+.checklist-close-btn {
+  position: absolute;
+  padding: 0;
+  text-align: center;
+  top: 10px;
+  right: 10px;;
+  width: 24px;
+  height: 24px;
+}
+
 .checklist-indicators span {
   font-weight: bold;
 }

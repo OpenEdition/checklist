@@ -1,11 +1,14 @@
 function initActions (ui) {
   const actions = {
-    "filters-clear": function () {
-      ui.clearFilters();
+    "close-component": function () {
+      const parent = $(this).parents(".checklist-component").get(0);
+      const view = parent.view;
+      if (!view) return;
+      view.close();
     },
 
-    "help-hide": function () {
-      ui.hideInfo();
+    "filters-clear": function () {
+      ui.clearFilters();
     },
 
     "help-show": function () {
