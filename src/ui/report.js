@@ -176,8 +176,8 @@ class Report extends View {
       return li;
     };
 
-    const addButton = ({element, classname, name, action}) => {
-      const html = `<button class="${classname}" data-checklist-action="${action}">${name}</button>`;
+    const addButton = ({element, classname, contents, action}) => {
+      const html = `<button class="checklist-statement-btn ${classname}" data-checklist-action="${action}">${contents}</button>`;
       $(html).appendTo(element);
     };
 
@@ -186,7 +186,7 @@ class Report extends View {
         addButton({
           element,
           classname: "checklist-btn-goto-next-marker",
-          name: "Marqueur suivant",
+          contents: svg.search,
           action: "goto-next-marker"
         });
       }
@@ -195,7 +195,7 @@ class Report extends View {
         addButton({
           element,
           classname: "checklist-btn-help-show",
-          name: "Infos",
+          contents: svg.help,
           action: "help-show"
         });
       }
