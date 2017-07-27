@@ -7,7 +7,7 @@ const {escapeDoubleQuotes} = require("../utils.js");
 function getHtml (docId) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
-      <div class="checklist-rating">${svg["rating-none"]}</div>
+      <div class="checklist-rating">${svg.spinner}</div>
       <div class="checklist-progressbar"></div>
       <ul class="checklist-statements"></ul>
       <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)<a data-checklist-action="filters-clear">[Supprimer les filtres]</a></div>
