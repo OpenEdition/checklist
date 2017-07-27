@@ -64,7 +64,7 @@ class Report extends View {
   }
 
   createToolbar () {
-    if (typeof this.uttonsCreator !== "function") return;
+    if (typeof this.buttonsCreator !== "function") return;
 
     const getButtonAttributes = (buttonInfos) => {
       const attributes = [];
