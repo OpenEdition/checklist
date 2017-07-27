@@ -37,6 +37,18 @@ body.checklist-visible {
   margin: 0 0 6px 0;
 }
 
+.checklist-rating {
+  display: block;
+  margin: 10px auto;
+  width: 48px;
+  height: 48px;
+}
+
+.checklist-rating svg {
+  width: 48px;
+  height: 48px;
+}
+
 .svg-spinner {
   -webkit-animation-name: spin;
   -webkit-animation-duration: 1000ms;
