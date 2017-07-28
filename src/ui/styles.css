@@ -101,6 +101,11 @@ body.checklist-visible {
   bottom: 0;
 }
 
+/* TODO: factoriser .hidden/.visible */
+.checklist-statements-group.hidden {
+  display: none;
+}
+
 .checklist-rejections {
   display: none;
 }

@@ -9,7 +9,20 @@ function getHtml (docId) {
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-rating">${svg.spinner}</div>
       <div class="checklist-progressbar"></div>
-      <ul class="checklist-statements"></ul>
+      <div class="checklist-statements">
+        <div class="checklist-statements-danger checklist-statements-group">
+          <h3>Avertissements</h3>
+          <ul></ul>
+        </div>
+        <div class="checklist-statements-warning checklist-statements-group">
+          <h3>Recommandations</h3>
+          <ul></ul>
+        </div>
+        <div class="checklist-statements-info checklist-statements-group">
+          <h3>Informations</h3>
+          <ul></ul>
+        </div>
+      </div>
       <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)<a data-checklist-action="filters-clear">[Supprimer les filtres]</a></div>
       <div class="checklist-rejections">
         <a class="checklist-rejections-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent">Des erreurs ont été rencontrées</a>
@@ -116,7 +129,7 @@ class Report extends View {
       const state = getCheckState(check);
       this.incrementIndicator(state);
       this.incrementIndicator("checkcount");
-      this.updateIndicatorsView();
+      this.updateView();
     };
 
     const addToRejectionsView = (check) => {
@@ -185,6 +198,14 @@ class Report extends View {
       }
     };
 
+    const getGroup = (type) => this.find(`.checklist-statements-${type}`);
+
+    const appendToGroup = (element, type = "info") => {
+      const $group = getGroup(type);
+      const $ul = $group.find("ul");
+      $($ul).append(element);
+    };
+
     const doInjectStatement = (statement, target) => {
       this.injectMarkers(statement.markers);
       const html = getStatementHtml();
@@ -192,16 +213,15 @@ class Report extends View {
       addStatementButtons(statement, element);
       // Attach statement to element to use it in events
       element.statement = statement;
-      $(target).append(element);
+      appendToGroup(element, statement.type);
     };
 
-    const target = this.find(".checklist-statements");
-    doInjectStatement(statement, target);
+    doInjectStatement(statement);
     const count = statement.count || 1;
     if (increment) {
       this.incrementIndicator("statementcount", count);
       this.incrementIndicator(`statement${statement.type}`, count);
-      this.updateIndicatorsView();
+      this.updateView();
     }
     return this;
   }
@@ -283,7 +303,7 @@ class Report extends View {
       statementwarning: 0,
       statementdanger: 0
     };
-    this.updateIndicatorsView();
+    this.updateView();
     return this;
   }
 
@@ -297,13 +317,22 @@ class Report extends View {
     return this;
   }
 
-  updateIndicatorsView () {
+  updateView () {
+    const toggleStatementGroups = () => {
+      const $groups = this.find(".checklist-statements-group");
+      $groups.each(function () {
+        const isEmpty = $(this).find("li").length === 0;
+        $(this).toggleClass("hidden", isEmpty);
+      });
+    };
+
     const updateProgressbar = () => {
       const {checkcount, checktotal} = this.indicators;
       const percentage = (checkcount / checktotal) * 100;
       this.progressbar.go(percentage);
     };
 
+    toggleStatementGroups();
     updateProgressbar();
     this.updateHiddenCount();
     return this;
@@ -313,7 +342,7 @@ class Report extends View {
   // ======
 
   // TODO: Add to documentation:
-  // types = danger, warning, info
+  // types = danger , warning , info
   // ratings = bad, good, perfect
   computeRating () {
     const {statementwarning, statementdanger} = this.indicators;
