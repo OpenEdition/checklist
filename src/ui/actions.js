@@ -40,6 +40,10 @@ function initActions (ui) {
       $(window).scrollTop(tops[0]);
     },
 
+    "settings-show": function () {
+      ui.showChildpane("settings");
+    },
+
     "toggle-parent": function () {
       $(this).parent().toggleClass("open");
     }
