@@ -1,4 +1,5 @@
 const path = require("path");
+const LessPluginAutoPrefix = require("less-plugin-autoprefix");
 
 const jsRule = {
   test: /\.js$/,
@@ -11,7 +12,19 @@ const jsRule = {
 
 const lessRule = {
   test: /\.less$/,
-  use: ["style-loader", "css-loader", "less-loader"],
+  use: [
+    "style-loader",
+    "css-loader",
+    {
+      loader: "less-loader",
+      options: {
+        plugins: [
+          // See .browserslistrc
+          new LessPluginAutoPrefix()
+        ]
+      }
+    }
+  ],
 };
 
 module.exports = [
