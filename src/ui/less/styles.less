@@ -1,98 +1,14 @@
 @import (reference) "vars.less";
+@import "animations.less";
 
-body.checklist-visible {
-  margin-right: 240px !important;
-  position: relative;
-}
+// GENERIC RULES
+// =============
 
-.checklist-component {
+.hidden {
   display: none;
 }
 
-.checklist-visible .checklist-pane, .checklist-visible .checklist-component.visible {
-  display: block;
-}
-
-.checklist-pane, .checklist-childpane {
-  padding: 10px 20px;
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: #eee;
-  min-width: 200px;
-  width: 0%;
-  transition: width .8s ease;
-  z-index: 10000;
-  overflow-y: auto;
-}
-
-.checklist-childpane {
-  z-index: 10001;
-}
-
-.checklist-pane h1, .checklist-childpane h1 {
-  font-size: 16px;
-  color: #999;
-  border-bottom: 1px solid #999;
-  padding: 6px 0 6px 0;
-  margin: 0 0 6px 0;
-}
-
-.checklist-rating {
-  display: block;
-  margin: 10px auto;
-  width: 48px;
-  height: 48px;
-}
-
-.checklist-rating svg {
-  width: 48px;
-  height: 48px;
-}
-
-.svg-spinner {
-  animation-name: spin;
-  animation-duration: 1000ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes spin {
-  from {transform:rotate(0deg);}
-  to {transform:rotate(360deg);}
-}
-
-.checklist-close-btn {
-  position: absolute;
-  padding: 0;
-  text-align: center;
-  top: 10px;
-  right: 10px;;
-  width: 24px;
-  height: 24px;
-}
-
-.checklist-indicators span {
-  font-weight: bold;
-}
-
-.checklist-buttons {
-  margin-bottom: 20px;
-  position: absolute;
-  bottom: 0;
-}
-
-/* TODO: factoriser .hidden/.visible */
-.checklist-statements-group.hidden {
-  display: none;
-}
-
-.checklist-rejections {
-  display: none;
-}
-
-.checklist-rejections.visible {
+.visible {
   display: block;
 }
 
@@ -113,16 +29,94 @@ body.checklist-visible {
   display: block;
 }
 
-.checklist-statement.hidden {
+// PANE AND COMPONENTS
+// ===================
+
+body.checklist-visible {
+  margin-right: @pane-width !important;
+  position: relative;
+}
+
+.checklist-component {
   display: none;
+}
+
+.checklist-visible .checklist-pane, .checklist-visible .checklist-component.visible {
+  display: block;
+}
+
+.checklist-pane, .checklist-childpane {
+  width: @pane-width;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  background: @bg-color;
+  z-index: @z-index;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.checklist-childpane {
+  z-index: @z-index + 1;
+}
+
+.checklist-pane h1, .checklist-childpane h1 {
+  font-size: 16px;
+  color: #999;
+  border-bottom: 1px solid #999;
+  padding: 6px 0 6px 0;
+  margin: 0 0 6px 0;
+}
+
+.checklist-close-btn {
+  position: absolute;
+  padding: 0;
+  text-align: center;
+  top: 10px;
+  right: 10px;;
+  width: 24px;
+  height: 24px;
+}
+
+// REPORTS
+// =======
+
+.checklist-rating {
+  display: block;
+  margin: 10px auto;
+  width: 48px;
+  height: 48px;
+}
+
+.checklist-rating svg {
+  width: 48px;
+  height: 48px;
+}
+
+.svg-spinner {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+/* TODO: factoriser .hidden/.visible */
+.checklist-statements-group.hidden {
+  display: none;
+}
+
+.checklist-rejections {
+  display: none;
+}
+
+.checklist-rejections.visible {
+  display: block;
 }
 
 .checklist-hidden-statements {
   display: none;
-}
-
-.checklist-hidden-statements.visible {
-  display: block;
 }
 
 .checklist-marker:before {
@@ -132,8 +126,4 @@ body.checklist-visible {
 
 .checklist-help {
   display: none;
-}
-
-.checklist-help.visible {
-  display: block;
 }
