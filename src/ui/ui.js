@@ -8,7 +8,7 @@ const Settings = require("./settings.js");
 const TOC = require("./toc.js");
 
 // Load UI styles
-require("./styles.css");
+require("./less/styles.less");
 
 class UI extends Base {
   constructor ({ caller }) {

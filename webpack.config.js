@@ -9,9 +9,9 @@ const jsRule = {
   }],
 };
 
-const cssRule = {
-  test: /\.css$/,
-  use: ["style-loader", "css-loader"],
+const lessRule = {
+  test: /\.less$/,
+  use: ["style-loader", "css-loader", "less-loader"],
 };
 
 module.exports = [
@@ -25,7 +25,7 @@ module.exports = [
       filename: "checklist.js"
     },
     module: {
-      rules: [jsRule, cssRule],
+      rules: [jsRule, lessRule],
     }
   },
   {
