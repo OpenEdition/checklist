@@ -343,12 +343,12 @@ class Report extends View {
 
   // TODO: Add to documentation:
   // types = danger , warning , info
-  // ratings = bad, good, perfect
+  // ratings = bad, good, excellent
   computeRating () {
     const {statementwarning, statementdanger} = this.indicators;
     if (statementdanger > 0) return "bad";
     if (statementwarning > 0) return "good";
-    return "perfect";
+    return "excellent";
   }
 
   updateRating () {
