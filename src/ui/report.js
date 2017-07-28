@@ -221,8 +221,8 @@ class Report extends View {
     if (increment) {
       this.incrementIndicator("statementcount", count);
       this.incrementIndicator(`statement${statement.type}`, count);
-      this.updateView();
     }
+    this.updateView();
     return this;
   }
 
