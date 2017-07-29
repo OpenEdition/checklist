@@ -2,34 +2,6 @@
 @import (reference) "mixins.less";
 @import "animations.less";
 
-// GENERIC RULES
-// =============
-
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: block;
-}
-
-.checklist-toggle-open-parent:after {
-  content: " \25B6";
-  font-size: .9em;
-}
-
-.open > .checklist-toggle-open-parent:after {
-  content: " \25BC";
-}
-
-.checklist-collapsed {
-  display: none;
-}
-
-.open > .checklist-collapsed {
-  display: block;
-}
-
 // PANE AND COMPONENTS
 // ===================
 
@@ -168,4 +140,32 @@ body.checklist-visible {
   display: block;
   margin: 0 auto;
   max-width: 600px;
+}
+
+// GENERIC RULES
+// =============
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.checklist-toggle-open-parent:after {
+  content: " \25B6";
+  font-size: .9em;
+}
+
+.open > .checklist-toggle-open-parent:after {
+  content: " \25BC";
+}
+
+.checklist-collapsed {
+  display: none;
+}
+
+.open > .checklist-collapsed {
+  display: block;
 }
