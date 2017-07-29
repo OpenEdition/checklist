@@ -6,9 +6,10 @@ const {escapeDoubleQuotes} = require("../utils.js");
 function getHtml (docId) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
-      <div class="checklist-progress">
+      <div class="checklist-report-header">
         <div class="checklist-report-icon"></div>
         <div class="checklist-percentage"></div>
+        <div class="checklist-rating-text"></div>
       </div>
       <div class="checklist-statements">
         <div class="checklist-statements-danger checklist-statements-group">
@@ -380,15 +381,33 @@ class Report extends View {
   }
 
   updateRating () {
-    const setRatingView = (rating) => {
+    const applyClassToHeader = (rating) => {
+      const $header = this.find(".checklist-report-header");
+      $header.addClass(`checklist-rating-${rating}`);
+    };
+
+    const setRatingIcon = (rating) => {
       const $el = this.find(".checklist-report-icon");
       const html = svg[`rating-${rating}`];
       $el.html(html);
-      return this;
+    };
+
+    const setRatingText = (rating) => {
+      const texts = {
+        bad: "Ce document contient des erreurs de composition.",
+        good: "Ce document est correctement composé.",
+        excellent: "Ce document est très bien composé."
+      };
+      const $el = this.find(".checklist-rating-text");
+      const html = texts[rating];
+      $el.html(html);
     };
 
     const rating = this.computeRating();
-    setRatingView(rating);
+    applyClassToHeader(rating);
+    setRatingIcon(rating);
+    setRatingText(rating);
+    return this;
   }
 
   // FILTERS

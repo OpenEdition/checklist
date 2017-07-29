@@ -1,0 +1,9 @@
+.rating-box(@name) {
+  .checklist-rating-@{name} {
+    @color-varname: "rating-@{name}-color";
+    @bg-color-varname: "rating-@{name}-bg-color";
+    color: @@color-varname;
+    fill: @@color-varname;
+    background-color: @@bg-color-varname;
+  }
+}

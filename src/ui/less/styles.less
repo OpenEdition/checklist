@@ -1,4 +1,5 @@
 @import (reference) "vars.less";
+@import (reference) "mixins.less";
 @import "animations.less";
 
 // GENERIC RULES
@@ -84,9 +85,16 @@ body.checklist-visible {
 // REPORTS
 // =======
 
-.checklist-progress {
+.checklist-report-header {
   position: relative;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
 }
+
+.rating-box(bad);
+.rating-box(good);
+.rating-box(excellent);
 
 .checklist-report-icon {
   display: block;
@@ -110,7 +118,7 @@ body.checklist-visible {
 .checklist-percentage {
   position: absolute;
   font-size: 14px;
-  top: @report-icon-size/2 - 9;
+  top: @report-icon-size/2 + 10;
   left: 0;
   right:0;
   text-align: center;
