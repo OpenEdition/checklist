@@ -1,3 +1,4 @@
+const svg = require("./svg.json");
 const View = require("./view.js");
 const { getDocIdFromPathname } = require("../utils.js");
 
@@ -6,10 +7,13 @@ class Pane extends View {
     super("Pane", ui, parent);
 
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
-      <div id="checklist-current-report" class="checklist-current-report">
+      <div class="checklist-main-menu">
+        <div class="checklist-brand">${svg["checklist-logo"]}</div>
+        <div class="checklist-main-menu-buttons">
+          <button data-checklist-action="settings-show">${svg.settings}</button>
+        </div>
       </div>
-      <div class="checklist-menu">
-        <button data-checklist-action="settings-show">Préférences</button>
+      <div id="checklist-current-report" class="checklist-current-report">
       </div>
     </div>`;
     this.createView(html);

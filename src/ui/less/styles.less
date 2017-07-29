@@ -32,6 +32,10 @@ body.checklist-visible {
   overflow-y: auto;
 }
 
+.checklist-pane {
+  padding-top: @menu-height + 10;
+}
+
 .checklist-childpane {
   z-index: @z-index + 1;
 }
@@ -52,6 +56,59 @@ body.checklist-visible {
   right: 10px;;
   width: 24px;
   height: 24px;
+}
+
+// MENU
+// ====
+
+.checklist-main-menu {
+  display: flex;
+  box-sizing: border-box;
+  position: absolute;
+  height: @menu-height;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-bottom: @border-color 1px solid;
+  background: @bg-color;
+
+  & > div {
+    padding: 10px;
+  }
+}
+
+.checklist-brand {
+  flex: 100;
+  
+  svg {
+    margin-top: @menu-height/2 - 18px;
+    height: 18px;
+    width: auto;
+    fill: #666;
+  }
+}
+
+.checklist-main-menu-buttons {
+  flex: 1;
+  text-align: right;
+  border-left: @border-color 1px solid;
+
+  button {
+    border: none;
+    background: transparent;
+    padding: 5px;
+    margin: 0;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: #999;
+  }
+
+  button:hover svg {
+    fill: #666;
+  }
 }
 
 // REPORTS
