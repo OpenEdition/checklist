@@ -6,7 +6,14 @@ function getViewHtml () {
     const inputs = filters.map((filter) => {
       const isHidden = cache.getFilter(filter.id);
       const checkedAttr = isHidden ? "" : "checked";
-      return `<input type="checkbox" class="checklist-filter" value="${filter.id}" ${checkedAttr}>${filter.name}</input>`;
+      const elementId = `checklist-filter-${filter.name}`;
+      return `
+        <div class="checklist-filter-container">
+          <input type="checkbox" id="${elementId}" class="checklist-filter" value="${filter.id}" ${checkedAttr}>
+            <label for="${elementId}">${filter.name}</label>
+          </input>
+        </div>
+      `;
     });
     return inputs.join("\n");
   };
