@@ -33,7 +33,7 @@
 // ===================
 
 body.checklist-visible {
-  margin-right: @pane-width !important;
+  margin-right: @pane-width + 10 !important;
   position: relative;
 }
 
@@ -50,6 +50,7 @@ body.checklist-visible {
   box-sizing: border-box;
   padding: 10px 20px;
   background: @bg-color;
+  border-left: 1px solid @border-color;
   z-index: @z-index;
   position: fixed;
   right: 0;
