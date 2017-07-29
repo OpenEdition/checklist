@@ -352,16 +352,16 @@ class Report extends View {
     return this;
   }
 
-  updateView () {
-    const toggleStatementGroups = () => {
-      const $groups = this.find(".checklist-statements-group");
-      $groups.each(function () {
-        const isEmpty = $(this).find("li").length === 0;
-        $(this).toggleClass("hidden", isEmpty);
-      });
-    };
+  toggleStatementGroups () {
+    const $groups = this.find(".checklist-statements-group");
+    $groups.each(function () {
+      const isUnused = $(this).find("li:not(.hidden)").length === 0;
+      $(this).toggleClass("hidden", isUnused);
+    });
+  }
 
-    toggleStatementGroups();
+  updateView () {
+    this.toggleStatementGroups();
     this.setPercentage();
     this.updateHiddenCount();
     return this;
@@ -414,13 +414,11 @@ class Report extends View {
   // =======
 
   filterStatements (id, hidden = true) {
-    const setStatementVisibility = (selector, hidden) => {
-      const $elements = this.find(selector);
-      $elements.toggleClass("hidden", hidden);
-    };
-
     const selector = `.checklist-statement-${id}`;
-    setStatementVisibility(selector, hidden);
+    const $elements = this.find(selector);
+    $elements.toggleClass("hidden", hidden);
+
+    this.toggleStatementGroups();
     this.updateHiddenCount();
     return this;
   }
