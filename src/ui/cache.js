@@ -27,8 +27,8 @@ const cache = {
     const createRecord = (report) => {
       const exportStatement = (statement) => {
         // We dont need markers in cache because they are not used in toc view
-        const {name, description, id, type, count} = statement;
-        return {name, description, id, type, count};
+        const {name, description, id, type, count, tags} = statement;
+        return {name, description, id, type, count, tags};
       };
 
       const {docId, indicators, states, errMsgs} = report;
