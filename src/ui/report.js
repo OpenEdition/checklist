@@ -414,7 +414,7 @@ class Report extends View {
   // =======
 
   filterStatements (id, hidden = true) {
-    const setStatementVisibility = (selector, hidden = false) => {
+    const setStatementVisibility = (selector, hidden) => {
       const $elements = this.find(selector);
       $elements.toggleClass("hidden", hidden);
     };
