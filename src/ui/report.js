@@ -6,7 +6,10 @@ const {escapeDoubleQuotes} = require("../utils.js");
 function getHtml (docId) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
-      <div class="checklist-rating"></div>
+      <div class="checklist-progress">
+        <div class="checklist-report-icon"></div>
+        <div class="checklist-percentage"></div>
+      </div>
       <div class="checklist-statements">
         <div class="checklist-statements-danger checklist-statements-group">
           <h3>Avertissements</h3>
@@ -37,6 +40,7 @@ class Report extends View {
     this.docId = docId;
     this.buttonsCreator = buttonsCreator;
     this.errMsgs = [];
+    this.percentage = 0;
 
     const html = getHtml(docId, parent);
     this.createView(html);
@@ -98,10 +102,10 @@ class Report extends View {
     });
 
     checker.whenState("run").then(() => {
+      this.startPercentage();
       this.showSpinner();
     });
 
-    // Display rating when checker done
     checker.on("done", () => {
       this.updateRating();
       this.toCache();
@@ -286,8 +290,36 @@ class Report extends View {
   // ========
 
   showSpinner () {
-    const $div = this.find(".checklist-rating");
+    const $div = this.find(".checklist-report-icon");
     $div.html(svg.spinner);
+    return this;
+  }
+
+  startPercentage () {
+    const $el = this.find(".checklist-percentage");
+    let displayedPercentage = 0;
+
+    const updateView = (percentage) => {
+      if (percentage <= 0 || percentage >= 100) {
+        return $el.empty();
+      }
+      $el.text(`${percentage}%`);
+    };
+
+    const intervalId = setInterval(() => {
+      if (displayedPercentage >= this.percentage) return;
+      updateView(++displayedPercentage);
+      if (displayedPercentage >= 100) {
+        clearInterval(intervalId);
+      }
+    }, 10);
+
+    return this;
+  }
+
+  setPercentage () {
+    const {checkcount, checktotal} = this.indicators;
+    this.percentage = (checkcount / checktotal) * 100;
     return this;
   }
 
@@ -329,6 +361,7 @@ class Report extends View {
     };
 
     toggleStatementGroups();
+    this.setPercentage();
     this.updateHiddenCount();
     return this;
   }
@@ -348,7 +381,7 @@ class Report extends View {
 
   updateRating () {
     const setRatingView = (rating) => {
-      const $el = this.find(".checklist-rating");
+      const $el = this.find(".checklist-report-icon");
       const html = svg[`rating-${rating}`];
       $el.html(html);
       return this;

@@ -83,16 +83,20 @@ body.checklist-visible {
 // REPORTS
 // =======
 
-.checklist-rating {
-  display: block;
-  margin: 10px auto;
-  width: 48px;
-  height: 48px;
+.checklist-progress {
+  position: relative;
 }
 
-.checklist-rating svg {
-  width: 48px;
-  height: 48px;
+.checklist-report-icon {
+  display: block;
+  margin: 10px auto;
+  width: @report-icon-size;
+  height: @report-icon-size;
+}
+
+.checklist-report-icon svg {
+  width: @report-icon-size;
+  height: @report-icon-size;
 }
 
 .svg-spinner {
@@ -100,6 +104,15 @@ body.checklist-visible {
   animation-duration: 1000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.checklist-percentage {
+  position: absolute;
+  font-size: 14px;
+  top: @report-icon-size/2 - 9;
+  left: 0;
+  right:0;
+  text-align: center;
 }
 
 /* TODO: factoriser .hidden/.visible */
