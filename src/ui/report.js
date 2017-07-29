@@ -6,7 +6,7 @@ const {escapeDoubleQuotes} = require("../utils.js");
 function getHtml (docId) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
-      <div class="checklist-rating">${svg.spinner}</div>
+      <div class="checklist-rating"></div>
       <div class="checklist-statements">
         <div class="checklist-statements-danger checklist-statements-group">
           <h3>Avertissements</h3>
@@ -95,6 +95,10 @@ class Report extends View {
     // Connect future checks
     checker.on("check.done", (check) => {
       this.addCheck(check);
+    });
+
+    checker.whenState("run").then(() => {
+      this.showSpinner();
     });
 
     // Display rating when checker done
@@ -275,6 +279,15 @@ class Report extends View {
       errMsgs = [errMsgs];
     }
     errMsgs.forEach(this.injectRejection.bind(this));
+    return this;
+  }
+
+  // PROGRESS
+  // ========
+
+  showSpinner () {
+    const $div = this.find(".checklist-rating");
+    $div.html(svg.spinner);
     return this;
   }
 
