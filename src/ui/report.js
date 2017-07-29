@@ -1,5 +1,4 @@
 const cache = require("./cache.js");
-const Nanobar = require("nanobar");
 const svg = require("./svg.json");
 const View = require("./view.js");
 const {escapeDoubleQuotes} = require("../utils.js");
@@ -8,7 +7,6 @@ function getHtml (docId) {
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-rating">${svg.spinner}</div>
-      <div class="checklist-progressbar"></div>
       <div class="checklist-statements">
         <div class="checklist-statements-danger checklist-statements-group">
           <h3>Avertissements</h3>
@@ -42,8 +40,6 @@ class Report extends View {
 
     const html = getHtml(docId, parent);
     this.createView(html);
-
-    this.progressbar = this.createProgressbar();
     this.toolbar = this.createToolbar();
 
     this.clearIndicators();
@@ -52,13 +48,6 @@ class Report extends View {
 
   // CONSTRUCTOR METHODS
   // ===================
-
-  createProgressbar () {
-    const progressbarDiv = this.find(".checklist-progressbar").get(0);
-    return new Nanobar({
-      target: progressbarDiv
-    });
-  }
 
   createToolbar () {
     if (typeof this.buttonsCreator !== "function") return;
@@ -326,14 +315,7 @@ class Report extends View {
       });
     };
 
-    const updateProgressbar = () => {
-      const {checkcount, checktotal} = this.indicators;
-      const percentage = (checkcount / checktotal) * 100;
-      this.progressbar.go(percentage);
-    };
-
     toggleStatementGroups();
-    updateProgressbar();
     this.updateHiddenCount();
     return this;
   }

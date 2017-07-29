@@ -41,7 +41,6 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "eventemitter2": "^3.0.2",
-    "nanobar": "^0.4.2"
+    "eventemitter2": "^3.0.2"
   }
 }
