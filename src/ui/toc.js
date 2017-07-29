@@ -6,7 +6,7 @@ class TOC extends View {
     super("TOC", ui, parent);
 
     const html = `
-      <div id="checklist-toc-view" class="checklist-toc-view">
+      <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <ul id="checklist-toc" class="checklist-toc">
         <ul>
       </div>

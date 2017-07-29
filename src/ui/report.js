@@ -240,10 +240,11 @@ class Report extends View {
   injectMarker (marker) {
     const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${marker.name}"></span>`;
     const $element = $(html);
+    const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");
     if (marker.position !== "after") {
-        $element.prependTo(marker.target);
+        $element.prependTo($filteredTarget);
     } else {
-        $element.appendTo(marker.target);
+        $element.appendTo($filteredTarget);
     }
     marker.setElement($element.get(0));
   }
