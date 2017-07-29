@@ -47,13 +47,15 @@ class Batch extends Base {
       return this.postponePromise("ready", "run", arguments);
     }
 
+    this.triggerState("run");
+
     const checkers = this.checkers;
     if (!checkers || checkers.length === 0) {
       return Promise.reject("No checkers defined in Batch");
     }
 
     const promises = checkers.map((checker) => {
-      const eventsToForward = ["check.done", "check.success", "check.rejected", "statement.new", "statement.update", {"done": "checker.done"}, "marker"];
+      const eventsToForward = ["check.run", "check.done", "check.success", "check.rejected", "statement.new", "statement.update", {"run": "checker.run"}, {"done": "checker.done"}, "marker"];
       this.forwardEvents(checker, eventsToForward);
       return checker.run();
     });

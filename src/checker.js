@@ -47,6 +47,8 @@ class Checker extends Base {
       return this.postponePromise("ready", "run", arguments);
     }
 
+    this.triggerState("run");
+
     const getCheckPromises = (rule) => {
       return new Promise ((resolve, reject) => {
         const check = new Check({
@@ -64,6 +66,7 @@ class Checker extends Base {
 
     const initEvents = (check, resolve, reject) => {
       this.forwardEvents(check, [
+        {"run": "check.run"},
         {"done": "check.done"},
         {"success": "check.success"},
         {"rejected": "check.rejected"},

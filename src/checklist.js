@@ -31,9 +31,9 @@ function initUi (checklist, parent) {
   checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
 }
 
-function forwardCheckerEvents (checklist, checker) {
-  const events = [ "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.done", "marker"];
-  checklist.forwardEvents(checker, events);
+function forwardCheckerEvents (checklist, checkerOrBatch) {
+  const events = [ "check.run", "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.run", "checker.done", "marker"];
+  checklist.forwardEvents(checkerOrBatch, events);
 }
 
 function connectCheckerToUi (checker, ui) {
@@ -98,6 +98,9 @@ class Checklist extends Base {
     }
 
     const setCheckerHandlers = (checker, resolve, reject) => {
+      checker.once("run", () => {
+        this.emit("checker.run", checker);
+      });
       checker.once("done", () => {
         resolve(checker);
         this.emit("checker.done", checker);
@@ -144,6 +147,10 @@ class Checklist extends Base {
         });
       });
     }
+
+    batch.once("run", () => {
+      this.emit("batch.run", batch);
+    });
 
     return batch.run().then((batch) => {
       this.emit("batch.done", batch);
