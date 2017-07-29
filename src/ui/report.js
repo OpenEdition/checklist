@@ -110,6 +110,7 @@ class Report extends View {
     checker.on("done", () => {
       this.updateRating();
       this.toCache();
+      this.triggerState("done");
     });
   }
 
@@ -301,19 +302,20 @@ class Report extends View {
     const $el = this.find(".checklist-percentage");
     let displayedPercentage = 0;
 
-    const updateView = (percentage) => {
-      if (percentage <= 0 || percentage >= 100) {
-        return $el.empty();
-      }
-      $el.text(`${percentage}%`);
-    };
-
     const intervalId = setInterval(() => {
-      if (displayedPercentage >= this.percentage) return;
-      updateView(++displayedPercentage);
-      if (displayedPercentage >= 100) {
-        clearInterval(intervalId);
+      // Don't show 0%
+      if (displayedPercentage === 0) {
+        $el.empty();
       }
+      // Clear interval when done
+      if (this.hasState("done") || displayedPercentage >= 100) {
+        $el.empty();
+        clearInterval(intervalId);
+        return;
+      }
+      if (displayedPercentage >= this.percentage) return;
+      displayedPercentage++;
+      $el.text(`${displayedPercentage}%`);
     }, 10);
 
     return this;
