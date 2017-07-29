@@ -425,6 +425,7 @@ class Report extends View {
 
   clearFilters () {
     this.find(".checklist-statement.hidden").removeClass("hidden");
+    this.toggleStatementGroups();
     this.updateHiddenCount();
     return this;
   }
