@@ -161,7 +161,7 @@ class Report extends View {
     };
 
     const getStatementHtml = () => {
-      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-count">${statement.count}</span>` : "";
+      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-statement-count">${statement.count}</span>` : "";
       const type = statement.type;
       const typeClass = type ? `checklist-statement-type-${type}` : "";
 
@@ -172,7 +172,7 @@ class Report extends View {
       const isFiltered = cache.isFiltered([`type-${type}`, ...tagsFilters]);
       const filterClass = isFiltered ? "hidden" : "";
 
-      const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}">${statement.name} ${countSpan}</li>`;
+      const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}"><span class="checklist-statement-msg">${statement.name} ${countSpan}</span></li>`;
       return li;
     };
 

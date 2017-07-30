@@ -153,9 +153,84 @@ body.checklist-visible {
   text-align: center;
 }
 
-/* TODO: factoriser .hidden/.visible */
-.checklist-statements-group.hidden {
-  display: none;
+.checklist-statements {
+  h3 {
+    color: #999;
+    font-size: 14px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.checklist-statements-group ul {
+  background: #fff;
+  border: 1px solid @border-color;
+  border-radius: 5px;
+}
+
+.group-border(danger);
+.group-border(warning);
+.group-border(info);
+
+.checklist-statement {
+  font-size: 15px;
+  padding: 0 2px 0 10px;
+  margin: 0;
+  position: relative;
+  min-height: 30px;
+  display: flex;
+
+  &:hover .checklist-statement-btn {
+    visibility: visible;
+  }
+}
+
+.checklist-statement + .checklist-statement {
+  border-top: 1px solid @border-color;
+}
+
+.checklist-statement-msg {
+  padding-top: 5px;
+  flex: 1000;
+}
+
+.checklist-statement-count {
+  color: #fff;
+  background: #999;
+  font-size: 12px;
+  border-radius: 8px;
+  padding: 2px 4px;
+  margin-left: 2px;
+}
+
+.checklist-statement-btn {
+  flex: 1;
+  margin: 0;
+  padding: 4px 6px;
+  border: none;
+  border-left: 1px solid @border-color;
+  background: none;
+  visibility: hidden;
+  cursor: pointer;
+
+  svg {
+    fill: #999;
+    width: 16px;
+    height: 16px;
+    padding-top: 2px;
+  }
+
+  &:hover {
+    svg {
+      fill: #000;
+    }
+  }
+
+
 }
 
 .checklist-rejections {
