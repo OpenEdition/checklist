@@ -1,7 +1,6 @@
 const cache = require("./cache.js");
 const svg = require("./svg.json");
 const View = require("./view.js");
-const {escapeDoubleQuotes} = require("../utils.js");
 
 function getHtml (docId) {
   const html = `
