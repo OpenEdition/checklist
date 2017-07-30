@@ -69,7 +69,7 @@ class Report extends View {
     if (typeof this.buttonsCreator !== "function") return;
 
     const getButton = (infos) => {
-      const $btn = $(`<button class="checklist-report-toolbar-button">`);
+      const $btn = $(`<a class="checklist-report-toolbar-button">`);
       const icon = (infos.icon && svg[infos.icon]);
       if (icon) {
         $btn.html(icon);
