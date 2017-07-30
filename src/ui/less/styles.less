@@ -237,8 +237,22 @@ body.checklist-visible {
   display: none;
 }
 
-.checklist-rejections.visible {
-  display: block;
+.checklist-rejections-list {
+  list-style: none;
+  margin: 0 0 10px 10px;
+  padding: 0 0 0 10px;
+  border-left: 1px solid #000;
+}
+
+.checklist-rejection {
+  list-style: none;
+  margin: 4px 0;
+  padding: 0;
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
 }
 
 .checklist-hidden-statements {
@@ -311,4 +325,14 @@ body.checklist-visible {
 
 .open > .checklist-collapsed {
   display: block;
+}
+
+.checklist-icon-box {
+  display: flex;
+  align-items: center;
+  margin: 10px auto;
+
+  svg {
+    margin-right: 6px;
+  }
 }

@@ -26,12 +26,19 @@ function getHtml (docId) {
         </div>
       </div>
       <div class="checklist-hidden-statements">
-        ${svg["eye-blocked"]}
-        <span class="checklist-hidden-count"></span>
-        <button data-checklist-action="filters-clear">Afficher</button>
+        <span class="checklist-icon-box">
+          ${svg["eye-blocked"]}
+          <span>
+            <span class="checklist-hidden-count"></span>
+            <a data-checklist-action="filters-clear">Afficher</a>
+          </span>
+        </span>
       </div>
       <div class="checklist-rejections">
-        <a class="checklist-rejections-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent">Des erreurs ont été rencontrées</a>
+        <a class="checklist-rejections-toggle checklist-toggle-open-parent checklist-icon-box" data-checklist-action="toggle-parent">
+          ${svg.notification}
+          <span>Des tests ont échoué</span>
+        </a>
         <ul class="checklist-rejections-list checklist-collapsed"></ul>
       </div>
     </div>
@@ -44,7 +51,7 @@ class Report extends View {
     super("Report", ui, parent);
     this.docId = docId;
     this.buttonsCreator = buttonsCreator;
-    this.errMsgs = [];
+    this.rejections = [];
     this.percentage = 0;
 
     const html = getHtml(docId, parent);
@@ -137,10 +144,12 @@ class Report extends View {
 
     const addToRejectionsView = (check) => {
       if (!check.hasState("rejected")) return;
-      const errMsg = check.errMsg;
-      this.injectRejection(errMsg);
-      // Store errMsgs (without duplicates) in report
-      this.errMsgs.push(errMsg);
+      const rejection = {
+        ruleName: check.name,
+        errMsg: check.errMsg
+      };
+      this.injectRejection(rejection);
+      this.rejections.push(rejection);
     };
 
     addToIndicatorsView(check);
@@ -264,32 +273,24 @@ class Report extends View {
   // REJECTIONS
   // ==========
 
-  injectRejection (errMsg) {
-    const isDuplicateRejection = (msg, container) => {
-      const escapedMsg = escapeDoubleQuotes(msg);
-      const found = $(container).find(`li:contains("${escapedMsg}")`);
-      return found.length > 0;
-    };
+  injectRejection (rejection) {
+    const {ruleName, errMsg} = rejection;
 
-    const doInject = (errMsg, target) => {
-      const $container = this.find(".checklist-rejections");
-      $container.addClass("visible");
-      const html = `<li class="checklist-rejection">${errMsg}</li>`;
-      $(target).append(html);
-    };
+    const $container = this.find(".checklist-rejections");
+    $container.addClass("visible");
 
-    // TODO: add count span to count duplicate rejections
-    const $container = this.find(".checklist-rejections-list");
-    if(isDuplicateRejection(errMsg, $container)) return;
-    doInject(errMsg, $container);
+    const $ul = this.find(".checklist-rejections-list");
+    const html = `<li class="checklist-rejection" title="${errMsg}">${svg.bug}  ${ruleName}</li>`;
+    $ul.append(html);
+
     return this;
   }
 
-  injectRejections (errMsgs) {
-    if (!Array.isArray(errMsgs)) {
-      errMsgs = [errMsgs];
+  injectRejections (rejections) {
+    if (!Array.isArray(rejections)) {
+      rejections = [rejections];
     }
-    errMsgs.forEach(this.injectRejection.bind(this));
+    rejections.forEach(this.injectRejection.bind(this));
     return this;
   }
 

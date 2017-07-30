@@ -31,8 +31,8 @@ const cache = {
         return {name, description, id, type, count, tags};
       };
 
-      const {docId, indicators, states, errMsgs} = report;
-      const record = {docId, indicators, states, errMsgs};
+      const {docId, indicators, states, rejections} = report;
+      const record = {docId, indicators, states, rejections};
       record.statements = report.checker.statements.map(exportStatement);
       return record;
     };
