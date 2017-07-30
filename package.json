@@ -2,7 +2,7 @@
   "name": "checklist",
   "version": "0.0.1",
   "description": "OpenEdition Checklist",
-  "main": "index.js",
+  "main": "dist/checklist.js",
   "scripts": {
     "build": "webpack",
     "dev": "npm-run-all --parallel watch test",
