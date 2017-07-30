@@ -25,7 +25,11 @@ function getHtml (docId) {
           <ul></ul>
         </div>
       </div>
-      <div class="checklist-hidden-statements"><span class="checklist-hidden-count"></span> masquée(s)<a data-checklist-action="filters-clear">[Supprimer les filtres]</a></div>
+      <div class="checklist-hidden-statements">
+        ${svg["eye-blocked"]}
+        <span class="checklist-hidden-count"></span>
+        <button data-checklist-action="filters-clear">Afficher</button>
+      </div>
       <div class="checklist-rejections">
         <a class="checklist-rejections-toggle checklist-toggle-open-parent" data-checklist-action="toggle-parent">Des erreurs ont été rencontrées</a>
         <ul class="checklist-rejections-list checklist-collapsed"></ul>
@@ -434,16 +438,18 @@ class Report extends View {
   }
 
   updateHiddenCount () {
+    const getText = (hiddenCount) => {
+      if (hiddenCount === 0) return "";
+      const s = hiddenCount === 1 ? "" : "s";
+      return `${hiddenCount} notification${s} masquée${s}`;
+    };
+
     const hiddenCount = this.find(".checklist-statement.hidden").length;
     const $div = this.find(".checklist-hidden-statements");
     const $span = this.find(".checklist-hidden-count");
-    if (hiddenCount === 0) {
-      $div.removeClass("visible");
-      $span.empty();
-      return;
-    }
-    $div.addClass("visible");
-    $span.text(hiddenCount);
+    $div.toggleClass("visible", hiddenCount > 0);
+    const text = getText(hiddenCount);
+    $span.text(text);
     return this;
   }
 
