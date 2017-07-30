@@ -128,6 +128,7 @@ $(function () {
       {
         name: "Paper rule",
         tags: ["paper"],
+        type: "danger",
         action: function () {
           this.resolve(true);
         }
