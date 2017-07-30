@@ -12,6 +12,16 @@ body.checklist-visible {
 
 .checklist-component {
   display: none;
+
+  a {
+    color: @link-color;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: lighten(@link-color, 15%);
+  }
 }
 
 .checklist-visible .checklist-pane, .checklist-visible .checklist-component.visible {
