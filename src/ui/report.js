@@ -10,6 +10,7 @@ function getHtml (docId) {
         <div class="checklist-percentage"></div>
         <div class="checklist-rating-text"></div>
       </div>
+      <div class="checklist-report-toolbar"></div>
       <div class="checklist-statements">
         <div class="checklist-statements-danger checklist-statements-group">
           <h3>Avertissements</h3>
@@ -55,7 +56,7 @@ class Report extends View {
 
     const html = getHtml(docId, parent);
     this.createView(html);
-    this.toolbar = this.createToolbar();
+    this.createToolbar();
 
     this.clearIndicators();
     this.triggerState("ready");
@@ -67,28 +68,26 @@ class Report extends View {
   createToolbar () {
     if (typeof this.buttonsCreator !== "function") return;
 
-    const getButtonAttributes = (buttonInfos) => {
-      const attributes = [];
-      for (let attrName in buttonInfos) {
-        attributes.push(`${attrName}="${buttonInfos[attrName]}"`);
+    const getButton = (infos) => {
+      const $btn = $(`<button class="checklist-report-toolbar-button">`);
+      const icon = (infos.icon && svg[infos.icon]);
+      if (icon) {
+        $btn.html(icon);
+        $btn.attr("title", infos.title);
+      } else {
+        $btn.html(infos.title);
       }
-      return attributes.join(" ");
+      for (let attr in infos.attributes) {
+        $btn.attr(attr, infos.attributes[attr]);
+      }
+      return $btn;
     };
 
-    const getButtonsHtml = (buttonsInfos) => {
-      const buttons = buttonsInfos.map((buttonInfos) => {
-        const attributes = getButtonAttributes(buttonInfos);
-        return `<a class="checklist-toolbar-button" ${attributes}>${buttonInfos.title}</a>`;
-      });
-      const html = buttons.join("\n");
-      return html;
-    };
-
-    const buttonsInfos = this.buttonsCreator(this.docId);
-    const html = getButtonsHtml(buttonsInfos);
-    const $toolbar = $(html).appendTo(this.element);
-    const toolbar = $toolbar.get(0);
-    return toolbar;
+    const infos = this.buttonsCreator(this.docId);
+    const buttons = infos.map(getButton);
+    const $parent = this.find(".checklist-report-toolbar");
+    $parent.append(buttons);
+    return this;
   }
 
   // CHECKER & CHECKS

@@ -129,6 +129,8 @@ body.checklist-visible {
   text-align: center;
   padding: 10px;
   border-radius: 5px;
+  box-sizing: border-box;
+  min-height: 130px;
 }
 
 .rating-box(bad);
@@ -161,6 +163,39 @@ body.checklist-visible {
   left: 0;
   right:0;
   text-align: center;
+}
+
+.checklist-report-toolbar {
+  margin: 20px auto;
+  text-align: center
+}
+
+.checklist-report-toolbar-button {
+  border: 1px solid @border-color;
+  background: darken(@bg-color, 1%);
+  padding: 6px 12px;
+  text-align: center;
+  cursor: pointer;
+
+  svg {
+    fill: #333;
+  }
+
+  &:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  &:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+
+  &:hover {
+    background: linear-gradient(@bg-color, darken(@bg-color, 2%) 40%, darken(@bg-color, 6%));
+
+    svg {
+      fill: #000;
+    }
+  }
 }
 
 .checklist-statements {
