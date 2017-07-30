@@ -25,11 +25,31 @@ $(function () {
       return [
         {
           title: "Éditer",
-          href: `${docId}/editer`
+          icon: "pencil",
+          attributes : {
+            href: `${docId}/editer`
+          }
         },
         {
-          title: "Test",
-          onclick: "console.log('Hello world!')"
+          title: "Réimporter la source",
+          icon: "upload",
+          attributes: {
+            onclick: "console.log('Button clicked!')"
+          }
+        },
+        {
+          title: "Télécharger la source au format .doc",
+          icon: "file-word",
+          attributes: {
+            onclick: "console.log('Button clicked!')"
+          }
+        },
+        {
+          title: "Télécharger la source au format XML TEI",
+          icon: "file",
+          attributes: {
+            onclick: "console.log('Button clicked!')"
+          }
         }
       ];
     },
