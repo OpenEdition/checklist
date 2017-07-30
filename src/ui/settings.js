@@ -22,7 +22,7 @@ function getViewHtml () {
     {id: "type-danger", name: "Avertissements"},
     {id: "type-warning", name: "Recommandations"},
     {id: "type-info", name: "Informations"},
-    {id: "tag-paper", name: "Papier"}
+    {id: "tag-paper", name: "Publication papier"}
   ]);
 
   const html = `
@@ -30,6 +30,7 @@ function getViewHtml () {
       <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
       <h1>Préférences</h1>
       <h2>Filtres</h2>
+      <p>Afficher uniquement les notifications associées aux catégories suivantes&nbsp:</p>
       ${inputHtml}
     </div>
   `;
