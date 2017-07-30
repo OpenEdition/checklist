@@ -19,9 +19,9 @@ function getViewHtml () {
   };
 
   const inputHtml = getInputHtml([
-    {id: "type-info", name: "Informations"},
+    {id: "type-danger", name: "Avertissements"},
     {id: "type-warning", name: "Recommandations"},
-    {id: "type-danger", name: "Alertes"},
+    {id: "type-info", name: "Informations"},
     {id: "tag-paper", name: "Papier"}
   ]);
 
