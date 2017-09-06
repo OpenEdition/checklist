@@ -55,6 +55,10 @@ class UI extends Base {
     return this;
   }
 
+  clearCache () {
+    cache.clear();
+  }
+
   createReport (options) {
     const report = new Report({
       ui: this,

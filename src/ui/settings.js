@@ -18,12 +18,24 @@ function getViewHtml () {
     return inputs.join("\n");
   };
 
+  const getCacheHtml = () => {
+    if (localStorage.length === 0) {
+      return `<p>Le cache de Checklist est vide.</p>`;
+    }
+    return `
+      <p>Checklist utilise le cache de votre navigateur pour conserver des informations en mémoire comme les rapports de tests, la configuration et les filtres d'affichage. Vous pouvez supprimer l'ensemble de ces éléments en vidant le cache.</p>
+      <button data-checklist-action="cache-clear">Vider le cache</button>
+    `;
+  };
+
   const inputHtml = getInputHtml([
     {id: "type-danger", name: "Avertissements"},
     {id: "type-warning", name: "Recommandations"},
     {id: "type-info", name: "Informations"},
     {id: "tag-paper", name: "Publication papier"}
   ]);
+
+  const cacheHtml = getCacheHtml();
 
   const html = `
     <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
@@ -32,6 +44,8 @@ function getViewHtml () {
       <h2>Filtres</h2>
       <p>Afficher uniquement les notifications associées aux catégories suivantes&nbsp:</p>
       ${inputHtml}
+      <h2>Cache</h2>
+      ${cacheHtml}
     </div>
   `;
   return html;

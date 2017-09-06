@@ -1,5 +1,11 @@
 function initActions (ui) {
   const actions = {
+    "cache-clear": function () {
+      ui.clearCache();
+      window.alert("Le cache a été supprimé pour ce site.");
+      location.reload();
+    },
+
     "close-component": function () {
       const parent = $(this).parents(".checklist-component").get(0);
       const view = parent.view;
