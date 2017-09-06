@@ -5,6 +5,7 @@ class TOC extends View {
   constructor ({ ui, parent }) {
     super("TOC", ui, parent);
 
+    this.unchecked = [];
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <div id="checklist-publication-report" class="checklist-publication-report"></div>
@@ -38,7 +39,11 @@ class TOC extends View {
       $toc.append($element);
       const element = $element.get(0);
       const report = this.ui.createReport({parent: element, docId});
-      report.fromCache();
+      const isCached = report.fromCache();
+
+      if (!isCached) {
+        this.unchecked.push(href);
+      }
     });
   }
 
@@ -47,6 +52,16 @@ class TOC extends View {
     const docId = getDocIdFromPathname(window.location.pathname);
     const report = this.ui.createReport({parent, docId});
     return report;
+  }
+
+  runUnchecked () {
+    const unchecked = this.unchecked;
+    if (unchecked.length === 0) return this;
+    checklist.whenState("ready").then(() => {
+      checklist.runBatch(unchecked);
+      this.unchecked = [];
+    });
+    return this;
   }
 }
 

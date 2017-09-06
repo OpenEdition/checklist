@@ -130,6 +130,9 @@ class UI extends Base {
   toggleToc (flag) {
     const toc = this.components.toc;
     if (!toc) return;
+    if (flag !== false) {
+      toc.runUnchecked();
+    }
     toc.toggle(flag);
     return this;
   }
