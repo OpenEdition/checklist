@@ -285,6 +285,7 @@ class Report extends View {
   }
 
   injectRejections (rejections) {
+    if (rejections == null) return this;
     if (!Array.isArray(rejections)) {
       rejections = [rejections];
     }
