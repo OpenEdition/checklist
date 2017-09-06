@@ -52,6 +52,9 @@ function initActions (ui) {
 
     "toc-toggle": function () {
       ui.toggleToc();
+      const text = $(this).text();
+      const newText = text === "Afficher" ? "Masquer" : "Afficher";
+      $(this).text(newText);
     },
 
     "toggle-parent": function () {

@@ -33,7 +33,12 @@ class Pane extends View {
   }
 
   showTocSwitch () {
-    const html = `<button data-checklist-action="toc-toggle">Toggle TOC view</button>`;
+    const html = `
+      <div id="checklist-toc-control" class="checklist-toc-control">
+        <p class="checklist-toc-control-info">Vous avez la possibilité de controler le contenu de cette publication à l'aide de l'outil de vérification de la table des matières.</p>
+        <button data-checklist-action="toc-toggle">Afficher</button>
+      </div>
+    `;
     this.find("#checklist-pane-contents").html(html);
     return this;
   }
