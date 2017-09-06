@@ -157,10 +157,5 @@ $(function () {
   })
   .then(function () {
     checklist.run();
-
-    // Run batch if publication
-    if (isPublication) {
-      // checklist.runBatchFromToc();
-    }
   });
 });

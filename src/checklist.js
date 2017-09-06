@@ -157,14 +157,6 @@ class Checklist extends Base {
       return batch;
     });
   }
-
-  runBatchFromToc (rules) {
-    const toc = this.config.get("toc");
-    const hrefs = toc.map((entry) => {
-      return entry.href;
-    });
-    return this.runBatch(hrefs, rules);
-  }
 }
 
 module.exports = Checklist;
