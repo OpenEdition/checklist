@@ -28,7 +28,7 @@ class UI extends Base {
   }
 
   createComponents (toc) {
-    const options = {ui: this, parent: this.parent};
+    const options = {ui: this, parent: this.parent, toc};
     this.components.pane = new Pane(options);
     this.components.settings = new Settings(options);
     this.components.help = new Help(options);
@@ -82,9 +82,7 @@ class UI extends Base {
     const docId = checker.docId;
     const report = this.getReport(docId);
     if (!report) {
-      // FIXME: what to do here? which use case?
-      console.log(this.reports);
-      console.error(`Report not found for ${docId}`);
+      throw Error(`Report not found for ${docId}`);
     }
     report.connect(checker);
     return this;
@@ -112,6 +110,23 @@ class UI extends Base {
   show () {
     this.addBodyClass("checklist-visible");
     this.triggerState("visible");
+    return this;
+  }
+
+  showToc () {
+    this.toggleToc(true);
+    return this;
+  }
+
+  hideToc () {
+    this.toggleToc(false);
+    return this;
+  }
+
+  toggleToc (flag) {
+    const toc = this.components.toc;
+    if (!toc) return;
+    toc.toggle(flag);
     return this;
   }
 

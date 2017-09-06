@@ -7,11 +7,13 @@ class TOC extends View {
 
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
+        <div id="checklist-publication-report" class="checklist-publication-report"></div>
         <ul id="checklist-toc" class="checklist-toc">
         <ul>
       </div>
     `;
     this.createView(html);
+    this.showPubliReport();
   }
 
   copy (toc) {
@@ -38,6 +40,13 @@ class TOC extends View {
       const report = this.ui.createReport({parent: element, docId});
       report.fromCache();
     });
+  }
+
+  showPubliReport () {
+    const parent = this.find("#checklist-publication-report");
+    const docId = getDocIdFromPathname(window.location.pathname);
+    const report = this.ui.createReport({parent, docId});
+    return report;
   }
 }
 

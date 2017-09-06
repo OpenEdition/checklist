@@ -44,6 +44,10 @@ function initActions (ui) {
       ui.showChildpane("settings");
     },
 
+    "toc-toggle": function () {
+      ui.toggleToc();
+    },
+
     "toggle-parent": function () {
       $(this).parent().toggleClass("open");
     }
