@@ -7,6 +7,13 @@ class View extends Base {
     this.ui = ui;
   }
 
+  clear () {
+    const $el = this.get$element();
+    if (!$el) return;
+    $el.remove();
+    return this;
+  }
+
   createView (html) {
     this.$element = $(html).appendTo(this.parent);
     this.element = this.$element.get(0);

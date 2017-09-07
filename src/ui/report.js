@@ -54,16 +54,20 @@ class Report extends View {
     this.rejections = [];
     this.percentage = 0;
 
-    const html = getHtml(docId, parent);
-    this.createView(html);
-    this.createToolbar();
-
-    this.clearIndicators();
+    this.init();
     this.triggerState("ready");
   }
 
   // CONSTRUCTOR METHODS
   // ===================
+
+  init () {
+    const html = getHtml(this.docId, parent);
+    this.createView(html);
+    this.createToolbar();
+    this.clearIndicators();
+    return this;
+  }
 
   createToolbar () {
     if (typeof this.buttonsCreator !== "function") return;
@@ -88,6 +92,13 @@ class Report extends View {
     const $parent = this.find(".checklist-report-toolbar");
     $parent.append(buttons);
     return this;
+  }
+
+  // RESET
+  // =====
+
+  reset () {
+    return this.clear().init();
   }
 
   // CHECKER & CHECKS
