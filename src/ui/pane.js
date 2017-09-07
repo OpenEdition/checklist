@@ -37,6 +37,7 @@ class Pane extends View {
       <div id="checklist-toc-control" class="checklist-toc-control">
         <p class="checklist-toc-control-info">Vous avez la possibilité de controler le contenu de cette publication à l'aide de l'outil de vérification de la table des matières.</p>
         <button data-checklist-action="toc-toggle">Afficher</button>
+        <button data-checklist-action="toc-refresh">Recalculer</button>
       </div>
     `;
     this.find("#checklist-pane-contents").html(html);

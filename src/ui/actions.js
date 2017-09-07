@@ -50,6 +50,10 @@ function initActions (ui) {
       ui.showChildpane("settings");
     },
 
+    "toc-refresh": function () {
+      ui.refreshToc();
+    },
+
     "toc-toggle": function () {
       ui.toggleToc();
       const text = $(this).text();
