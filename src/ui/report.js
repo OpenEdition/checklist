@@ -51,8 +51,6 @@ class Report extends View {
     super("Report", ui, parent);
     this.docId = docId;
     this.buttonsCreator = buttonsCreator;
-    this.rejections = [];
-    this.percentage = 0;
 
     this.init();
     this.triggerState("ready");
@@ -62,6 +60,8 @@ class Report extends View {
   // ===================
 
   init () {
+    this.rejections = [];
+    this.percentage = 0;
     const html = getHtml(this.docId, parent);
     this.createView(html);
     this.createToolbar();
