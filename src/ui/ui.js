@@ -137,6 +137,12 @@ class UI extends Base {
     return this;
   }
 
+  refreshToc () {
+    const toc = this.components.toc;
+    if (!toc) return;
+    toc.rerunAll();
+  }  
+
   showChildpane (name) {
     const components = this.components;
     for (let key in components) {

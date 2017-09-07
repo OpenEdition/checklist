@@ -18,6 +18,7 @@ class TOC extends View {
   }
 
   copy (toc) {
+    this.toc = toc;
     const $toc = this.find("#checklist-toc");
     toc.forEach((entry) => {
       const href = entry.href;
@@ -52,6 +53,21 @@ class TOC extends View {
     const docId = getDocIdFromPathname(window.location.pathname);
     const report = this.ui.createReport({parent, docId});
     return report;
+  }
+
+  rerunAll () {
+    const hrefs = this.toc.map((entry) => entry.href);
+
+    hrefs.forEach((href) => {
+      // Destroy previous report element
+      const report = this.ui.getReport(href);
+      report.reset();
+    });
+
+    checklist.whenState("ready").then(() => {
+      checklist.runBatch(hrefs);
+      this.unchecked = [];
+    });
   }
 
   runUnchecked () {
