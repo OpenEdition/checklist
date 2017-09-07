@@ -474,10 +474,10 @@ class Report extends View {
 
   fromCache () {
     const updateViewFromRecord = (record) => {
-      const {errMsgs, indicators, states, statements} = record;
-      Object.assign(this, {errMsgs, indicators, states});
+      const {rejections, indicators, states, statements} = record;
+      Object.assign(this, {rejections, indicators, states});
       this.injectStatements(statements, false);
-      this.injectRejections(errMsgs);
+      this.injectRejections(rejections);
       this.updateRating();
     };
 
