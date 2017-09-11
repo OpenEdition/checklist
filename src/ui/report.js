@@ -98,7 +98,7 @@ class Report extends View {
   // =====================
 
   reset () {
-    return this.clear().init();
+    return this.clear().clearStates().init();
   }
 
   rerun () {
