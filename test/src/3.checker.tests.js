@@ -27,7 +27,7 @@ describe("Checker and .run()", function () {
       name: "This should run",
       action: () => done()
     }];
-    checklist.run(arr);
+    checklist.run({rules: arr});
   });
 
   it("Should run check() (object)", function (done) {
@@ -35,7 +35,7 @@ describe("Checker and .run()", function () {
       name: "This should run",
       action: () => done()
     };
-    checklist.run(obj);
+    checklist.run({rules: obj});
   });
 
   it("Should load rules from config if not defined", function (done) {
@@ -72,7 +72,7 @@ describe("Checker and .run()", function () {
         expect(rejection.error).to.be.an("error");
       });
     };
-    checklist.run(rules).then(callback);
+    checklist.run({rules}).then(callback);
   });
 
 });

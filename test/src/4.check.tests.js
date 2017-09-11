@@ -15,11 +15,12 @@ describe("Check", function () {
         no: false
       }
     });
-    checklist.run({
+    const rules = {
       name: "Context is true (function)",
       condition: (context) => context.yes && !context.no,
       action: () => done()
-    });
+    };
+    checklist.run({rules});
   });
 
   it("Should run action() when condition (string) is true", function (done) {
@@ -27,11 +28,12 @@ describe("Check", function () {
       yes: true,
       no: false
     });
-    checklist.run({
+    const rules = {
       name: "Context is true (string)",
       condition: "yes && !no",
       action: () => done()
-    });
+    };
+    checklist.run({rules});
   });
 
   it("Should not run action() when condition is false", function (done) {
@@ -40,11 +42,12 @@ describe("Check", function () {
       yes: true,
       no: false
     });
-    checklist.run({
+    const rules = {
       name: "Context is false",
       condition: "no",
       action: () => flag = true
-    })
+    };
+    checklist.run({rules})
     .then(() => {
       expectAsync(done, () => expect(flag).to.be.false);
     });
@@ -57,11 +60,12 @@ describe("Check", function () {
         no: $("#container").length === 0
       };
     });
-    checklist.run({
+    const rules = {
       name: "Context is computed from a function",
       condition: "yes && !no",
       action: () => done()
-    });
+    };
+    checklist.run({rules});
   });
 
 });

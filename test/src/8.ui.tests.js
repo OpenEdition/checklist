@@ -10,7 +10,7 @@ describe("UI", function () {
   });
 
   it("Should display notifications into the panel", function (done) {
-    checklist.run([
+    const rules = [
       {
         name: "First rule",
         action: function () {
@@ -25,7 +25,8 @@ describe("UI", function () {
           this.resolve(flag);
         }
       }
-    ])
+    ];
+    checklist.run({rules})
     .then(() => {
       expectAsync(done, () => expect($(".checklist-statement")).to.have.lengthOf(2));
     });

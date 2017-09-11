@@ -36,54 +36,58 @@ describe("Statement", function () {
     checklist.once("statement.new", function(statement) {
       checkStatement(statement, defaultValues, done);
     });
-    checklist.run({
+    const rules = {
       name: defaultValues.name,
       id: defaultValues.id,
       description: defaultValues.description,
       action: function () {
         this.resolve(true);
       }
-    });
+    };
+    checklist.run({rules});
   });
 
   it("Should create a statement using values given in resolve()/notify()", function (done) {
     checklist.once("statement.new", function(statement) {
       checkStatement(statement, otherValues, done);
     });
-    checklist.run({
+    const rules = {
       name: defaultValues.name,
       id: defaultValues.id,
       description: defaultValues.description,
       action: function () {
         this.resolve(otherValues);
       }
-    });
+    };
+    checklist.run({rules});
   });
 
   it("Should generate an id from name", function (done) {
     checklist.once("statement.new", function(statement) {
       expectAsync(done, () => expect(statement).to.have.property("id", "rule-without-id"));
     });
-    checklist.run({
+    const rules = {
       name: "Rule without id",
       action: function () {
         this.resolve(true);
       }
-    });
+    };
+    checklist.run({rules});
   });
 
   it("Should increment count", function (done) {
     checklist.once("statement.update", function(statement) {
       expectAsync(done, () => expect(statement.count).to.equal(2));
     });
-    checklist.run({
+    const rules = {
       name: "Some rule",
       id: "some-rule",
       action: function () {
         this.notify(true);
         this.resolve(true);
       }
-    });
+    };
+    checklist.run({rules});
   });
 
 });

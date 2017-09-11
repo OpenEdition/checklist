@@ -84,23 +84,23 @@ describe("Events", function () {
 
     it("Should emit the 'check.done' event with an argument", function (done) {
       checklist.once("check.done", getHandler("isCheck", done));
-      checklist.run(rules.done);
+      checklist.run({rules: rules.done});
     });
 
     it("Should emit the 'check.success' event with an argument", function (done) {
       checklist.once("check.success", getHandler("isCheck", done));
-      checklist.run(rules.done);
+      checklist.run({rules: rules.done});
     });
 
     // FIXME: this test leads to an error message in the browser console
     it("Should emit the 'check.rejected' event with two arguments", function (done) {
       checklist.once("check.rejected", getHandler("isCheckRejected", done));
-      checklist.run(rules.rejected);
+      checklist.run({rules: rules.rejected});
     });
 
     it("Should emit the 'statement.new' event with an argument", function (done) {
       checklist.once("statement.new", getHandler("isStatement", done));
-      checklist.run(rules.statement);
+      checklist.run({rules: rules.statement});
     });
 
   });

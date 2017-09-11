@@ -85,8 +85,7 @@ describe("Loader and Sources", function () {
           expect(statement).to.have.property("id", id);
         });
       };
-      checklist.on("check.done", listener);
-      checklist.run({
+      const rules = {
         name: "Remote source is OK",
         id: id,
         href: remoteHref,
@@ -97,7 +96,9 @@ describe("Loader and Sources", function () {
           }
           this.resolve();
         }
-      });
+      };
+      checklist.on("check.done", listener);
+      checklist.run({rules});
     });
 
     it("Should return an error when the remote source doesn't exist", function (done) {
@@ -111,15 +112,16 @@ describe("Loader and Sources", function () {
     });
 
     it("Should create a rejection when Source is not found", function (done) {
-      checklist.once("check.rejected", () => done());
-      checklist.run({
+      const rules = {
         name: "This should be rejected",
         href: "bad-remote-href",
         action: function () {
           done(Error("This action should never be executed"));
           this.resolve();
         }
-      });
+      };
+      checklist.once("check.rejected", () => done());
+      checklist.run({rules});
     });
 
   });

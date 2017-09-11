@@ -90,7 +90,7 @@ class Checklist extends Base {
     return this;
   }
 
-  run (rules) {
+  run ({rules} = {}) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
       return this.postponePromise("ready", "run", arguments);
