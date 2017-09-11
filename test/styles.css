@@ -13,3 +13,13 @@ body.checklist-visible {
 #links {
   padding: 20px;
 }
+
+.checklist-off {
+  text-align: center;
+}
+
+button.activate-checklist {
+  font-size: 18px;
+  display: block;
+  margin: 0 auto;
+}
