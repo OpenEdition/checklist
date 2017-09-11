@@ -65,16 +65,19 @@ class TOC extends View {
     });
 
     checklist.whenState("ready").then(() => {
-      checklist.runBatch(hrefs);
+      hrefs.forEach((href) => {
+        checklist.run({href});
+      });
       this.unchecked = [];
     });
   }
 
   runUnchecked () {
     const unchecked = this.unchecked;
-    if (unchecked.length === 0) return this;
     checklist.whenState("ready").then(() => {
-      checklist.runBatch(unchecked);
+      unchecked.forEach((href) => {
+        checklist.run({href});
+      });
       this.unchecked = [];
     });
     return this;

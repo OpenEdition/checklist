@@ -1,5 +1,4 @@
 const Base = require("./base.js");
-const Batch = require("./batch.js");
 const Checker = require("./checker.js");
 const Config = require("./config.js");
 const Loader = require("./loader.js");
@@ -28,11 +27,6 @@ function initUi (checklist, parent) {
   const buttonsCreator = checklist.config.get("buttonsCreator");
   const toc = checklist.config.get("toc");
   ui.init({parent, buttonsCreator, toc});
-}
-
-function forwardCheckerEvents (checklist, checkerOrBatch) {
-  const events = [ "check.run", "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.run", "checker.done", "marker"];
-  checklist.forwardEvents(checkerOrBatch, events);
 }
 
 function connectCheckerToUi (checker, ui) {
@@ -96,6 +90,11 @@ class Checklist extends Base {
       return this.postponePromise("ready", "run", arguments);
     }
 
+    const forwardCheckerEvents = (checker) => {
+      const events = [ "check.run", "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.run", "checker.done", "marker"];
+      this.forwardEvents(checker, events);
+    };
+
     const setCheckerHandlers = (checker, resolve, reject) => {
       checker.once("run", () => {
         this.emit("checker.run", checker);
@@ -109,7 +108,7 @@ class Checklist extends Base {
         reject(err);
         this.emit("checker.error", err, checker);
       });
-      forwardCheckerEvents(this, checker);
+      forwardCheckerEvents(checker);
     };
 
     rules = rules || this.config.get("rules");
@@ -125,35 +124,6 @@ class Checklist extends Base {
     return new Promise((resolve, reject) => {
       setCheckerHandlers(checker, resolve, reject);
       checker.run();
-    });
-  }
-
-  runBatch (hrefs, rules) {
-    // Wait for the 'ready' event
-    if (!this.hasState("ready")) {
-      return this.postponePromise("ready", "runBatch", arguments);
-    }
-    rules = rules || this.config.get("rules");
-    const context = this.config.get("context");
-    const batch = new Batch({ rules, context, hrefs, caller: this });
-    forwardCheckerEvents(this, batch);
-
-    const ui = this.ui;
-    if (ui.hasState("initialized")) {
-      batch.on("ready", () => {
-        batch.checkers.forEach((checker) => {
-          connectCheckerToUi(checker, ui);
-        });
-      });
-    }
-
-    batch.once("run", () => {
-      this.emit("batch.run", batch);
-    });
-
-    return batch.run().then((batch) => {
-      this.emit("batch.done", batch);
-      return batch;
     });
   }
 }
