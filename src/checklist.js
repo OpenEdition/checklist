@@ -28,7 +28,6 @@ function initUi (checklist, parent) {
   const buttonsCreator = checklist.config.get("buttonsCreator");
   const toc = checklist.config.get("toc");
   ui.init({parent, buttonsCreator, toc});
-  checklist.forwardEvents(ui, [{"injected.statement": "ui.injected.statement"}, {"injected.statements": "ui.injected.statements"}]);
 }
 
 function forwardCheckerEvents (checklist, checkerOrBatch) {
