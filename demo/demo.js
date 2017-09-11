@@ -1,4 +1,9 @@
 $(function () {
+  if (!window.checklist) {
+    console.info("Checklist is not active");
+    return;
+  }
+
   const isPublication = $(document.body).hasClass("publication");
 
   // Prepare toc

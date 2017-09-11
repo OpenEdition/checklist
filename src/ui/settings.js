@@ -35,6 +35,8 @@ function getViewHtml () {
       <h2>Cache</h2>
       <p>Checklist utilise le cache de votre navigateur pour conserver des informations en mémoire comme les rapports de tests et la configuration.</p>
       <button data-checklist-action="cache-clear">Vider le cache</button>
+      <h2>Désactiver</h2>
+      <button data-checklist-action="checklist-off">Désactiver Checklist</button>
     </div>
   `;
   return html;
