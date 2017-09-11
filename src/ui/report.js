@@ -94,15 +94,24 @@ class Report extends View {
     return this;
   }
 
-  // RESET
-  // =====
+  // RESET & RERUN CHECKER
+  // =====================
 
   reset () {
     return this.clear().init();
   }
 
-  // CHECKER & CHECKS
-  // ================
+  rerun () {
+    const href = this.docId;
+    this.reset();
+    checklist.whenState("ready").then(() => {
+      checklist.run({href});
+    });
+    return this;
+  }
+
+// CHECKER & CHECKS
+// ================
 
   connect (checker) {
     this.checker = checker;

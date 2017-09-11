@@ -43,7 +43,7 @@ class TOC extends View {
       const isCached = report.fromCache();
 
       if (!isCached) {
-        this.unchecked.push(href);
+        this.unchecked.push(report);
       }
     });
   }
@@ -56,30 +56,23 @@ class TOC extends View {
   }
 
   rerunAll () {
-    const hrefs = this.toc.map((entry) => entry.href);
-
-    hrefs.forEach((href) => {
-      // Destroy previous report element
-      const report = this.ui.getReport(href);
-      report.reset();
+    const reports = this.toc.map((entry) => {
+      const href = entry.href;
+      return this.ui.getReport(href);
     });
-
-    checklist.whenState("ready").then(() => {
-      hrefs.forEach((href) => {
-        checklist.run({href});
-      });
-      this.unchecked = [];
+    reports.forEach((report) => {
+      report.rerun();
     });
+    this.unchecked = [];
+    return this;
   }
 
   runUnchecked () {
     const unchecked = this.unchecked;
-    checklist.whenState("ready").then(() => {
-      unchecked.forEach((href) => {
-        checklist.run({href});
-      });
-      this.unchecked = [];
+    unchecked.forEach((report) => {
+      report.rerun();
     });
+    this.unchecked = [];
     return this;
   }
 }
