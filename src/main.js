@@ -13,8 +13,20 @@ function startChecklist () {
 }
 
 function showSwitch () {
-  const html = `<div id="#checklist-switch" class="checklist-switch">Start checklist</div>`;
-  const $el = $(html).on("click", startChecklist);
+  const html = `
+    <div id="checklist-start" class="checklist-start">
+      <span>Start checklist</span>
+      <div class="checklist-switch">
+        <div class="checklist-slider"></div>
+      </div>
+    </div>
+  `;
+  const $el = $(html);
+  $el.on("click", function () {
+    const $switch = $(this).find(".checklist-switch");
+    $switch.one("transitionend", startChecklist);
+    $switch.addClass("checked");
+  });
   $("body").append($el);
 }
 
