@@ -1,4 +1,5 @@
 describe("Checker and .run()", function () {
+  const remoteHref = window.remoteHref;
 
   before((done) => {
     checklist.init().then(() => done());
@@ -45,6 +46,20 @@ describe("Checker and .run()", function () {
     }];
     checklist.config.set("rules", rules);
     checklist.run();
+  });
+
+  it("Should run Checker with remote href", function (done) {
+    const href = remoteHref;
+    const rules = {
+      name: "This should run",
+      action: ($) => {
+        const title = $("title").text();
+        expectAsync(done, () => {
+          expect(title).to.equal("Page 1");
+        });
+      }
+    };
+    checklist.run({href, rules});
   });
 
   it("Should store rejections in Checker.rejections", function (done) {
