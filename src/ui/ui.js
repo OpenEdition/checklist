@@ -7,9 +7,6 @@ const Report = require("./report.js");
 const Settings = require("./settings.js");
 const TOC = require("./toc.js");
 
-// Load UI styles
-require("./less/styles.less");
-
 class UI extends Base {
   constructor ({ caller }) {
     super("UI", caller);
@@ -141,7 +138,7 @@ class UI extends Base {
     const toc = this.components.toc;
     if (!toc) return;
     toc.rerunAll();
-  }  
+  }
 
   showChildpane (name) {
     const components = this.components;

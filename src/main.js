@@ -1,5 +1,8 @@
 const Checklist = require("./checklist.js");
 
+// Load LESS
+require("./less/styles.less");
+
 if (typeof jQuery === "undefined") {
   throw Error ("Checklist requires jQuery");
 }
