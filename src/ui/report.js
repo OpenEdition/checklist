@@ -98,6 +98,9 @@ class Report extends View {
   // =====================
 
   reset () {
+    if (this.checker) {
+      this.checker.removeAllListeners();
+    }
     return this.clear().clearStates().init();
   }
 
