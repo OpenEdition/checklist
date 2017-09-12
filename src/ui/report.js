@@ -10,6 +10,7 @@ function getHtml (docId) {
         <div class="checklist-percentage"></div>
         <div class="checklist-rating-text"></div>
       </div>
+      <button class="checklist-report-rerun" data-checklist-action="report-rerun">Recalculer</button>
       <div class="checklist-report-toolbar"></div>
       <div class="checklist-hidden-statements">
         <span class="checklist-icon-box">
@@ -64,6 +65,8 @@ class Report extends View {
     this.percentage = 0;
     const html = getHtml(this.docId, parent);
     this.createView(html);
+    // Attach report to element to use it in events
+    this.element.report = this;
     this.createToolbar();
     this.clearIndicators();
     return this;

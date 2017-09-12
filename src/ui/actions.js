@@ -55,6 +55,12 @@ function initActions (ui) {
       ui.showChildpane("settings");
     },
 
+    "report-rerun": function () {
+      const el = $(this).parents(".checklist-report").get(0);
+      const report = el.report;
+      report.rerun();
+    },
+
     "toc-refresh": function () {
       ui.refreshToc();
     },
