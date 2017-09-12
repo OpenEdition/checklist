@@ -10,6 +10,7 @@ function getHtml (docId) {
         <div class="checklist-percentage"></div>
         <div class="checklist-rating-text"></div>
       </div>
+      <div class="checklist-report-cache-info">Ce rapport a été chargé depuis le cache.</div>
       <button class="checklist-report-rerun" data-checklist-action="report-rerun">Recalculer</button>
       <div class="checklist-report-toolbar"></div>
       <div class="checklist-hidden-statements">
@@ -499,6 +500,7 @@ class Report extends View {
     const docId = this.docId;
     const record = cache.getRecord(docId);
     if (record == null) return false;
+    this.get$element().addClass("checklist-report-from-cache");
     updateViewFromRecord(record);
     return this;
   }
