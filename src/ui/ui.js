@@ -25,13 +25,15 @@ class UI extends Base {
   }
 
   createComponents (publi) {
-    const options = {ui: this, parent: this.parent, publi};
+    const options = {ui: this, parent: this.parent};
+    const isPubli = publi && publi.title && publi.toc && publi.toc.length > 0;
+    if (isPubli) {
+      options.publi = publi;
+      this.components.toc = new TOC(options);
+    }
     this.components.pane = new Pane(options);
     this.components.settings = new Settings(options);
     this.components.help = new Help(options);
-    if (publi) {
-      this.components.toc = new TOC(options);
-    }
     return this;
   }
 

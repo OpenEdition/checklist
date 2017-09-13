@@ -6,7 +6,7 @@ $(function () {
 
   const isPublication = $(document.body).hasClass("publication");
 
-  // Prepare toc
+  // Prepare publi
   function getToc () {
     if (!isPublication) return;
 
@@ -22,6 +22,16 @@ $(function () {
       toc.push(entry);
     });
     return toc;
+  }
+
+  function getPubli () {
+    if ($("body").hasClass("publication")) {
+      return {
+        title: $(".publi-title").text(),
+        toc: getToc()
+      };
+    }
+    return false;
   }
 
   checklist.init({
@@ -65,10 +75,7 @@ $(function () {
         "motsclesfr": $(".motsclesfr .entry").length
       };
     },
-    publi: {
-      title: $(".publi-title").text(),
-      toc: getToc()
-    },
+    publi: getPubli(),
     rules: [
       {
         name: "First rule",
