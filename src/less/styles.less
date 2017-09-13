@@ -169,11 +169,25 @@ body.checklist-visible {
   text-align: center;
 }
 
-.checklist-report-cache-info {
+.checklist-report-rerun {
   display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: .8;
+  cursor: pointer;
 }
 
-.checklist-report-from-cache .checklist-report-cache-info {
+.checklist-report-rerun:hover {
+  opacity: 1;
+}
+
+.checklist-report-rerun svg {
+  width: 20px;
+  height: 20px;
+}
+
+.checklist-report-from-cache .checklist-report-rerun {
   display: block;
 }
 

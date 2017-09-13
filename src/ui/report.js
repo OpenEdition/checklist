@@ -9,9 +9,10 @@ function getHtml (docId) {
         <div class="checklist-report-icon"></div>
         <div class="checklist-percentage"></div>
         <div class="checklist-rating-text"></div>
+        <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.">
+          ${svg.history}
+        </div>
       </div>
-      <div class="checklist-report-cache-info">Ce rapport a été chargé depuis le cache.</div>
-      <button class="checklist-report-rerun" data-checklist-action="report-rerun">Recalculer</button>
       <div class="checklist-report-toolbar"></div>
       <div class="checklist-hidden-statements">
         <span class="checklist-icon-box">
