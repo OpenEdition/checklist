@@ -16,23 +16,21 @@ class UI extends Base {
   }
 
   // FIXME: not consistent with other checklist components
-  init ({parent, buttonsCreator, toc}) {
+  init ({parent, buttonsCreator, publi}) {
     Object.assign(this, {parent, buttonsCreator});
-    this.createComponents(toc);
+    this.createComponents(publi);
     initActions(this);
     this.show();
     this.triggerState("initialized");
   }
 
-  createComponents (toc) {
-    const options = {ui: this, parent: this.parent, toc};
+  createComponents (publi) {
+    const options = {ui: this, parent: this.parent, publi};
     this.components.pane = new Pane(options);
     this.components.settings = new Settings(options);
     this.components.help = new Help(options);
-    if (toc) {
-      const tocView = new TOC(options);
-      tocView.copy(toc);
-      this.components.toc = tocView;
+    if (publi) {
+      this.components.toc = new TOC(options);
     }
     return this;
   }

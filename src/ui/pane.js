@@ -3,7 +3,7 @@ const View = require("./view.js");
 const { getDocIdFromPathname } = require("../utils.js");
 
 class Pane extends View {
-  constructor ({ ui, parent, toc }) {
+  constructor ({ ui, parent, publi }) {
     super("Pane", ui, parent);
 
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
@@ -18,7 +18,7 @@ class Pane extends View {
     </div>`;
     this.createView(html);
 
-    if (toc) {
+    if (publi) {
       this.showTocSwitch();
     } else {
       this.showReport();

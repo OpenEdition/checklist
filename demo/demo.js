@@ -65,7 +65,10 @@ $(function () {
         "motsclesfr": $(".motsclesfr .entry").length
       };
     },
-    toc: getToc(),
+    publi: {
+      title: $(".publi-title").text(),
+      toc: getToc()
+    },
     rules: [
       {
         name: "First rule",
