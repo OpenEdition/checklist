@@ -50,11 +50,9 @@ function getHtml (docId) {
 }
 
 class Report extends View {
-  constructor ({ ui, docId, parent, buttonsCreator }) {
+  constructor ({ ui, parent, docId, buttonsCreator, showMarkers }) {
     super("Report", ui, parent);
-    this.docId = docId;
-    this.buttonsCreator = buttonsCreator;
-
+    Object.assign(this, {docId, buttonsCreator, showMarkers});
     this.init();
     this.triggerState("ready");
   }
@@ -217,7 +215,7 @@ class Report extends View {
     };
 
     const addStatementButtons = (statement, element) => {
-      if (statement.markers && statement.markers.length > 0) {
+      if (this.showMarkers !== false && statement.markers && statement.markers.length > 0) {
         addButton({
           element,
           classname: "checklist-btn-goto-next-marker",
@@ -278,6 +276,7 @@ class Report extends View {
   // =======
 
   injectMarker (marker) {
+    if (this.showMarkers === false) return;
     const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${marker.name}"></span>`;
     const $element = $(html);
     const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");

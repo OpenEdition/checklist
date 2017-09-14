@@ -17,17 +17,19 @@ class UI extends Base {
 
   // FIXME: not consistent with other checklist components
   init ({parent, buttonsCreator, publi}) {
-    Object.assign(this, {parent, buttonsCreator});
-    this.createComponents(publi);
+    const isPubli = publi && publi.title && publi.toc && publi.toc.length > 0;
+    publi = isPubli ? publi : false;
+    Object.assign(this, {parent, buttonsCreator, publi});
+    this.createComponents();
     initActions(this);
     this.show();
     this.triggerState("initialized");
   }
 
-  createComponents (publi) {
+  createComponents () {
     const options = {ui: this, parent: this.parent};
-    const isPubli = publi && publi.title && publi.toc && publi.toc.length > 0;
-    if (isPubli) {
+    const publi = this.publi;
+    if (publi) {
       options.publi = publi;
       this.components.toc = new TOC(options);
     }
@@ -61,7 +63,8 @@ class UI extends Base {
       ui: this,
       parent: options.parent,
       docId: options.docId,
-      buttonsCreator: options.buttonsCreator || this.buttonsCreator
+      buttonsCreator: options.buttonsCreator || this.buttonsCreator,
+      showMarkers: this.publi ? false : true,
     });
     this.reports[options.docId] = report;
     return report;
