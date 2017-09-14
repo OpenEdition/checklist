@@ -61,14 +61,14 @@ function initActions (ui) {
       report.rerun();
     },
 
-    "toc-refresh": function () {
+    "toc-rerun": function () {
       ui.refreshToc();
     },
 
     "toc-toggle": function () {
       ui.toggleToc();
       const text = $(this).text();
-      const newText = text === "Afficher" ? "Masquer" : "Afficher";
+      const newText = text === "Controler la publication" ? "Masquer" : "Controler la publication";
       $(this).text(newText);
     },
 
