@@ -11,3 +11,26 @@ body {
   padding: 2em;
   margin: 2em;
 }
+
+#toc ul {
+  padding: 0;
+}
+
+.toc-entry {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.toc-entry a {
+  color: #000;
+  text-decoration: none;
+}
+
+.toc-entry a:hover {
+  color: darkblue;
+}
+
+.toc-entry h3, .toc-entry p {
+  margin: 5px;
+}
