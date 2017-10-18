@@ -44,7 +44,9 @@ class TOC extends View {
 
       const html = `
         <li class="checklist-toc-entry checklist-report-container">
-          ${metadatas.join("\n")}
+          <a href="${href}">
+            ${metadatas.join("\n")}
+          </a>
         </li>
       `;
       const $element = $(html);
