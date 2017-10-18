@@ -1,3 +1,4 @@
+const svg = require("./svg.json");
 const View = require("./view.js");
 const { getDocIdFromPathname } = require("../utils.js");
 
@@ -24,7 +25,7 @@ class TOC extends View {
 
   setTitle (title) {
     this.title = title;
-    this.find(".checklist-publication-title").html(title);
+    this.find(".checklist-publication-title").html(svg.book + " " + title);
     return this;
   }
 
@@ -38,15 +39,14 @@ class TOC extends View {
       const metadatas = [];
       for (let metadata in entry) {
         if (metadata === "href" || !entry[metadata]) continue;
-        const line = `<p class="checklist-entry-${metadata}">${entry[metadata]}</p>`;
+        const icon = metadatas.length === 0 ? svg.article : "";
+        const line = `<p class="checklist-entry-${metadata}">${icon} ${entry[metadata]}</p>`;
         metadatas.push(line);
       }
 
       const html = `
         <li class="checklist-toc-entry checklist-report-container">
-          <a href="${href}">
-            ${metadatas.join("\n")}
-          </a>
+          <a href="${href}">${metadatas.join("\n")}</a>
         </li>
       `;
       const $element = $(html);
