@@ -14,9 +14,13 @@ $(function () {
     $("#toc").find(".toc-entry").each(function () {
       const pathname = $(this).find("a").get(0).pathname;
       const entry = {
-        title: $(this).find("h3").text(),
-        subtitle: $(this).find(".subtitle").text(),
-        author: $(this).find(".author").text(),
+        title: (function (el) {
+          const res = [];
+          $(el).children("a").children().each(function () {
+            res.push($(this).text().trim());
+          });
+          return res.join("<br>");
+        })(this),
         href: pathname
       };
       toc.push(entry);
