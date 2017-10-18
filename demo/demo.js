@@ -65,7 +65,7 @@ $(function () {
         },
         {
           title: "Télécharger la source au format XML TEI",
-          icon: "file",
+          icon: "file-xml",
           attributes: {
             onclick: "console.log('Button clicked!')"
           }
