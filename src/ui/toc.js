@@ -11,8 +11,8 @@ class TOC extends View {
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <div class="checklist-toc-view-menu">
           <span>Publication</span>
-          <button data-checklist-action="">${svg["square-plus"]} Tout déplier</button>
-          <button data-checklist-action="">${svg["square-minus"]} Tout replier</button>
+          <button data-checklist-action="toc-unfold">${svg["square-plus"]} Tout déplier</button>
+          <button data-checklist-action="toc-fold">${svg["square-minus"]} Tout replier</button>
           <button class="checklist-toc-rerun" data-checklist-action="toc-rerun">${svg.history} Tout rafraîchir</button>
           <button data-checklist-action="toc-toggle">× Fermer</button>
         </div>

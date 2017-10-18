@@ -1,3 +1,9 @@
+function tocToggleAll (flag) {
+  const $containers = $(".checklist-toc-view .checklist-report-container");
+  const classname = "checklist-details-visible";
+  $containers.toggleClass(classname, flag);
+}
+
 function initActions (ui) {
   const actions = {
     "cache-clear": function () {
@@ -67,6 +73,14 @@ function initActions (ui) {
       const classname = "checklist-details-visible";
       const isVisible = $container.hasClass(classname);
       $container.toggleClass(classname, !isVisible);
+    },
+
+    "toc-fold": function () {
+      tocToggleAll(false);
+    },
+
+    "toc-unfold": function () {
+      tocToggleAll(true);
     },
 
     "toc-rerun": function () {
