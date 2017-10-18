@@ -1,4 +1,3 @@
-const svg = require("./svg.json");
 const View = require("./view.js");
 const { getDocIdFromPathname } = require("../utils.js");
 
@@ -9,13 +8,6 @@ class TOC extends View {
     this.unchecked = [];
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
-        <div class="checklist-toc-view-menu">
-          <span>Publication</span>
-          <button data-checklist-action="toc-unfold">${svg["square-plus"]} Tout déplier</button>
-          <button data-checklist-action="toc-fold">${svg["square-minus"]} Tout replier</button>
-          <button class="checklist-toc-rerun" data-checklist-action="toc-rerun">${svg.history} Tout rafraîchir</button>
-          <button data-checklist-action="toc-toggle">× Fermer</button>
-        </div>
         <div class="checklist-toc-view-contents">
           <h1 id="checklist-publication-title" class="checklist-publication-title"></h1>
           <div id="checklist-publication-report" class="checklist-publication-report checklist-report-container"></div>

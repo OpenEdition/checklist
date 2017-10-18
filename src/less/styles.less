@@ -71,6 +71,17 @@ body.checklist-visible {
   height: 24px;
 }
 
+// TOC control in pane
+.checklist-toc-control {
+  button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 4px;
+    margin: 6px 0;
+  }
+}
+
 // MENU
 // ====
 
@@ -422,6 +433,19 @@ body.checklist-visible {
     font-family: @font-sans-serif;
     font-size: 24px;
     margin: 0 8px;
+  }
+}
+
+.checklist-if-toc-is-visible {
+  display: none;
+}
+
+.checklist-toc-is-visible {
+  .checklist-if-toc-is-visible {
+    display: block;
+  }
+  .checklist-if-toc-is-hidden {
+    display: none;
   }
 }
 

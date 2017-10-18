@@ -134,6 +134,7 @@ class UI extends Base {
       toc.runUnchecked();
     }
     toc.toggle(flag);
+    $("body").toggleClass("checklist-toc-is-visible");
     return this;
   }
 

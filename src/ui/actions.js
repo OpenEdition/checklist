@@ -89,10 +89,6 @@ function initActions (ui) {
 
     "toc-toggle": function () {
       ui.toggleToc();
-      const $btn = $(".checklist-toc-control [data-checklist-action='toc-toggle']");
-      const text = $btn.text();
-      const newText = text === "Controler la publication" ? "Masquer" : "Controler la publication";
-      $btn.text(newText);
     },
 
     "toggle-parent": function () {
