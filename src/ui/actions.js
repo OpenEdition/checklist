@@ -61,6 +61,15 @@ function initActions (ui) {
       report.rerun();
     },
 
+    "report-toggle-details": function () {
+      const $report = $(this).parents(".checklist-report");
+      const $details = $report.find(".checklist-report-details");
+      const isVisible = $details.hasClass("visible");
+      $details.toggleClass("visible", !isVisible);
+      const newText = isVisible ? "Afficher les détails" : "Masquer les détails";
+      $(this).text(newText);
+    },
+
     "toc-rerun": function () {
       ui.refreshToc();
     },

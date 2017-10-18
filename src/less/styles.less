@@ -139,6 +139,14 @@ body.checklist-visible {
   border-radius: 5px;
   box-sizing: border-box;
   min-height: 130px;
+
+  a {
+    color: #666;
+    text-decoration: underline;
+  }
+  a:focus, a:hover {
+    color: #000;
+  }
 }
 
 .rating-box(bad);
@@ -193,6 +201,23 @@ body.checklist-visible {
 
 .checklist-report-from-cache .checklist-report-rerun {
   display: block;
+}
+
+// Show report details (only in toc view)
+.checklist-report-toggle-details {
+  display: none;
+}
+
+.checklist-toc-view {
+  .checklist-report-toggle-details {
+    display: block;
+  }
+  .checklist-report-details {
+    display: none;
+  }
+  .checklist-report-details.visible {
+    display: block;
+  }
 }
 
 .checklist-report-toolbar {
