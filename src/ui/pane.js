@@ -1,10 +1,13 @@
 const svg = require("./svg.json");
+const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
 const { getDocIdFromPathname } = require("../utils.js");
 
 class Pane extends View {
   constructor ({ ui, parent, publi }) {
     super("Pane", ui, parent);
+
+    this.docId = getDocIdFromPathname(window.location.pathname);
 
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
       <div class="checklist-main-menu">
@@ -13,10 +16,12 @@ class Pane extends View {
           <button data-checklist-action="settings-show">${svg.settings}</button>
         </div>
       </div>
+      <div class="checklist-toolbar-container"></div>
       <div id="checklist-pane-contents" class="checklist-pane-contents">
       </div>
     </div>`;
     this.createView(html);
+    this.createToolbar();
 
     if (publi) {
       this.showTocSwitch();
@@ -25,10 +30,17 @@ class Pane extends View {
     }
   }
 
+  createToolbar () {
+    this.toolbar = new Toolbar({
+      ui: this.ui,
+      parent: this.find(".checklist-toolbar-container"),
+      docId: this.docId
+    });
+  }
+
   showReport () {
     const parent = this.find("#checklist-pane-contents");
-    const docId = getDocIdFromPathname(window.location.pathname);
-    const report = this.ui.createReport({parent, docId});
+    const report = this.ui.createReport({parent, docId: this.docId});
     return report;
   }
 

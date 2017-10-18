@@ -11,13 +11,12 @@ function getHtml (docId) {
         <div class="checklist-rating-text"></div>
         <a class="checklist-report-toggle-details" data-checklist-action="report-toggle-details">
           <span class="checklist-report-toggle-details-show">Afficher les détails</span>
-          <span class="checklist-report-toggle-details-hide">Masquer les détails</span> 
+          <span class="checklist-report-toggle-details-hide">Masquer les détails</span>
         </a>
         <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.">
           ${svg.history}
         </div>
       </div>
-      <div class="checklist-report-toolbar"></div>
       <div class="checklist-report-details">
         <div class="checklist-hidden-statements">
           <span class="checklist-icon-box">
@@ -73,33 +72,7 @@ class Report extends View {
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;
-    this.createToolbar();
     this.clearIndicators();
-    return this;
-  }
-
-  createToolbar () {
-    if (typeof this.buttonsCreator !== "function") return;
-
-    const getButton = (infos) => {
-      const $btn = $(`<a class="checklist-report-toolbar-button">`);
-      const icon = (infos.icon && svg[infos.icon]);
-      if (icon) {
-        $btn.html(icon);
-        $btn.attr("title", infos.title);
-      } else {
-        $btn.html(infos.title);
-      }
-      for (let attr in infos.attributes) {
-        $btn.attr(attr, infos.attributes[attr]);
-      }
-      return $btn;
-    };
-
-    const infos = this.buttonsCreator(this.docId);
-    const buttons = infos.map(getButton);
-    const $parent = this.find(".checklist-report-toolbar");
-    $parent.append(buttons);
     return this;
   }
 

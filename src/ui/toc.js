@@ -1,4 +1,5 @@
 const svg = require("./svg.json");
+const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
 const { getDocIdFromPathname } = require("../utils.js");
 
@@ -50,6 +51,16 @@ class TOC extends View {
         </li>
       `;
       const $element = $(html);
+
+      // Create toolbar
+      const $toolbarParent = $("<div class='checklist-toolbar-container'></div>");
+      $toolbarParent.prependTo($element);
+      new Toolbar({
+        ui: this.ui,
+        parent: $toolbarParent,
+        docId: docId
+      });
+
       $toc.append($element);
       const element = $element.get(0);
       const report = this.ui.createReport({parent: element, docId});
