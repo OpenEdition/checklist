@@ -62,12 +62,11 @@ function initActions (ui) {
     },
 
     "report-toggle-details": function () {
-      const $report = $(this).parents(".checklist-report");
-      const $details = $report.find(".checklist-report-details");
-      const isVisible = $details.hasClass("visible");
-      $details.toggleClass("visible", !isVisible);
-      const newText = isVisible ? "Afficher les détails" : "Masquer les détails";
-      $(this).text(newText);
+      const $container = $(this).parents(".checklist-report-container");
+      if ($container.length === 0) return;
+      const classname = "checklist-details-visible";
+      const isVisible = $container.hasClass(classname);
+      $container.toggleClass(classname, !isVisible);
     },
 
     "toc-rerun": function () {

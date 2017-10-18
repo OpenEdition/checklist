@@ -11,7 +11,7 @@ class TOC extends View {
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <h1 id="checklist-publication-title" class="checklist-publication-title"></h1>
         <button class="checklist-toc-rerun" data-checklist-action="toc-rerun">${svg.history} Tout rafraîchir</button>
-        <div id="checklist-publication-report" class="checklist-publication-report"></div>
+        <div id="checklist-publication-report" class="checklist-publication-report checklist-report-container"></div>
         <ul id="checklist-toc" class="checklist-toc">
         <ul>
       </div>
@@ -43,7 +43,7 @@ class TOC extends View {
       }
 
       const html = `
-        <li class="checklist-toc-entry">
+        <li class="checklist-toc-entry checklist-report-container">
           ${metadatas.join("\n")}
         </li>
       `;

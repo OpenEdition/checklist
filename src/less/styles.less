@@ -209,14 +209,19 @@ body.checklist-visible {
 }
 
 .checklist-toc-view {
-  .checklist-report-toggle-details {
+  .checklist-report-toggle-details, .checklist-report-toggle-details-show {
     display: block;
   }
-  .checklist-report-details {
+  .checklist-report-details, .checklist-report-toggle-details-hide {
     display: none;
   }
-  .checklist-report-details.visible {
-    display: block;
+  .checklist-details-visible {
+    .checklist-report-toggle-details-show {
+      display: none;
+    }
+    .checklist-report-details, .checklist-report-toggle-details-hide {
+      display: block;
+    }
   }
 }
 
