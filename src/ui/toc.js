@@ -9,11 +9,19 @@ class TOC extends View {
     this.unchecked = [];
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
-        <h1 id="checklist-publication-title" class="checklist-publication-title"></h1>
-        <button class="checklist-toc-rerun" data-checklist-action="toc-rerun">${svg.history} Tout rafraîchir</button>
-        <div id="checklist-publication-report" class="checklist-publication-report checklist-report-container"></div>
-        <ul id="checklist-toc" class="checklist-toc">
-        <ul>
+        <div class="checklist-toc-view-menu">
+          <span>Publication</span>
+          <button data-checklist-action="">${svg["square-plus"]} Tout déplier</button>
+          <button data-checklist-action="">${svg["square-minus"]} Tout replier</button>
+          <button class="checklist-toc-rerun" data-checklist-action="toc-rerun">${svg.history} Tout rafraîchir</button>
+          <button data-checklist-action="toc-toggle">× Fermer</button>
+        </div>
+        <div class="checklist-toc-view-contents">
+          <h1 id="checklist-publication-title" class="checklist-publication-title"></h1>
+          <div id="checklist-publication-report" class="checklist-publication-report checklist-report-container"></div>
+          <ul id="checklist-toc" class="checklist-toc">
+          <ul>
+        </div>
       </div>
     `;
     this.createView(html);
