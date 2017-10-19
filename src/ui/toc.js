@@ -47,6 +47,12 @@ class TOC extends View {
       const html = `
         <li class="checklist-toc-entry checklist-report-container">
           <div class="checklist-toc-entry-contents"></div>
+          <div class="checklist-toc-entry-footer">
+            <a class="checklist-toggle-report-details" data-checklist-action="toggle-report-details">
+              <span class="checklist-toggle-report-details-show">${svg["square-plus"]} Afficher les détails</span>
+              <span class="checklist-toggle-report-details-hide">${svg["square-minus"]} Masquer les détails</span>
+            </a>
+          </div>
         </li>
       `;
       const $element = $(html);

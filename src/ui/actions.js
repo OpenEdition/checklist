@@ -67,7 +67,7 @@ function initActions (ui) {
       report.rerun();
     },
 
-    "report-toggle-details": function () {
+    "toggle-report-details": function () {
       const $container = $(this).parents(".checklist-report-container");
       if ($container.length === 0) return;
       const classname = "checklist-details-visible";

@@ -219,22 +219,22 @@ body.checklist-visible {
 }
 
 // Show report details (only in toc view)
-.checklist-report-toggle-details {
+.checklist-toggle-report-details {
   display: none;
 }
 
 .checklist-toc-view {
-  .checklist-report-toggle-details, .checklist-report-toggle-details-show {
+  .checklist-toggle-report-details, .checklist-toggle-report-details-show {
     display: block;
   }
-  .checklist-report-details, .checklist-report-toggle-details-hide {
+  .checklist-report-details, .checklist-toggle-report-details-hide {
     display: none;
   }
   .checklist-details-visible {
-    .checklist-report-toggle-details-show {
+    .checklist-toggle-report-details-show {
       display: none;
     }
-    .checklist-report-details, .checklist-report-toggle-details-hide {
+    .checklist-report-details, .checklist-toggle-report-details-hide {
       display: block;
     }
   }
@@ -443,22 +443,6 @@ body.checklist-visible {
   background: #fff;
   box-shadow: 0px 0px 8px #e3e3e3;
 
-  .checklist-toc-entry-header {
-    border-bottom: 1px solid @border-color;
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    color: #888;
-
-    svg {
-      fill: #666;
-    }
-  }
-
-  .checklist-toc-entry-brand {
-    padding: 8px;
-  }
-
   .checklist-toolbar {
     border: none;
     border-left: 1px solid @border-color;
@@ -469,8 +453,36 @@ body.checklist-visible {
   }
 }
 
+.checklist-toc-entry-header {
+  border-bottom: 1px solid @border-color;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  color: #888;
+
+  svg {
+    fill: #666;
+  }
+}
+
+.checklist-toc-entry-brand {
+  padding: 8px;
+}
+
 .checklist-toc-entry-contents {
   padding: 0 20px;
+}
+
+.checklist-toc-entry-footer a {
+  border-top: 1px solid @border-color;
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  padding: 10px;
+  
+  svg {
+    fill: #666;
+  }
 }
 
 .checklist-if-toc-is-visible {
