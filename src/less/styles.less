@@ -132,6 +132,39 @@ body.checklist-visible {
   }
 }
 
+// TOOLBAR
+// =======
+
+.checklist-toolbar {
+  display: flex;
+  justify-content: flex-center;
+  border-bottom: 1px solid @border-color;
+}
+
+.checklist-toolbar-button {
+  border-left: 1px solid @border-color;
+  padding: 8px 12px 4px;
+  text-align: center;
+  display: inline-block;
+  flex-grow: 1;
+
+  &:first-child {
+    border-left: 0;
+  }
+
+  svg {
+    fill: #333;
+  }
+
+  &:hover {
+    background: darken(@bg-color, 2%);
+
+    svg {
+      fill: #000;
+    }
+  }
+}
+
 // REPORTS
 // =======
 
@@ -221,54 +254,6 @@ body.checklist-visible {
 // Show report details (only in toc view)
 .checklist-toggle-report-details {
   display: none;
-}
-
-.checklist-toc-view {
-  .checklist-toggle-report-details, .checklist-toggle-report-details-show {
-    display: block;
-  }
-  .checklist-report-details, .checklist-toggle-report-details-hide {
-    display: none;
-  }
-  .checklist-details-visible {
-    .checklist-toggle-report-details-show {
-      display: none;
-    }
-    .checklist-report-details, .checklist-toggle-report-details-hide {
-      display: block;
-    }
-  }
-}
-
-// TODO: move this in a dedicated section
-.checklist-toolbar {
-  display: flex;
-  justify-content: flex-center;
-  border-bottom: 1px solid @border-color;
-}
-
-.checklist-toolbar-button {
-  border-left: 1px solid @border-color;
-  padding: 8px 12px 4px;
-  text-align: center;
-  display: inline-block;
-  flex-grow: 1;
-
-  &:first-child {
-    border-left: 0;
-  }
-
-  svg {
-    fill: #333;
-  }
-
-  &:hover {
-    background: darken(@bg-color, 2%);
-
-    svg {
-      fill: #000;
-    }
-  }
 }
 
 .checklist-statements {
@@ -479,9 +464,26 @@ body.checklist-visible {
   color: #888;
   text-align: center;
   padding: 10px;
-  
+
   svg {
     fill: #666;
+  }
+}
+
+.checklist-toc-view {
+  .checklist-toggle-report-details, .checklist-toggle-report-details-show {
+    display: block;
+  }
+  .checklist-report-details, .checklist-toggle-report-details-hide {
+    display: none;
+  }
+  .checklist-details-visible {
+    .checklist-toggle-report-details-show {
+      display: none;
+    }
+    .checklist-report-details, .checklist-toggle-report-details-hide {
+      display: block;
+    }
   }
 }
 
