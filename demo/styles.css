@@ -2,18 +2,15 @@ body {
   font-family: sans-serif;
 }
 
+#container {
+  width: 800px;
+  display: block;
+  margin: 0 auto;
+  font-size: 120%;
+}
+
 #links {
   padding: 20px;
-}
-
-#toc {
-  border: 1px #000 solid;
-  padding: 2em;
-  margin: 2em;
-}
-
-#toc ul {
-  padding: 0;
 }
 
 .toc-entry {
