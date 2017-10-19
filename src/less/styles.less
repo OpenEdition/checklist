@@ -409,12 +409,18 @@ body.checklist-visible {
 .checklist-toc-view-contents {
   display: block;
   margin: 0 auto;
-  max-width: 600px;
-  padding-bottom: 30px;
+  max-width: 700px;
+  padding: 30px 0;
 }
 
-.checklist-publication-title {
-  margin: 40px auto;
+.checklist-toc-heading {
+  border-top: 1px solid darken(@border-color, 10%);
+  border-bottom: 1px solid darken(@border-color, 10%);
+  padding: 10px 0;
+  color: #999;
+  font-weight: normal;
+  text-align: center;
+  font-size: 16px;
 }
 
 .checklist-toc {
@@ -477,7 +483,7 @@ body.checklist-visible {
   .checklist-report-details, .checklist-toggle-report-details-hide {
     display: none;
   }
-  
+
   &.checklist-details-visible {
     .checklist-toggle-report-details-show {
       display: none;

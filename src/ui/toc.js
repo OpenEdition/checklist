@@ -13,6 +13,7 @@ class TOC extends View {
         <div class="checklist-toc-view-contents">
           <h1 id="checklist-publication-title" class="checklist-publication-title"></h1>
           <div id="checklist-publication-report" class="checklist-publication-report checklist-report-container"></div>
+          <h2 class="checklist-toc-heading">Contenu de la publication</h2>
           <ul id="checklist-toc" class="checklist-toc">
           <ul>
         </div>
