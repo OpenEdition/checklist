@@ -423,15 +423,39 @@ body.checklist-visible {
   list-style: none;
   border: 1px solid #eee;
   margin-top: 40px;
-  padding: 30px 30px 0 30px;
   background: #fff;
   box-shadow: 0px 0px 8px #e3e3e3;
+
+  .checklist-toc-entry-header {
+    border-bottom: 1px solid @border-color;
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    color: #888;
+
+    svg {
+      fill: #666;
+    }
+  }
+
+  .checklist-toc-entry-brand {
+    padding: 8px;
+  }
+
+  .checklist-toolbar {
+    border: none;
+    border-left: 1px solid @border-color;
+  }
 
   p {
     font-family: @font-sans-serif;
     font-size: 20px;
     margin: 0 8px;
   }
+}
+
+.checklist-toc-entry-contents {
+  padding: 30px 30px 0 30px;
 }
 
 .checklist-if-toc-is-visible {

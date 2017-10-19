@@ -40,20 +40,26 @@ class TOC extends View {
       const metadatas = [];
       for (let metadata in entry) {
         if (metadata === "href" || !entry[metadata]) continue;
-        const icon = metadatas.length === 0 ? svg.article : "";
-        const line = `<p class="checklist-entry-${metadata}">${icon} ${entry[metadata]}</p>`;
+        const line = `<p class="checklist-entry-${metadata}">${entry[metadata]}</p>`;
         metadatas.push(line);
       }
 
       const html = `
         <li class="checklist-toc-entry checklist-report-container">
-          <a href="${href}">${metadatas.join("\n")}</a>
+          <div class="checklist-toc-entry-contents">
+            <a href="${href}">${metadatas.join("\n")}</a>
+          </div>
         </li>
       `;
       const $element = $(html);
 
       // Create toolbar
-      const $toolbarParent = $("<div class='checklist-toolbar-container'></div>");
+      const headerHtml = `
+        <div class="checklist-toc-entry-header">
+          <div class="checklist-toc-entry-brand">${svg.article} Article</div>
+        </div>
+      `;
+      const $toolbarParent = $(headerHtml);
       $toolbarParent.prependTo($element);
       new Toolbar({
         ui: this.ui,
@@ -62,7 +68,7 @@ class TOC extends View {
       });
 
       $toc.append($element);
-      const element = $element.get(0);
+      const element = $element.find(".checklist-toc-entry-contents").get(0);
       const report = this.ui.createReport({parent: element, docId});
       const isCached = report.fromCache();
 
