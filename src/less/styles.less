@@ -34,7 +34,6 @@ body.checklist-visible {
 .checklist-pane, .checklist-childpane {
   width: @pane-width;
   box-sizing: border-box;
-  padding: 10px 20px;
   background: @bg-color;
   border-left: 1px solid @border-color;
   z-index: @z-index;
@@ -45,12 +44,13 @@ body.checklist-visible {
   overflow-y: auto;
 }
 
-.checklist-pane {
-  padding-top: @menu-height + 10;
+.checklist-pane-contents {
+  padding: 10px 20px;
 }
 
 .checklist-childpane {
   z-index: @z-index + 1;
+  padding: 10px 20px;
 }
 
 .checklist-pane h1, .checklist-childpane h1 {
@@ -88,11 +88,7 @@ body.checklist-visible {
 .checklist-main-menu {
   display: flex;
   box-sizing: border-box;
-  position: absolute;
   height: @menu-height;
-  top: 0;
-  right: 0;
-  left: 0;
   border-bottom: @border-color 1px solid;
   background: @bg-color;
 
@@ -229,30 +225,28 @@ body.checklist-visible {
 }
 
 .checklist-toolbar {
-  margin: 20px auto;
-  text-align: center
+  display: flex;
+  justify-content: flex-center;
+  border-bottom: 1px solid @border-color;
 }
 
 .checklist-toolbar-button {
-  border: 1px solid @border-color;
-  background: darken(@bg-color, 1%);
+  border-left: 1px solid @border-color;
   padding: 8px 12px 4px;
   text-align: center;
+  display: inline-block;
+  flex-grow: 1;
+
+  &:first-child {
+    border-left: 0;
+  }
 
   svg {
     fill: #333;
   }
 
-  &:first-child {
-    border-radius: 5px 0 0 5px;
-  }
-
-  &:last-child {
-    border-radius: 0 5px 5px 0;
-  }
-
   &:hover {
-    background: linear-gradient(@bg-color, darken(@bg-color, 2%) 40%, darken(@bg-color, 6%));
+    background: darken(@bg-color, 2%);
 
     svg {
       fill: #000;

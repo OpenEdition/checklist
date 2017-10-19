@@ -24,7 +24,7 @@ function getHtml (buttonsCreator, docId) {
   const infos = buttonsCreator(docId);
   const buttonsHtml = infos.map(getButton).join("\n");
   const html = `
-    <div class="checklist-report-toolbar">
+    <div class="checklist-toolbar">
       ${buttonsHtml}
     </div>
   `;
