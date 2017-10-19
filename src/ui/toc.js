@@ -46,9 +46,7 @@ class TOC extends View {
 
       const html = `
         <li class="checklist-toc-entry checklist-report-container">
-          <div class="checklist-toc-entry-contents">
-            <a href="${href}">${metadatas.join("\n")}</a>
-          </div>
+          <div class="checklist-toc-entry-contents"></div>
         </li>
       `;
       const $element = $(html);
@@ -69,7 +67,11 @@ class TOC extends View {
 
       $toc.append($element);
       const element = $element.find(".checklist-toc-entry-contents").get(0);
-      const report = this.ui.createReport({parent: element, docId});
+      const report = this.ui.createReport({
+        parent: element,
+        docId,
+        metadatas: metadatas.join("\n")
+      });
       const isCached = report.fromCache();
 
       if (!isCached) {

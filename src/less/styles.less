@@ -140,12 +140,28 @@ body.checklist-visible {
 }
 
 .checklist-report-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checklist-report-metadatas {
+  flex: 10;
+  align-self: center;
+  font-family: @font-sans-serif;
+  font-size: 20px;
+
+  p {
+    margin: 0 8px;
+  }
+}
+
+.checklist-report-rating {
   position: relative;
   text-align: center;
   padding: 10px;
   border-radius: 5px;
   box-sizing: border-box;
-  min-height: 130px;
+  flex-grow: 1;
 }
 
 .rating-box(bad);
@@ -224,6 +240,7 @@ body.checklist-visible {
   }
 }
 
+// TODO: move this in a dedicated section
 .checklist-toolbar {
   display: flex;
   justify-content: flex-center;
@@ -447,15 +464,13 @@ body.checklist-visible {
     border-left: 1px solid @border-color;
   }
 
-  p {
-    font-family: @font-sans-serif;
-    font-size: 20px;
-    margin: 0 8px;
+  .checklist-rating-text {
+    display: none;
   }
 }
 
 .checklist-toc-entry-contents {
-  padding: 30px 30px 0 30px;
+  padding: 0 20px;
 }
 
 .checklist-if-toc-is-visible {

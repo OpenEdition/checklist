@@ -63,6 +63,7 @@ class UI extends Base {
       ui: this,
       parent: options.parent,
       docId: options.docId,
+      metadatas: options.metadatas,
       buttonsCreator: options.buttonsCreator || this.buttonsCreator,
       showMarkers: this.publi ? false : true,
     });

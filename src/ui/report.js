@@ -2,19 +2,23 @@ const cache = require("./cache.js");
 const svg = require("./svg.json");
 const View = require("./view.js");
 
-function getHtml (docId) {
+function getHtml (docId, metadatas) {
+  const metadatasDiv = metadatas ? `<div class="checklist-report-metadatas">${metadatas}</div>` : "";
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-report-header">
-        <div class="checklist-report-icon"></div>
-        <div class="checklist-percentage"></div>
-        <div class="checklist-rating-text"></div>
-        <a class="checklist-report-toggle-details" data-checklist-action="report-toggle-details">
-          <span class="checklist-report-toggle-details-show">Afficher les détails</span>
-          <span class="checklist-report-toggle-details-hide">Masquer les détails</span>
-        </a>
-        <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.">
-          ${svg.history}
+        ${metadatasDiv}
+        <div class="checklist-report-rating">
+          <div class="checklist-report-icon"></div>
+          <div class="checklist-percentage"></div>
+          <div class="checklist-rating-text"></div>
+          <a class="checklist-report-toggle-details" data-checklist-action="report-toggle-details">
+            <span class="checklist-report-toggle-details-show">Afficher les détails</span>
+            <span class="checklist-report-toggle-details-hide">Masquer les détails</span>
+          </a>
+          <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.">
+            ${svg.history}
+          </div>
         </div>
       </div>
       <div class="checklist-report-details">
@@ -55,9 +59,9 @@ function getHtml (docId) {
 }
 
 class Report extends View {
-  constructor ({ ui, parent, docId, buttonsCreator, showMarkers }) {
+  constructor ({ ui, parent, docId, metadatas, buttonsCreator, showMarkers }) {
     super("Report", ui, parent);
-    Object.assign(this, {docId, buttonsCreator, showMarkers});
+    Object.assign(this, {docId, metadatas, buttonsCreator, showMarkers});
     this.init();
     this.triggerState("ready");
   }
@@ -68,7 +72,7 @@ class Report extends View {
   init () {
     this.rejections = [];
     this.percentage = 0;
-    const html = getHtml(this.docId, parent);
+    const html = getHtml(this.docId, this.metadatas);
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;
@@ -395,7 +399,7 @@ class Report extends View {
 
   updateRating () {
     const applyClassToHeader = (rating) => {
-      const $header = this.find(".checklist-report-header");
+      const $header = this.find(".checklist-report-rating");
       $header.addClass(`checklist-rating-${rating}`);
     };
 
