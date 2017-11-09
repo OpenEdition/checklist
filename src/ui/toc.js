@@ -11,7 +11,9 @@ class TOC extends View {
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <div class="checklist-toc-view-contents">
+          <h1>Vérification de la publication</h1>
           <ul id="checklist-toc-stats" class="checklist-toc-stats"></ul>
+          <h2 class="checklist-toc-heading">Détails</h2>
           <ul id="checklist-toc" class="checklist-toc"></ul>
         </div>
       </div>
@@ -29,23 +31,17 @@ class TOC extends View {
     this.stats[name] = newValue;
     const icon = svg[`rating-${name}`];
 
-    const texts = {
-      bad: "document(s) contenant des erreurs de composition",
-      good: "document(s) correctement composé(s)",
-      excellent: "document(s) très bien composé(s)"
-    };
-
     let $el = this.find(`.checklist-toc-stat-${name}`);
     if ($el.length === 0) {
       const $parent = this.find("#checklist-toc-stats");
-      $el = $(`<li class="checklist-toc-stat-${name}"><span class="checklist-toc-stat-nb"></span> ${texts[name]}</li>`);
+      $el = $(`<li class="checklist-toc-stat-${name}"></li>`);
       $el.appendTo($parent);
     }
 
     if (newValue === 0) {
       $el.remove();
     } else {
-      $el.find(".checklist-toc-stat-nb").html(`${icon} ${newValue}`);
+      $el.html(`${icon} ${newValue}`);
     }
     return this;
   }
