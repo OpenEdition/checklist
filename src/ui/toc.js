@@ -11,8 +11,6 @@ class TOC extends View {
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <div class="checklist-toc-view-contents">
-          <div id="checklist-publication-report" class="checklist-publication-report checklist-report-container"></div>
-          <h2 class="checklist-toc-heading">Contenu de la publication</h2>
           <ul id="checklist-toc" class="checklist-toc">
           <ul>
         </div>
@@ -20,23 +18,16 @@ class TOC extends View {
     `;
     this.createView(html);
     this.title = publi.title;
-    this.copy(publi.toc);
-    this.showPubliReport();
+    this.inject(publi.toc);
   }
 
-  copy (toc) {
+  inject (toc) {
     this.toc = toc;
     const $toc = this.find("#checklist-toc");
-    toc.forEach((entry) => {
+
+    toc.forEach((entry, index) => {
       const href = entry.href;
       const docId = getDocIdFromPathname(href);
-
-      const metadatas = [];
-      for (let metadata in entry) {
-        if (metadata === "href" || !entry[metadata]) continue;
-        const line = `<p class="checklist-entry-${metadata}">${entry[metadata]}</p>`;
-        metadatas.push(line);
-      }
 
       const html = `
         <li class="checklist-toc-entry checklist-report-container">
@@ -52,9 +43,11 @@ class TOC extends View {
       const $element = $(html);
 
       // Create toolbar
+      const type = entry.type || "Article";
+      const icon = entry.icon || "article";
       const headerHtml = `
         <div class="checklist-toc-entry-header">
-          <div class="checklist-toc-entry-brand">${svg.article} Article</div>
+          <div class="checklist-toc-entry-brand">${svg[icon]} ${type}</div>
         </div>
       `;
       const $toolbarParent = $(headerHtml);
@@ -67,10 +60,11 @@ class TOC extends View {
 
       $toc.append($element);
       const element = $element.find(".checklist-toc-entry-contents").get(0);
+      const metadatas = `<p class="checklist-entry-title">${entry.title}</p>`;
       const report = this.ui.createReport({
         parent: element,
         docId,
-        metadatas: metadatas.join("\n")
+        metadatas
       });
       const isCached = report.fromCache();
 
@@ -78,14 +72,6 @@ class TOC extends View {
         this.unchecked.push(report);
       }
     });
-  }
-
-  showPubliReport () {
-    const parent = this.find("#checklist-publication-report");
-    const docId = getDocIdFromPathname(window.location.pathname);
-    const metadatas = this.title;
-    const report = this.ui.createReport({parent, docId, metadatas});
-    return report;
   }
 
   rerunAll () {

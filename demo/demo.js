@@ -10,7 +10,12 @@ $(function () {
   function getToc () {
     if (!isPublication) return;
 
-    const toc = [];
+    const toc = [{
+      title: $(".publi-title").text(),
+      href: window.location.pathname,
+      type: "Publication",
+      icon: "book"
+    }];
     $("#toc").find(".toc-entry").each(function () {
       const pathname = $(this).find("a").get(0).pathname;
       const entry = {
