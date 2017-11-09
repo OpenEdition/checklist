@@ -180,6 +180,9 @@ $(function () {
     ]
   })
   .then(function () {
-    checklist.run();
+    // Don't ditrectly run tests on publications
+    if (!isPublication) {
+      checklist.run();
+    }
   });
 });
