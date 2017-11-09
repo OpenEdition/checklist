@@ -76,8 +76,8 @@ class TOC extends View {
 
   rerunAll () {
     const reports = this.toc.map((entry) => {
-      const href = entry.href;
-      return this.ui.getReport(href);
+      const docId = getDocIdFromPathname(entry.href);
+      return this.ui.getReport(docId);
     });
     reports.forEach((report) => {
       report.rerun();
