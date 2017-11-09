@@ -46,20 +46,23 @@ class Source extends Base {
   }
 
   load () {
-    const getBodyClasses = (body = "body") => $(body).get(0).className.split(/\s+/);
-
     const loadLocal = () => {
       this.root = document.body;
-      this.bodyClasses = getBodyClasses();
+      this.bodyClasses = document.body.className.split(/\s+/);
       this.success().complete();
     };
 
     const loadRemote = () => {
-      const bodyExists = (data) => typeof data === "string" && /\n.*(<body.*)\n/i.test(data);
+      const bodyRegex = /<body([^<>]*)>/i;
+      const bodyClone = "<div$1>";
+      const bodyExists = (data) => typeof data === "string" && bodyRegex.test(data);
 
       const setContainer = (data) => {
-        const body = data.match(/\n.*(<body.*)\n/i)[1].replace("body", "div");
-        const bodyClasses = getBodyClasses(body);
+        const bodyTag = data.match(bodyRegex)[0];
+        const clone = bodyTag.replace(bodyRegex, bodyClone);
+        const bodyClasses = $(clone).get(0).className.split(/\s+/);
+        
+        data = data.replace(bodyRegex, bodyClone);
         const $data = $(`<div>${data}</div>`);
         const root = $data.get(0);
         return {root, bodyClasses};
