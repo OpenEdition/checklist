@@ -27,18 +27,25 @@ class TOC extends View {
     const value = this.stats[name] || 0;
     const newValue = value + nb < 0 ? 0 : value + nb;
     this.stats[name] = newValue;
+    const icon = svg[`rating-${name}`];
 
-    if (value === 0) {
+    const texts = {
+      bad: "document(s) contenant des erreurs de composition",
+      good: "document(s) correctement composé(s)",
+      excellent: "document(s) très bien composé(s)"
+    };
+
+    let $el = this.find(`.checklist-toc-stat-${name}`);
+    if ($el.length === 0) {
       const $parent = this.find("#checklist-toc-stats");
-      $parent.append(`<li class="checklist-toc-stat-${name}">${name}: ${newValue}</li>`);
-      return this;
+      $el = $(`<li class="checklist-toc-stat-${name}"><span class="checklist-toc-stat-nb"></span> ${texts[name]}</li>`);
+      $el.appendTo($parent);
     }
 
-    const $el = this.find(`.checklist-toc-stat-${name}`);
     if (newValue === 0) {
       $el.remove();
     } else {
-      $el.text(`${name}: ${newValue}`);
+      $el.find(".checklist-toc-stat-nb").html(`${icon} ${newValue}`);
     }
     return this;
   }
