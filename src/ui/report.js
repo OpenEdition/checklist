@@ -113,6 +113,7 @@ class Report extends View {
 
     // Connect future checks
     checker.on("check.done", (check) => {
+      if (this.hasState("done")) return;
       this.addCheck(check);
     });
 
