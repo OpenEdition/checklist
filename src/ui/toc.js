@@ -11,14 +11,36 @@ class TOC extends View {
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <div class="checklist-toc-view-contents">
-          <ul id="checklist-toc" class="checklist-toc">
-          <ul>
+          <ul id="checklist-toc-stats" class="checklist-toc-stats"></ul>
+          <ul id="checklist-toc" class="checklist-toc"></ul>
         </div>
       </div>
     `;
     this.createView(html);
     this.title = publi.title;
+    this.stats = {};
     this.inject(publi.toc);
+  }
+
+  addStat (name, nb = 1) {
+    if (nb === 0) return this;
+    const value = this.stats[name] || 0;
+    const newValue = value + nb < 0 ? 0 : value + nb;
+    this.stats[name] = newValue;
+
+    if (value === 0) {
+      const $parent = this.find("#checklist-toc-stats");
+      $parent.append(`<li class="checklist-toc-stat-${name}">${name}: ${newValue}</li>`);
+      return this;
+    }
+
+    const $el = this.find(`.checklist-toc-stat-${name}`);
+    if (newValue === 0) {
+      $el.remove();
+    } else {
+      $el.text(`${name}: ${newValue}`);
+    }
+    return this;
   }
 
   inject (toc) {
@@ -65,6 +87,13 @@ class TOC extends View {
         parent: element,
         docId,
         metadatas
+      });
+
+      report.on("rating", () => {
+        this.addStat(report.rating);
+      });
+      report.on("beforeReset", () => {
+        this.addStat(report.rating, -1);
       });
       const isCached = report.fromCache();
 

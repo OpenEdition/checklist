@@ -80,6 +80,7 @@ class Report extends View {
   // =====================
 
   reset () {
+    this.emit("beforeReset");
     if (this.checker) {
       this.checker.removeAllListeners();
     }
@@ -417,10 +418,11 @@ class Report extends View {
       $el.html(html);
     };
 
-    const rating = this.computeRating();
+    const rating = this.rating = this.computeRating();
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);
+    this.triggerState("rating");
     return this;
   }
 
