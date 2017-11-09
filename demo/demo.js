@@ -87,16 +87,16 @@ $(function () {
     publi: getPubli(),
     rules: [
       {
-        name: "First rule",
-        description: "Hello world",
+        name: "Première règle",
+        description: "<p>Cette règle renvoie une notification sur toutes les pages.</p><p>Lorem ipsum dolor sit amet consectetur adipiscing elit eu nec, magnis purus porta donec eget class pretium sapien ultricies, aliquet sociis proin ante vivamus etiam montes fames. Convallis dis aptent platea massa taciti volutpat placerat inceptos erat ut, pharetra habitasse cras condimentum risus sapien sodales porta. Congue donec justo egestas porttitor integer quisque leo est, laoreet et urna risus blandit sociosqu aenean conubia lacinia.</p><a href='#'>Lien vers la documentation</a>",
         action: function () {
-          this.notify(true);
+          this.notify();
           this.resolve(true);
         }
       },
       {
-        name: "Second rule (ajax)",
-        description: "Foo bar",
+        name: "Seconde règle (ajax)",
+        description: "<p>Cette règle recherche une information dans une source externe.",
         // TODO: href must be a function (variable)
         href: "./pages/1.html",
         action: function ($) {
@@ -105,9 +105,8 @@ $(function () {
         }
       },
       {
-        name: "Timeout rule",
-        description: "Lorem ipsum",
-        type: "warning",
+        name: "Règle avec un délai",
+        description: "Checklist supporte les tests asynchrones. Cette règle est exécutée avec un délai qui simule (par exemple) un requête asynchrone.",
         action: function ($) {
           var that = this;
           setTimeout(function () {
@@ -116,64 +115,61 @@ $(function () {
         }
       },
       {
-        name: "False condition",
-        description: "Obladi oblada!",
+        name: "Mauvaise condition",
+        description: "Cette règle ne sera jamais appliquée.",
         condition: "rubrique",
         action: function ($) {
           this.resolve("This should never happen");
         }
       },
       {
-        name: "Page 1 only",
-        type: "danger",
-        action: function ($) {
+        name: "Avertissement dans l'article 2",
+        description: "Un avertissement qui ne ressort que dans l'article 2.",
+        type: "warning",
         action: function ($, bodyClasses) {
-          const text = $("p").text();
-          if (text === "This is the page 1.") {
-            this.resolve(true);
-          }
+          const flag = bodyClasses.includes("article-2");
+          this.notify(flag);
+          this.resolve();
         }
       },
       {
-        name: "Bad href",
-        href: "bad",
+        name: "Erreur critique dans l'article 3",
+        description: "Une erreur critique qui ne ressort que dans l'article 3.",
+        type: "danger",
+        action: function ($, bodyClasses) {
+          const flag = bodyClasses.includes("article-3");
+          this.resolve(flag);
+        }
+      },
+      {
+        name: "Règle qui appelle une source 404",
+        description: "Un exemple de règle qui renvoie une exception",
+        href: "bad-location",
         action: function () {
           this.resolve(true);
         }
       },
       {
-        name: "Bad href (duplicate)",
-        href: "bad",
-        action: function () {
-          this.resolve(true);
-        }
-      },
-      {
-        name: "With marker",
+        name: "Une règle qui injecte des marqueurs",
+        description: "Cette règle injecte un marqueur à un paragraphe sur 5.",
         action: function ($) {
-          const statement = this.notify(true);
-          statement.addMarker({
-            name: "marker here",
-            target: $("h1").get(0),
-            position: "after"
+          const statement = this.notify();
+          $("p").each(function (index) {
+            if (index % 5 !== 0) return;
+            statement.addMarker({
+              name: "Marqueur",
+              target: $(this),
+              position: "after"
+            });
           });
-          statement.addMarker({
-            name: "marker here",
-            target: $("p"),
-            position: "after"
-          });
-          statement.addMarker({
-            name: "marker here",
-            target: $("blockquote").get(0),
-            position: "after"
-          });
+
           this.resolve();
         }
       },
       {
         name: "Paper rule",
+        description: "Une règle qui est associée à la catégorie 'papier'",
         tags: ["paper"],
-        type: "danger",
         action: function () {
           this.resolve(true);
         }
