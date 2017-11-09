@@ -477,6 +477,7 @@ class Report extends View {
       this.updateRating();
     };
 
+    if (this.hasState("done")) return this;
     const docId = this.docId;
     const record = cache.getRecord(docId);
     if (record == null) return false;
