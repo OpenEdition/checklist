@@ -11,7 +11,6 @@ class TOC extends View {
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <div class="checklist-toc-view-contents">
-          <h1 id="checklist-publication-title" class="checklist-publication-title"></h1>
           <div id="checklist-publication-report" class="checklist-publication-report checklist-report-container"></div>
           <h2 class="checklist-toc-heading">Contenu de la publication</h2>
           <ul id="checklist-toc" class="checklist-toc">
@@ -20,15 +19,9 @@ class TOC extends View {
       </div>
     `;
     this.createView(html);
-    this.setTitle(publi.title);
+    this.title = publi.title;
     this.copy(publi.toc);
     this.showPubliReport();
-  }
-
-  setTitle (title) {
-    this.title = title;
-    this.find(".checklist-publication-title").html(svg.book + " " + title);
-    return this;
   }
 
   copy (toc) {
@@ -90,7 +83,8 @@ class TOC extends View {
   showPubliReport () {
     const parent = this.find("#checklist-publication-report");
     const docId = getDocIdFromPathname(window.location.pathname);
-    const report = this.ui.createReport({parent, docId});
+    const metadatas = this.title;
+    const report = this.ui.createReport({parent, docId, metadatas});
     return report;
   }
 
