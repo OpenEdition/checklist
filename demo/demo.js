@@ -127,6 +127,7 @@ $(function () {
         name: "Page 1 only",
         type: "danger",
         action: function ($) {
+        action: function ($, bodyClasses) {
           const text = $("p").text();
           if (text === "This is the page 1.") {
             this.resolve(true);

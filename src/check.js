@@ -105,7 +105,8 @@ class Check extends Base {
       this.triggerState("run", this);
       setTimeout(this.resolve.bind(this), delay);
       const selectFunc = this.source.get$();
-      this.action.call(this, selectFunc);
+      const bodyClasses = this.source.bodyClasses;
+      this.action.call(this, selectFunc, bodyClasses);
       return this;
     }
   }

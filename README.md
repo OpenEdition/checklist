@@ -17,7 +17,7 @@ Checklist requiert jQuery.
 
   <!-- Configuration de checklist (voir plus bas) -->  
   <script src="path/to/checklist-config.js"></script>
-``` 
+```
 
 ## Utilisation
 
@@ -29,7 +29,7 @@ checklist.init({
   // Définir le parent où l'UI sera intégré.
   // Si cette variable est vide, l'UI ne sera pas créée.
   parent: "body",
-  
+
   // Une fonction qui permet de créer les boutons de la barre d'outil.
   // Prend l'identifant du document en paramètre.
   buttonsCreator: function (docId) {
@@ -50,7 +50,7 @@ checklist.init({
       }
     ];
   },
-  
+
   // Fonction de création du contexte.
   context: function ($) {
     return {
@@ -60,7 +60,7 @@ checklist.init({
       "motsclesfr": $(".motsclesfr .entry").length
     };
   },
-  
+
   // Liste des règles.
   rules: [
     {
@@ -68,14 +68,14 @@ checklist.init({
       description: "<p>Le titre n'est pas présent sur la page.</p>",
       condition: "article || publication",
       type: "danger",
-      action: function ($) {
+      action: function ($, bodyClasses) {
         var flag = $("h1").length === 0;
         this.resolve(flag);
       }
     },
     // etc.
   ],
-  
+
   // Clé à utiliser dans le cas où la page courante contient une table des matières.
   // Dans ce cas, le raport de l'entité en cours ne sera pas automatiquement affiché dans le panel. À la place, l'option de relecture de la table des matières sera proposée à l'utilisateur.
   publi: {
@@ -92,7 +92,7 @@ checklist.init({
 .then(function () {
   checklist.run();
 });
-``` 
+```
 
 ### Définition des règles
 
@@ -126,7 +126,8 @@ checklist.init({
 
   // Action de la règle.
   // Ne pas oublier de passer $ en paramètre pour que la règle fonctionne avec les sources externes chargées par le loader.
-  action: function ($) {
+  // Dans le cas de sources externes chargées via ajax, le tag body est remplacé par un div pour éviter une erreur du DOM. Pour cette raison le deuxième paramètre d'action() correspond aux classes du body de la source.
+  action: function ($, bodyClasses) {
     // Créer un statement en utilisant les valeurs par défaut de la règle.
     this.notify(true);
 
@@ -161,7 +162,7 @@ checklist.init({
       // Position: "after"|"before"
       position: "after"
     });
-    
+
     // Déclarer un exception au cours du test (si par exemple un élément de maquette n'existe pas)
     this.reject("Message d'erreur");
 
@@ -171,7 +172,7 @@ checklist.init({
     this.resolve(true);
   }
 }
-``` 
+```
 
 ## Fonctionnement interne
 
@@ -203,7 +204,7 @@ L'objet `checklist` émet les événements suivants :
 * `check.rejected`: émis quand un check lève un exception. L'erreur est passée en premier argument et le check est passé en deuxième argument du event handler.
 * `statement.new`: émis quand un statement est créé. Le statement est passé en argument du event handler.
 
-Tous les objets internes de checklist exposent les attributs `classname` qui correspond au nom de la classe de l'objet, et `caller` qui est une référence au parent ayant créé l'objet en cours. 
+Tous les objets internes de checklist exposent les attributs `classname` qui correspond au nom de la classe de l'objet, et `caller` qui est une référence au parent ayant créé l'objet en cours.
 
 Pour connaître le checker responsable de la création d'un statement, il est donc possible de faire :
 
@@ -212,7 +213,7 @@ Pour connaître le checker responsable de la création d'un statement, il est do
     var check = statement.caller;
     var checker = check.caller;
   });
-``` 
+```
 
 ## Développement
 
