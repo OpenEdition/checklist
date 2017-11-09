@@ -51,6 +51,8 @@ class Check extends Base {
   }
 
   notify (value) {
+    if (value === false) return;
+
     const statement = new Statement({check: this, infos: value, caller: this});
     this.forwardEvents(statement, ["marker"]);
 
@@ -78,7 +80,7 @@ class Check extends Base {
 
   resolve (value) {
     if (this.hasState("done") || this.hasState("success")) return this;
-    if (value) {
+    if (value != null) {
       this.notify(value);
     }
     this.triggerState("success", this);

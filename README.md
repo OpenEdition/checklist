@@ -128,13 +128,17 @@ checklist.init({
   // Ne pas oublier de passer $ en paramètre pour que la règle fonctionne avec les sources externes chargées par le loader.
   // Dans le cas de sources externes chargées via ajax, le tag body est remplacé par un div pour éviter une erreur du DOM. Pour cette raison le deuxième paramètre d'action() correspond aux classes du body de la source.
   action: function ($, bodyClasses) {
-    // Créer un statement en utilisant les valeurs par défaut de la règle.
-    this.notify(true);
+    // Créer un statement en utilisant les valeurs par défaut de la règle
+    this.notify();
 
     // Il est posible d'incrémenter le compteur en ajoutant d'autres statements identiques (= qui ont le même id).
     for (var i=0; i < 3; i++) {
-      this.notify(true);
+      this.notify();
     }
+
+    // Si notify prend false pour argument alors il n'est pas pris en compte (c'est une écriture courte pour éviter les blocs conditionnels)
+    const flag = 0 === 1;
+    this.notify(flag);
 
     // Créer un statement avec des valeurs personnalisées.
     this.notify({
@@ -146,7 +150,7 @@ checklist.init({
     });
 
     // Ajouter des markers.
-    var statement = this.notify(true);
+    var statement = this.notify();
     statement.addMarker({
       // Titre du marker.
       // Par défaut on utilise le nom du statement (qui est lui même peut-être hérité de la règle, voir ci-dessus).
@@ -168,7 +172,7 @@ checklist.init({
 
     // Déclarer la fin du test avec resolve().
     // C'est indipensable car tous les tests sont asynchrones.
-    // Si un argument est donné, this.notify() est exécuté avec cet argument avant la fin du test.
+    // Si un argument est donné, this.notify() est exécuté avec cet argument avant la fin du test. Il est donc possible de créer une notification par défaut avec l'argument true.
     this.resolve(true);
   }
 }
