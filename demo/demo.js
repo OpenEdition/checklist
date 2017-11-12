@@ -151,24 +151,24 @@ $(function () {
       },
       {
         name: "Une règle qui injecte des marqueurs",
-        description: "Cette règle injecte un marqueur à un paragraphe sur 5.",
+        description: "Cette règle injecte un marqueur à un paragraphe sur 3.",
         action: function ($) {
-          const statement = this.notify();
+          const statement = this.notify(true);
           $("p").each(function (index) {
-            if (index % 5 !== 0) return;
+            if (index % 3 !== 0) return;
             statement.addMarker({
               name: "Marqueur",
               target: $(this),
               position: "after"
             });
           });
-
           this.resolve();
         }
       },
       {
         name: "Paper rule",
         description: "Une règle qui est associée à la catégorie 'papier'",
+        type: "warning",
         tags: ["paper"],
         action: function () {
           this.resolve(true);
