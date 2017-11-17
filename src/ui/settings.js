@@ -17,10 +17,8 @@ function getViewHtml (cache) {
     return inputs.join("\n");
   };
 
+  // TODO: this should be dynamically computed from available tags (so tags and their names should be defined in checklist.init())
   const inputHtml = getInputHtml([
-    {id: "type-danger", name: "Avertissements"},
-    {id: "type-warning", name: "Recommandations"},
-    {id: "type-info", name: "Informations"},
     {id: "tag-paper", name: "Publication papier"}
   ]);
 
