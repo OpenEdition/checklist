@@ -1,29 +1,26 @@
 const Base = require("./base.js");
 const Source = require("./source.js");
 
-function getNewSource (loader, href) {
-  const source = new Source({ href, caller: loader });
-  source.load();
-  return source;
-}
-
-function registerSource (loader, source) {
-  loader.sources.push(source);
-  return source;
-}
-
 class Loader extends Base {
   constructor ({ caller }) {
     super("Loader", caller);
 
-    this.selfSource = getNewSource(this);
-    this.sources = [this.selfSource];
+    this.sources = [];
+    this.selfSource = this.loadSource();
     this.triggerState("ready");
+  }
+
+  // Load and register a new Source (it doesn't check duplicates!)
+  loadSource (href) {
+    const source = new Source({ href, caller: this });
+    source.load();
+    this.sources.push(source);
+    return source;
   }
 
   requestSource (href) {
     return new Promise((resolve, reject) => {
-      const source = this.getSource(href) || registerSource(this, getNewSource(this, href));
+      const source = this.getSource(href) || this.loadSource(href);
 
       source.whenState("ready").then(() => {
         if (source.hasState("success")) {
