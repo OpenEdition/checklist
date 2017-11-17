@@ -6,6 +6,9 @@ class Loader extends Base {
     super("Loader", caller);
 
     this.sources = [];
+    this.queue = [];
+    this.maxLoading = 5; // TODO: move this to config
+    this.loadingCount = 0;
     this.selfSource = this.createSource().load();
     this.triggerState("ready");
   }
@@ -15,13 +18,16 @@ class Loader extends Base {
       let source = this.getSource(href);
       if (source == null) {
         source = this.createSource(href);
-        source.load();
+        this.loadSource(source);
       }
 
       source.whenState("ready").then(() => {
+        this.loadingCount--;
+        this.dequeue();
         if (source.hasState("success")) {
           return resolve(source);
         }
+        // TODO: store rejection in order to avoid useless duplicate requests
         reject(source.error);
       });
     });
@@ -39,6 +45,24 @@ class Loader extends Base {
     return this.sources.find((source) => {
       return source.is(href);
     });
+  }
+
+  loadSource (source) {
+    if (this.loadingCount < this.maxLoading) {
+      this.loadingCount++;
+      return source.load();
+    }
+    this.enqueue(source);
+  }
+
+  enqueue (source) {
+    this.queue.push(source);
+  }
+
+  dequeue () {
+    const source = this.queue.shift();
+    if (source == null) return;
+    this.loadSource(source);
   }
 }
 
