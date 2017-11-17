@@ -6,24 +6,17 @@ class Loader extends Base {
     super("Loader", caller);
 
     this.sources = [];
-    this.selfSource = this.loadSource();
+    this.selfSource = this.createSource().load();
     this.triggerState("ready");
-  }
-
-  // Load and register a new Source
-  loadSource (href) {
-    const source = this.getSource(href);
-    if (source) return source;
-
-    const newSource = new Source({ href, caller: this });
-    newSource.load();
-    this.sources.push(newSource);
-    return newSource;
   }
 
   requestSource (href) {
     return new Promise((resolve, reject) => {
-      const source = this.loadSource(href);
+      let source = this.getSource(href);
+      if (source == null) {
+        source = this.createSource(href);
+        source.load();
+      }
 
       source.whenState("ready").then(() => {
         if (source.hasState("success")) {
@@ -32,6 +25,12 @@ class Loader extends Base {
         reject(source.error);
       });
     });
+  }
+
+  createSource (href) {
+    const source = new Source({ href, caller: this });
+    this.sources.push(source);
+    return source;
   }
 
   getSource (href) {
