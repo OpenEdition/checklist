@@ -35,13 +35,11 @@ class Loader extends Base {
   }
 
   getSource (href) {
+    if (href == null) return this.selfSource;
+
     return this.sources.find((source) => {
       return source.is(href);
     });
-  }
-
-  getSelfSource () {
-    return this.selfSource;
   }
 }
 
