@@ -1,4 +1,3 @@
-const cache = require("./cache.js");
 const svg = require("./svg.json");
 const View = require("./view.js");
 
@@ -182,6 +181,7 @@ class Report extends View {
       const tags = statement.tags;
       const tagsClasses = getTagsClasses(tags);
 
+      const cache = this.ui.cache;
       const tagsFilters = getTagsFilters(tags);
       const isFiltered = cache.isFiltered([`type-${type}`, ...tagsFilters]);
       const filterClass = isFiltered ? "hidden" : "";
@@ -466,6 +466,7 @@ class Report extends View {
   // =====
 
   toCache () {
+    const cache = this.ui.cache;
     cache.setRecord(this);
     return this;
   }
@@ -480,6 +481,7 @@ class Report extends View {
     };
 
     if (this.hasState("done")) return this;
+    const cache = this.ui.cache;
     const docId = this.docId;
     const record = cache.getRecord(docId);
     if (record == null) return false;

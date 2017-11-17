@@ -45,6 +45,7 @@ $(function () {
 
   checklist.init({
     parent: "body",
+    namespace: "demo",
     buttonsCreator: function (docId) {
       return [
         {

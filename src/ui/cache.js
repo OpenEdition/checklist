@@ -1,29 +1,38 @@
-const cache = {
-  get: function (id, defaultValue) {
+const Base = require("../base.js");
+
+class Cache extends Base {
+  constructor ({ caller, namespace }) {
+    super("Cache", caller);
+    this.namespace = namespace;
+  }
+
+  get (id, defaultValue) {
     if (id == null) return;
-    const key = `checklist-${id}`;
+    const namespace = this.namespace;
+    const key = `checklist-${namespace}-${id}`;
     if (key != null) {
       return JSON.parse(localStorage.getItem(key));
     }
     return defaultValue;
-  },
+  }
 
-  set: function (id, value) {
+  set (id, value) {
     if (id == null) return;
-    const key = `checklist-${id}`;
+    const namespace = this.namespace;
+    const key = `checklist-${namespace}-${id}`;
     localStorage.setItem(key, JSON.stringify(value));
     return this;
-  },
+  }
 
-  clear: function (regex = /^checklist-/) {
+  clear (regex = new RegExp(`^checklist-${this.namespace}-`)) {
     Object.keys(localStorage).forEach((key) => {
       if (!regex.test(key)) return;
       localStorage.removeItem(key);
     });
     return this;
-  },
+  }
 
-  setRecord: function (report) {
+  setRecord (report) {
     const createRecord = (report) => {
       const exportStatement = (statement) => {
         // We dont need markers in cache because they are not used in toc view
@@ -38,32 +47,34 @@ const cache = {
     };
 
     const record = createRecord(report);
-    cache.set(report.docId, record);
+    this.set(report.docId, record);
     return this;
-  },
+  }
 
-  getRecord: function (docId) {
-    const record = cache.get(docId);
+  getRecord (docId) {
+    const record = this.get(docId);
     return record;
-  },
+  }
 
-  setFilter: function (id, value) {
-    cache.set(`filter-${id}`, value);
-  },
+  setFilter (id, value) {
+    this.set(`filter-${id}`, value);
+  }
 
   // Return true if filter exists, i.e. statements must be hidden
-  getFilter: function (id) {
-    return cache.get(`filter-${id}`, false);
-  },
+  getFilter (id) {
+    return this.get(`filter-${id}`, false);
+  }
 
   // Return true if any filter exists
-  isFiltered: function (ids) {
-    return ids.some((id) => cache.getFilter(id));
-  },
-
-  clearFilters: function () {
-    cache.clear(/^checklist-filter-/);
+  isFiltered (ids) {
+    return ids.some((id) => this.getFilter(id));
   }
-};
 
-module.exports = cache;
+  clearFilters () {
+    const namespace = this.namespace;
+    const regex = new RegExp(`^checklist-${namespace}-filter-`);
+    this.clear(regex);
+  }
+}
+
+module.exports = Cache;

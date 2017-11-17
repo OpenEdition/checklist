@@ -1,7 +1,6 @@
-const cache = require("./cache.js");
 const View = require("./view.js");
 
-function getViewHtml () {
+function getViewHtml (cache) {
   const getInputHtml = (filters) => {
     const inputs = filters.map((filter) => {
       const isHidden = cache.getFilter(filter.id);
@@ -47,7 +46,8 @@ class Settings extends View {
     super("Settings", ui, parent);
     this.childpane = true;
 
-    const html = getViewHtml();
+    const cache = this.ui.cache;
+    const html = getViewHtml(cache);
     this.createView(html);
     this.initEventHandlers();
   }

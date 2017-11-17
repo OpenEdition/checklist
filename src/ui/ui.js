@@ -1,5 +1,5 @@
 const Base = require("../base.js");
-const cache = require("./cache.js");
+const Cache = require("./cache.js");
 const Help = require("./help.js");
 const initActions = require("./actions.js");
 const Pane = require("./pane.js");
@@ -20,6 +20,10 @@ class UI extends Base {
     const isPubli = publi && publi.title && publi.toc && publi.toc.length > 0;
     publi = isPubli ? publi : false;
     Object.assign(this, {parent, buttonsCreator, publi});
+
+    const namespace = this.caller.config.get("namespace");
+    this.cache = new Cache({caller: this, namespace});
+
     this.createComponents();
     initActions(this);
     this.show();
@@ -43,19 +47,19 @@ class UI extends Base {
     this.forEachReport((report) => {
       report.filterStatements(id, hidden);
     });
-    cache.setFilter(id, hidden);
+    this.cache.setFilter(id, hidden);
     return this;
   }
 
   clearFilters () {
     this.forEachReport((report) => report.clearFilters());
     this.components.settings.clearFilters();
-    cache.clearFilters();
+    this.cache.clearFilters();
     return this;
   }
 
   clearCache () {
-    cache.clear();
+    this.cache.clear();
   }
 
   createReport (options) {
