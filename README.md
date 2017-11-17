@@ -30,6 +30,10 @@ checklist.init({
   // Si cette variable est vide, l'UI ne sera pas créée.
   parent: "body",
 
+  // Prefixe des clés du localStorage
+  // Sur Revues.org et OpenEdition Books, utiliser le nom court
+  namespace: "foobar",
+
   // Une fonction qui permet de créer les boutons de la barre d'outil.
   // Prend l'identifant du document en paramètre.
   buttonsCreator: function (docId) {
