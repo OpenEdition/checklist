@@ -10,17 +10,20 @@ class Loader extends Base {
     this.triggerState("ready");
   }
 
-  // Load and register a new Source (it doesn't check duplicates!)
+  // Load and register a new Source
   loadSource (href) {
-    const source = new Source({ href, caller: this });
-    source.load();
-    this.sources.push(source);
-    return source;
+    const source = this.getSource(href);
+    if (source) return source;
+
+    const newSource = new Source({ href, caller: this });
+    newSource.load();
+    this.sources.push(newSource);
+    return newSource;
   }
 
   requestSource (href) {
     return new Promise((resolve, reject) => {
-      const source = this.getSource(href) || this.loadSource(href);
+      const source = this.loadSource(href);
 
       source.whenState("ready").then(() => {
         if (source.hasState("success")) {
