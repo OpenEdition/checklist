@@ -78,6 +78,15 @@ $(function () {
         }
       ];
     },
+    // TODO: ajouter la définition des ratings à cette config : textes, icones, etc.
+    // types = danger , warning , info
+    // ratings = bad, good, excellent
+    computeRating: function (indicators) {
+      const {statementwarning, statementdanger} = indicators;
+      if (statementdanger > 0) return "bad";
+      if (statementwarning > 0) return "good";
+      return "excellent";
+    },
     context: function () {
       return {
         "article": true,

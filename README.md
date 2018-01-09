@@ -55,6 +55,15 @@ checklist.init({
     ];
   },
 
+  // Fonction de calcul du rating affiché dans le report.
+  // Prends les indicateurs du report en paramètre et retourne un identifiant de ratings.
+  computeRating: function (indicators) {
+    const {statementwarning, statementdanger} = indicators;
+    if (statementdanger > 0) return "bad";
+    if (statementwarning > 0) return "good";
+    return "excellent";
+  },
+
   // Fonction de création du contexte.
   context: function ($) {
     return {

@@ -25,8 +25,9 @@ function initComponents (checklist) {
 function initUi (checklist, parent) {
   const ui = checklist.ui;
   const buttonsCreator = checklist.config.get("buttonsCreator");
+  const computeRating = checklist.config.get("computeRating");
   const publi = checklist.config.get("publi");
-  ui.init({parent, buttonsCreator, publi});
+  ui.init({parent, buttonsCreator, computeRating, publi});
 }
 
 function connectCheckerToUi (checker, ui) {

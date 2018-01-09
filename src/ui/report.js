@@ -54,9 +54,9 @@ function getHtml (docId, metadatas) {
 }
 
 class Report extends View {
-  constructor ({ ui, parent, docId, metadatas, buttonsCreator, showMarkers }) {
+  constructor ({ ui, parent, docId, metadatas, buttonsCreator, computeRating, showMarkers }) {
     super("Report", ui, parent);
-    Object.assign(this, {docId, metadatas, buttonsCreator, showMarkers});
+    Object.assign(this, {docId, metadatas, buttonsCreator, computeRating, showMarkers});
     this.init();
     this.triggerState("ready");
   }
@@ -384,17 +384,6 @@ class Report extends View {
 
   // RATING
   // ======
-
-  // TODO: Add to documentation:
-  // types = danger , warning , info
-  // ratings = bad, good, excellent
-  computeRating () {
-    const {statementwarning, statementdanger} = this.indicators;
-    if (statementdanger > 0) return "bad";
-    if (statementwarning > 0) return "good";
-    return "excellent";
-  }
-
   updateRating () {
     const applyClassToHeader = (rating) => {
       const $header = this.find(".checklist-report-rating");
@@ -418,7 +407,7 @@ class Report extends View {
       $el.html(html);
     };
 
-    const rating = this.rating = this.computeRating();
+    const rating = this.rating = this.computeRating(this.indicators);
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);
