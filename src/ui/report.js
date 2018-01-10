@@ -130,18 +130,7 @@ class Report extends View {
   }
 
   addCheck (check) {
-    const getCheckState = (check) => {
-      const done = check.hasState("done");
-      const success = check.hasState("success");
-      const rejected = check.hasState("rejected");
-      if (!done) throw Error("Check is not done");
-      if (success === rejected) throw Error("Check state is not valid");
-      return success ? "checksuccess" : "checkrejected";
-    };
-
     const addToIndicatorsView = (check) => {
-      const state = getCheckState(check);
-      this.incrementIndicator(state);
       this.incrementIndicator("checkcount");
       this.updateView();
     };
@@ -346,8 +335,6 @@ class Report extends View {
     this.indicators = {
       checkcount: 0,
       checktotal: 0,
-      checksuccess: 0,
-      checkrejected: 0,
       statementcount: 0,
       statementinfo: 0,
       statementwarning: 0,
