@@ -122,6 +122,14 @@ class Check extends Base {
     }
     return true;
   }
+
+  // Export instance to a minimal plain object which can be stored in cache
+  export () {
+    // FIXME: peut etre vérifier si 'done' et retourner une Promise pour faire comme partout ? Ou alors on supprime ce système partout et on remplace par un init() ?
+    const clone = Base.export(this, ["states", "name", "id", "href"]);
+    clone.statements = this.statements.map((statement) => statement.export());
+    return clone;
+  }
 }
 
 module.exports = Check;

@@ -85,6 +85,14 @@ class Base extends EventEmitter {
       }
     });
   }
+
+  static export (instance, keys) {
+    const clone = {};
+    keys.forEach((key) => {
+      clone[key] = instance[key];
+    });
+    return clone;
+  }
 }
 
 module.exports = Base;
