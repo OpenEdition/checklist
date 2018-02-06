@@ -143,7 +143,7 @@ class Report extends View {
   // STATEMENTS
   // ==========
 
-  injectStatement (statement, increment = true) {
+  injectStatement (statement) {
     const getTagsClasses = (tags = []) => {
       return tags.map((tag) => `checklist-statement-tag-${tag}`).join(" ");
     };
@@ -217,12 +217,12 @@ class Report extends View {
     return this;
   }
 
-  injectStatements (statements, increment) {
+  injectStatements (statements) {
     if (!Array.isArray(statements)) {
       statements = [statements];
     }
     statements.forEach((statement) => {
-      this.injectStatement(statement, increment);
+      this.injectStatement(statement);
     });
     return this;
   }
@@ -423,13 +423,11 @@ class Report extends View {
       const {indicators, checks} = record;
       checks.forEach((check) => {
         if (check.states.rejected) {
-          // TODO: remove useless method injectRejections
           this.injectRejection({
             ruleName: check.name,
             errMsg: check.states.rejected
           });
         } else {
-          // FIXME: is increment param still useful ?
           this.injectStatements(check.statements);
         }
       });
