@@ -71,7 +71,6 @@ class Report extends View {
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;
-    this.clearIndicators();
     return this;
   }
 
@@ -102,9 +101,6 @@ class Report extends View {
     this.checker = checker;
     checker.report = this;
 
-    const checktotal = checker.rules.length;
-    this.setIndicator("checktotal", checktotal);
-
     // Connect checks that are already done
     checker.checks.forEach((check) => {
       if (!check.hasState("done")) return;
@@ -130,11 +126,6 @@ class Report extends View {
   }
 
   addCheck (check) {
-    const addToIndicatorsView = (check) => {
-      this.incrementIndicator("checkcount");
-      this.updateView();
-    };
-
     const addToRejectionsView = (check) => {
       if (!check.hasState("rejected")) return;
       const rejection = {
@@ -145,7 +136,6 @@ class Report extends View {
       this.rejections.push(rejection);
     };
 
-    addToIndicatorsView(check);
     addToRejectionsView(check);
     this.injectStatements(check.statements);
   }
@@ -223,11 +213,6 @@ class Report extends View {
     };
 
     doInjectStatement(statement);
-    const count = statement.count || 1;
-    if (increment) {
-      this.incrementIndicator("statementcount", count);
-      this.incrementIndicator(`statement${statement.type}`, count);
-    }
     this.updateView();
     return this;
   }
@@ -323,36 +308,15 @@ class Report extends View {
   }
 
   setPercentage () {
-    const {checkcount, checktotal} = this.indicators;
-    this.percentage = (checkcount / checktotal) * 100;
+    const checker = this.checker;
+    const total = checker.rules.length;
+    const count = checker.indicators.checks.done;
+    this.percentage = (count / total) * 100;
     return this;
   }
 
   // INDICATORS
   // ==========
-
-  clearIndicators () {
-    this.indicators = {
-      checkcount: 0,
-      checktotal: 0,
-      statementcount: 0,
-      statementinfo: 0,
-      statementwarning: 0,
-      statementdanger: 0
-    };
-    this.updateView();
-    return this;
-  }
-
-  setIndicator (key, value) {
-    this.indicators[key] = value;
-    return this;
-  }
-
-  incrementIndicator (key, nb = 1) {
-    this.indicators[key] = (this.indicators[key] || 0) + nb;
-    return this;
-  }
 
   toggleStatementGroups () {
     const $groups = this.find(".checklist-statements-group");
@@ -394,7 +358,7 @@ class Report extends View {
       $el.html(html);
     };
 
-    const rating = this.rating = this.computeRating(this.indicators);
+    const rating = this.rating = this.computeRating(this.checker);
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);

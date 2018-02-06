@@ -32,22 +32,8 @@ class Cache extends Base {
     return this;
   }
 
-  setRecord (report) {
-    const createRecord = (report) => {
-      const exportStatement = (statement) => {
-        // We dont need markers in cache because they are not used in toc view
-        const {name, description, id, type, count, tags} = statement;
-        return {name, description, id, type, count, tags};
-      };
-
-      const {docId, indicators, states, rejections} = report;
-      const record = {docId, indicators, states, rejections};
-      record.statements = report.checker.statements.map(exportStatement);
-      return record;
-    };
-
-    const record = createRecord(report);
-    this.set(report.docId, record);
+  setRecord () {
+    // TODO: reecrire ceci
     return this;
   }
 

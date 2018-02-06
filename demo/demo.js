@@ -79,12 +79,13 @@ $(function () {
       ];
     },
     // TODO: ajouter la définition des ratings à cette config : textes, icones, etc.
+    // TODO: documenter ceci
     // types = danger , warning , info
     // ratings = bad, good, excellent
-    computeRating: function (indicators) {
-      const {statementwarning, statementdanger} = indicators;
-      if (statementdanger > 0) return "bad";
-      if (statementwarning > 0) return "good";
+    computeRating: function (checker) {
+      const {warning, danger} = checker.indicators.type;
+      if (danger > 0) return "bad";
+      if (warning > 0) return "good";
       return "excellent";
     },
     context: function () {

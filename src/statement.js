@@ -24,6 +24,7 @@ class Statement extends Base {
       this.type = defaultType;
     }
 
+    // TODO: utile ?
     // If infos is a string, then use it as the name
     if (typeof infos === "string") {
       this.name = infos;
@@ -39,6 +40,9 @@ class Statement extends Base {
     if (infos.name && infos.id == null) {
       this.id = getIdFromName(this.name);
     }
+
+    // "tags" must be an array
+    this.tags = this.tags || [];
   }
 
   add (nb = 1) {
