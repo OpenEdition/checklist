@@ -32,16 +32,6 @@ class Cache extends Base {
     return this;
   }
 
-  setRecord () {
-    // TODO: reecrire ceci
-    return this;
-  }
-
-  getRecord (docId) {
-    const record = this.get(docId);
-    return record;
-  }
-
   setFilter (id, value) {
     this.set(`filter-${id}`, value);
   }

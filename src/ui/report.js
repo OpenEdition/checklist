@@ -434,7 +434,7 @@ class Report extends View {
     if (this.hasState("done")) return this;
     const cache = this.ui.cache;
     const docId = this.docId;
-    const record = cache.getRecord(docId);
+    const record = cache.get(docId);
     updateViewFromRecord(record);
     return this;
   }
