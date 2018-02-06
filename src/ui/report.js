@@ -1,6 +1,15 @@
 const svg = require("./svg.json");
 const View = require("./view.js");
 
+function oneByOne (param, fn) {
+  if (param == null) return;
+  if (!Array.isArray(param)) {
+    fn(param);
+  } else {
+    param.forEach(fn);
+  }
+}
+
 function getHtml (docId, metadatas) {
   const metadatasDiv = metadatas ? `<div class="checklist-report-metadatas">${metadatas}</div>` : "";
   const html = `
@@ -218,12 +227,7 @@ class Report extends View {
   }
 
   injectStatements (statements) {
-    if (!Array.isArray(statements)) {
-      statements = [statements];
-    }
-    statements.forEach((statement) => {
-      this.injectStatement(statement);
-    });
+    oneByOne(statements, this.injectStatement.bind(this));
     return this;
   }
 
@@ -244,10 +248,7 @@ class Report extends View {
   }
 
   injectMarkers (markers) {
-    if (!markers) return;
-    markers.forEach((marker) => {
-      this.injectMarker(marker);
-    });
+    oneByOne(markers, this.injectMarker.bind(this));
   }
 
   // REJECTIONS
@@ -265,11 +266,7 @@ class Report extends View {
   }
 
   injectRejections (rejections) {
-    if (rejections == null) return this;
-    if (!Array.isArray(rejections)) {
-      rejections = [rejections];
-    }
-    rejections.forEach(this.injectRejection.bind(this));
+    oneByOne(rejections, this.injectRejection.bind(this));
     return this;
   }
 
