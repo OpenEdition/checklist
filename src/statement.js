@@ -3,6 +3,7 @@ const Marker = require("./marker.js");
 const {getIdFromName} = require("./utils.js");
 
 class Statement extends Base {
+  // FIXME: infos cest le bazar : passer de args propres calcules dans Check
   constructor ({check, infos, caller}) {
     super("Statement", caller);
     this.check = check;
@@ -24,7 +25,6 @@ class Statement extends Base {
       this.type = defaultType;
     }
 
-    // TODO: utile ?
     // If infos is a string, then use it as the name
     if (typeof infos === "string") {
       this.name = infos;
@@ -80,7 +80,7 @@ class Statement extends Base {
   // Export instance to a minimal plain object which can be stored in cache
   export () {
     // FIXME: peut etre vérifier si 'done' et retourner une Promise pour faire comme partout ? Ou alors on supprime ce système partout et on remplace par un init() ?
-    const clone = Base.export(this, ["docId", "states", "name", "description", "id", "type", "tags"]);
+    const clone = Base.export(this, ["docId", "states", "name", "description", "id", "type", "tags", "count"]);
     return clone;
   }
 }

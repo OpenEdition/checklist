@@ -253,9 +253,7 @@ class Report extends View {
   // REJECTIONS
   // ==========
 
-  injectRejection (rejection) {
-    const {ruleName, errMsg} = rejection;
-
+  injectRejection ({ruleName, errMsg}) {
     const $container = this.find(".checklist-rejections");
     $container.addClass("visible");
 
@@ -308,6 +306,11 @@ class Report extends View {
   }
 
   setPercentage () {
+    // If no checker, then process is 100%
+    if (this.checker == null) {
+      this.percentage = 100;
+      return this;
+    }
     const checker = this.checker;
     const total = checker.rules.length;
     const count = checker.indicators.checks.done;
@@ -335,7 +338,7 @@ class Report extends View {
 
   // RATING
   // ======
-  updateRating () {
+  updateRating (indicators = this.checker.indicators) {
     const applyClassToHeader = (rating) => {
       const $header = this.find(".checklist-report-rating");
       $header.addClass(`checklist-rating-${rating}`);
@@ -358,7 +361,7 @@ class Report extends View {
       $el.html(html);
     };
 
-    const rating = this.rating = this.computeRating(this.checker);
+    const rating = this.rating = this.computeRating(indicators);
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);
@@ -407,25 +410,36 @@ class Report extends View {
 
   toCache () {
     const cache = this.ui.cache;
-    cache.setRecord(this);
+    const docId = this.docId;
+    const record = this.checker.export();
+    cache.set(docId, record);
     return this;
   }
 
   fromCache () {
     const updateViewFromRecord = (record) => {
-      const {rejections, indicators, states, statements} = record;
-      Object.assign(this, {rejections, indicators, states});
-      this.injectStatements(statements, false);
-      this.injectRejections(rejections);
-      this.updateRating();
+      if (record == null) return false;
+      this.get$element().addClass("checklist-report-from-cache");
+      const {indicators, checks} = record;
+      checks.forEach((check) => {
+        if (check.states.rejected) {
+          // TODO: remove useless method injectRejections
+          this.injectRejection({
+            ruleName: check.name,
+            errMsg: check.states.rejected
+          });
+        } else {
+          // FIXME: is increment param still useful ?
+          this.injectStatements(check.statements);
+        }
+      });
+      this.updateRating(indicators);
     };
 
     if (this.hasState("done")) return this;
     const cache = this.ui.cache;
     const docId = this.docId;
     const record = cache.getRecord(docId);
-    if (record == null) return false;
-    this.get$element().addClass("checklist-report-from-cache");
     updateViewFromRecord(record);
     return this;
   }

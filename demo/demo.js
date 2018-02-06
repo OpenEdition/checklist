@@ -82,8 +82,8 @@ $(function () {
     // TODO: documenter ceci
     // types = danger , warning , info
     // ratings = bad, good, excellent
-    computeRating: function (checker) {
-      const {warning, danger} = checker.indicators.type;
+    computeRating: function (indicators) {
+      const {warning, danger} = indicators.type;
       if (danger > 0) return "bad";
       if (warning > 0) return "good";
       return "excellent";
@@ -109,7 +109,7 @@ $(function () {
         name: "Seconde règle (ajax)",
         description: "<p>Cette règle recherche une information dans une source externe.",
         // TODO: href must be a function (variable)
-        href: "./pages/1.html",
+        href: "./pages/article-1.html",
         action: function ($) {
           var flag = $("h1").length === 1;
           this.resolve(flag);
@@ -134,11 +134,12 @@ $(function () {
         }
       },
       {
-        name: "Avertissement dans l'article 2",
+        name: "Deux avertissements dans l'article 2",
         description: "Un avertissement qui ne ressort que dans l'article 2.",
         type: "warning",
         action: function ($, bodyClasses) {
           const flag = bodyClasses.includes("article-2");
+          this.notify(flag);
           this.notify(flag);
           this.resolve();
         }
