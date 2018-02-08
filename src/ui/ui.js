@@ -16,15 +16,10 @@ class UI extends Base {
   }
 
   // FIXME: not consistent with other checklist components
-  // TODO: better sort buttonsCreator and computeRating
-  init ({parent, buttonsCreator, computeRating, publi}) {
-    const isPubli = publi && publi.title && publi.toc && publi.toc.length > 0;
-    publi = isPubli ? publi : false;
-    Object.assign(this, {parent, buttonsCreator, computeRating, publi});
-
-    const namespace = this.caller.config.get("namespace");
-    this.cache = new Cache({caller: this, namespace});
-
+  init ({parent}) {
+    this.parent = parent;
+    this.publi = this.getConfig("publi");
+    this.cache = new Cache({caller: this});
     this.createComponents();
     initActions(this);
     this.show();
@@ -69,8 +64,6 @@ class UI extends Base {
       parent: options.parent,
       docId: options.docId,
       metadatas: options.metadatas,
-      buttonsCreator: options.buttonsCreator || this.buttonsCreator,
-      computeRating: options.computeRating || this.computeRating,
       showMarkers: this.publi ? false : true,
     });
     this.reports[options.docId] = report;

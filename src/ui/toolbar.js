@@ -35,7 +35,8 @@ class Toolbar extends View {
   constructor ({ ui, parent, docId }) {
     super("Toolbar", ui, parent);
 
-    const html = getHtml(ui.buttonsCreator, docId);
+    const buttonsCreator = this.getConfig("buttonsCreator");
+    const html = getHtml(buttonsCreator, docId);
     this.createView(html);
   }
 }

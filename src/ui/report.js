@@ -63,9 +63,9 @@ function getHtml (docId, metadatas) {
 }
 
 class Report extends View {
-  constructor ({ ui, parent, docId, metadatas, buttonsCreator, computeRating, showMarkers }) {
+  constructor ({ ui, parent, docId, metadatas, showMarkers }) {
     super("Report", ui, parent);
-    Object.assign(this, {docId, metadatas, buttonsCreator, computeRating, showMarkers});
+    Object.assign(this, {docId, metadatas, showMarkers});
     this.init();
     this.triggerState("ready");
   }
@@ -358,7 +358,8 @@ class Report extends View {
       $el.html(html);
     };
 
-    const rating = this.rating = this.computeRating(indicators);
+    const computeRating = this.getConfig("computeRating");
+    const rating = this.rating = computeRating(indicators);
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);

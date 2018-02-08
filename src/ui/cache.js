@@ -1,9 +1,9 @@
 const Base = require("../base.js");
 
 class Cache extends Base {
-  constructor ({ caller, namespace }) {
+  constructor ({ caller }) {
     super("Cache", caller);
-    this.namespace = namespace;
+    this.namespace = this.getConfig("namespace");
   }
 
   get (id, defaultValue) {

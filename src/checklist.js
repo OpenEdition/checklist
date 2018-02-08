@@ -24,10 +24,7 @@ function initComponents (checklist) {
 
 function initUi (checklist, parent) {
   const ui = checklist.ui;
-  const buttonsCreator = checklist.config.get("buttonsCreator");
-  const computeRating = checklist.config.get("computeRating");
-  const publi = checklist.config.get("publi");
-  ui.init({parent, buttonsCreator, computeRating, publi});
+  ui.init({parent});
 }
 
 function connectCheckerToUi (checker, ui) {
@@ -61,11 +58,12 @@ class Checklist extends Base {
       this.config.extend(siteConfig, userConfig);
 
       // Inject custom styles
-      const customStyles = this.config.get("customStyles");
+      // TODO: move this in ui?
+      const customStyles = this.getConfig("customStyles");
       injectStyles(customStyles);
 
       // Init UI if parent is defined
-      const parent = this.config.get("parent");
+      const parent = this.getConfig("parent");
       if (parent) {
         initUi(this, parent);
       }
@@ -112,9 +110,9 @@ class Checklist extends Base {
       forwardCheckerEvents(checker);
     };
 
-    rules = rules || this.config.get("rules");
+    rules = rules || this.getConfig("rules");
     // TODO: rename context in contextCreator
-    const context = this.config.get("context");
+    const context = this.getConfig("context");
     const ui = this.ui;
     const checker = new Checker({ href, rules, context, caller: this });
 

@@ -5,6 +5,7 @@ class Base extends EventEmitter {
     super();
     this.classname = classname;
     this.caller = caller;
+    this.checklist = caller ? caller.checklist : this;
     this.states = {};
   }
 
@@ -84,6 +85,10 @@ class Base extends EventEmitter {
         this.emit(forwardName, ...values);
       }
     });
+  }
+
+  getConfig (key, defaultValue) {
+    return this.checklist.config.get(key, defaultValue);
   }
 
   static export (instance, keys) {

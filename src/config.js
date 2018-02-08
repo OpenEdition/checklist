@@ -8,6 +8,7 @@ class Config extends Base {
   }
 
   get (key, defaultValue) {
+    if (key == null) return this.getAll();
     return this.entries[key] || defaultValue;
   }
 
