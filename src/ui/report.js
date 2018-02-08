@@ -10,8 +10,16 @@ function oneByOne (param, fn) {
   }
 }
 
-function getHtml (docId, metadatas) {
+function getHtml (docId, types, metadatas) {
+  const typesHtml = types.map((type) => `
+    <div class="checklist-statements-${type.id} checklist-statements-group">
+      <h3>${type.name}</h3>
+      <ul></ul>
+    </div>
+  `).join("\n");
+
   const metadatasDiv = metadatas ? `<div class="checklist-report-metadatas">${metadatas}</div>` : "";
+
   const html = `
     <div class="checklist-report" data-checklist-doc-id="${docId}">
       <div class="checklist-report-header">
@@ -27,18 +35,7 @@ function getHtml (docId, metadatas) {
       </div>
       <div class="checklist-report-details">
         <div class="checklist-statements">
-          <div class="checklist-statements-danger checklist-statements-group">
-            <h3>Avertissements</h3>
-            <ul></ul>
-          </div>
-          <div class="checklist-statements-warning checklist-statements-group">
-            <h3>Recommandations</h3>
-            <ul></ul>
-          </div>
-          <div class="checklist-statements-info checklist-statements-group">
-            <h3>Informations</h3>
-            <ul></ul>
-          </div>
+          ${typesHtml}
         </div>
         <div class="checklist-rejections">
           <a class="checklist-rejections-toggle checklist-toggle-open-parent checklist-icon-box" data-checklist-action="toggle-parent">
@@ -67,7 +64,8 @@ class Report extends View {
   init () {
     this.rejections = [];
     this.percentage = 0;
-    const html = getHtml(this.docId, this.metadatas);
+    const types = this.getConfig("types");
+    const html = getHtml(this.docId, types, this.metadatas);
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;

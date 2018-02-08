@@ -78,6 +78,20 @@ $(function () {
         }
       ];
     },
+    types: [
+      {
+        id: "danger",
+        name: "Avertissements"
+      },
+      {
+        id: "warning",
+        name: "Recommandations"
+      },
+      {
+        id: "info",
+        name: "Informations"
+      }
+    ],
     // TODO: ajouter la définition des ratings à cette config : textes, icones, etc.
     // TODO: documenter ceci
     // types = danger , warning , info
