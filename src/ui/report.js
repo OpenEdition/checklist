@@ -329,6 +329,9 @@ class Report extends View {
   updateRating () {
     const applyClassToHeader = (rating) => {
       const $header = this.find(".checklist-report-rating");
+      $header.removeClass((index, classname) => {
+        return (classname.match(/(^|\s)checklist-rating-\S+/g) || []).join(' ');
+      });
       $header.addClass(`checklist-rating-${rating}`);
     };
 
@@ -371,6 +374,7 @@ class Report extends View {
     const $elements = this.find(selector);
     $elements.toggleClass("hidden", hidden);
     this.toggleStatementGroups();
+    this.updateRating();
     return this;
   }
 
