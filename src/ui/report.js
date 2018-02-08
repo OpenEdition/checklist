@@ -204,6 +204,8 @@ class Report extends View {
       this.injectMarkers(statement.markers);
       const html = getStatementHtml();
       const element = $(html).get(0);
+      // Link element to its statement in order to easily implement filters
+      element.statement = statement;
       addStatementButtons(statement, element);
       // Attach statement to element to use it in events
       element.statement = statement;
@@ -324,7 +326,7 @@ class Report extends View {
 
   // RATING
   // ======
-  updateRating (statements = this.checker.getStatements()) {
+  updateRating () {
     const applyClassToHeader = (rating) => {
       const $header = this.find(".checklist-report-rating");
       $header.addClass(`checklist-rating-${rating}`);
@@ -347,8 +349,13 @@ class Report extends View {
       $el.html(html);
     };
 
+    const visibleStatements = this.find(".checklist-statement:visible")
+    .map(function () {
+      return this.statement;
+    })
+    .get();
     const computeRating = this.getConfig("computeRating");
-    const rating = this.rating = computeRating(statements);
+    const rating = this.rating = computeRating(visibleStatements);
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);
@@ -363,7 +370,6 @@ class Report extends View {
     const selector = `.checklist-statement-${id}`;
     const $elements = this.find(selector);
     $elements.toggleClass("hidden", hidden);
-
     this.toggleStatementGroups();
     return this;
   }
@@ -395,7 +401,7 @@ class Report extends View {
         }
       });
       this.injectStatements(statements);
-      this.updateRating(statements);
+      this.updateRating();
     };
 
     if (this.hasState("done")) return this;
