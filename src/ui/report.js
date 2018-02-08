@@ -352,7 +352,7 @@ class Report extends View {
       $el.html(html);
     };
 
-    const visibleStatements = this.find(".checklist-statement:visible")
+    const visibleStatements = this.find(".checklist-statement:not(.hidden)")
     .map(function () {
       return this.statement;
     })
