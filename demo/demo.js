@@ -82,11 +82,15 @@ $(function () {
     // TODO: documenter ceci
     // types = danger , warning , info
     // ratings = bad, good, excellent
-    computeRating: function (indicators) {
-      const {warning, danger} = indicators.type;
-      if (danger > 0) return "bad";
-      if (warning > 0) return "good";
-      return "excellent";
+    computeRating: function (statements) {
+      let warning = false;
+      for (let i=0; i < statements.length; i++) {
+        const statement = statements[i];
+        const type = statement.type;
+        if (type === "danger") return "bad";
+        if (type === "warning") warning = true;
+      }
+      return warning ? "good" : "excellent";
     },
     context: function () {
       return {

@@ -310,6 +310,7 @@ class Report extends View {
     }
     const checker = this.checker;
     const total = checker.rules.length;
+    // FIXME: indicators still usefull ?
     const count = checker.indicators.checks.done;
     this.percentage = (count / total) * 100;
     return this;
@@ -335,7 +336,7 @@ class Report extends View {
 
   // RATING
   // ======
-  updateRating (indicators = this.checker.indicators) {
+  updateRating (statements = this.checker.getStatements()) {
     const applyClassToHeader = (rating) => {
       const $header = this.find(".checklist-report-rating");
       $header.addClass(`checklist-rating-${rating}`);
@@ -359,7 +360,7 @@ class Report extends View {
     };
 
     const computeRating = this.getConfig("computeRating");
-    const rating = this.rating = computeRating(indicators);
+    const rating = this.rating = computeRating(statements);
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);
@@ -418,18 +419,19 @@ class Report extends View {
     const updateViewFromRecord = (record) => {
       if (record == null) return false;
       this.get$element().addClass("checklist-report-from-cache");
-      const {indicators, checks} = record;
-      checks.forEach((check) => {
+      const statements = [];
+      record.checks.forEach((check) => {
         if (check.states.rejected) {
           this.injectRejection({
             ruleName: check.name,
             errMsg: check.states.rejected
           });
         } else {
-          this.injectStatements(check.statements);
+          statements.concat(check.statements);
         }
       });
-      this.updateRating(indicators);
+      this.injectStatements(statements);
+      this.updateRating(statements);
     };
 
     if (this.hasState("done")) return this;
