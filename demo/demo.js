@@ -92,6 +92,9 @@ $(function () {
         name: "Informations"
       }
     ],
+    filters: [
+      {id: "tag-paper", name: "Publication papier"}
+    ],
     // TODO: ajouter la définition des ratings à cette config : textes, icones, etc.
     // TODO: documenter ceci
     // types = danger , warning , info

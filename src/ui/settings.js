@@ -1,6 +1,6 @@
 const View = require("./view.js");
 
-function getViewHtml (cache) {
+function getViewHtml (cache, filters) {
   const getInputHtml = (filters) => {
     const inputs = filters.map((filter) => {
       const isHidden = cache.getFilter(filter.id);
@@ -17,10 +17,7 @@ function getViewHtml (cache) {
     return inputs.join("\n");
   };
 
-  // TODO: this should be dynamically computed from available tags (so tags and their names should be defined in checklist.init())
-  const inputHtml = getInputHtml([
-    {id: "tag-paper", name: "Publication papier"}
-  ]);
+  const inputHtml = getInputHtml(filters);
 
   const html = `
     <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
@@ -45,7 +42,8 @@ class Settings extends View {
     this.childpane = true;
 
     const cache = this.ui.cache;
-    const html = getViewHtml(cache);
+    const filters = this.getConfig("filters");
+    const html = getViewHtml(cache, filters);
     this.createView(html);
     this.initEventHandlers();
   }
