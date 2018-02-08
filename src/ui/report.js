@@ -401,7 +401,7 @@ class Report extends View {
             errMsg: check.states.rejected
           });
         } else {
-          statements.concat(check.statements);
+          statements.push.apply(statements, check.statements);
         }
       });
       this.injectStatements(statements);
