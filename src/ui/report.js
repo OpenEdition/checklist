@@ -26,15 +26,6 @@ function getHtml (docId, metadatas) {
         </div>
       </div>
       <div class="checklist-report-details">
-        <div class="checklist-hidden-statements">
-          <span class="checklist-icon-box">
-            ${svg["eye-blocked"]}
-            <span>
-              <span class="checklist-hidden-count"></span>
-              <a data-checklist-action="filters-clear">Afficher</a>
-            </span>
-          </span>
-        </div>
         <div class="checklist-statements">
           <div class="checklist-statements-danger checklist-statements-group">
             <h3>Avertissements</h3>
