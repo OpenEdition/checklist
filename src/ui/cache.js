@@ -45,12 +45,6 @@ class Cache extends Base {
   isFiltered (ids) {
     return ids.some((id) => this.getFilter(id));
   }
-
-  clearFilters () {
-    const namespace = this.namespace;
-    const regex = new RegExp(`^checklist-${namespace}-filter-`);
-    this.clear(regex);
-  }
 }
 
 module.exports = Cache;

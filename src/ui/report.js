@@ -319,7 +319,6 @@ class Report extends View {
   updateView () {
     this.toggleStatementGroups();
     this.setPercentage();
-    this.updateHiddenCount();
     return this;
   }
 
@@ -366,30 +365,6 @@ class Report extends View {
     $elements.toggleClass("hidden", hidden);
 
     this.toggleStatementGroups();
-    this.updateHiddenCount();
-    return this;
-  }
-
-  clearFilters () {
-    this.find(".checklist-statement.hidden").removeClass("hidden");
-    this.toggleStatementGroups();
-    this.updateHiddenCount();
-    return this;
-  }
-
-  updateHiddenCount () {
-    const getText = (hiddenCount) => {
-      if (hiddenCount === 0) return "";
-      const s = hiddenCount === 1 ? "" : "s";
-      return `${hiddenCount} notification${s} masquée${s}.`;
-    };
-
-    const hiddenCount = this.find(".checklist-statement.hidden").length;
-    const $div = this.find(".checklist-hidden-statements");
-    const $span = this.find(".checklist-hidden-count");
-    $div.toggleClass("visible", hiddenCount > 0);
-    const text = getText(hiddenCount);
-    $span.text(text);
     return this;
   }
 

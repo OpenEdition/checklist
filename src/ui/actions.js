@@ -24,10 +24,6 @@ function initActions (ui) {
       view.close();
     },
 
-    "filters-clear": function () {
-      ui.clearFilters();
-    },
-
     "help-show": function () {
       const parent = $(this).parent(".checklist-statement").get(0);
       const statement = parent.statement;

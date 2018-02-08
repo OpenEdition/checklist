@@ -47,13 +47,6 @@ class UI extends Base {
     return this;
   }
 
-  clearFilters () {
-    this.forEachReport((report) => report.clearFilters());
-    this.components.settings.clearFilters();
-    this.cache.clearFilters();
-    return this;
-  }
-
   clearCache () {
     this.cache.clear();
   }

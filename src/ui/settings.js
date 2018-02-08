@@ -63,13 +63,6 @@ class Settings extends View {
 
     return this;
   }
-
-  clearFilters () {
-    this.find("input.checklist-filter").each(function () {
-      $(this).prop("checked", true);
-    });
-    return this;
-  }
 }
 
 module.exports = Settings;
