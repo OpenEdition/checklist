@@ -22,6 +22,10 @@ class TOC extends View {
     this.title = publi.title;
     this.stats = {};
     this.inject(publi.toc);
+
+    ui.on("filterStatements", () => {
+      this.clearStats();
+    });
   }
 
   addStat (name, nb = 1) {
@@ -32,6 +36,7 @@ class TOC extends View {
     const icon = svg[`rating-${name}`];
 
     let $el = this.find(`.checklist-toc-stat-${name}`);
+    // TODO: load this from user config
     if ($el.length === 0) {
       const $parent = this.find("#checklist-toc-stats");
       $el = $(`<li class="checklist-toc-stat-${name}"></li>`);
@@ -43,6 +48,13 @@ class TOC extends View {
     } else {
       $el.html(`${icon} ${newValue}`);
     }
+    return this;
+  }
+
+  clearStats () {
+    this.stats = {};
+    const $parent = this.find("#checklist-toc-stats");
+    $parent.empty();
     return this;
   }
 

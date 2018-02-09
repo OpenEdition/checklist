@@ -40,6 +40,7 @@ class UI extends Base {
   }
 
   filterStatements (id, hidden = true) {
+    this.emit("filterStatements");
     this.forEachReport((report) => {
       report.filterStatements(id, hidden);
     });
