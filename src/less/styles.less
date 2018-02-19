@@ -407,8 +407,11 @@ body.checklist-visible {
     margin: 6px;
     font-size: 24px;
     text-align: center;
-    display: inline-block;
     border-radius: 5px;
+    display: none;
+    &.visible {
+      display: inline-block;
+    }
     svg {
       width: 24px;
       height: 24px;

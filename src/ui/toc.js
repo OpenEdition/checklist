@@ -19,12 +19,12 @@ class TOC extends View {
       </div>
     `;
     this.createView(html);
+    this.resetStats();
     this.title = publi.title;
-    this.stats = {};
     this.inject(publi.toc);
 
     ui.on("filterStatements", () => {
-      this.clearStats();
+      this.resetStats();
     });
   }
 
@@ -33,28 +33,22 @@ class TOC extends View {
     const value = this.stats[name] || 0;
     const newValue = value + nb < 0 ? 0 : value + nb;
     this.stats[name] = newValue;
+    // TODO: get this svg from config + do it everywhere
     const icon = svg[`rating-${name}`];
-
     let $el = this.find(`.checklist-toc-stat-${name}`);
-    // TODO: load this from user config
-    if ($el.length === 0) {
-      const $parent = this.find("#checklist-toc-stats");
-      $el = $(`<li class="checklist-toc-stat-${name}"></li>`);
-      $el.appendTo($parent);
-    }
-
-    if (newValue === 0) {
-      $el.remove();
-    } else {
-      $el.html(`${icon} ${newValue}`);
-    }
+    $el.html(`${icon} ${newValue}`);
+    $el.toggleClass("visible", newValue > 0);
     return this;
   }
 
-  clearStats () {
+  resetStats () {
     this.stats = {};
+    const ratings = this.getConfig("ratings", []);
     const $parent = this.find("#checklist-toc-stats");
-    $parent.empty();
+    const statsHtml = ratings.map((rating) => {
+      return `<li class="checklist-toc-stat-${rating.id}"></li>`;
+    }).join("\n");
+    $parent.html(statsHtml);
     return this;
   }
 
