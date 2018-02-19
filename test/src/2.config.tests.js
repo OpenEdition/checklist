@@ -3,31 +3,13 @@ describe("Config", function () {
   before((done) => {
     checklist.init().then(() => done());
   });
-
-  describe("User config", function () {
-
-    it("Should load optional user config from window.checklistUserConfig", function () {
-      const config = checklist.config;
-      const userConfig = window.checklistUserConfig;
-      Object.keys(userConfig).forEach((key) => {
-        expect(config.get(key)).to.deep.equal(userConfig[key]);
-      });
+  
+  it("Should load optional user config from window.checklistUserConfig", function () {
+    const config = checklist.config;
+    const userConfig = window.checklistUserConfig;
+    Object.keys(userConfig).forEach((key) => {
+      expect(config.get(key)).to.deep.equal(userConfig[key]);
     });
-
-    it("Should inject custom styles", function (done) {
-      checklist.init({customStyles: `
-        body {
-          margin-bottom: 42px;
-        }
-      `})
-      .then(() => {
-        expectAsync(done, () => {
-          const marginBottom = $("body").css("margin-bottom");
-          expect(marginBottom).to.equal("42px");
-        });
-      });
-    });
-
   });
 
   describe("Config manipulation", function () {
