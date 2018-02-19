@@ -81,21 +81,46 @@ $(function () {
     types: [
       {
         id: "danger",
-        name: "Avertissements"
+        name: "Avertissements",
+        color: "#ed5740"
       },
       {
         id: "warning",
-        name: "Recommandations"
+        name: "Recommandations",
+        color: "#f8d14c"
       },
       {
         id: "info",
-        name: "Informations"
+        name: "Informations",
+        color: "#3d9cdf"
       }
     ],
     filters: [
       {id: "tag-paper", name: "Publication papier"}
     ],
-    // TODO: ajouter la définition des ratings à cette config : textes, icones, etc.
+    ratings: [
+      {
+        id: "bad",
+        icon: "rating-bad",
+        text: "Ce document contient des erreurs de composition.",
+        color: "#a94442",
+        bgcolor: "#f2dede"
+      },
+      {
+        id: "good",
+        icon: "rating-good",
+        text: "Ce document est correctement composé.",
+        color: "#31708f",
+        bgcolor: "#d9edf7"
+      },
+      {
+        id: "excellent",
+        icon: "rating-excellent",
+        text: "Ce document est très bien composé.",
+        color: "#3c763d",
+        bgcolor: "#dff0d8"
+      }
+    ],
     // TODO: documenter ceci
     // types = danger , warning , info
     // ratings = bad, good, excellent

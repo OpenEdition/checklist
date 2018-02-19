@@ -40,14 +40,6 @@ class Checklist extends Base {
   }
 
   init (siteConfig) {
-    const injectStyles = (function () {
-      const $styleTag = $("<style>").appendTo("head");
-      return function (styles) {
-        if (styles == null) return;
-        $styleTag.html(styles);
-      };
-    })();
-
     // Clear previous properties first
     this.clear();
 
@@ -56,11 +48,6 @@ class Checklist extends Base {
     .then(() => {
       const userConfig = this.userConfig;
       this.config.extend(siteConfig, userConfig);
-
-      // Inject custom styles
-      // TODO: move this in ui?
-      const customStyles = this.getConfig("customStyles");
-      injectStyles(customStyles);
 
       // Init UI if parent is defined
       const parent = this.getConfig("parent");

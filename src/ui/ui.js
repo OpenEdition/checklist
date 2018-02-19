@@ -20,10 +20,48 @@ class UI extends Base {
     this.parent = parent;
     this.publi = this.getConfig("publi");
     this.cache = new Cache({caller: this});
+    this.initStyles();
     this.createComponents();
     initActions(this);
     this.show();
     this.triggerState("initialized");
+  }
+
+  initStyles () {
+    const styles = [];
+    // Function to inject custom styles in page
+    const injectStyles = (styles) => {
+      const $styleTag = $("<style>").appendTo("head");
+      if (styles == null) return;
+      $styleTag.html(styles);
+    };
+
+    // Inject types related styles
+    const types = this.getConfig("types");
+    types.forEach((type) => {
+      styles.push(`
+        .checklist-statements-${type.id} ul {
+          border-left: 5px solid ${type.color};
+        }
+      `);
+    });
+
+    // Inject ratings related styles
+    const ratings = this.getConfig("ratings");
+    ratings.forEach((rating) => {
+      styles.push(`
+        .checklist-rating-${rating.id}, .checklist-toc-stat-${rating.id} {
+          color: ${rating.color};
+          fill: ${rating.color};
+          background-color: ${rating.bgcolor};
+          border: 1px solid ${rating.color};
+        }
+      `);
+    });
+
+    // Inject custom styles
+    const customStyles = this.getConfig("customStyles", []);
+    injectStyles(styles.concat(customStyles).join("\n"));
   }
 
   createComponents () {
