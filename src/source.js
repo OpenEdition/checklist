@@ -61,7 +61,7 @@ class Source extends Base {
         const bodyTag = data.match(bodyRegex)[0];
         const clone = bodyTag.replace(bodyRegex, bodyClone);
         const bodyClasses = $(clone).get(0).className.split(/\s+/);
-        
+
         data = data.replace(bodyRegex, bodyClone);
         const $data = $(`<div>${data}</div>`);
         const root = $data.get(0);
@@ -84,9 +84,10 @@ class Source extends Base {
       };
 
       const href = this.url.href;
+      const timeout = this.getConfig("loaderTimeout", 20000);
       const ajaxOptions = {
         url: href,
-        timeout: 20000, // TODO: add this timeout value to config
+        timeout,
         success: ajaxSuccess,
         error: (jqXHR, textStatus, errorThrown) => {
           const msg = `Could not load URL ${href} (${textStatus}: ${errorThrown})`;

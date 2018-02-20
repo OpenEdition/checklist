@@ -47,6 +47,7 @@ $(function () {
     parent: "body",
     namespace: "demo",
     maxSourcesLoading: 5,
+    loaderTimeout: 10000,
     buttonsCreator: function (docId) {
       return [
         {
