@@ -7,7 +7,7 @@ class Loader extends Base {
 
     this.sources = [];
     this.queue = [];
-    this.maxLoading = 5; // TODO: move this to config
+    this.maxSourcesLoading = this.getConfig("maxSourcesLoading", 5);
     this.loadingCount = 0;
     this.selfSource = this.createSource().load();
     this.triggerState("ready");
@@ -48,7 +48,7 @@ class Loader extends Base {
   }
 
   loadSource (source) {
-    if (this.loadingCount < this.maxLoading) {
+    if (this.loadingCount < this.maxSourcesLoading) {
       this.loadingCount++;
       return source.load();
     }
