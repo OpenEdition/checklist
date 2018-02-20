@@ -337,8 +337,8 @@ class Report extends View {
 
     const setRatingIcon = (rating) => {
       const $el = this.find(".checklist-report-icon");
-      const html = svg[`rating-${rating}`];
-      $el.html(html);
+      const icon = this.ui.getRatingIcon(rating);
+      $el.html(icon);
     };
 
     const setRatingText = (rating) => {

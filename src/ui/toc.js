@@ -33,8 +33,8 @@ class TOC extends View {
     const value = this.stats[name] || 0;
     const newValue = value + nb < 0 ? 0 : value + nb;
     this.stats[name] = newValue;
-    // TODO: get this svg from config + do it everywhere
-    const icon = svg[`rating-${name}`];
+
+    const icon = this.ui.getRatingIcon(name);
     let $el = this.find(`.checklist-toc-stat-${name}`);
     $el.html(`${icon} ${newValue}`);
     $el.toggleClass("visible", newValue > 0);

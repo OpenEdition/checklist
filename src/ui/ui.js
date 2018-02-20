@@ -5,6 +5,7 @@ const initActions = require("./actions.js");
 const Pane = require("./pane.js");
 const Report = require("./report.js");
 const Settings = require("./settings.js");
+const svg = require("./svg.json");
 const TOC = require("./toc.js");
 
 class UI extends Base {
@@ -201,6 +202,13 @@ class UI extends Base {
     this.components.help.empty();
     this.hideChildpanes();
     return this;
+  }
+
+  getRatingIcon (name) {
+    const ratings = this.getConfig("ratings", []);
+    const rating = ratings.find((rating) => rating.id === name);
+    if (rating == null) return "";
+    return svg[rating.icon];
   }
 }
 
