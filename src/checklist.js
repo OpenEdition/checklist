@@ -4,35 +4,6 @@ const Config = require("./config.js");
 const Loader = require("./loader.js");
 const UI = require("./ui/ui.js");
 
-function initComponents (checklist) {
-  function getComponentPromise (componentClass) {
-    return new Promise((resolve, reject) => {
-      const component = new componentClass({caller: checklist});
-      const componentName = component.classname.toLowerCase();
-      component.whenState("ready")
-      .then(() => {
-        checklist[componentName] = component;
-        resolve(component);
-      });
-    });
-  }
-
-  const componentClasses = [Config, Loader, UI];
-  const promises = componentClasses.map(getComponentPromise);
-  return Promise.all(promises);
-}
-
-function initUi (checklist, parent) {
-  const ui = checklist.ui;
-  ui.init({parent});
-}
-
-function connectCheckerToUi (checker, ui) {
-  checker.whenState("ready").then(() => {
-    ui.connectChecker(checker);
-  });
-}
-
 class Checklist extends Base {
   constructor (userConfig) {
     super("Checklist");
@@ -44,18 +15,28 @@ class Checklist extends Base {
     this.clear();
 
     // Init components
-    return initComponents(this)
-    .then(() => {
+    // Init Config first
+    this.config = new Config({caller: this});
+    return this.config.whenState("ready").then(() => {
       const userConfig = this.userConfig;
       this.config.extend(siteConfig, userConfig);
 
-      // Init UI if parent is defined
-      const parent = this.getConfig("parent");
-      if (parent) {
-        initUi(this, parent);
-      }
+      // ...then init Loader
+      this.loader = new Loader({caller: this});
+      return this.loader.whenState("ready").then(() => {
 
-      this.triggerState("ready");
+        // Init UI if parent is defined
+        const parent = this.getConfig("parent");
+        if (parent) {
+          this.ui = new UI({caller: this});
+          this.ui.whenState("ready").then(() => {
+            this.ui.init({parent});
+          });
+        }
+
+        // Set ready state
+        this.triggerState("ready");
+      });
     });
   }
 
@@ -103,8 +84,10 @@ class Checklist extends Base {
     const ui = this.ui;
     const checker = new Checker({ href, rules, context, caller: this });
 
-    if (ui.hasState("initialized")) {
-      connectCheckerToUi(checker, ui);
+    if (ui && ui.hasState("initialized")) {
+      checker.whenState("ready").then(() => {
+        ui.connectChecker(checker);
+      });
     }
 
     return new Promise((resolve, reject) => {
