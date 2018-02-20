@@ -34,6 +34,12 @@ checklist.init({
   // Sur Revues.org et OpenEdition Books, utiliser le nom court
   namespace: "foobar",
 
+  // Nombre maximum de requêtes Ajax lancées simultanément par le Loader
+  maxSourcesLoading: 5,
+
+  // Timeout des requêtes Ajax lancées par le Loader
+  loaderTimeout: 10000,
+
   // Une fonction qui permet de créer les boutons de la barre d'outil.
   // Prend l'identifant du document en paramètre.
   buttonsCreator: function (docId) {
@@ -55,13 +61,66 @@ checklist.init({
     ];
   },
 
+  // Liste des types utilisés dans les règles et configuration de leur affichage dans l'interface
+  types: [
+    {
+      id: "danger",
+      name: "Avertissements",
+      color: "#ed5740"
+    },
+    {
+      id: "warning",
+      name: "Recommandations",
+      color: "#f8d14c"
+    },
+    {
+      id: "info",
+      name: "Informations",
+      color: "#3d9cdf"
+    }
+  ],
+
+  // Liste des filtres utilisés dans l'interface
+  filters: [
+    {id: "tag-paper", name: "Publication papier"}
+  ],
+
+  // Liste des notes attribuées aux documents et configuration de leur affichage dans l'interface
+  ratings: [
+    {
+      id: "bad",
+      icon: "rating-bad",
+      text: "Ce document contient des erreurs de composition.",
+      color: "#a94442",
+      bgcolor: "#f2dede"
+    },
+    {
+      id: "good",
+      icon: "rating-good",
+      text: "Ce document est correctement composé.",
+      color: "#31708f",
+      bgcolor: "#d9edf7"
+    },
+    {
+      id: "excellent",
+      icon: "rating-excellent",
+      text: "Ce document est très bien composé.",
+      color: "#3c763d",
+      bgcolor: "#dff0d8"
+    }
+  ],
+
   // Fonction de calcul du rating affiché dans le report.
-  // Prends les indicateurs du report en paramètre et retourne un identifiant de ratings.
-  computeRating: function (indicators) {
-    const {statementwarning, statementdanger} = indicators;
-    if (statementdanger > 0) return "bad";
-    if (statementwarning > 0) return "good";
-    return "excellent";
+  // Prends les statements du report en paramètre et retourne un id de rating.
+  computeRating: function (statements) {
+    let warning = false;
+    for (let i=0; i < statements.length; i++) {
+      const statement = statements[i];
+      const type = statement.type;
+      if (type === "danger") return "bad";
+      if (type === "warning") warning = true;
+    }
+    return warning ? "good" : "excellent";
   },
 
   // Fonction de création du contexte.
@@ -103,7 +162,13 @@ checklist.init({
   }
 })
 .then(function () {
-  checklist.run();
+  // La méthode checklist.run() exécute Checklist et retourne une promesse qui transmet le Checker.
+  // Cette méthode prend un objet optionnel {href, rules} en paramètre :
+  // * href: liste d'URL pour exécuter Checklist. En cas d'omission c'est la page courante qui est utilisée.
+  // * rules: liste de règles à exécuter. En cas d'omission, les règles déclarées dans la configuration sont utilisées.
+  checklist.run().then((checker) => {
+    console.log("Exécution terminée !");
+  });
 });
 ```
 

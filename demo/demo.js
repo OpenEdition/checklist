@@ -123,9 +123,7 @@ $(function () {
         bgcolor: "#dff0d8"
       }
     ],
-    // TODO: documenter ceci
-    // types = danger , warning , info
-    // ratings = bad, good, excellent
+
     computeRating: function (statements) {
       let warning = false;
       for (let i=0; i < statements.length; i++) {
@@ -136,6 +134,7 @@ $(function () {
       }
       return warning ? "good" : "excellent";
     },
+
     context: function () {
       return {
         "article": true,
@@ -143,7 +142,9 @@ $(function () {
         "motsclesfr": $(".motsclesfr .entry").length
       };
     },
+
     publi: getPubli(),
+
     rules: [
       {
         name: "Première règle",
