@@ -27,7 +27,6 @@ class Checker extends Base {
 
     this.rules = getRules(rules);
     this.checks = [];
-    this.indicators = {};
 
     const loader = window.checklist.loader;
     loader.requestSource(href)
@@ -64,22 +63,6 @@ class Checker extends Base {
     };
 
     const initEvents = (check, resolve, reject) => {
-      // Indicators: statements types and tags
-      const recordStatement = (statement) => {
-        this.incrementIndicator("type", statement.type);
-        statement.tags.forEach((tag) => {
-          this.incrementIndicator("tag", tag);
-        });
-      };
-      check.on("statement.new", recordStatement);
-      check.on("statement.update", recordStatement);
-
-      // Indicators: checks states
-      const getHandler = (state) => this.incrementIndicator.bind(this, "checks", state);
-      check.once("success", getHandler("success"));
-      check.once("rejected", getHandler("rejected"));
-      check.once("done", getHandler("done"));
-
       // Forward events
       this.forwardEvents(check, [
         {"run": "check.run"},
@@ -90,7 +73,6 @@ class Checker extends Base {
         "statement.update",
         "marker"
       ]);
-
       // Resolve
       check.once("done", () => resolve());
     };
@@ -110,18 +92,10 @@ class Checker extends Base {
     }, []);
   }
 
-  // section = type|tag, name = indicator to increment
-  incrementIndicator (section, name) {
-    const sectionObj = this.indicators[section] || {};
-    sectionObj[name] = sectionObj[name] || 0;
-    sectionObj[name]++;
-    this.indicators[section] = sectionObj;
-  }
-
   // Export instance to a minimal plain object which can be stored in cache
   export () {
     // FIXME: peut etre vérifier si 'done' et retourner une Promise pour faire comme partout ? Ou alors on supprime ce système partout et on remplace par un init() ?
-    const clone = Base.export(this, ["context", "docId", "states", "indicators"]);
+    const clone = Base.export(this, ["context", "docId", "states"]);
     clone.checks = this.checks.map((check) => check.export());
     return clone;
   }

@@ -301,8 +301,7 @@ class Report extends View {
     }
     const checker = this.checker;
     const total = checker.rules.length;
-    // FIXME: indicators still usefull ?
-    const count = checker.indicators.checks.done;
+    const count = checker.checks.filter((check) => check.hasState("done")).length;
     this.percentage = (count / total) * 100;
     return this;
   }
