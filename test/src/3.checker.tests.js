@@ -62,4 +62,23 @@ describe("Checker and .run()", function () {
     checklist.run({href, rules});
   });
 
+  it("Should get Checker statements", function (done) {
+    const obj = {
+      name: "This should run",
+      action: function () {
+        this.notify("foo");
+        this.resolve("bar");
+      }
+    };
+    checklist.run({rules: obj})
+    .then((checker) => {
+      const statements = checker.getStatements();
+      expectAsync(done, () => {
+        expect(statements).to.be.an.instanceof(Array);
+        expect(statements).to.have.lengthOf(2);
+        expect(statements[0]).to.have.property("classname", "Statement");
+      });
+    });
+  });
+
 });
