@@ -79,7 +79,7 @@ class Checker extends Base {
 
     const promises = this.rules.map(getCheckPromises);
     return Promise.all(promises).then(() => {
-      this.emit("done", this);
+      this.triggerState("done", this);
     }).catch((err) => {
       // TODO: error handling ok ?
       throw Error(err);
@@ -94,8 +94,7 @@ class Checker extends Base {
 
   // Export instance to a minimal plain object which can be stored in cache
   export () {
-    // FIXME: peut etre vérifier si 'done' et retourner une Promise pour faire comme partout ? Ou alors on supprime ce système partout et on remplace par un init() ?
-    const clone = Base.export(this, ["context", "docId", "states"]);
+    const clone = Base.export(this, ["context", "docId", "states"], true);
     clone.checks = this.checks.map((check) => check.export());
     return clone;
   }

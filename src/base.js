@@ -91,7 +91,10 @@ class Base extends EventEmitter {
     return this.checklist.config.get(key, defaultValue);
   }
 
-  static export (instance, keys) {
+  static export (instance, keys, forceDone) {
+    if (forceDone && !instance.hasState("done")) {
+      throw Error(`${this.classname} instance must have the "done" state to be exported`);
+    }
     const clone = {};
     keys.forEach((key) => {
       clone[key] = instance[key];
