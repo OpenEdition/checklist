@@ -81,4 +81,14 @@ describe("Checker and .run()", function () {
     });
   });
 
+  it("Should export Checker", function (done) {
+    checklist.run()
+    .then((checker) => {
+      const exported = checker.export();
+      expectAsync(done, () => {
+        expect(exported).to.have.all.keys("checks", "context", "docId", "states");
+      });
+    });
+  });
+  
 });
