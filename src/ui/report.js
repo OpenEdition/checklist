@@ -28,7 +28,7 @@ function getHtml (docId, types, metadatas) {
           <div class="checklist-report-icon"></div>
           <div class="checklist-percentage"></div>
           <div class="checklist-rating-text"></div>
-          <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.">
+          <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="${t("report-changed")}">
             ${svg.history}
           </div>
         </div>
@@ -40,7 +40,7 @@ function getHtml (docId, types, metadatas) {
         <div class="checklist-rejections">
           <a class="checklist-rejections-toggle checklist-toggle-open-parent checklist-icon-box" data-checklist-action="toggle-parent">
             ${svg.notification}
-            <span>Des tests ont échoué</span>
+            <span>${t("report-tests-failed")}</span>
           </a>
           <ul class="checklist-rejections-list checklist-collapsed"></ul>
         </div>
@@ -341,6 +341,7 @@ class Report extends View {
     };
 
     const setRatingText = (rating) => {
+      // FIXME: get from config!!!
       const texts = {
         bad: "Ce document contient des erreurs de composition.",
         good: "Ce document est correctement composé.",

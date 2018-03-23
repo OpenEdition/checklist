@@ -22,15 +22,15 @@ function getViewHtml (cache, filters) {
   const html = `
     <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
       <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
-      <h1>Préférences</h1>
-      <h2>Filtres</h2>
-      <p>Afficher uniquement les notifications associées aux catégories suivantes&nbsp:</p>
+      <h1>${t("settings-title")}</h1>
+      <h2>${t("settings-filters-title")}</h2>
+      <p>${t("settings-filters-descripion")}</p>
       ${inputHtml}
-      <h2>Cache</h2>
-      <p>Checklist utilise le cache de votre navigateur pour conserver des informations en mémoire comme les rapports de tests et la configuration.</p>
-      <button data-checklist-action="cache-clear">Vider le cache</button>
-      <h2>Désactiver</h2>
-      <button data-checklist-action="checklist-off">Désactiver Checklist</button>
+      <h2>${t("settings-cache-title")}</h2>
+      <p>${t("settings-cache-description")}</p>
+      <button data-checklist-action="cache-clear">${t("settings-cache-clear")}</button>
+      <h2>${t("settings-disable-title")}</h2>
+      <button data-checklist-action="checklist-off">${t("settings-disable-button")}</button>
     </div>
   `;
   return html;

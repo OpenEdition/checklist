@@ -8,7 +8,7 @@ function initActions (ui) {
   const actions = {
     "cache-clear": function () {
       ui.clearCache();
-      window.alert("Le cache a été supprimé pour ce site.");
+      window.alert(t("cache-deleted"));
       location.reload();
     },
 

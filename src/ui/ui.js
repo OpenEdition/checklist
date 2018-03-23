@@ -2,6 +2,7 @@ const Base = require("../base.js");
 const Cache = require("./cache.js");
 const Help = require("./help.js");
 const initActions = require("./actions.js");
+const i18n = require("./i18n.js");
 const Pane = require("./pane.js");
 const Report = require("./report.js");
 const Settings = require("./settings.js");
@@ -22,10 +23,16 @@ class UI extends Base {
     this.publi = this.getConfig("publi");
     this.cache = new Cache({caller: this});
     this.initStyles();
-    this.createComponents();
-    initActions(this);
-    this.show();
-    this.triggerState("initialized");
+
+    const lang = this.getConfig("lang");
+    i18n({lang}).then((t) => {
+      // TODO: t transmission to createComponents and initActions. Peut-être faut-il en faire une globale dans un namespace, ou une methode de l'objet View (un peu comme Base.getConfig) ? En tout cas window.t comme maintenant c'est pas joli...
+      window.t = t;
+      this.createComponents();
+      initActions(this);
+      this.show();
+      this.triggerState("initialized");
+    });
   }
 
   initStyles () {

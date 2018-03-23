@@ -6,7 +6,7 @@ function startChecklist () {
 function showSwitch () {
   const html = `
     <div id="checklist-start" class="checklist-start">
-      <span>Activer Checklist</span>
+      <span>${t("checklist-activate")}</span>
       <div class="checklist-switch">
         <div class="checklist-slider"></div>
       </div>

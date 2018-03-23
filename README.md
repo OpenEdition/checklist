@@ -34,6 +34,9 @@ checklist.init({
   // Sur Revues.org et OpenEdition Books, utiliser le nom court
   namespace: "foobar",
 
+  // Langue de l'interface
+  lang: "fr",
+
   // Nombre maximum de requêtes Ajax lancées simultanément par le Loader
   maxSourcesLoading: 5,
 

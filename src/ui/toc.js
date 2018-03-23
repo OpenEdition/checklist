@@ -11,9 +11,9 @@ class TOC extends View {
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component">
         <div class="checklist-toc-view-contents">
-          <h1>Vérification de la publication</h1>
+          <h1>${t("toc-title")}</h1>
           <ul id="checklist-toc-stats" class="checklist-toc-stats"></ul>
-          <h2 class="checklist-toc-heading">Détails</h2>
+          <h2 class="checklist-toc-heading">${t("toc-details")}</h2>
           <ul id="checklist-toc" class="checklist-toc"></ul>
         </div>
       </div>
@@ -65,8 +65,8 @@ class TOC extends View {
           <div class="checklist-toc-entry-contents"></div>
           <div class="checklist-toc-entry-footer">
             <a class="checklist-toggle-report-details" data-checklist-action="toggle-report-details">
-              <span class="checklist-toggle-report-details-show">${svg["square-plus"]} Afficher les détails</span>
-              <span class="checklist-toggle-report-details-hide">${svg["square-minus"]} Masquer les détails</span>
+              <span class="checklist-toggle-report-details-show">${svg["square-plus"]} t("toc-show-details")</span>
+              <span class="checklist-toggle-report-details-hide">${svg["square-minus"]} t("toc-hide-details")</span>
             </a>
           </div>
         </li>
@@ -74,7 +74,7 @@ class TOC extends View {
       const $element = $(html);
 
       // Create toolbar
-      const type = entry.type || "Article";
+      const type = entry.type || t("article");
       const icon = entry.icon || "article";
       const headerHtml = `
         <div class="checklist-toc-entry-header">

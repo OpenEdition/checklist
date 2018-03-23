@@ -12,13 +12,19 @@ function getLocales () {
   return locales;
 }
 
-i18next.init({
-  fallbackLng: "en",
-  // TODO: load lng from config
-  lng: "fr",
-  debug: false,
-  resources: getLocales(),
-}, function(err, t) {
-  // initialized and ready to go!
-  console.log("i18next ready!");
-});
+function i18n ({ lang = "fr" }) {
+  return new Promise((resolve, reject) => {
+    const options = {
+      fallbackLng: "en",
+      lng: lang,
+      debug: false,
+      resources: getLocales(),
+    };
+    i18next.init(options, (err, t) => {
+      if (err) reject(err);
+      resolve(t);
+    });
+  });
+}
+
+module.exports = i18n;

@@ -47,13 +47,13 @@ class Pane extends View {
   showTocSwitch () {
     const html = `
       <div id="checklist-toc-control" class="checklist-toc-control">
-        <p class="checklist-toc-control-info">Vous avez la possibilité de controler le contenu de cette publication.</p>
-        <button class="checklist-if-toc-is-hidden" data-checklist-action="toc-toggle">${svg.book} Controler la publication</button>
+        <p class="checklist-toc-control-info">${t("toc-control-info")}</p>
+        <button class="checklist-if-toc-is-hidden" data-checklist-action="toc-toggle">${svg.book} ${t("toc-check")}</button>
         <div class="checklist-toc-view-menu checklist-if-toc-is-visible">
-          <button class="checklist-toc-rerun" data-checklist-action="toc-rerun">${svg.history} Tout rafraîchir</button>
-          <button data-checklist-action="toc-unfold">${svg["square-plus"]} Tout déplier</button>
-          <button data-checklist-action="toc-fold">${svg["square-minus"]} Tout replier</button>
-          <button data-checklist-action="toc-toggle">× Masquer</button>
+          <button class="checklist-toc-rerun" data-checklist-action="toc-rerun">${svg.history} ${t("toc-rerun")}</button>
+          <button data-checklist-action="toc-unfold">${svg["square-plus"]} ${t("toc-unfold")}</button>
+          <button data-checklist-action="toc-fold">${svg["square-minus"]} ${t("toc-fold")}</button>
+          <button data-checklist-action="toc-toggle">× ${t("toc-hide")}</button>
         </div>
       </div>
     `;
