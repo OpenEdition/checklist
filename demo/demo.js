@@ -46,6 +46,7 @@ $(function () {
   checklist.init({
     parent: "body",
     namespace: "demo",
+    lang: "fr",
     maxSourcesLoading: 5,
     loaderTimeout: 10000,
     buttonsCreator: function (docId) {
