@@ -10,7 +10,7 @@ function oneByOne (param, fn) {
   }
 }
 
-function getHtml (docId, types, metadatas) {
+function getHtml (docId, types, metadatas, t) {
   const typesHtml = types.map((type) => `
     <div class="checklist-statements-${type.id} checklist-statements-group">
       <h3>${type.name}</h3>
@@ -65,7 +65,7 @@ class Report extends View {
     this.rejections = [];
     this.percentage = 0;
     const types = this.getConfig("types");
-    const html = getHtml(this.docId, types, this.metadatas);
+    const html = getHtml(this.docId, types, this.metadatas, this.ui.t);
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;

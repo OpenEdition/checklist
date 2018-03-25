@@ -1,9 +1,12 @@
+// FIXME: charger switch depuis UI car 1) c'est pas logique autrement, 2) on a besoin de ui.t() dans switch
+
 function startChecklist () {
   localStorage.setItem("checklist-on", true);
   location.reload();
 }
 
 function showSwitch () {
+  // FIXME: window.t() n'existe pas, utiliser ui.t()
   const html = `
     <div id="checklist-start" class="checklist-start">
       <span>${t("checklist-activate")}</span>

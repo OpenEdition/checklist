@@ -26,8 +26,7 @@ class UI extends Base {
 
     const lang = this.getConfig("lang");
     i18n({lang}).then((t) => {
-      // TODO: t transmission to createComponents and initActions. Peut-être faut-il en faire une globale dans un namespace, ou une methode de l'objet View (un peu comme Base.getConfig) ? En tout cas window.t comme maintenant c'est pas joli...
-      window.t = t;
+      this.t = t;
       this.createComponents();
       initActions(this);
       this.show();

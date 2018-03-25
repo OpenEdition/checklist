@@ -1,6 +1,6 @@
 const View = require("./view.js");
 
-function getViewHtml (cache, filters) {
+function getViewHtml (cache, filters, t) {
   const getInputHtml = (filters) => {
     const inputs = filters.map((filter) => {
       const isHidden = cache.getFilter(filter.id);
@@ -43,7 +43,7 @@ class Settings extends View {
 
     const cache = this.ui.cache;
     const filters = this.getConfig("filters");
-    const html = getViewHtml(cache, filters);
+    const html = getViewHtml(cache, filters, this.ui.t);
     this.createView(html);
     this.initEventHandlers();
   }

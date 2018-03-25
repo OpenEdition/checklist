@@ -8,7 +8,7 @@ function initActions (ui) {
   const actions = {
     "cache-clear": function () {
       ui.clearCache();
-      window.alert(t("cache-deleted"));
+      window.alert(ui.t("cache-deleted"));
       location.reload();
     },
 

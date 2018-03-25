@@ -9,7 +9,7 @@ class Help extends View {
     const html = `
       <div id="checklist-help" class="checklist-help checklist-component checklist-childpane">
       <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
-        <h1>${svg.help} ${t("help-title")}</h1>
+        <h1>${svg.help} ${this.t("help-title")}</h1>
         <div id="checklist-help-contents"></div>
       </div>
     `;

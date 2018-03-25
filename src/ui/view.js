@@ -53,6 +53,11 @@ class View extends Base {
   close () {
     this.hide();
   }
+
+  t (...args) {
+    if (typeof this.ui.t !== "function") throw Error("i18n is not ready");
+    return this.ui.t(...args);
+  }
 }
 
 module.exports = View;
