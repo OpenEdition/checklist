@@ -334,22 +334,17 @@ class Report extends View {
       $header.addClass(`checklist-rating-${rating}`);
     };
 
-    const setRatingIcon = (rating) => {
+    const setRatingIcon = (id) => {
       const $el = this.find(".checklist-report-icon");
-      const icon = this.ui.getRatingIcon(rating);
+      const rating = this.ui.getRating(id);
+      const icon = svg[rating.icon];
       $el.html(icon);
     };
 
-    const setRatingText = (rating) => {
-      // FIXME: get from config!!!
-      const texts = {
-        bad: "Ce document contient des erreurs de composition.",
-        good: "Ce document est correctement composé.",
-        excellent: "Ce document est très bien composé."
-      };
+    const setRatingText = (id) => {
+      const rating = this.ui.getRating(id);
       const $el = this.find(".checklist-rating-text");
-      const html = texts[rating];
-      $el.html(html);
+      $el.html(rating.text);
     };
 
     const visibleStatements = this.find(".checklist-statement:not(.hidden)")

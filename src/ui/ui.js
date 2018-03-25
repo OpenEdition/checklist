@@ -6,7 +6,6 @@ const i18n = require("./i18n.js");
 const Pane = require("./pane.js");
 const Report = require("./report.js");
 const Settings = require("./settings.js");
-const svg = require("./svg.json");
 const TOC = require("./toc.js");
 
 class UI extends Base {
@@ -210,11 +209,9 @@ class UI extends Base {
     return this;
   }
 
-  getRatingIcon (name) {
+  getRating (id) {
     const ratings = this.getConfig("ratings", []);
-    const rating = ratings.find((rating) => rating.id === name);
-    if (rating == null) return "";
-    return svg[rating.icon];
+    return ratings.find((rating) => rating.id === id);
   }
 }
 
