@@ -1,6 +1,5 @@
 const Base = require("./base.js");
 const Marker = require("./marker.js");
-const {getIdFromName} = require("./utils.js");
 
 class Statement extends Base {
   // FIXME: infos cest le bazar : passer de args propres calcules dans Check
@@ -14,13 +13,9 @@ class Statement extends Base {
     this.assign(["name", "description", "id", "type", "tags"], check, infos);
     this.count = 1;
 
-    // If no id then create it from name
-    if (this.id == null) {
-      this.id = getIdFromName(this.name);
-    }
-
     // Use a default type is no type defined
     if (this.type == null) {
+      // TODO: move this into config
       const defaultType = "info";
       this.type = defaultType;
     }
@@ -28,17 +23,11 @@ class Statement extends Base {
     // If infos is a string, then use it as the name
     if (typeof infos === "string") {
       this.name = infos;
-      this.id = getIdFromName(this.name);
     }
 
     // Do we have a name here?
     if (this.name == null) {
       throw Error("Statement constructor requires a name at least");
-    }
-
-    // Generate an new id from name if only the name was specified
-    if (infos.name && infos.id == null) {
-      this.id = getIdFromName(this.name);
     }
 
     // "tags" must be an array
