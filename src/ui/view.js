@@ -58,6 +58,10 @@ class View extends Base {
     if (typeof this.ui.t !== "function") throw Error("i18n is not ready");
     return this.ui.t(...args);
   }
+
+  tk (...args) {
+    return this.ui.tk(...args);
+  }
 }
 
 module.exports = View;
