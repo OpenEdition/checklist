@@ -22,14 +22,12 @@ function i18n ({ lang = "fr" }) {
     };
     i18next.init(options, (err, t) => {
       if (err) reject(err);
-      // Wrapper on i18n.t() to support {fr: "...", en: "..."} objects
-      const t2 = (arg, options) => {
-        if (typeof arg === "object" && !Array.isArray(arg)) {
-          return arg[lang] || arg[options.fallbackLng] || "";
-        }
-        return t(arg, options);
+      // tk = translations from keys: {fr: "...", en: "..."}
+      const tk = (arg) => {
+        if (typeof arg === "string") return arg;
+        return arg[lang] || arg[options.fallbackLng] || "";
       };
-      resolve(t2);
+      resolve({t, tk});
     });
   });
 }
