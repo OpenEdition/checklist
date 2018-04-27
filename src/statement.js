@@ -1,6 +1,13 @@
 const Base = require("./base.js");
 const Marker = require("./marker.js");
 
+function getIdFromName (name) {
+  if (typeof name === "object" && name.length > 0) {
+    name = Object.values(name)[0];
+  }
+  return name.replace(/\W/gi, "-").toLowerCase();
+}
+
 class Statement extends Base {
   // FIXME: infos cest le bazar : passer de args propres calcules dans Check
   constructor ({check, infos, caller}) {
@@ -15,8 +22,7 @@ class Statement extends Base {
 
     // Do we have an id?
     if (this.id == null) {
-      // FIXME: Error not raised here
-      throw Error("Statement constructor requires an id");
+      this.id = getIdFromName(this.name);
     }
 
     // Use a default type is no type defined
@@ -26,12 +32,18 @@ class Statement extends Base {
     // If infos is a string, then use it as the name
     if (typeof infos === "string") {
       this.name = infos;
+      this.id = getIdFromName(this.name);
     }
 
     // Do we have a name here?
     if (this.name == null) {
       // FIXME: Error not raised here
       throw Error("Statement constructor requires a name");
+    }
+
+    // Generate an new id from name if only the name was specified
+    if (infos.name && infos.id == null) {
+      this.id = getIdFromName(this.name);
     }
 
     // "tags" must be an array
