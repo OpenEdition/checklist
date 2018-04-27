@@ -1,13 +1,14 @@
 const svg = require("./svg.json");
 const View = require("./view.js");
 
-function getHtml (buttonsCreator, docId) {
+function getHtml (buttonsCreator, docId, tk) {
   if (typeof buttonsCreator !== "function") return;
 
   const getButton = (infos) => {
     const icon = (infos.icon && svg[infos.icon]);
-    const text = icon || infos.title;
-    const title = icon ? `title="${infos.title}"`: "";
+    const translatedTitle = tk(infos.title);
+    const text = icon || translatedTitle;
+    const title = icon ? `title="${translatedTitle}"`: "";
     const attrs = [];
     for (let attr in infos.attributes) {
       const value = infos.attributes[attr];
@@ -36,7 +37,7 @@ class Toolbar extends View {
     super("Toolbar", ui, parent);
 
     const buttonsCreator = this.getConfig("buttonsCreator");
-    const html = getHtml(buttonsCreator, docId);
+    const html = getHtml(buttonsCreator, docId, this.ui.tk);
     this.createView(html);
   }
 }

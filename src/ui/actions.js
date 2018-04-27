@@ -29,7 +29,8 @@ function initActions (ui) {
       const statement = parent.statement;
       const {name, description} = statement;
       if (!name || !description) return;
-      ui.showInfo(`<h2>${name}</h2> <p>${description}</p>`);
+      const tk = ui.tk;
+      ui.showInfo(`<h2>${tk(name)}</h2> <p>${tk(description)}</p>`);
     },
 
     "goto-next-marker": function () {

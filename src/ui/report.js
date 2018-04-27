@@ -10,10 +10,10 @@ function oneByOne (param, fn) {
   }
 }
 
-function getHtml (docId, types, metadatas, t) {
+function getHtml (docId, types, metadatas, t, tk) {
   const typesHtml = types.map((type) => `
     <div class="checklist-statements-${type.id} checklist-statements-group">
-      <h3>${type.name}</h3>
+      <h3>${tk(type.name)}</h3>
       <ul></ul>
     </div>
   `).join("\n");
@@ -65,7 +65,7 @@ class Report extends View {
     this.rejections = [];
     this.percentage = 0;
     const types = this.getConfig("types");
-    const html = getHtml(this.docId, types, this.metadatas, this.ui.t);
+    const html = getHtml(this.docId, types, this.metadatas, this.ui.t, this.ui.tk);
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;
@@ -163,7 +163,7 @@ class Report extends View {
       const isFiltered = cache.isFiltered([`type-${type}`, ...tagsFilters]);
       const filterClass = isFiltered ? "hidden" : "";
 
-      const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}"><span class="checklist-statement-msg">${statement.name} ${countSpan}</span></li>`;
+      const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}"><span class="checklist-statement-msg">${this.tk(statement.name)} ${countSpan}</span></li>`;
       return li;
     };
 
@@ -227,7 +227,7 @@ class Report extends View {
 
   injectMarker (marker) {
     if (this.showMarkers === false) return;
-    const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${marker.name}"></span>`;
+    const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${this.tk(marker.name)}"></span>`;
     const $element = $(html);
     const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");
     if (marker.position !== "after") {
@@ -250,7 +250,7 @@ class Report extends View {
     $container.addClass("visible");
 
     const $ul = this.find(".checklist-rejections-list");
-    const html = `<li class="checklist-rejection" title="${errMsg}">${svg.bug}  ${ruleName}</li>`;
+    const html = `<li class="checklist-rejection" title="${errMsg}">${svg.bug}  ${this.tk(ruleName)}</li>`;
     $ul.append(html);
 
     return this;
@@ -344,7 +344,8 @@ class Report extends View {
     const setRatingText = (id) => {
       const rating = this.ui.getRating(id);
       const $el = this.find(".checklist-rating-text");
-      $el.html(rating.text);
+      const text = this.tk(rating.text);
+      $el.html(text);
     };
 
     const visibleStatements = this.find(".checklist-statement:not(.hidden)")

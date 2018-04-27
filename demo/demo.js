@@ -52,28 +52,40 @@ $(function () {
     buttonsCreator: function (docId) {
       return [
         {
-          title: "Éditer",
+          title: {
+            fr: "Éditer",
+            en: "Edit"
+          },
           icon: "pencil",
           attributes : {
             href: `${docId}/editer`
           }
         },
         {
-          title: "Réimporter la source",
+          title: {
+            fr: "Réimporter la source",
+            en: "Upload source"
+          },
           icon: "upload",
           attributes: {
             onclick: "console.log('Button clicked!')"
           }
         },
         {
-          title: "Télécharger la source au format .doc",
+          title: {
+            fr: "Télécharger la source au format .doc",
+            en: "Download source in .doc format"
+          },
           icon: "file-word",
           attributes: {
             onclick: "console.log('Button clicked!')"
           }
         },
         {
-          title: "Télécharger la source au format XML TEI",
+          title: {
+            fr: "Télécharger la source au format XML TEI",
+            en: "Download source in XML format"
+          },
           icon: "file-xml",
           attributes: {
             onclick: "console.log('Button clicked!')"
@@ -84,42 +96,66 @@ $(function () {
     types: [
       {
         id: "danger",
-        name: "Avertissements",
+        name: {
+          fr: "Avertissements",
+          en: "Danger"
+        },
         color: "#ed5740"
       },
       {
         id: "warning",
-        name: "Recommandations",
+        name: {
+          fr: "Recommandations",
+          en: "Warning"
+        },
         color: "#f8d14c"
       },
       {
         id: "info",
-        name: "Informations",
+        name: {
+          fr: "Informations",
+          en: "Information"
+        },
         color: "#3d9cdf"
       }
     ],
     filters: [
-      {id: "tag-paper", name: "Publication papier"}
+      {
+        id: "tag-paper",
+        name: {
+          fr: "Publication papier",
+          en: "Print"
+        }
+      }
     ],
     ratings: [
       {
         id: "bad",
         icon: "rating-bad",
-        text: "Ce document contient des erreurs de composition.",
+        text: {
+          fr: "Ce document contient des erreurs de composition.",
+          en: "This document contains issues."
+        },
         color: "#a94442",
         bgcolor: "#f2dede"
       },
       {
         id: "good",
         icon: "rating-good",
-        text: "Ce document est correctement composé.",
+        text: {
+          fr: "Ce document est correctement composé.",
+          en: "This document is well formated."
+        },
         color: "#31708f",
         bgcolor: "#d9edf7"
       },
       {
         id: "excellent",
         icon: "rating-excellent",
-        text: "Ce document est très bien composé.",
+        text: {
+          fr: "Ce document est très bien composé.",
+          en: "This document is well formated"
+        },
         color: "#3c763d",
         bgcolor: "#dff0d8"
       }
@@ -148,8 +184,14 @@ $(function () {
 
     rules: [
       {
-        name: "Première règle",
-        description: "<p>Cette règle renvoie une notification sur toutes les pages.</p><p>Lorem ipsum dolor sit amet consectetur adipiscing elit eu nec, magnis purus porta donec eget class pretium sapien ultricies, aliquet sociis proin ante vivamus etiam montes fames. Convallis dis aptent platea massa taciti volutpat placerat inceptos erat ut, pharetra habitasse cras condimentum risus sapien sodales porta. Congue donec justo egestas porttitor integer quisque leo est, laoreet et urna risus blandit sociosqu aenean conubia lacinia.</p><a href='#'>Lien vers la documentation</a>",
+        name: {
+          fr: "Première règle",
+          en: "First rule"
+        },
+        description: {
+          fr: "<p>Cette règle renvoie une notification sur toutes les pages.</p><p>Lorem ipsum dolor sit amet consectetur adipiscing elit eu nec, magnis purus porta donec eget class pretium sapien ultricies, aliquet sociis proin ante vivamus etiam montes fames. Convallis dis aptent platea massa taciti volutpat placerat inceptos erat ut, pharetra habitasse cras condimentum risus sapien sodales porta. Congue donec justo egestas porttitor integer quisque leo est, laoreet et urna risus blandit sociosqu aenean conubia lacinia.</p><a href='#'>Lien vers la documentation</a>",
+          en: "<p>Description in English...</p><a href='#'>Link to documentation</a>"
+        },
         action: function () {
           this.notify();
           this.resolve(true);

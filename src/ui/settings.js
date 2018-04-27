@@ -1,15 +1,15 @@
 const View = require("./view.js");
 
-function getViewHtml (cache, filters, t) {
+function getViewHtml (cache, filters, t, tk) {
   const getInputHtml = (filters) => {
     const inputs = filters.map((filter) => {
       const isHidden = cache.getFilter(filter.id);
       const checkedAttr = isHidden ? "" : "checked";
-      const elementId = `checklist-filter-${filter.name}`;
+      const elementId = `checklist-filter-${filter.id}`;
       return `
         <div class="checklist-filter-container">
           <input type="checkbox" id="${elementId}" class="checklist-filter" value="${filter.id}" ${checkedAttr}>
-            <label for="${elementId}">${filter.name}</label>
+            <label for="${elementId}">${tk(filter.name)}</label>
           </input>
         </div>
       `;
@@ -43,7 +43,7 @@ class Settings extends View {
 
     const cache = this.ui.cache;
     const filters = this.getConfig("filters");
-    const html = getViewHtml(cache, filters, this.ui.t);
+    const html = getViewHtml(cache, filters, this.ui.t, this.ui.tk);
     this.createView(html);
     this.initEventHandlers();
   }
