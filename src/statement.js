@@ -13,12 +13,15 @@ class Statement extends Base {
     this.assign(["name", "description", "id", "type", "tags"], check, infos);
     this.count = 1;
 
-    // Use a default type is no type defined
-    if (this.type == null) {
-      // TODO: move this into config
-      const defaultType = "info";
-      this.type = defaultType;
+    // Do we have an id?
+    if (this.id == null) {
+      // FIXME: Error not raised here
+      throw Error("Statement constructor requires an id");
     }
+
+    // Use a default type is no type defined
+    const defaultType = "info"; // TODO: move this into config
+    this.type = this.type || defaultType;
 
     // If infos is a string, then use it as the name
     if (typeof infos === "string") {
@@ -27,7 +30,8 @@ class Statement extends Base {
 
     // Do we have a name here?
     if (this.name == null) {
-      throw Error("Statement constructor requires a name at least");
+      // FIXME: Error not raised here
+      throw Error("Statement constructor requires a name");
     }
 
     // "tags" must be an array
