@@ -184,6 +184,7 @@ $(function () {
 
     rules: [
       {
+        id: "first-rule",
         name: {
           fr: "Première règle",
           en: "First rule"
@@ -198,6 +199,7 @@ $(function () {
         }
       },
       {
+        id: "2nd-rule",
         name: "Seconde règle (ajax)",
         description: "<p>Cette règle recherche une information dans une source externe.",
         // TODO: href must be a function (variable)
@@ -208,6 +210,7 @@ $(function () {
         }
       },
       {
+        id: "delay-rule",
         name: "Règle avec un délai",
         description: "Checklist supporte les tests asynchrones. Cette règle est exécutée avec un délai qui simule (par exemple) un requête asynchrone.",
         action: function ($) {
@@ -218,6 +221,7 @@ $(function () {
         }
       },
       {
+        id: "bad-condition",
         name: "Mauvaise condition",
         description: "Cette règle ne sera jamais appliquée.",
         condition: "rubrique",
@@ -226,6 +230,7 @@ $(function () {
         }
       },
       {
+        id: "2-warnings-article-2",
         name: "Deux avertissements dans l'article 2",
         description: "Un avertissement qui ne ressort que dans l'article 2.",
         type: "warning",
@@ -237,6 +242,7 @@ $(function () {
         }
       },
       {
+        id: "error-article-3",
         name: "Erreur critique dans l'article 3",
         description: "Une erreur critique qui ne ressort que dans l'article 3.",
         type: "danger",
@@ -246,6 +252,7 @@ $(function () {
         }
       },
       {
+        id: "404",
         name: "Règle qui appelle une source 404",
         description: "Un exemple de règle qui renvoie une exception",
         href: "bad-location",
@@ -254,6 +261,7 @@ $(function () {
         }
       },
       {
+        id: "markers",
         name: "Une règle qui injecte des marqueurs",
         description: "Cette règle injecte un marqueur à un paragraphe sur 3.",
         action: function ($) {
@@ -270,6 +278,7 @@ $(function () {
         }
       },
       {
+        id: "paper-rule",
         name: "Paper rule",
         description: "Une règle qui est associée à la catégorie 'papier'",
         type: "warning",
