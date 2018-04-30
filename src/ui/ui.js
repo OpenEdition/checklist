@@ -24,7 +24,8 @@ class UI extends Base {
     this.initStyles();
 
     const lang = this.getConfig("lang");
-    i18n({lang}).then(({t, tk}) => {
+    const translations = this.getConfig("translations");
+    i18n({lang, translations}).then(({t, tk}) => {
       this.t = t;
       this.tk = tk;
       this.createComponents();

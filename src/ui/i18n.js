@@ -1,24 +1,27 @@
 const i18next = require("i18next");
 
-function getLocales () {
+function getLocales (translations = {}) {
   const locales = {};
   const r = require.context('./locales/', false, /\.json$/);
   r.keys().forEach((key) => {
     const re = /[A-z]+(?=\.json$)/;
     const lang = (re.exec(key) || [])[0];
     if (lang == null) return;
-    locales[lang] = r(key);
+    const defaultTranslations = r(key);
+    locales[lang] = {
+      translation: Object.assign(defaultTranslations, translations[lang])
+    };
   });
   return locales;
 }
 
-function i18n ({ lang = "fr" }) {
+function i18n ({ lang = "fr", translations }) {
   return new Promise((resolve, reject) => {
     const options = {
       fallbackLng: "fr",
       lng: lang,
       debug: false,
-      resources: getLocales(),
+      resources: getLocales(translations),
     };
     i18next.init(options, (err, t) => {
       if (err) reject(err);

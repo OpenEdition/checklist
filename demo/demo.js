@@ -49,6 +49,13 @@ $(function () {
     lang: "fr",
     maxSourcesLoading: 5,
     loaderTimeout: 10000,
+
+    translations: {
+      fr: {
+        "toc-check": "Contrôler le numéro"
+      }
+    },
+
     buttonsCreator: function (docId) {
       return [
         {
