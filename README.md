@@ -43,7 +43,7 @@ checklist.init({
   // Timeout des requêtes Ajax lancées par le Loader
   loaderTimeout: 10000,
 
-  // Override default translations. See src/ui/locales/
+  // Surcharger les traductions par défaut de l'interface. Voir src/ui/locales/
   translations: {
     fr: {
       "toc-check": "Contrôler le numéro"
