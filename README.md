@@ -48,14 +48,20 @@ checklist.init({
   buttonsCreator: function (docId) {
     return [
       {
-        title: "Edit document",
+        title: {
+          fr: "Editer le document",
+          en: "Edit document"
+        },
         icon: "pencil",
         attributes : {
           href: `${docId}/edit`
         }
       },
       {
-        title: "Download source",
+        title: {
+          fr: "Télécharger la source",
+          en: "Download source"
+        },
         icon: "file-word",
         attributes: {
           onclick: "doStuff()"
@@ -68,24 +74,39 @@ checklist.init({
   types: [
     {
       id: "danger",
-      name: "Avertissements",
+      name: {
+        fr: "Avertissements",
+        en: "Danger"
+      },
       color: "#ed5740"
     },
     {
       id: "warning",
-      name: "Recommandations",
+      name: {
+        fr: "Recommandations",
+        en: "Warning"
+      },
       color: "#f8d14c"
     },
     {
       id: "info",
-      name: "Informations",
+      name: {
+        fr: "Informations",
+        en: "Information"
+      },
       color: "#3d9cdf"
     }
   ],
 
   // Liste des filtres utilisés dans l'interface
   filters: [
-    {id: "tag-paper", name: "Publication papier"}
+    {
+      id: "tag-paper",
+      name: {
+        fr: "Publication papier",
+        en: "Print"
+      }
+    }
   ],
 
   // Liste des notes attribuées aux documents et configuration de leur affichage dans l'interface
@@ -93,21 +114,30 @@ checklist.init({
     {
       id: "bad",
       icon: "rating-bad",
-      text: "Ce document contient des erreurs de composition.",
+      text: {
+        fr: "Ce document contient des erreurs de composition.",
+        en: "This document contains issues."
+      },
       color: "#a94442",
       bgcolor: "#f2dede"
     },
     {
       id: "good",
       icon: "rating-good",
-      text: "Ce document est correctement composé.",
+      text: {
+        fr: "Ce document est correctement composé.",
+        en: "This document is well formated."
+      },
       color: "#31708f",
       bgcolor: "#d9edf7"
     },
     {
       id: "excellent",
       icon: "rating-excellent",
-      text: "Ce document est très bien composé.",
+      text: {
+        fr: "Ce document est très bien composé.",
+        en: "This document is well formated"
+      },
       color: "#3c763d",
       bgcolor: "#dff0d8"
     }
@@ -139,8 +169,15 @@ checklist.init({
   // Liste des règles.
   rules: [
     {
-      name: "Absence de titre",
-      description: "<p>Le titre n'est pas présent sur la page.</p>",
+      id: "missing-title"
+      name: {
+        fr: "Absence de titre",
+        en: "Missing title"
+      }
+      description: {
+        fr: "<p>Le titre n'est pas présent sur la page.</p>",
+        en: "<p>Title was not found on this page.</p>"
+      },
       condition: "article || publication",
       type: "danger",
       action: function ($, bodyClasses) {
@@ -180,15 +217,20 @@ checklist.init({
 ```javascript
 {
   // Nom de la règle.
-  // C'est aussi cette clé qui est utilisé par défaut pour les titres des statements créés par cette règle.
-  name: "Nom de la règle",
+  name: {
+    fr: "Nom de la règle",
+    en: "Rule name"
+  },
 
   // Identifiant des statements créés par défaut par la règle.
-  // S'il n'est pas précisé, il sera créé d'après l'attribut name.
+  // S'il n'est pas précisé, il sera créé d'après l'attribut name. Il est toutefois fortement recommandé de donner un id à chaque règle.
   id: "id-de-la-regle",
 
   // Aide associée. Accepte le HTML.
-  description: "<p>C'est une règles de démonstration.</p>",
+  description: {
+    fr: "<p>C'est une règle de démonstration.</p>",
+    en: "<p>This is a sample rule.</p>"
+  },
 
   // URL du document où appliquer cette règle. Si vide, on utilise le document du checker.
   href: "./pages/1.html",
@@ -223,9 +265,15 @@ checklist.init({
 
     // Créer un statement avec des valeurs personnalisées.
     this.notify({
-      name: "Une notification différente",
+      name: {
+        fr: "Une notification différente",
+        en: "A different notification"
+      },
       id: "un-id-different",
-      description: "<p>Ce Statement n'a pas la même description que la règle parente.</p>",
+      description: {
+        fr: "<p>Ce Statement n'a pas la même description que la règle parente.</p>",
+        en: "<p>This Statement has a different description."
+      },
       type: "danger",
       tags: []
     });
@@ -235,7 +283,10 @@ checklist.init({
     statement.addMarker({
       // Titre du marker.
       // Par défaut on utilise le nom du statement (qui est lui même peut-être hérité de la règle, voir ci-dessus).
-      name: "Texte du marker",
+      name: {
+        fr: "Texte du marker",
+        en: "Marker text"
+      },
 
       // Type du marker.
       // Par défaut on utilise le type du statement (qui est lui même peut-être hérité de la règle, voir ci-dessus).
@@ -312,7 +363,7 @@ Les scripts npm suivants sont disponibles :
 
 ## License
 
-**OpenEdition Checklist**
+**OpenEdition Checklist**  
 **Copyright (c) 2017 OpenEdition, Thomas Brouard**
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
