@@ -43,6 +43,13 @@ checklist.init({
   // Timeout des requêtes Ajax lancées par le Loader
   loaderTimeout: 10000,
 
+  // Override default translations. See src/ui/locales/
+  translations: {
+    fr: {
+      "toc-check": "Contrôler le numéro"
+    }
+  },
+
   // Une fonction qui permet de créer les boutons de la barre d'outil.
   // Prend l'identifant du document en paramètre.
   buttonsCreator: function (docId) {
