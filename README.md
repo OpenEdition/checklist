@@ -180,7 +180,7 @@ checklist.init({
       name: {
         fr: "Absence de titre",
         en: "Missing title"
-      }
+      },
       description: {
         fr: "<p>Le titre n'est pas présent sur la page.</p>",
         en: "<p>Title was not found on this page.</p>"
