@@ -11,7 +11,7 @@ if (typeof jQuery === "undefined") {
 $(function () {
   // Show switch button if checklist is off
   const on = localStorage.getItem("checklist-on");
-  if (on === false || on === "false") {
+  if (on == null || on === false || on === "false") {
     return showSwitch();
   }
   // Otherwise init checklist
