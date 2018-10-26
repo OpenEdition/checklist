@@ -29,8 +29,6 @@ function getViewHtml (cache, filters, t, tk) {
       <h2>${t("settings-cache-title")}</h2>
       <p>${t("settings-cache-description")}</p>
       <button data-checklist-action="cache-clear">${t("settings-cache-clear")}</button>
-      <h2>${t("settings-disable-title")}</h2>
-      <button data-checklist-action="checklist-off">${t("settings-disable-button")}</button>
     </div>
   `;
   return html;

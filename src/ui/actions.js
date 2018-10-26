@@ -12,11 +12,6 @@ function initActions (ui) {
       location.reload();
     },
 
-    "checklist-off": function () {
-      localStorage.setItem("checklist-on", false);
-      location.reload();
-    },
-
     "close-component": function () {
       const parent = $(this).parents(".checklist-component").get(0);
       const view = parent.view;
