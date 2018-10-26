@@ -2,8 +2,6 @@ const svg = require("./svg.json");
 const View = require("./view.js");
 
 function getHtml (buttonsCreator, docId, tk) {
-  if (typeof buttonsCreator !== "function") return;
-
   const getButton = (infos) => {
     const icon = (infos.icon && svg[infos.icon]);
     const translatedTitle = tk(infos.title);
@@ -37,6 +35,7 @@ class Toolbar extends View {
     super("Toolbar", ui, parent);
 
     const buttonsCreator = this.getConfig("buttonsCreator");
+    if (typeof buttonsCreator !== "function") return;
     const html = getHtml(buttonsCreator, docId, this.ui.tk);
     this.createView(html);
   }

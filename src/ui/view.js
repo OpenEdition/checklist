@@ -15,6 +15,7 @@ class View extends Base {
   }
 
   createView (html) {
+    if (html == null) return;
     this.$element = $(html).appendTo(this.parent);
     this.element = this.$element.get(0);
     this.element.view = this;
