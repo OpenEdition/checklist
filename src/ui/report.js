@@ -69,6 +69,7 @@ class Report extends View {
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;
+    this.updateView();
     return this;
   }
 
