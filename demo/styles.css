@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  display: flex;
+  align-items: flex-start;
 }
 
 #container {
@@ -7,6 +9,16 @@ body {
   display: block;
   margin: 0 auto;
   font-size: 120%;
+  flex: 1;
+}
+
+#checklist-pane {
+  flex: 1;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  max-width: 320px;
+  margin-left: 20px;
 }
 
 #links {
