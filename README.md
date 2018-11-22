@@ -69,6 +69,7 @@ checklist.init({
           fr: "Télécharger la source",
           en: "Download source"
         },
+        condition: "textes && article",
         icon: "file-word",
         attributes: {
           onclick: "doStuff()"
@@ -197,12 +198,24 @@ checklist.init({
 
   // Clé à utiliser dans le cas où la page courante contient une table des matières.
   // Dans ce cas, le raport de l'entité en cours ne sera pas automatiquement affiché dans le panel. À la place, l'option de relecture de la table des matières sera proposée à l'utilisateur.
+  // Par exemple :
   publi: {
     title: "Titre de la publication",
     toc: [
       {
+        title: $(".publi-title").text(),
+        href: window.location.pathname, // indique qu'il s'agit de la page courante
+        type: "Publication",
+        icon: "book",
+        context: {"publications": true}
+      }
+      {
         title: "Premier article",
-        href: "url/to/article.html"
+        href: "url/to/article.html",
+        context: {
+          "textes": true,
+          "article": true
+        }
       },
       // etc.
     ]

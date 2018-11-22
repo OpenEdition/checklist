@@ -1,5 +1,6 @@
 const Base = require("./base.js");
 const Statement = require("./statement.js");
+const { testCondition } = require("./utils.js");
 
 function getSource (check) {
   // If rule.href is not found then use the checker source (in case of runBatch)
@@ -8,23 +9,6 @@ function getSource (check) {
   }
   const loader = window.checklist.loader;
   return loader.requestSource(check.href);
-}
-
-// Eval a condition defined as a string
-function evalStringCondition (condition, context) {
-  // Replace context keys by their values in string (false if undefined)
-  function replaceAttributes (condition, context) {
-    const regex = /\b[^!&|()]*\b/g;
-    return condition.replace(regex, (key) => {
-      if (key.trim().length === 0) return key;
-      return typeof context[key] !== "undefined" ? context[key] : false;
-    });
-  }
-
-  const conditionToEval = replaceAttributes(condition, context);
-  // No worry, eval is safe here
-  // jshint evil: true
-  return eval(conditionToEval);
 }
 
 function setDone (check) {
@@ -114,13 +98,7 @@ class Check extends Base {
   }
 
   test () {
-    const context = this.context;
-    if (typeof this.condition === "function") {
-      return this.condition(context);
-    } else if (typeof this.condition === "string") {
-      return evalStringCondition(this.condition, context);
-    }
-    return true;
+    return testCondition(this.condition, this.context);
   }
 
   // Export instance to a minimal plain object which can be stored in cache

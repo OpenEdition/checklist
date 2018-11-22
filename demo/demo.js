@@ -14,7 +14,8 @@ $(function () {
       title: $(".publi-title").text(),
       href: window.location.pathname,
       type: "Publication",
-      icon: "book"
+      icon: "book",
+      context: {"publications": true}
     }];
     $("#toc").find(".toc-entry").each(function () {
       const pathname = $(this).find("a").get(0).pathname;
@@ -26,7 +27,11 @@ $(function () {
           });
           return res.join("<br>");
         })(this),
-        href: pathname
+        href: pathname,
+        context: {
+          "textes": true,
+          "article": true
+        }
       };
       toc.push(entry);
     });
@@ -73,6 +78,7 @@ $(function () {
             fr: "Réimporter la source",
             en: "Upload source"
           },
+          condition: "textes",
           icon: "upload",
           attributes: {
             onclick: "console.log('Button clicked!')"
@@ -83,6 +89,7 @@ $(function () {
             fr: "Télécharger la source au format .doc",
             en: "Download source in .doc format"
           },
+          condition: "textes && article",
           icon: "file-word",
           attributes: {
             onclick: "console.log('Button clicked!')"
@@ -93,6 +100,7 @@ $(function () {
             fr: "Télécharger la source au format XML TEI",
             en: "Download source in XML format"
           },
+          condition: "publications",
           icon: "file-xml",
           attributes: {
             onclick: "console.log('Button clicked!')"
@@ -181,8 +189,9 @@ $(function () {
 
     context: function () {
       return {
-        "article": true,
-        "textes": true,
+        "article": !isPublication,
+        "textes":  !isPublication,
+        "publications": isPublication,
         "motsclesfr": $(".motsclesfr .entry").length
       };
     },

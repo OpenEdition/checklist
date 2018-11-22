@@ -87,7 +87,8 @@ class TOC extends View {
       new Toolbar({
         ui: this.ui,
         parent: $toolbarParent,
-        docId: docId
+        docId: docId,
+        context: entry.context
       });
 
       $toc.append($element);
