@@ -1,4 +1,3 @@
-const svg = require("./svg.json");
 const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
 const { getDocIdFromPathname } = require("../utils.js");
@@ -35,7 +34,7 @@ class TOC extends View {
     this.stats[name] = newValue;
 
     const rating = this.ui.getRating(name);
-    const icon = svg[rating.icon];
+    const icon = rating.icon;
     let $el = this.find(`.checklist-toc-stat-${name}`);
     $el.html(`${icon} ${newValue}`);
     $el.toggleClass("visible", newValue > 0);
@@ -66,8 +65,8 @@ class TOC extends View {
           <div class="checklist-toc-entry-contents"></div>
           <div class="checklist-toc-entry-footer">
             <a class="checklist-toggle-report-details" data-checklist-action="toggle-report-details">
-              <span class="checklist-toggle-report-details-show">${svg["square-plus"]} ${this.t("toc-show-details")}</span>
-              <span class="checklist-toggle-report-details-hide">${svg["square-minus"]} ${this.t("toc-hide-details")}</span>
+              <span class="checklist-toggle-report-details-show"><i class="far fa-plus-square"></i> ${this.t("toc-show-details")}</span>
+              <span class="checklist-toggle-report-details-hide"><i class="far fa-minus-square"></i> ${this.t("toc-hide-details")}</span>
             </a>
           </div>
         </li>
@@ -76,10 +75,10 @@ class TOC extends View {
 
       // Create toolbar
       const type = entry.type || this.t("article");
-      const icon = entry.icon || "article";
+      const icon = entry.icon || "<i class='far fa-file-alt'></i>";
       const headerHtml = `
         <div class="checklist-toc-entry-header">
-          <div class="checklist-toc-entry-brand">${svg[icon]} ${type}</div>
+          <div class="checklist-toc-entry-brand">${icon} ${type}</div>
         </div>
       `;
       const $toolbarParent = $(headerHtml);

@@ -1,4 +1,3 @@
-const svg = require("./svg.json");
 const View = require("./view.js");
 const { testCondition } = require("../utils.js");
 
@@ -7,7 +6,7 @@ function getHtml (buttonsCreator, docId, context, tk) {
     if (!testCondition(infos.condition, context)) {
       return;
     }
-    const icon = (infos.icon && svg[infos.icon]);
+    const icon = infos.icon;
     const translatedTitle = tk(infos.title);
     const text = icon || translatedTitle;
     const title = icon ? `title="${translatedTitle}"`: "";

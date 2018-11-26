@@ -14,7 +14,7 @@ $(function () {
       title: $(".publi-title").text(),
       href: window.location.pathname,
       type: "Publication",
-      icon: "book",
+      icon: "<i class='fas fa-book'></i>",
       context: {"publications": true}
     }];
     $("#toc").find(".toc-entry").each(function () {
@@ -68,7 +68,7 @@ $(function () {
             fr: "Éditer",
             en: "Edit"
           },
-          icon: "pencil",
+          icon: "<i class='fas fa-edit'></i>",
           attributes : {
             href: `${docId}/editer`
           }
@@ -79,7 +79,7 @@ $(function () {
             en: "Upload source"
           },
           condition: "textes",
-          icon: "upload",
+          icon: "<i class='fas fa-file-upload'></i>",
           attributes: {
             onclick: "console.log('Button clicked!')"
           }
@@ -90,7 +90,7 @@ $(function () {
             en: "Download source in .doc format"
           },
           condition: "textes && article",
-          icon: "file-word",
+          icon: "<i class='far fa-file-word'></i>",
           attributes: {
             onclick: "console.log('Button clicked!')"
           }
@@ -101,7 +101,7 @@ $(function () {
             en: "Download source in XML format"
           },
           condition: "publications",
-          icon: "file-xml",
+          icon: "<i class='far fa-file-code'></i>",
           attributes: {
             onclick: "console.log('Button clicked!')"
           }
@@ -146,7 +146,7 @@ $(function () {
     ratings: [
       {
         id: "bad",
-        icon: "rating-bad",
+        icon: "<i class='far fa-meh'></i>",
         text: {
           fr: "Ce document contient des erreurs de composition.",
           en: "This document contains issues."
@@ -156,7 +156,7 @@ $(function () {
       },
       {
         id: "good",
-        icon: "rating-good",
+        icon: "<i class='far fa-smile'></i>",
         text: {
           fr: "Ce document est correctement composé.",
           en: "This document is well formated."
@@ -166,7 +166,7 @@ $(function () {
       },
       {
         id: "excellent",
-        icon: "rating-excellent",
+        icon: "<i class='far fa-laugh-wink '></i>",
         text: {
           fr: "Ce document est très bien composé.",
           en: "This document is well formated"

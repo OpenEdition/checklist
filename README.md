@@ -6,9 +6,12 @@
 2. Installer les dépendances `npm install`.
 3. Compiler le script : `npm run build`
 
-Checklist requiert jQuery.
+Checklist requiert jQuery et Font Awesome 5.
 
 ```html
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
   <!-- jQuery  -->
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
@@ -59,7 +62,7 @@ checklist.init({
           fr: "Editer le document",
           en: "Edit document"
         },
-        icon: "pencil",
+        icon: "<i class='fas fa-edit'></i>",
         attributes : {
           href: `${docId}/edit`
         }
@@ -70,7 +73,7 @@ checklist.init({
           en: "Download source"
         },
         condition: "textes && article",
-        icon: "file-word",
+        icon: "<i class='far fa-file-word'></i>",
         attributes: {
           onclick: "doStuff()"
         }
@@ -121,7 +124,7 @@ checklist.init({
   ratings: [
     {
       id: "bad",
-      icon: "rating-bad",
+      icon: "<i class='far fa-meh'></i>",
       text: {
         fr: "Ce document contient des erreurs de composition.",
         en: "This document contains issues."
@@ -131,7 +134,7 @@ checklist.init({
     },
     {
       id: "good",
-      icon: "rating-good",
+      icon: "<i class='far fa-smile'></i>",
       text: {
         fr: "Ce document est correctement composé.",
         en: "This document is well formated."
@@ -141,7 +144,7 @@ checklist.init({
     },
     {
       id: "excellent",
-      icon: "rating-excellent",
+      icon: "<i class='far fa-laugh-wink '></i>",
       text: {
         fr: "Ce document est très bien composé.",
         en: "This document is well formated"
@@ -206,7 +209,7 @@ checklist.init({
         title: $(".publi-title").text(),
         href: window.location.pathname, // indique qu'il s'agit de la page courante
         type: "Publication",
-        icon: "book",
+        icon: "<i class='fas fa-book'></i>",
         context: {"publications": true}
       }
       {

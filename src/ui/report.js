@@ -29,7 +29,7 @@ function getHtml (docId, types, metadatas, t, tk) {
           <div class="checklist-percentage"></div>
           <div class="checklist-rating-text"></div>
           <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="${t("report-changed")}">
-            ${svg.history}
+            <i class="fas fa-history"></i>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@ function getHtml (docId, types, metadatas, t, tk) {
         </div>
         <div class="checklist-rejections">
           <a class="checklist-rejections-toggle checklist-toggle-open-parent checklist-icon-box" data-checklist-action="toggle-parent">
-            ${svg.notification}
+            <i class="fas fa-exclamation-circle"></i>
             <span>${t("report-tests-failed")}</span>
           </a>
           <ul class="checklist-rejections-list checklist-collapsed"></ul>
@@ -178,7 +178,7 @@ class Report extends View {
         addButton({
           element,
           classname: "checklist-btn-goto-next-marker",
-          contents: svg.search,
+          contents: "<i class='fas fa-search'></i>",
           action: "goto-next-marker"
         });
       }
@@ -187,7 +187,7 @@ class Report extends View {
         addButton({
           element,
           classname: "checklist-btn-help-show",
-          contents: svg.help,
+          contents: "<i class='fas fa-info-circle'></i>",
           action: "help-show"
         });
       }
@@ -251,7 +251,7 @@ class Report extends View {
     $container.addClass("visible");
 
     const $ul = this.find(".checklist-rejections-list");
-    const html = `<li class="checklist-rejection" title="${errMsg}">${svg.bug}  ${this.tk(ruleName)}</li>`;
+    const html = `<li class="checklist-rejection" title="${errMsg}"><i class="fas fa-bug"></i>  ${this.tk(ruleName)}</li>`;
     $ul.append(html);
 
     return this;
@@ -267,7 +267,9 @@ class Report extends View {
 
   showSpinner () {
     const $div = this.find(".checklist-report-icon");
-    $div.html(svg.spinner);
+    const spinner = svg.spinner;
+    // const spinner = "<i class='fas fa-spinner'></i>";
+    $div.html(spinner);
     return this;
   }
 
@@ -338,7 +340,7 @@ class Report extends View {
     const setRatingIcon = (id) => {
       const $el = this.find(".checklist-report-icon");
       const rating = this.ui.getRating(id);
-      const icon = svg[rating.icon];
+      const icon = rating.icon;
       $el.html(icon);
     };
 
