@@ -55,7 +55,7 @@ checklist.init({
 
   // Une fonction qui permet de créer les boutons de la barre d'outil.
   // Prend l'identifant du document en paramètre.
-  buttonsCreator: function (docId) {
+  buttonsCreator: function (docId, context) {
     return [
       {
         title: {

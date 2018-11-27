@@ -22,7 +22,7 @@ function getHtml (buttonsCreator, docId, context, tk) {
     `;
   };
 
-  const infos = buttonsCreator(docId);
+  const infos = buttonsCreator(docId, context);
   const buttonsHtml = infos.map(getButton).join("");
   const html = `
     <div class="checklist-toolbar">

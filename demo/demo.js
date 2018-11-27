@@ -61,7 +61,7 @@ $(function () {
       }
     },
 
-    buttonsCreator: function (docId) {
+    buttonsCreator: function (docId, context) {
       return [
         {
           title: {
