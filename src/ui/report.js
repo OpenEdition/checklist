@@ -413,7 +413,7 @@ class Report extends View {
     const docId = this.docId;
     const record = cache.get(docId);
     updateViewFromRecord(record);
-    return this;
+    return record;
   }
 }
 
