@@ -34,6 +34,10 @@ class TOC extends View {
     this.stats[name] = newValue;
 
     const rating = this.ui.getRating(name);
+
+    // FIXME: this should not happen. If so, then display an error in the Report.
+    if (rating == null) return;
+
     const icon = rating.icon;
     let $el = this.find(`.checklist-toc-stat-${name}`);
     $el.html(`${icon} ${newValue}`);
