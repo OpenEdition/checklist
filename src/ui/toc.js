@@ -100,7 +100,8 @@ class TOC extends View {
       const report = this.ui.createReport({
         parent: element,
         docId,
-        metadatas
+        metadatas,
+        context: entry.context
       });
 
       report.on("rating", () => {

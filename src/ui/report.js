@@ -51,9 +51,9 @@ function getHtml (docId, types, metadatas, t, tk) {
 }
 
 class Report extends View {
-  constructor ({ ui, parent, docId, metadatas, showMarkers }) {
+  constructor ({ ui, parent, docId, metadatas, context, showMarkers }) {
     super("Report", ui, parent);
-    Object.assign(this, {docId, metadatas, showMarkers});
+    Object.assign(this, {docId, metadatas, context, showMarkers});
     this.init();
     this.triggerState("ready");
   }
@@ -86,9 +86,10 @@ class Report extends View {
 
   rerun () {
     const href = this.docId;
+    const context = this.context;
     this.reset();
     checklist.whenState("ready").then(() => {
-      checklist.run({href});
+      checklist.run({href, context});
     });
     return this;
   }

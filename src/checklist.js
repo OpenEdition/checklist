@@ -51,7 +51,7 @@ class Checklist extends Base {
     return this;
   }
 
-  run ({href, rules} = {}) {
+  run ({href, rules, context} = {}) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
       return this.postponePromise("ready", "run", arguments);
@@ -80,7 +80,7 @@ class Checklist extends Base {
 
     rules = rules || this.getConfig("rules");
     // TODO: rename context in contextCreator
-    const context = this.getConfig("context");
+    context = context || this.getConfig("context");
     const ui = this.ui;
     const checker = new Checker({ href, rules, context, caller: this });
 

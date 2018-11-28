@@ -104,6 +104,7 @@ class UI extends Base {
       parent: options.parent,
       docId: options.docId,
       metadatas: options.metadatas,
+      context: options.context,
       showMarkers: this.publi ? false : true,
     });
     this.reports[options.docId] = report;
