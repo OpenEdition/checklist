@@ -1,6 +1,5 @@
 const Base = require("./base.js");
 const Check = require("./check.js");
-const utils = require("./utils.js");
 
 function getContext (source, contextCreator) {
   if (typeof contextCreator === "object") {
@@ -22,9 +21,10 @@ function getRules (rules) {
 }
 
 class Checker extends Base {
-  constructor ({ rules = [], context = [], href, caller }) {
+  constructor ({ rules = [], context = [], href, docId, caller }) {
     super("Checker", caller);
 
+    this.docId = docId;
     this.rules = getRules(rules);
     this.checks = [];
 
@@ -32,7 +32,6 @@ class Checker extends Base {
     loader.requestSource(href)
     .then((source) => {
       this.source = source;
-      this.docId = utils.getDocIdFromPathname(source.url.pathname);
       // TODO: rename context in constructor (contextCreator?)
       this.context = getContext(source, context);
       this.triggerState("ready");

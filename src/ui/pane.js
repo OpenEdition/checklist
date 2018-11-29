@@ -1,13 +1,12 @@
 const svg = require("./svg.json");
 const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
-const { getDocIdFromPathname } = require("../utils.js");
 
 class Pane extends View {
   constructor ({ ui, parent, publi }) {
     super("Pane", ui, parent);
 
-    this.docId = getDocIdFromPathname(window.location.pathname);
+    this.docId = this.getConfig("docId");
 
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
       <div class="checklist-main-menu">

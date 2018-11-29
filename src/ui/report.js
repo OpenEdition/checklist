@@ -85,11 +85,12 @@ class Report extends View {
   }
 
   rerun () {
-    const href = this.docId;
+    const docId = this.docId;
+    const href = docId;
     const context = this.context;
     this.reset();
     checklist.whenState("ready").then(() => {
-      checklist.run({href, context});
+      checklist.run({docId, href, context});
     });
     return this;
   }

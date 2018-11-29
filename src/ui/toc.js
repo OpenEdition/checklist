@@ -1,6 +1,5 @@
 const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
-const { getDocIdFromPathname } = require("../utils.js");
 
 class TOC extends View {
   constructor ({ ui, parent, publi }) {
@@ -65,7 +64,7 @@ class TOC extends View {
 
     toc.forEach((entry, index) => {
       const href = entry.href;
-      const docId = getDocIdFromPathname(href);
+      const docId = entry.docId || href;
 
       const html = `
         <li class="checklist-toc-entry checklist-report-container">
@@ -123,7 +122,7 @@ class TOC extends View {
 
   rerunAll () {
     const reports = this.toc.map((entry) => {
-      const docId = getDocIdFromPathname(entry.href);
+      const docId = entry.docId || entry.href;
       return this.ui.getReport(docId);
     });
     reports.forEach((report) => {

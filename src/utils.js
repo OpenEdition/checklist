@@ -16,17 +16,6 @@ function evalStringCondition (condition, context) {
 }
 
 const utils = {
-  getDocIdFromPathname: function (pathname) {
-    try {
-      // FIXME: this assumes id is the last part of the URL. subdir/page/1 will result to 1 (this behavior is specific to Lodel)
-      const re = /\/?([^\/]+)\/?$/;
-      return pathname.match(re)[1];
-    }
-    catch (err) {
-      console.error(`Could not get docId from pathname "${pathname}"`);
-    }
-  },
-
   testCondition: function (condition, context) {
     if (typeof condition === "function") {
       return condition(context);
