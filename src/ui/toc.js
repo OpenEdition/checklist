@@ -4,6 +4,9 @@ const { getDocIdFromPathname } = require("../utils.js");
 
 class TOC extends View {
   constructor ({ ui, parent, publi }) {
+    // Use publi.parent if it exists
+    parent = publi.parent || parent;
+
     super("TOC", ui, parent);
 
     this.unchecked = [];

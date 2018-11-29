@@ -204,6 +204,7 @@ checklist.init({
   // Par exemple :
   publi: {
     title: "Titre de la publication",
+    parent: "body", // si ce sélecteur n'est pas spécifié, la toc sera injectée dans config.parent
     toc: [
       {
         title: $(".publi-title").text(),
