@@ -89,6 +89,7 @@ class Report extends View {
     const href = docId;
     const context = this.context;
     this.reset();
+    this.showSpinner();
     checklist.whenState("ready").then(() => {
       checklist.run({docId, href, context});
     });
@@ -270,7 +271,6 @@ class Report extends View {
   showSpinner () {
     const $div = this.find(".checklist-report-icon");
     const spinner = svg.spinner;
-    // const spinner = "<i class='fas fa-spinner'></i>";
     $div.html(spinner);
     return this;
   }
