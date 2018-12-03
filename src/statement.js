@@ -42,7 +42,7 @@ class Statement extends Base {
     }
 
     // Generate an new id from name if only the name was specified
-    if (infos.name && infos.id == null) {
+    if (infos && infos.name && infos.id == null) {
       this.id = getIdFromName(this.name);
     }
 
