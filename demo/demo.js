@@ -220,9 +220,9 @@ $(function () {
         name: "Seconde règle (ajax)",
         description: "<p>Cette règle recherche une information dans une source externe.",
         // TODO: href must be a function (variable)
-        href: "./pages/article-1.html",
+        href: "./article-1.html",
         action: function ($) {
-          var flag = $("h1").length === 1;
+          var flag = $("h2").length === 1;
           this.resolve(flag);
         }
       },
