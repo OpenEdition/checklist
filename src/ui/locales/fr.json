@@ -3,6 +3,8 @@
   "cache-deleted": "Le cache a été supprimé pour ce site.",
   "help-title": "Aide",
   "report-changed": "Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.",
+  "report-retry": "Réessayer",
+  "report-source-failed": "Erreur lors du chargement de la source&nbsp;: {{url}}.",
   "report-tests-failed": "Des tests ont échoué",
   "settings-cache-clear": "Vider le cache",
   "settings-cache-description": "Checklist utilise le cache de votre navigateur pour conserver des informations en mémoire comme les rapports de tests et la configuration.",

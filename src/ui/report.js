@@ -33,6 +33,10 @@ function getHtml (docId, types, metadatas, t, tk) {
           </div>
         </div>
       </div>
+      <div class="checklist-report-source-failed">
+      ${t("report-source-failed", {url: docId})}
+      <button class="checklist-report-retry" data-checklist-action="report-rerun">${t("report-retry")}</button>
+      </div>
       <div class="checklist-report-details">
         <div class="checklist-statements">
           ${typesHtml}
@@ -270,7 +274,7 @@ class Report extends View {
   fail (err) {
     const $report = this.get$element();
     const $container = $report.parents(".checklist-report-container").eq(0);
-    $container.addClass("checklist-report-fail");
+    $container.addClass("checklist-report-failed");
 
     const $icon = this.find(".checklist-report-icon");
     $icon.html("<i class='fas fa-exclamation-triangle'></i>");

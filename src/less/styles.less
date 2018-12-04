@@ -491,11 +491,30 @@ body.checklist-visible {
   }
 }
 
-.checklist-toc-entry.checklist-report-fail {
+.checklist-report-source-failed {
+  display: none;
+}
+
+.checklist-toc-entry.checklist-report-failed {
   background: repeating-linear-gradient(-45deg, #ddd, #ddd 15px, #eee 15px, #eee 30px);
 
   .checklist-percentage, .checklist-toc-entry-footer {
     display: none;
+  }
+
+  .checklist-report-source-failed {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #ddd;
+    border-radius: 5px;
+  }
+
+  .checklist-report-retry {
+    display: block;
+    margin: 10px auto 0;
+    width: 100px;
   }
 }
 
