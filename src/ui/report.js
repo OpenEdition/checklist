@@ -89,7 +89,7 @@ class Report extends View {
     const href = docId;
     const context = this.context;
     this.reset();
-    this.showSpinner();
+    this.toggleSpinner();
     checklist.whenState("ready").then(() => {
       checklist.run({docId, href, context});
     });
@@ -117,7 +117,7 @@ class Report extends View {
 
     checker.whenState("run").then(() => {
       this.startPercentage();
-      this.showSpinner();
+      this.toggleSpinner();
     });
 
     checker.on("done", () => {
@@ -268,10 +268,10 @@ class Report extends View {
   // PROGRESS
   // ========
 
-  showSpinner () {
+  toggleSpinner (flag = true) {
     const $div = this.find(".checklist-report-icon");
-    const spinner = svg.spinner;
-    $div.html(spinner);
+    const html = flag ? svg.spinner : "";
+    $div.html(html);
     return this;
   }
 
