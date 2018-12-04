@@ -91,7 +91,8 @@ class Report extends View {
     this.reset();
     this.toggleSpinner();
     checklist.whenState("ready").then(() => {
-      checklist.run({docId, href, context});
+      checklist.run({docId, href, context})
+        .catch((err) => this.fail(err));
     });
     return this;
   }
@@ -263,6 +264,16 @@ class Report extends View {
   injectRejections (rejections) {
     oneByOne(rejections, this.injectRejection.bind(this));
     return this;
+  }
+
+  // Source loading failed (toc view only)
+  fail (err) {
+    const $report = this.get$element();
+    const $container = $report.parents(".checklist-report-container").eq(0);
+    $container.addClass("checklist-report-fail");
+
+    const $icon = this.find(".checklist-report-icon");
+    $icon.html("<i class='fas fa-exclamation-triangle'></i>");
   }
 
   // PROGRESS

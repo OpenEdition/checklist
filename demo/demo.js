@@ -35,6 +35,17 @@ $(function () {
       };
       toc.push(entry);
     });
+
+    // Bad href
+    toc.push({
+      title: "Une page 404",
+      href: "bad-href",
+      context: {
+        "textes": true,
+        "article": true
+      }
+    });
+
     return toc;
   }
 
