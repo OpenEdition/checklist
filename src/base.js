@@ -65,7 +65,7 @@ class Base extends EventEmitter {
     const fn = this.getMethod(methodName, ...arg);
     return new Promise((resolve, reject) => {
       this.once(state, () => {
-        fn().then(resolve);
+        fn().then(resolve, reject);
       });
     });
   }

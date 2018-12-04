@@ -34,6 +34,12 @@ class Checker extends Base {
       this.source = source;
       // TODO: rename context in constructor (contextCreator?)
       this.context = getContext(source, context);
+    })
+    .catch((err) => {
+      this.errorMsg = err;
+      this.triggerState("error", err);
+    })
+    .finally(() => {
       this.triggerState("ready");
     });
   }
@@ -45,6 +51,10 @@ class Checker extends Base {
     }
 
     this.triggerState("run");
+
+    if (this.hasState("error")) {
+      return Promise.reject(this.errorMsg);
+    }
 
     const getCheckPromises = (rule) => {
       return new Promise ((resolve, reject) => {
@@ -77,12 +87,14 @@ class Checker extends Base {
     };
 
     const promises = this.rules.map(getCheckPromises);
-    return Promise.all(promises).then(() => {
-      this.triggerState("done", this);
-    }).catch((err) => {
-      // TODO: error handling ok ?
-      throw Error(err);
-    });
+    return Promise.all(promises)
+      .then(() => {
+        return this.triggerState("done", this);
+      })
+      .catch((err) => {
+        this.triggerState("error", err);
+        return Promise.reject(err);
+      });
   }
 
   getStatements () {

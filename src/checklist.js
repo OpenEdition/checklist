@@ -62,22 +62,6 @@ class Checklist extends Base {
       this.forwardEvents(checker, events);
     };
 
-    const setCheckerHandlers = (checker, resolve, reject) => {
-      checker.once("run", () => {
-        this.emit("checker.run", checker);
-      });
-      checker.once("done", () => {
-        resolve(checker);
-        this.emit("checker.done", checker);
-      });
-      // TODO: handle error
-      checker.once("err", (err) => {
-        reject(err);
-        this.emit("checker.error", err, checker);
-      });
-      forwardCheckerEvents(checker);
-    };
-
     docId = docId || this.getConfig("docId");
     rules = rules || this.getConfig("rules");
     // TODO: rename context in contextCreator
@@ -91,10 +75,21 @@ class Checklist extends Base {
       });
     }
 
-    return new Promise((resolve, reject) => {
-      setCheckerHandlers(checker, resolve, reject);
-      checker.run();
+    // Events
+    checker.once("run", () => {
+      this.emit("checker.run", checker);
     });
+    forwardCheckerEvents(checker);
+
+    return checker.run()
+      .then(() => {
+        this.emit("checker.done", checker);
+        return checker;
+      })
+      .catch((err) => {
+        this.emit("checker.error", err, checker);
+        return Promise.reject(err);
+      });
   }
 }
 

@@ -309,7 +309,7 @@ $(function () {
   .then(function () {
     // Don't ditrectly run tests on publications
     if (!isPublication) {
-      checklist.run();
+      checklist.run().catch(console.error);
     }
   });
 });

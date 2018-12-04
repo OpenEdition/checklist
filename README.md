@@ -232,7 +232,8 @@ checklist.init({
   // * rules: liste de règles à exécuter. En cas d'omission, les règles déclarées dans la configuration sont utilisées.
   checklist.run().then((checker) => {
     console.log("Exécution terminée !");
-  });
+  })
+  .catch(console.error);
 });
 ```
 
