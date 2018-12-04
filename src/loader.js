@@ -41,8 +41,14 @@ class Loader extends Base {
 
   getSource (href) {
     if (href == null) return this.selfSource;
-
     return this.sources.find((source) => {
+      return source.is(href);
+    });
+  }
+
+  getSourceIndex (href) {
+    if (href == null) return 0;
+    return this.sources.findIndex((source) => {
       return source.is(href);
     });
   }
@@ -63,6 +69,12 @@ class Loader extends Base {
     const source = this.queue.shift();
     if (source == null) return;
     this.loadSource(source);
+  }
+
+  removeSource (href) {
+    const sourceIndex = this.getSourceIndex(href);
+    this.sources.splice(sourceIndex, 1);
+    return this;
   }
 }
 

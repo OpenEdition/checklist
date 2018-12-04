@@ -95,7 +95,7 @@ class Report extends View {
     this.reset();
     this.toggleSpinner();
     checklist.whenState("ready").then(() => {
-      checklist.run({docId, href, context})
+      checklist.run({docId, href, context, reloadSource: true})
         .catch((err) => this.fail(err));
     });
     return this;
