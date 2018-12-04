@@ -85,6 +85,7 @@ class Report extends View {
     if (this.checker) {
       this.checker.removeAllListeners();
     }
+    this.toggleFail(false);
     return this.clear().clearStates().init();
   }
 
@@ -96,7 +97,7 @@ class Report extends View {
     this.toggleSpinner();
     checklist.whenState("ready").then(() => {
       checklist.run({docId, href, context, reloadSource: true})
-        .catch((err) => this.fail(err));
+        .catch((err) => this.toggleFail(true));
     });
     return this;
   }
@@ -271,13 +272,14 @@ class Report extends View {
   }
 
   // Source loading failed (toc view only)
-  fail (err) {
+  toggleFail (flag = true) {
     const $report = this.get$element();
     const $container = $report.parents(".checklist-report-container").eq(0);
-    $container.addClass("checklist-report-failed");
+    $container.toggleClass("checklist-report-failed", flag);
 
     const $icon = this.find(".checklist-report-icon");
-    $icon.html("<i class='fas fa-exclamation-triangle'></i>");
+    const html = flag ? "<i class='fas fa-exclamation-triangle'></i>" : "";
+    $icon.html(html);
   }
 
   // PROGRESS
