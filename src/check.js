@@ -1,6 +1,5 @@
 const Base = require("./base.js");
 const Statement = require("./statement.js");
-const { testCondition } = require("./utils.js");
 
 function getSource (check) {
   // If rule.href is not found then use the checker source (in case of runBatch)
@@ -98,7 +97,7 @@ class Check extends Base {
   }
 
   test () {
-    return testCondition(this.condition, this.context);
+    return Base.testCondition(this.condition, this.context);
   }
 
   // Export instance to a minimal plain object which can be stored in cache

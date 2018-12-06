@@ -1,9 +1,9 @@
+const Base = require("../base.js");
 const View = require("./view.js");
-const { testCondition } = require("../utils.js");
 
 function getHtml (buttonsCreator, docId, context, tk) {
   const getButton = (infos) => {
-    if (!testCondition(infos.condition, context)) {
+    if (!Base.testCondition(infos.condition, context)) {
       return;
     }
     const icon = infos.icon;
