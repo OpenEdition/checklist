@@ -10,7 +10,7 @@ function oneByOne (param, fn) {
   }
 }
 
-function getHtml (docId, types, metadatas, t, tk) {
+function getHtml (docId, href, types, metadatas, t, tk) {
   const typesHtml = types.map((type) => `
     <div class="checklist-statements-${type.id} checklist-statements-group">
       <h3>${tk(type.name)}</h3>
@@ -21,7 +21,7 @@ function getHtml (docId, types, metadatas, t, tk) {
   const metadatasDiv = metadatas ? `<div class="checklist-report-metadatas">${metadatas}</div>` : "";
 
   const html = `
-    <div class="checklist-report" data-checklist-doc-id="${docId}">
+    <div class="checklist-report" data-checklist-doc-id="${docId}" data-checklist-href="${href}">
       <div class="checklist-report-header">
         ${metadatasDiv}
         <div class="checklist-report-rating">
@@ -55,9 +55,9 @@ function getHtml (docId, types, metadatas, t, tk) {
 }
 
 class Report extends View {
-  constructor ({ ui, parent, docId, metadatas, context, showMarkers }) {
+  constructor ({ ui, parent, docId, href, metadatas, context, showMarkers }) {
     super("Report", ui, parent);
-    Object.assign(this, {docId, metadatas, context, showMarkers});
+    Object.assign(this, {docId, href, metadatas, context, showMarkers});
     this.init();
     this.triggerState("ready");
   }
@@ -69,7 +69,7 @@ class Report extends View {
     this.rejections = [];
     this.percentage = 0;
     const types = this.getConfig("types");
-    const html = getHtml(this.docId, types, this.metadatas, this.ui.t, this.ui.tk);
+    const html = getHtml(this.docId, this.href, types, this.metadatas, this.ui.t, this.ui.tk);
     this.createView(html);
     // Attach report to element to use it in events
     this.element.report = this;
@@ -91,7 +91,7 @@ class Report extends View {
 
   rerun () {
     const docId = this.docId;
-    const href = docId;
+    const href = this.href;
     const context = this.context;
     this.reset();
     this.toggleSpinner();

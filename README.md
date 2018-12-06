@@ -208,7 +208,7 @@ checklist.init({
     toc: [
       {
         title: $(".publi-title").text(),
-        href: window.location.pathname, // indique qu'il s'agit de la page courante
+        href: window.location.href, // indique qu'il s'agit de la page courante
         type: "Publication",
         icon: "<i class='fas fa-book'></i>",
         context: {"publications": true}

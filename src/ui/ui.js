@@ -103,6 +103,7 @@ class UI extends Base {
       ui: this,
       parent: options.parent,
       docId: options.docId,
+      href: options.href,
       metadatas: options.metadatas,
       context: options.context,
       showMarkers: this.publi ? false : true,

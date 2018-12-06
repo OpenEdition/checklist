@@ -12,13 +12,13 @@ $(function () {
 
     const toc = [{
       title: $(".publi-title").text(),
-      href: window.location.pathname,
+      href: window.location.href,
       type: "Publication",
       icon: "<i class='fas fa-book'></i>",
       context: {"publications": true}
     }];
     $("#toc").find(".toc-entry").each(function () {
-      const pathname = $(this).find("a").get(0).pathname;
+      const href = $(this).find("a").get(0).href;
       const entry = {
         title: (function (el) {
           const res = [];
@@ -27,7 +27,7 @@ $(function () {
           });
           return res.join("<br>");
         })(this),
-        href: pathname,
+        href: href,
         context: {
           "textes": true,
           "article": true

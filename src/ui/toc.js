@@ -102,6 +102,7 @@ class TOC extends View {
       const report = this.ui.createReport({
         parent: element,
         docId,
+        href,
         metadatas,
         context: entry.context
       });
