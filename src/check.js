@@ -103,7 +103,7 @@ class Check extends Base {
 
   // Export instance to a minimal plain object which can be stored in cache
   export () {
-    const clone = Base.export(this, ["states", "name", "id", "href"], true);
+    const clone = Base.export(this, ["states", "name", "id", "href", "errMsg"], true);
     clone.statements = this.statements.map((statement) => statement.export());
     return clone;
   }

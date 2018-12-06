@@ -416,7 +416,7 @@ class Report extends View {
         if (check.states.rejected) {
           this.injectRejection({
             ruleName: check.name,
-            errMsg: check.states.rejected
+            errMsg: check.errMsg
           });
         } else {
           statements.push.apply(statements, check.statements);
