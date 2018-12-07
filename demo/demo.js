@@ -19,6 +19,8 @@ $(function () {
     }];
     $("#toc").find(".toc-entry").each(function () {
       const href = $(this).find("a").get(0).href;
+      const contextAttr = $(this).attr("data-context");
+      const context = contextAttr ? JSON.parse(contextAttr) : {};
       const entry = {
         title: (function (el) {
           const res = [];
@@ -28,10 +30,7 @@ $(function () {
           return res.join("<br>");
         })(this),
         href: href,
-        context: {
-          "textes": true,
-          "article": true
-        }
+        context: context
       };
       toc.push(entry);
     });
@@ -221,6 +220,7 @@ $(function () {
           fr: "<p>Cette règle renvoie une notification sur toutes les pages.</p><p>Lorem ipsum dolor sit amet consectetur adipiscing elit eu nec, magnis purus porta donec eget class pretium sapien ultricies, aliquet sociis proin ante vivamus etiam montes fames. Convallis dis aptent platea massa taciti volutpat placerat inceptos erat ut, pharetra habitasse cras condimentum risus sapien sodales porta. Congue donec justo egestas porttitor integer quisque leo est, laoreet et urna risus blandit sociosqu aenean conubia lacinia.</p><a href='#'>Lien vers la documentation</a>",
           en: "<p>Description in English...</p><a href='#'>Link to documentation</a>"
         },
+        condition: "textes || publications",
         action: function () {
           this.notify();
           this.resolve(true);
@@ -232,6 +232,7 @@ $(function () {
         description: "<p>Cette règle recherche une information dans une source externe.",
         // TODO: href must be a function (variable)
         href: "./article-1.html",
+        condition: "textes || publications",
         action: function ($) {
           var flag = $("h2").length === 1;
           this.resolve(flag);
@@ -241,6 +242,7 @@ $(function () {
         id: "delay-rule",
         name: "Règle avec un délai",
         description: "Checklist supporte les tests asynchrones. Cette règle est exécutée avec un délai qui simule (par exemple) un requête asynchrone.",
+        condition: "textes || publications",
         action: function ($) {
           var that = this;
           setTimeout(function () {
@@ -262,6 +264,7 @@ $(function () {
         name: "Deux avertissements dans l'article 2",
         description: "Un avertissement qui ne ressort que dans l'article 2.",
         type: "warning",
+        condition: "textes || publications",
         action: function ($, bodyClasses) {
           const flag = bodyClasses.includes("article-2");
           this.notify(flag);
@@ -274,6 +277,7 @@ $(function () {
         name: "Erreur critique dans l'article 3",
         description: "Une erreur critique qui ne ressort que dans l'article 3.",
         type: "danger",
+        condition: "textes || publications",
         action: function ($, bodyClasses) {
           const flag = bodyClasses.includes("article-3");
           this.resolve(flag);
@@ -284,6 +288,7 @@ $(function () {
         name: "Règle qui appelle une source 404",
         description: "Un exemple de règle qui renvoie une exception",
         href: "bad-location",
+        condition: "textes || publications",
         action: function () {
           this.resolve(true);
         }
@@ -292,6 +297,7 @@ $(function () {
         id: "markers",
         name: "Une règle qui injecte des marqueurs",
         description: "Cette règle injecte un marqueur à un paragraphe sur 3.",
+        condition: "textes || publications",
         action: function ($) {
           const statement = this.notify(true);
           $("p").each(function (index) {
@@ -311,6 +317,7 @@ $(function () {
         description: "Une règle qui est associée à la catégorie 'papier'",
         type: "warning",
         tags: ["paper"],
+        condition: "textes || publications",
         action: function () {
           this.resolve(true);
         }
