@@ -85,6 +85,7 @@ class Report extends View {
     if (this.checker) {
       this.checker.removeAllListeners();
     }
+    this.checker = null;
     this.toggleFail(false);
     return this.clear().clearStates().init();
   }
@@ -97,7 +98,13 @@ class Report extends View {
     this.toggleSpinner();
     checklist.whenState("ready").then(() => {
       checklist.run({docId, href, context, reloadSource: true})
-        .catch((err) => this.toggleFail(true));
+        .then((checker) => {
+          this.checker = checker;
+        })
+        .catch((err) => {
+          console.error(err);
+          this.toggleFail(true);
+        });
     });
     return this;
   }
