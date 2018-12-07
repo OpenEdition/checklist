@@ -273,13 +273,13 @@ $(function () {
         }
       },
       {
-        id: "error-article-3",
-        name: "Erreur critique dans l'article 3",
-        description: "Une erreur critique qui ne ressort que dans l'article 3.",
+        id: "error-article-2",
+        name: "Erreur critique dans l'article 2",
+        description: "Une erreur critique qui ne ressort que dans l'article 2.",
         type: "danger",
         condition: "textes || publications",
         action: function ($, bodyClasses) {
-          const flag = bodyClasses.includes("article-3");
+          const flag = bodyClasses.includes("article-2");
           this.resolve(flag);
         }
       },
