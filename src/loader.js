@@ -73,7 +73,7 @@ class Loader extends Base {
 
   removeSource (href) {
     const sourceIndex = this.getSourceIndex(href);
-    if (sourceIndex === -1) return this;
+    if (sourceIndex === -1 || this.sources[sourceIndex].isSelf()) return this;
     this.sources.splice(sourceIndex, 1);
     return this;
   }
