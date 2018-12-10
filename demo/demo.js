@@ -180,14 +180,25 @@ $(function () {
         icon: "<i class='far fa-laugh-wink '></i>",
         text: {
           fr: "Ce document est très bien composé.",
-          en: "This document is well formated"
+          en: "This document is well formated."
         },
         color: "#3c763d",
         bgcolor: "#dff0d8"
+      },
+      {
+        id: "empty",
+        icon: "<i class='far fa-question-circle'></i>",
+        text: {
+          fr: "Aucun test n'est prévu pour ce document.",
+          en: "This document can not be checked."
+        },
+        color: "#999",
+        bgcolor: "#eee"
       }
     ],
 
     computeRating: function (statements) {
+      if (statements.length === 0) return "empty";
       let warning = false;
       for (let i=0; i < statements.length; i++) {
         const statement = statements[i];
