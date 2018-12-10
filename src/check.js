@@ -85,20 +85,17 @@ class Check extends Base {
     }
 
     if (this.hasState("run")) return this;
-
     this.triggerState("run", this);
+    if (this.hasState("dropped")) return this.resolve();
 
-    if (!this.hasState("dropped")) {
-      // TODO: move delay in config
-      // TODO: do something/run event when timeout
-      const delay = 3000;
-      setTimeout(this.resolve.bind(this), delay);
-      const selectFunc = this.source.get$();
-      const bodyClasses = this.source.bodyClasses;
-      this.action.call(this, selectFunc, bodyClasses);
-    }
-
-    return this.resolve();
+    // TODO: move delay in config
+    // TODO: do something/run event when timeout
+    const delay = 3000;
+    setTimeout(this.resolve.bind(this), delay);
+    const selectFunc = this.source.get$();
+    const bodyClasses = this.source.bodyClasses;
+    this.action.call(this, selectFunc, bodyClasses);
+    return this;
   }
 
   test () {
