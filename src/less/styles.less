@@ -474,7 +474,15 @@ body.checklist-visible {
 }
 
 .checklist-toc-entry {
-  .checklist-toggle-report-details, .checklist-toggle-report-details-show {
+  .checklist-toggle-report-details {
+    visibility: hidden;
+    display: block;
+  }
+  &.checklist-report-with-details .checklist-toggle-report-details {
+    visibility: visible;
+  }
+
+  .checklist-toggle-report-details-show {
     display: block;
   }
   .checklist-report-details, .checklist-toggle-report-details-hide {
@@ -489,6 +497,10 @@ body.checklist-visible {
       display: block;
     }
   }
+}
+
+.checklist-toc-entry.checklist-report-with-details {
+
 }
 
 .checklist-report-source-failed {
