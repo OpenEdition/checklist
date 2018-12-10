@@ -58,7 +58,7 @@ class Checklist extends Base {
     }
 
     const forwardCheckerEvents = (checker) => {
-      const events = [ "check.run", "check.done", "check.success", "check.rejected", "statement.new", "statement.update", "checker.run", "checker.done", "marker"];
+      const events = [ "check.run", "check.done", "check.success", "check.rejected", "check.dropped", "statement.new", "statement.update", "checker.run", "checker.done", "marker"];
       this.forwardEvents(checker, events);
     };
 

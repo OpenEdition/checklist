@@ -78,6 +78,7 @@ class Checker extends Base {
         {"done": "check.done"},
         {"success": "check.success"},
         {"rejected": "check.rejected"},
+        {"dropped": "check.dropped"},
         "statement.new",
         "statement.update",
         "marker"

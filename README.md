@@ -359,6 +359,7 @@ L'objet `checklist` émet les événements suivants :
 
 * `checker.run`: émis lors de l'exécution d'un checker. Le checker est passé en argument du event handler.
 * `checker.done`: émis à la fin de l'exécution d'un checker. Le checker est passé en argument du event handler.
+* `check.dropped`: émis lorsqu'un check n'est pas exécuté parce que sa condition ne correspond pas au contexte. Le check est passé en argument du event handler.
 * `check.run`: émis lors de l'exécution d'un check. Le check est passé en argument du event handler.
 * `check.done`: émis à la fin de l'exécution d'un check. Le check est passé en argument du event handler.
 * `check.success`: émis à la fin de l'exécution d'un check, uniquement en cas de succès. Le check est passé en argument du event handler.

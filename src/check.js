@@ -23,6 +23,12 @@ class Check extends Base {
     this.assign(allowedProps, rule, {context, docId, source});
     this.statements = [];
 
+    if (!this.test()) {
+      this.triggerState("dropped", this);
+      this.triggerState("ready");
+      return;
+    }
+
     getSource(this)
     .then((source) => {
       this.source = source;
@@ -78,22 +84,21 @@ class Check extends Base {
       return this;
     }
 
-    if (!this.test()) {
-      this.resolve();
-      return this;
-    }
+    if (this.hasState("run")) return this;
 
-    if (!this.hasState("run")) {
+    this.triggerState("run", this);
+
+    if (!this.hasState("dropped")) {
       // TODO: move delay in config
       // TODO: do something/run event when timeout
       const delay = 3000;
-      this.triggerState("run", this);
       setTimeout(this.resolve.bind(this), delay);
       const selectFunc = this.source.get$();
       const bodyClasses = this.source.bodyClasses;
       this.action.call(this, selectFunc, bodyClasses);
-      return this;
     }
+
+    return this.resolve();
   }
 
   test () {
