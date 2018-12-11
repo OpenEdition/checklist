@@ -165,9 +165,9 @@ checklist.init({
   ],
 
   // Fonction de calcul du rating affiché dans le report.
-  // Prends les statements du report en paramètre et retourne un id de rating.
-  computeRating: function (statements) {
-    if (statements.length === 0) return "empty";
+  // Prends les statements du report, et le report lui-même en paramètre et retourne un id de rating.
+  computeRating: function (statements, report) {
+    if (report.checksCount === 0) return "empty";
     let warning = false;
     for (let i=0; i < statements.length; i++) {
       const statement = statements[i];

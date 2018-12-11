@@ -68,6 +68,7 @@ class Report extends View {
   init () {
     this.rejections = [];
     this.percentage = 0;
+    this.checksCount = 0;
     const types = this.getConfig("types");
     const html = getHtml(this.docId, this.href, types, this.metadatas, this.ui.t, this.ui.tk);
     this.createView(html);
@@ -151,8 +152,17 @@ class Report extends View {
       this.rejections.push(rejection);
     };
 
+    this.countCheck(check);
     addToRejectionsView(check);
     this.injectStatements(check.statements);
+  }
+
+  countCheck (check) {
+    const isDropped = typeof check.hasState === "function" ? check.hasState("dropped") : check.states.dropped === true;
+    if (!isDropped) {
+      this.checksCount++;
+    }
+    return this;
   }
 
   // STATEMENTS
@@ -396,7 +406,7 @@ class Report extends View {
     })
     .get();
     const computeRating = this.getConfig("computeRating");
-    const rating = this.rating = computeRating(visibleStatements);
+    const rating = this.rating = computeRating(visibleStatements, this);
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);
@@ -433,6 +443,7 @@ class Report extends View {
       this.get$element().addClass("checklist-report-from-cache");
       const statements = [];
       record.checks.forEach((check) => {
+        this.countCheck(check);
         if (check.states.rejected) {
           this.injectRejection({
             ruleName: check.name,

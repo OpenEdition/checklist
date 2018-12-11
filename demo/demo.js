@@ -197,8 +197,8 @@ $(function () {
       }
     ],
 
-    computeRating: function (statements) {
-      if (statements.length === 0) return "empty";
+    computeRating: function (statements, report) {
+      if (report.checksCount === 0) return "empty";
       let warning = false;
       for (let i=0; i < statements.length; i++) {
         const statement = statements[i];
