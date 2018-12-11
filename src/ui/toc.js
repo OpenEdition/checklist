@@ -98,7 +98,7 @@ class TOC extends View {
 
       $toc.append($element);
       const element = $element.find(".checklist-toc-entry-contents").get(0);
-      const metadatas = `<p class="checklist-entry-title">${entry.title}</p>`;
+      const metadatas = `<p class="checklist-entry-title"><a href="${href}">${entry.title}</a></p>`;
       const report = this.ui.createReport({
         parent: element,
         docId,
