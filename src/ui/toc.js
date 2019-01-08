@@ -67,8 +67,12 @@ class TOC extends View {
 
         // Section
         if (entry.section) {
-          const $section = $(`<li>${entry.title}</li>`).appendTo($parent);
-          const $contents = $("<ul></ul>").appendTo($section);
+          const html = `<li class="checklist-toc-section">
+              <h2 class="checklist-toc-section-heading">${entry.title}</h2>
+              <ul class="checklist-toc-section-contents"></ul>
+            </li>`;
+          const $section = $(html).appendTo($parent);
+          const $contents = $section.find(".checklist-toc-section-contents");
           createSection($contents, entry.section);
           return;
         }
