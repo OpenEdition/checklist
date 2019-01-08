@@ -62,63 +62,77 @@ class TOC extends View {
     this.toc = toc;
     const $toc = this.find("#checklist-toc");
 
-    toc.forEach((entry, index) => {
-      const href = entry.href;
-      const docId = entry.docId || href;
+    const createSection = ($parent, entries) => {
+      entries.forEach((entry, index) => {
 
-      const html = `
-        <li class="checklist-toc-entry checklist-report-container">
-          <div class="checklist-toc-entry-contents"></div>
-          <div class="checklist-toc-entry-footer">
-            <a class="checklist-toggle-report-details" data-checklist-action="toggle-report-details">
-              <span class="checklist-toggle-report-details-show"><i class="far fa-plus-square"></i> ${this.t("toc-show-details")}</span>
-              <span class="checklist-toggle-report-details-hide"><i class="far fa-minus-square"></i> ${this.t("toc-hide-details")}</span>
-            </a>
+        // Section
+        if (entry.section) {
+          const $section = $(`<li>${entry.title}</li>`).appendTo($parent);
+          const $contents = $("<ul></ul>").appendTo($section);
+          createSection($contents, entry.section);
+          return;
+        }
+
+        // Entry
+        const href = entry.href;
+        const docId = entry.docId || href;
+
+        const html = `
+          <li class="checklist-toc-entry checklist-report-container">
+            <div class="checklist-toc-entry-contents"></div>
+            <div class="checklist-toc-entry-footer">
+              <a class="checklist-toggle-report-details" data-checklist-action="toggle-report-details">
+                <span class="checklist-toggle-report-details-show"><i class="far fa-plus-square"></i> ${this.t("toc-show-details")}</span>
+                <span class="checklist-toggle-report-details-hide"><i class="far fa-minus-square"></i> ${this.t("toc-hide-details")}</span>
+              </a>
+            </div>
+          </li>
+        `;
+        const $element = $(html);
+
+        // Create toolbar
+        const type = entry.type || this.t("article");
+        const icon = entry.icon || "<i class='far fa-file-alt'></i>";
+        const headerHtml = `
+          <div class="checklist-toc-entry-header">
+            <div class="checklist-toc-entry-brand">${icon} ${type}</div>
           </div>
-        </li>
-      `;
-      const $element = $(html);
+        `;
+        const $toolbarParent = $(headerHtml);
+        $toolbarParent.prependTo($element);
+        new Toolbar({
+          ui: this.ui,
+          parent: $toolbarParent,
+          docId: docId,
+          context: entry.context
+        });
 
-      // Create toolbar
-      const type = entry.type || this.t("article");
-      const icon = entry.icon || "<i class='far fa-file-alt'></i>";
-      const headerHtml = `
-        <div class="checklist-toc-entry-header">
-          <div class="checklist-toc-entry-brand">${icon} ${type}</div>
-        </div>
-      `;
-      const $toolbarParent = $(headerHtml);
-      $toolbarParent.prependTo($element);
-      new Toolbar({
-        ui: this.ui,
-        parent: $toolbarParent,
-        docId: docId,
-        context: entry.context
-      });
+        $parent.append($element);
+        const element = $element.find(".checklist-toc-entry-contents").get(0);
+        const metadatas = `<p class="checklist-entry-title"><a href="${href}">${entry.title}</a></p>`;
+        const report = this.ui.createReport({
+          parent: element,
+          docId,
+          href,
+          metadatas,
+          context: entry.context
+        });
 
-      $toc.append($element);
-      const element = $element.find(".checklist-toc-entry-contents").get(0);
-      const metadatas = `<p class="checklist-entry-title"><a href="${href}">${entry.title}</a></p>`;
-      const report = this.ui.createReport({
-        parent: element,
-        docId,
-        href,
-        metadatas,
-        context: entry.context
-      });
+        report.on("rating", () => {
+          this.addStat(report.rating);
+        });
+        report.on("beforeReset", () => {
+          this.addStat(report.rating, -1);
+        });
+        const isCached = report.fromCache();
 
-      report.on("rating", () => {
-        this.addStat(report.rating);
+        if (!isCached) {
+          this.unchecked.push(report);
+        }
       });
-      report.on("beforeReset", () => {
-        this.addStat(report.rating, -1);
-      });
-      const isCached = report.fromCache();
+    }
 
-      if (!isCached) {
-        this.unchecked.push(report);
-      }
-    });
+    createSection($toc, toc);
   }
 
   rerunAll () {

@@ -4,58 +4,62 @@ $(function () {
     return;
   }
 
+  // Prepare publi
   const isPublication = $(document.body).hasClass("publication");
 
-  // Prepare publi
-  function getToc () {
-    if (!isPublication) return;
-
-    const toc = [{
-      title: $(".publi-title").text(),
-      href: window.location.href,
-      type: "Publication",
-      icon: "<i class='fas fa-book'></i>",
-      context: {"publications": true}
-    }];
-    $("#toc").find(".toc-entry").each(function () {
-      const href = $(this).find("a").get(0).href;
-      const contextAttr = $(this).attr("data-context");
-      const context = contextAttr ? JSON.parse(contextAttr) : {};
-      const entry = {
-        title: (function (el) {
-          const res = [];
-          $(el).children("a").children().each(function () {
-            res.push($(this).text().trim());
-          });
-          return res.join("<br>");
-        })(this),
-        href: href,
-        context: context
-      };
-      toc.push(entry);
-    });
-
-    // Bad href
-    toc.push({
-      title: "Une page 404",
-      href: "bad-href",
-      context: {
-        "textes": true,
-        "article": true
+  const publi = {
+    title: $(".publi-title").text(),
+    toc: [
+      {
+        "title": "Checklist Demo",
+        "href": "http://localhost:3000/demo/",
+        "type": "Publication",
+        "icon": "<i class='fas fa-book'></i>",
+        "context": {
+          "publications": true
+        }
+      },
+      {
+        "title": "Article de test",
+        "href": "http://localhost:3000/demo/article-1.html",
+        "context": {
+          "textes": true,
+          "article": true
+        }
+      },
+      {
+        "title": "Une sous-partie",
+        "section": [
+          {
+            "title": "Deuxième article",
+            "href": "http://localhost:3000/demo/article-2.html",
+            "context": {
+              "textes": true,
+              "article": true
+            }
+          },
+          {
+            "title": "Troisième article",
+            "href": "http://localhost:3000/demo/article-3.html",
+            "context": {
+              "no-test": true
+            }
+          }
+        ]
+      },
+      {
+        "title": "Une page 404",
+        "href": "bad-href",
+        "context": {
+          "textes": true,
+          "article": true
+        }
       }
-    });
+    ]
+  };
 
-    return toc;
-  }
-
-  function getPubli () {
-    if ($("body").hasClass("publication")) {
-      return {
-        title: $(".publi-title").text(),
-        toc: getToc()
-      };
-    }
-    return false;
+  if (isPublication) {
+    $("#toc").append(`<p><code>publi</code> key passed to Checklist config:</p> <pre>${JSON.stringify(publi, null, 2)}</pre>`);
   }
 
   checklist.init({
@@ -218,7 +222,7 @@ $(function () {
       };
     },
 
-    publi: getPubli(),
+    publi: isPublication ? publi : false,
 
     rules: [
       {
