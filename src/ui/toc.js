@@ -140,7 +140,8 @@ class TOC extends View {
   }
 
   rerunAll () {
-    const reports = this.toc.map((entry) => {
+    const entries = this.getEntries();
+    const reports = entries.map((entry) => {
       const docId = entry.docId || entry.href;
       return this.ui.getReport(docId);
     });
@@ -158,6 +159,18 @@ class TOC extends View {
     });
     this.unchecked = [];
     return this;
+  }
+
+  // Return a flat version of this.toc
+  getEntries () {
+    const extractEntries = (obj) => {
+      const reducer = (accumulator, item) => {
+        const value = (item.section) ? extractEntries(item.section) : item;
+        return accumulator.concat(value);
+      };
+      return obj.reduce(reducer, []);
+    };
+    return extractEntries(this.toc);
   }
 }
 
