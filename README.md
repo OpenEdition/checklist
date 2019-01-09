@@ -214,7 +214,6 @@ checklist.init({
   // Dans ce cas, le raport de l'entité en cours ne sera pas automatiquement affiché dans le panel. À la place, l'option de relecture de la table des matières sera proposée à l'utilisateur.
   // Par exemple :
   publi: {
-    title: "Titre de la publication",
     parent: "body", // si ce sélecteur n'est pas spécifié, la toc sera injectée dans config.parent
     toc: [
       {

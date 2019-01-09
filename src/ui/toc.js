@@ -21,7 +21,6 @@ class TOC extends View {
     `;
     this.createView(html);
     this.resetStats();
-    this.title = publi.title;
     this.inject(publi.toc);
 
     ui.on("filterStatements", () => {

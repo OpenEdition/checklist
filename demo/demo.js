@@ -8,7 +8,6 @@ $(function () {
   const isPublication = $(document.body).hasClass("publication");
 
   const publi = {
-    title: $(".publi-title").text(),
     parent: "#toc-container",
     toc: [
       {
