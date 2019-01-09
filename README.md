@@ -226,12 +226,25 @@ checklist.init({
       }
       {
         title: "Premier article",
-        href: "url/to/article.html",
+        href: "url/to/article1.html",
         context: {
           "textes": true,
           "article": true
         }
       },
+      {
+        "title": "Une sous-partie",
+        "section": [
+          {
+            "title": "Deuxième article",
+            "href": "ulr/to/article2.html",
+            "context": {
+              "textes": true,
+              "article": true
+            }
+          }
+        ]
+      }
       // etc.
     ]
   }
