@@ -9,6 +9,7 @@ $(function () {
 
   const publi = {
     title: $(".publi-title").text(),
+    parent: "#toc-container",
     toc: [
       {
         "title": "Checklist Demo",
