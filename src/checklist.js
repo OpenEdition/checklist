@@ -31,6 +31,8 @@ class Checklist extends Base {
           this.ui = new UI({caller: this});
           this.ui.whenState("ready").then(() => {
             this.ui.init({parent});
+            const events = [ {beforeAction : "ui.beforeAction"}, {afterAction: "ui.afterAction"}];
+            this.forwardEvents(this.ui, events);
           });
         }
 

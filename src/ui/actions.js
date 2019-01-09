@@ -90,7 +90,11 @@ function initActions (ui) {
 
   for (let id in actions) {
     const action = actions[id];
-    $(document.body).on("click", `[data-checklist-action='${id}']`, action);
+    $(document.body).on("click", `[data-checklist-action='${id}']`, function () {
+      ui.emit("beforeAction", id);
+      action.bind(this)();
+      ui.emit("afterAction", id);
+    });
   }
 }
 

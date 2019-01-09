@@ -389,6 +389,7 @@ L'objet `checklist` émet les événements suivants :
 * `check.success`: émis à la fin de l'exécution d'un check, uniquement en cas de succès. Le check est passé en argument du event handler.
 * `check.rejected`: émis quand un check lève un exception. L'erreur est passée en premier argument et le check est passé en deuxième argument du event handler.
 * `statement.new`: émis quand un statement est créé. Le statement est passé en argument du event handler.
+* `ui.beforeAction` et `ui.afterAction`: émis respectivement avant et après l'exécution d'une action de l'UI. L'id de l'action est passé en argument du event handler.
 
 Tous les objets internes de checklist exposent les attributs `classname` qui correspond au nom de la classe de l'objet, et `caller` qui est une référence au parent ayant créé l'objet en cours.
 
