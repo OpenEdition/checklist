@@ -106,7 +106,8 @@ class Report extends View {
           console.error(err);
           this.toggleFail(true);
         });
-    });
+    })
+    .catch(console.error);
     return this;
   }
 
@@ -132,7 +133,8 @@ class Report extends View {
     checker.whenState("run").then(() => {
       this.startPercentage();
       this.toggleSpinner();
-    });
+    })
+    .catch(console.error);
 
     checker.on("done", () => {
       this.updateRating();

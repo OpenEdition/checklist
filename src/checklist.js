@@ -33,13 +33,16 @@ class Checklist extends Base {
             this.ui.init({parent});
             const events = [ {beforeAction : "ui.beforeAction"}, {afterAction: "ui.afterAction"}];
             this.forwardEvents(this.ui, events);
-          });
+          })
+          .catch(console.error);
         }
 
         // Set ready state
         this.triggerState("ready");
-      });
-    });
+      })
+      .catch(console.error);
+    })
+    .catch(console.error);
   }
 
   clear () {
@@ -80,7 +83,8 @@ class Checklist extends Base {
     if (ui && ui.hasState("initialized")) {
       checker.whenState("ready").then(() => {
         ui.connectChecker(checker);
-      });
+      })
+      .catch(console.error);
     }
 
     // Events

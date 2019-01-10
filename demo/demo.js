@@ -344,5 +344,6 @@ $(function () {
     if (!isPublication) {
       checklist.run().catch(console.error);
     }
-  });
+  })
+  .catch(console.error);
 });

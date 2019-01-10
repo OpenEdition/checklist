@@ -29,7 +29,8 @@ class Loader extends Base {
         }
         // TODO: store rejection in order to avoid useless duplicate requests
         reject(source.error);
-      });
+      })
+      .catch(console.error);
     });
   }
 

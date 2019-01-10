@@ -32,7 +32,8 @@ class UI extends Base {
       initActions(this);
       this.show();
       this.triggerState("initialized");
-    });
+    })
+    .catch(console.error);
   }
 
   initStyles () {
