@@ -46,6 +46,9 @@ checklist.init({
   // Timeout des requêtes Ajax lancées par le Loader
   loaderTimeout: 10000,
 
+  // Timeout de l'exécution des tests
+  checkTimeout: 3000,
+
   // Surcharger les traductions par défaut de l'interface. Voir src/ui/locales/
   translations: {
     fr: {
