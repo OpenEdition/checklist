@@ -259,9 +259,12 @@ checklist.init({
 })
 .then(function () {
   // La méthode checklist.run() exécute Checklist et retourne une promesse qui transmet le Checker.
-  // Cette méthode prend un objet optionnel {href, rules} en paramètre :
-  // * href: liste d'URL pour exécuter Checklist. En cas d'omission c'est la page courante qui est utilisée.
+  // Cette méthode prend un objet optionnel {docId, href, rules, context, reloadSource} en paramètre :
+  // * docId: id unique du document (utilisé en interne).
+  // * href: URL du document qui sera chargé et vérifié par Checklist. En cas d'omission c'est la page courante qui est utilisée.
   // * rules: liste de règles à exécuter. En cas d'omission, les règles déclarées dans la configuration sont utilisées.
+  // context: contexte à utiliser pour ce Checker. En cas d'omission le contexte déclaré dans la configuration est utilisé.
+  // reloadSource: booléen qui lorsqu'il est vrai force le rechargement de la source. Par défaut (false) le Loader utilisera la source déjà chargée (si elle existe).
   checklist.run().then((checker) => {
     console.log("Exécution terminée !");
   })
