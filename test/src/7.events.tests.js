@@ -54,14 +54,7 @@ describe("Events", function () {
   };
 
   before((done) => {
-    checklist.init().then(() => done());
-  });
-
-  before(function (done) {
-    checklist.init()
-    .then(() => {
-      done();
-    });
+    checklist.init({ checkTimeout: 1000 }).then(() => done());
   });
 
   it("Should emit the 'checker.run' event", function (done) {
