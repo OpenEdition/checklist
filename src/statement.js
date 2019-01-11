@@ -25,8 +25,8 @@ class Statement extends Base {
       this.id = getIdFromName(this.name);
     }
 
-    // Use a default type is no type defined
-    const defaultType = "info"; // TODO: move this into config
+    // Use a default type if no type defined
+    const defaultType = this.getConfig("defaultType", "info");
     this.type = this.type || defaultType;
 
     // If infos is a string, then use it as the name

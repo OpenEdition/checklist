@@ -115,6 +115,9 @@ checklist.init({
     }
   ],
 
+  // Type par défaut (utilisé quand le type d'une notification n'est pas spécifié)
+  defaultType: "info",
+
   // Liste des filtres utilisés dans l'interface
   filters: [
     {
