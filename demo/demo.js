@@ -247,8 +247,8 @@ $(function () {
         description: "<p>Cette règle recherche une information dans une source externe.",
         href: "./article-1.html",
         condition: "textes || publications",
-        action: function ($) {
-          var flag = $("h2").length === 1;
+        action: function ($, bodyClasses) {
+          var flag = $(".titre-article-1").length === 1 && bodyClasses.indexOf("article-1") > -1;
           this.resolve(flag);
         }
       },
