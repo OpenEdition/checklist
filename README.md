@@ -290,7 +290,9 @@ checklist.init({
   },
 
   // URL du document où appliquer cette règle. Si vide, on utilise le document du checker.
+  // Peut être une string ou une fonction qui prend le check en paramètre et retourne une URL.
   href: "./pages/1.html",
+  href: (check) => "./pages/" + check.docId,
 
   // Condition d'exécution de la règle.
   // Peut être une string à comparer avec le contexte du checker, ou une fonction qui prend le contexte en paramètre et renvoit un booléen.

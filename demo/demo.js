@@ -245,7 +245,6 @@ $(function () {
         id: "2nd-rule",
         name: "Seconde règle (ajax)",
         description: "<p>Cette règle recherche une information dans une source externe.",
-        // TODO: href must be a function (variable)
         href: "./article-1.html",
         condition: "textes || publications",
         action: function ($) {

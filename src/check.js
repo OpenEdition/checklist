@@ -2,12 +2,15 @@ const Base = require("./base.js");
 const Statement = require("./statement.js");
 
 function getSource (check) {
-  // If rule.href is not found then use the checker source (in case of runBatch)
-  if (!check.href && check.source) {
-    return Promise.resolve(check.source);
-  }
   const loader = window.checklist.loader;
-  return loader.requestSource(check.href);
+  
+  if (typeof check.href === "string") {
+    return loader.requestSource(check.href);
+  } else if (typeof check.href === "function") {
+    const computedHref = check.href(check);
+    return loader.requestSource(computedHref);
+  }
+  return Promise.resolve(check.source);
 }
 
 function setDone (check) {
