@@ -337,6 +337,14 @@ $(function () {
           this.resolve(true);
         }
       },
+      {
+        id: "no-resolve",
+        name: "Une règle sans resolve()",
+        description: "Aucun resolve pour cette règle : il doit y avoir un timeout",
+        type: "danger",
+        condition: "textes || publications",
+        action: function () {}
+      }
     ]
   })
   .then(function () {

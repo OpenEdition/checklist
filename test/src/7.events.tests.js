@@ -46,6 +46,10 @@ describe("Events", function () {
       action: function () {
         this.resolve(true);
       }
+    },
+    timeout: {
+      name: "This should be rejected with a timeout error message",
+      action: function () {}
     }
   };
 
@@ -85,10 +89,14 @@ describe("Events", function () {
     checklist.run({rules: rules.done});
   });
 
-  // FIXME: this test leads to an error message in the browser console
   it("Should emit the 'check.rejected' event with two arguments", function (done) {
     checklist.once("check.rejected", getHandler("isCheckRejected", done));
     checklist.run({rules: rules.rejected});
+  });
+
+  it("Should emit the 'check.rejected' event when resolve() is missing (timeout)", function (done) {
+    checklist.once("check.rejected", getHandler("isCheckRejected", done));
+    checklist.run({rules: rules.timeout});
   });
 
   it("Should emit the 'statement.new' event with an argument", function (done) {

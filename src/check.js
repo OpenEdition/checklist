@@ -89,9 +89,9 @@ class Check extends Base {
     if (this.hasState("dropped")) return this.resolve();
 
     // TODO: move delay in config
-    // TODO: do something/run event when timeout
     const delay = 3000;
-    setTimeout(this.resolve.bind(this), delay);
+    const timeoutMsg = "Check timeout: maybe resolve() is missing in this rule?";
+    setTimeout(this.reject.bind(this, timeoutMsg), delay);
     const selectFunc = this.source.get$();
     const bodyClasses = this.source.bodyClasses;
     this.action.call(this, selectFunc, bodyClasses);
