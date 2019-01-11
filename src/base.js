@@ -67,8 +67,7 @@ class Base extends EventEmitter {
       this.once(state, () => {
         fn().then(resolve, reject);
       });
-    })
-    .catch(console.error);
+    });
   }
 
   // events = ["eventNameNotRenamed", {name: newName}]
