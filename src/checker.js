@@ -21,7 +21,7 @@ function getRules (rules) {
 }
 
 class Checker extends Base {
-  constructor ({ rules = [], context = [], href, docId, caller }) {
+  constructor ({ rules = [], contextCreator = [], href, docId, caller }) {
     super("Checker", caller);
 
     this.docId = docId;
@@ -32,8 +32,7 @@ class Checker extends Base {
     loader.requestSource(href)
     .then((source) => {
       this.source = source;
-      // TODO: rename context in constructor (contextCreator?)
-      this.context = getContext(source, context);
+      this.context = getContext(source, contextCreator);
     })
     .catch((err) => {
       this.errorMsg = err;

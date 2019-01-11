@@ -70,15 +70,14 @@ class Checklist extends Base {
     docId = docId || this.getConfig("docId");
     rules = rules || this.getConfig("rules");
 
-    // TODO: rename context in contextCreator
-    context = context || this.getConfig("context");
+    const contextCreator = context || this.getConfig("context");
     const ui = this.ui;
 
     if (reloadSource === true) {
       this.loader.removeSource(href);
     }
 
-    const checker = new Checker({ docId, href, rules, context, caller: this });
+    const checker = new Checker({ docId, href, rules, contextCreator, caller: this });
 
     if (ui && ui.hasState("initialized")) {
       checker.whenState("ready").then(() => {
