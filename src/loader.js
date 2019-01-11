@@ -27,7 +27,6 @@ class Loader extends Base {
         if (source.hasState("success")) {
           return resolve(source);
         }
-        // TODO: store rejection in order to avoid useless duplicate requests
         reject(source.error);
       })
       .catch(console.error);
