@@ -37,7 +37,6 @@ class Statement extends Base {
 
     // Do we have a name here?
     if (this.name == null) {
-      // FIXME: Error not raised here
       throw Error("Statement constructor requires a name");
     }
 
