@@ -15,6 +15,13 @@ function setDone (check) {
   check.triggerState("done", check);
 }
 
+function getIdFromName (name) {
+  if (typeof name === "object" && name.length > 0) {
+    name = Object.values(name)[0];
+  }
+  return name.replace(/\W/gi, "-").toLowerCase();
+}
+
 class Check extends Base {
   constructor ({ context, docId, rule, source, caller }) {
     super("Check", caller);
@@ -42,7 +49,21 @@ class Check extends Base {
   notify (value) {
     if (value === false) return;
 
-    const statement = new Statement({check: this, infos: value, caller: this});
+    if (typeof value === "string") {
+      value = { name: value };
+    }
+
+    if (value == null) {
+      value = {};
+    }
+
+    const name = value.name || this.name;
+    const id = value.id || this.id || getIdFromName(name);
+    const description = value.description || this.description;
+    const type = value.type || this.type || this.getConfig("defaultType", "info");
+    const tags = value.tags || this.tags || [];
+
+    const statement = new Statement({name, id, description, type, tags, caller: this});
     this.forwardEvents(statement, ["marker"]);
 
     // Increase count if this statement already exists in Check

@@ -1,52 +1,20 @@
 const Base = require("./base.js");
 const Marker = require("./marker.js");
 
-function getIdFromName (name) {
-  if (typeof name === "object" && name.length > 0) {
-    name = Object.values(name)[0];
-  }
-  return name.replace(/\W/gi, "-").toLowerCase();
-}
-
 class Statement extends Base {
-  // FIXME: infos cest le bazar : passer de args propres calcules dans Check
-  constructor ({check, infos, caller}) {
+  constructor ({name, id, description, type, tags, caller}) {
     super("Statement", caller);
-    this.check = check;
-    this.docId = check.docId;
-    this.markers = [];
+    this.check = caller;
+    this.docId = caller.docId;
 
-    // Get values from check, otherwise default values are inherited from check
-    this.assign(["name", "description", "id", "type", "tags"], check, infos);
-    this.count = 1;
+    Object.assign(this, {name, id, description, type, tags});
 
-    // Do we have an id?
-    if (this.id == null) {
-      this.id = getIdFromName(this.name);
-    }
-
-    // Use a default type if no type defined
-    const defaultType = this.getConfig("defaultType", "info");
-    this.type = this.type || defaultType;
-
-    // If infos is a string, then use it as the name
-    if (typeof infos === "string") {
-      this.name = infos;
-      this.id = getIdFromName(this.name);
-    }
-
-    // Do we have a name here?
     if (this.name == null) {
       throw Error("Statement constructor requires a name");
     }
 
-    // Generate an new id from name if only the name was specified
-    if (infos && infos.name && infos.id == null) {
-      this.id = getIdFromName(this.name);
-    }
-
-    // "tags" must be an array
-    this.tags = this.tags || [];
+    this.markers = [];
+    this.count = 1;
   }
 
   add (nb = 1) {
