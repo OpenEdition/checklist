@@ -49,6 +49,9 @@ checklist.init({
   // Timeout de l'exécution des tests
   checkTimeout: 3000,
 
+  // Activer ou non l'affichage des markers dans le texte
+  showMarkers: true,
+
   // Surcharger les traductions par défaut de l'interface. Voir src/ui/locales/
   translations: {
     fr: {

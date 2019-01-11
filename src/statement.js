@@ -66,6 +66,9 @@ class Statement extends Base {
   // In rules, set: label = { target, name[, position, type] }
   addMarker (options) {
     try {
+      const showMarkers = this.getConfig("showMarkers", true);
+      if (!showMarkers) return this;
+
       const createMarker = (singleTarget, options) => {
         const overwriting = {target: singleTarget, caller: this};
         const newOptions = Object.assign({}, options, overwriting);
