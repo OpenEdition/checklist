@@ -29,15 +29,16 @@ class TOC extends View {
   }
 
   addStat (name, nb = 1) {
-    if (nb === 0) return this;
+    if (typeof name !== "string" || nb === 0) return this;
     const value = this.stats[name] || 0;
     const newValue = value + nb < 0 ? 0 : value + nb;
     this.stats[name] = newValue;
 
     const rating = this.ui.getRating(name);
 
-    // FIXME: this should not happen. If so, then display an error in the Report.
-    if (rating == null) return;
+    if (rating == null) {
+      throw Error(`Missing rating declaration for '${name}'`);
+    };
 
     const icon = rating.icon;
     let $el = this.find(`.checklist-toc-stat-${name}`);
