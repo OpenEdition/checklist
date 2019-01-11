@@ -6,7 +6,6 @@ class Marker extends Base {
     super("Marker", caller);
 
     if (!target || !name) {
-      // FIXME: uncaught error here !!!
       throw Error("Can not create Marker: bad or missing parameters");
     }
     type = type || caller.type;
