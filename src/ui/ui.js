@@ -160,16 +160,6 @@ class UI extends Base {
     return this;
   }
 
-  showToc () {
-    this.toggleToc(true);
-    return this;
-  }
-
-  hideToc () {
-    this.toggleToc(false);
-    return this;
-  }
-
   toggleToc (flag) {
     const toc = this.components.toc;
     if (!toc) return;
