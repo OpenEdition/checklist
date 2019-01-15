@@ -160,17 +160,6 @@ class UI extends Base {
     return this;
   }
 
-  toggleToc (flag) {
-    const toc = this.components.toc;
-    if (!toc) return;
-    if (flag !== false) {
-      toc.runUnchecked();
-    }
-    toc.toggle(flag);
-    $("body").toggleClass("checklist-toc-is-visible");
-    return this;
-  }
-
   refreshToc () {
     const toc = this.components.toc;
     if (!toc) return;

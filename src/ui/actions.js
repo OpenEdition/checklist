@@ -79,10 +79,6 @@ function initActions (ui) {
       ui.refreshToc();
     },
 
-    "toc-toggle": function () {
-      ui.toggleToc();
-    },
-
     "toggle-parent": function () {
       $(this).parent().toggleClass("open");
     }
