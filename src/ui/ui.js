@@ -160,10 +160,10 @@ class UI extends Base {
     return this;
   }
 
-  refreshToc () {
+  runToc (rerunAll) {
     const toc = this.components.toc;
     if (!toc) return;
-    toc.rerunAll();
+    return rerunAll === true ? toc.rerunAll() : toc.runUnchecked();
   }
 
   showChildpane (name) {

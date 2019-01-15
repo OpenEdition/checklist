@@ -75,8 +75,12 @@ function initActions (ui) {
       tocToggleAll(true);
     },
 
+    "toc-run": function () {
+      ui.runToc();
+    },
+
     "toc-rerun": function () {
-      ui.refreshToc();
+      ui.runToc(true);
     },
 
     "toggle-parent": function () {
