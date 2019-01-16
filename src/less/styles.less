@@ -80,10 +80,15 @@ body.checklist-visible {
   }
 }
 
-button.checklist-toc-rerun, .toc-is-checked button.checklist-toc-run {
+.checklist-toc-control-info-cache,
+button.checklist-toc-rerun,
+body.checklist-toc-is-checked button.checklist-toc-run,
+body.checklist-toc-has-cached button.checklist-toc-run {
   display: none;
 }
-.toc-is-checked button.checklist-toc-rerun {
+body.checklist-toc-has-cached .checklist-toc-control-info-cache,
+body.checklist-toc-has-cached button.checklist-toc-rerun,
+body.checklist-toc-is-checked button.checklist-toc-rerun {
   display: block;
 }
 

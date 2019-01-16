@@ -47,6 +47,7 @@ class Pane extends View {
     const html = `
       <div id="checklist-toc-control" class="checklist-toc-control">
         <p class="checklist-toc-control-info">${this.t("toc-control-info")}</p>
+        <p class="checklist-toc-control-info-cache">${this.t("toc-control-info-cache")}</p>
         <div class="checklist-toc-view-menu">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
           <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>

@@ -15,6 +15,7 @@
   "settings-title": "Préférences",
   "toc-check": "Controler la publication",
   "toc-control-info": "Vous avez la possibilité de controler le contenu de cette publication.",
+  "toc-control-info-cache": "Des notifications concernant la qualité ont été chargées à partir du cache du navigateur et ne sont peut-être pas à jour.",
   "toc-details": "Détails",
   "toc-fold": "Tout replier",
   "toc-hide-details": "Masquer les détails",

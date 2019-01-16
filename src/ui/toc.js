@@ -178,7 +178,9 @@ class TOC extends View {
 
   toggleBodyClass () {
     const tocIsChecked = this.unchecked.length === 0;
-    $(document.body).toggleClass("toc-is-checked", tocIsChecked);
+    const tocHasCached = this.find(".checklist-report-from-cache").length > 0;
+    $(document.body).toggleClass("checklist-toc-is-checked", tocIsChecked);
+    $(document.body).toggleClass("checklist-toc-has-cached", tocHasCached);
     return this;
   }
 }
