@@ -50,8 +50,6 @@ class Pane extends View {
         <div class="checklist-toc-view-menu">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
           <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
-          <button data-checklist-action="toc-unfold"><i class="far fa-plus-square"></i> ${this.t("toc-unfold")}</button>
-          <button data-checklist-action="toc-fold"><i class="far fa-minus-square"></i> ${this.t("toc-fold")}</button>
         </div>
       </div>
     `;
