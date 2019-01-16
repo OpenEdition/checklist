@@ -22,6 +22,7 @@ class TOC extends View {
     this.createView(html);
     this.resetStats();
     this.inject(publi.toc);
+    this.toggleBodyClass();
 
     ui.on("filterStatements", () => {
       this.resetStats();
@@ -149,6 +150,7 @@ class TOC extends View {
       report.rerun();
     });
     this.unchecked = [];
+    this.toggleBodyClass();
     return this;
   }
 
@@ -158,6 +160,7 @@ class TOC extends View {
       report.rerun();
     });
     this.unchecked = [];
+    this.toggleBodyClass();
     return this;
   }
 
@@ -171,6 +174,12 @@ class TOC extends View {
       return obj.reduce(reducer, []);
     };
     return extractEntries(this.toc);
+  }
+
+  toggleBodyClass () {
+    const tocIsChecked = this.unchecked.length === 0;
+    $(document.body).toggleClass("toc-is-checked", tocIsChecked);
+    return this;
   }
 }
 
