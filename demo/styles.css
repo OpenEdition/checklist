@@ -13,7 +13,8 @@ body {
 }
 
 #pane-container {
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
 #checklist-pane {
