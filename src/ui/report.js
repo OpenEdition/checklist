@@ -87,7 +87,6 @@ class Report extends View {
       this.checker.removeAllListeners();
     }
     this.checker = null;
-    this.toggleFail(false);
     return this.clear().clearStates().init();
   }
 
@@ -104,7 +103,7 @@ class Report extends View {
         })
         .catch((err) => {
           console.error(err);
-          this.toggleFail(true);
+          this.emit("failed");
         });
     })
     .catch(console.error);
@@ -289,17 +288,6 @@ class Report extends View {
   injectRejections (rejections) {
     oneByOne(rejections, this.injectRejection.bind(this));
     return this;
-  }
-
-  // Source loading failed (toc view only)
-  toggleFail (flag = true) {
-    const $report = this.get$element();
-    const $container = $report.parents(".checklist-report-container").eq(0);
-    $container.toggleClass("checklist-report-failed", flag);
-
-    const $icon = this.find(".checklist-report-icon");
-    const html = flag ? "<i class='fas fa-exclamation-triangle'></i>" : "";
-    $icon.html(html);
   }
 
   // PROGRESS

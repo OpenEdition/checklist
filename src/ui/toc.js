@@ -19,14 +19,15 @@ class TOC extends View {
       </div>
     `;
     this.createView(html);
+
+    this.overview = this.ui.getOverview();
+
     this.inject(publi.toc);
     this.toggleBodyClass();
   }
 
   addStat (name, nb) {
-    const overview = this.ui.getOverview();
-    if (overview == null) return this;
-    overview.addStat(name, nb);
+    this.overview.addStat(name, nb);
     return this;
   }
 
@@ -52,6 +53,7 @@ class TOC extends View {
         // Entry
         const href = entry.href;
         const docId = entry.docId || href;
+        this.overview.incrementLength();
 
         const html = `
           <li class="checklist-toc-entry checklist-report-container">
@@ -98,12 +100,21 @@ class TOC extends View {
         });
 
         // Stats events
-        report.on("rating", () => {
-          this.addStat(report.rating);
-        });
-        report.on("beforeReset", () => {
-          this.addStat(report.rating, -1);
-        });
+        report.on("rating", () => this.addStat(report.rating));
+        report.on("beforeReset", () => this.addStat(report.rating, -1));
+
+        // Source loading failed
+        const toggleFail = (flag = true) => {
+          if (flag) {
+            this.overview.addStat("failed");
+          }
+          $element.toggleClass("checklist-report-failed", flag);
+          const $icon = report.find(".checklist-report-icon");
+          const html = flag ? "<i class='fas fa-exclamation-triangle'></i>" : "";
+          $icon.html(html);
+        }
+        report.on("failed", () => toggleFail());
+        report.on("beforeReset", () => toggleFail(false));
 
         // Toggle "show details" button
         report.on("afterUpdateView", () => {
@@ -137,6 +148,7 @@ class TOC extends View {
       const docId = entry.docId || entry.href;
       return this.ui.getReport(docId);
     });
+    this.overview.reset();
     reports.forEach((report) => {
       report.rerun();
     });

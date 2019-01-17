@@ -48,8 +48,8 @@ $(function () {
         ]
       },
       {
-        "title": "Une page 404",
-        "href": "bad-href",
+        "title": "Une erreur 200",
+        "href": "https://httpstat.us/200?sleep=2000",
         "context": {
           "textes": true,
           "article": true
