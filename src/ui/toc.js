@@ -14,48 +14,19 @@ class TOC extends View {
         <div class="checklist-toc-view-contents">
           <h1>${this.t("toc-title")}</h1>
           <ul id="checklist-toc-stats" class="checklist-toc-stats"></ul>
-          <h2 class="checklist-toc-heading">${this.t("toc-details")}</h2>
           <ul id="checklist-toc" class="checklist-toc"></ul>
         </div>
       </div>
     `;
     this.createView(html);
-    this.resetStats();
     this.inject(publi.toc);
     this.toggleBodyClass();
-
-    ui.on("filterStatements", () => {
-      this.resetStats();
-    });
   }
 
-  addStat (name, nb = 1) {
-    if (typeof name !== "string" || nb === 0) return this;
-    const value = this.stats[name] || 0;
-    const newValue = value + nb < 0 ? 0 : value + nb;
-    this.stats[name] = newValue;
-
-    const rating = this.ui.getRating(name);
-
-    if (rating == null) {
-      throw Error(`Missing rating declaration for '${name}'`);
-    };
-
-    const icon = rating.icon;
-    let $el = this.find(`.checklist-toc-stat-${name}`);
-    $el.html(`${icon} ${newValue}`);
-    $el.toggleClass("visible", newValue > 0);
-    return this;
-  }
-
-  resetStats () {
-    this.stats = {};
-    const ratings = this.getConfig("ratings", []);
-    const $parent = this.find("#checklist-toc-stats");
-    const statsHtml = ratings.map((rating) => {
-      return `<li class="checklist-toc-stat-${rating.id}"></li>`;
-    }).join("\n");
-    $parent.html(statsHtml);
+  addStat (name, nb) {
+    const overview = this.ui.getOverview();
+    if (overview == null) return this;
+    overview.addStat(name, nb);
     return this;
   }
 

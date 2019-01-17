@@ -1,4 +1,5 @@
 const svg = require("./svg.json");
+const Overview = require("./overview.js");
 const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
 
@@ -23,7 +24,7 @@ class Pane extends View {
     this.createToolbar();
 
     if (publi) {
-      this.showTocSwitch();
+      this.showOverview();
     } else {
       this.showReport();
     }
@@ -43,19 +44,12 @@ class Pane extends View {
     return report;
   }
 
-  showTocSwitch () {
-    const html = `
-      <div id="checklist-toc-control" class="checklist-toc-control">
-        <p class="checklist-toc-control-info">${this.t("toc-control-info")}</p>
-        <p class="checklist-toc-control-info-cache">${this.t("toc-control-info-cache")}</p>
-        <div class="checklist-toc-view-menu">
-          <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
-          <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
-        </div>
-      </div>
-    `;
-    this.find("#checklist-pane-contents").html(html);
-    return this;
+  showOverview () {
+    this.overview = new Overview({
+      ui: this.ui,
+      parent: this.find("#checklist-pane-contents")
+    });
+    return this.overview;
   }
 }
 

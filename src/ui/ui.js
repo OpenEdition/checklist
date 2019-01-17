@@ -59,7 +59,7 @@ class UI extends Base {
     const ratings = this.getConfig("ratings");
     ratings.forEach((rating) => {
       styles.push(`
-        .checklist-rating-${rating.id}, .checklist-toc-stat-${rating.id} {
+        .checklist-rating-${rating.id}, .checklist-overview-stat-${rating.id} {
           color: ${rating.color};
           fill: ${rating.color};
           background-color: ${rating.bgcolor};
@@ -74,15 +74,13 @@ class UI extends Base {
   }
 
   createComponents () {
-    const options = {ui: this, parent: this.parent};
-    const publi = this.publi;
-    if (publi) {
-      options.publi = publi;
-      this.components.toc = new TOC(options);
-    }
+    const options = {ui: this, parent: this.parent, publi: this.publi};
     this.components.pane = new Pane(options);
     this.components.settings = new Settings(options);
     this.components.help = new Help(options);
+    if (this.publi) {
+      this.components.toc = new TOC(options);
+    }
     return this;
   }
 
@@ -196,6 +194,10 @@ class UI extends Base {
   getRating (id) {
     const ratings = this.getConfig("ratings", []);
     return ratings.find((rating) => rating.id === id);
+  }
+
+  getOverview () {
+    return this.components.pane.overview;
   }
 }
 
