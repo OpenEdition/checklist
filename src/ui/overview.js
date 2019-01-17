@@ -29,7 +29,8 @@ class Overview extends View {
   }
 
   addStat (name, nb = 1) {
-    if (typeof name !== "string" || nb === 0) return this;
+    if (typeof name !== "string" || nb === 0 || this.statsCount + nb > this.length || this.statsCount + nb < 0) return this;
+
     const value = this.stats[name] || 0;
     const newValue = value + nb < 0 ? 0 : value + nb;
     this.stats[name] = newValue;
@@ -67,10 +68,12 @@ class Overview extends View {
   }
 
   updateProgress () {
-    const percent = this.statsCount / this.length * 100;
-    const text = this.statsCount + "/" + this.length;
+    const count = this.statsCount;
+    const total = this.length;
+    const percent =  count / total * 100;
+    const text = this.t("overview-documents", {count, total})
     this.find(".checklist-overview-progressbar").width(percent  + "%");
-    this.find(".checklist-overview-progresstext").text(text);
+    this.find(".checklist-overview-progresstext").html(text);
 
   }
 }

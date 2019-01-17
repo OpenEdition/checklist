@@ -2,6 +2,7 @@
   "article": "Article",
   "cache-deleted": "Le cache a été supprimé pour ce site.",
   "help-title": "Aide",
+  "overview-documents": "Documents controlés&nbsp;: {{count}} sur {{total}}",
   "report-changed": "Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.",
   "report-retry": "Réessayer",
   "report-source-failed": "Erreur lors du chargement de la source&nbsp;: {{url}}.",

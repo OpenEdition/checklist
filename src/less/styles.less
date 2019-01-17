@@ -201,12 +201,25 @@ body.checklist-toc-is-checked button.checklist-toc-rerun {
 
 .checklist-overview-progress {
   width: 100%;
+  position: relative;
+  background-color: #ccc;
 }
 
 .checklist-overview-progressbar {
   display: block;
-  height: 20px;
-  background-color: red;
+  height: 30px;
+  background-color: #333;
+	transition: width 500ms ease-in-out;
+  border-radius: 3px;
+}
+
+.checklist-overview-progresstext {
+  text-align: center;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  color: #fff;
 }
 
 // REPORTS
