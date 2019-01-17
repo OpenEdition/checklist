@@ -360,22 +360,10 @@ class Report extends View {
   }
 
   updateView () {
-    // FIXME: should listen to report events in Toc instead of doing this dirty stuff
-    const toggleShowDetailsButton = () => {
-      const $report = this.get$element();
-      const $container = $report.parents(".checklist-report-container").eq(0);
-      if ($container.length ===  0) return;
-
-      const hasStatements = () => this.find(".checklist-statements .checklist-statement").length > 0;
-      const hasRejections = () => this.find(".checklist-rejections .checklist-rejection").length > 0;
-      const containsSomething = hasStatements() || hasRejections();
-
-      $container.toggleClass("checklist-report-with-details", containsSomething);
-    }
-
+    this.emit("beforeUpdateView");
     this.toggleStatementGroups();
     this.setPercentage();
-    toggleShowDetailsButton();
+    this.emit("afterUpdateView");
     return this;
   }
 

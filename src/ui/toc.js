@@ -134,6 +134,14 @@ class TOC extends View {
           this.addStat(report.rating, -1);
         });
 
+        // Toggle "show details" button
+        report.on("afterUpdateView", () => {
+          const hasStatements = () => report.find(".checklist-statements .checklist-statement").length > 0;
+          const hasRejections = () => report.find(".checklist-rejections .checklist-rejection").length > 0;
+          const containsSomething = hasStatements() || hasRejections();
+          $element.toggleClass("checklist-report-with-details", containsSomething);
+        });
+
         // Hide "run" button
         const isCached = report.fromCache();
         const hideRunBtn = () => $element.find(".checklist-report-run").addClass("hidden");
