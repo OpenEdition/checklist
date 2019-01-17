@@ -203,6 +203,13 @@ class TOC extends View {
     $(document.body).toggleClass("checklist-toc-has-cached", tocHasCached);
     return this;
   }
+
+  focus (duration = 300) {
+    const $toc = this.get$element();
+    const top = $toc.offset().top;
+    $("html, body").animate({scrollTop: top}, duration);
+    return this;
+  }
 }
 
 module.exports = TOC;
