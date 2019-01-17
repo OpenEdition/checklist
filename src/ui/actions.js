@@ -53,8 +53,8 @@ function initActions (ui) {
       ui.showChildpane("settings");
     },
 
-    "report-rerun": function () {
-      const el = $(this).parents(".checklist-report").get(0);
+    "report-run": function () {
+      let el = $(this).parents(".checklist-report-container").find(".checklist-report").get(0);
       const report = el.report;
       report.rerun();
     },

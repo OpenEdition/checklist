@@ -28,14 +28,14 @@ function getHtml (docId, href, types, metadatas, t, tk) {
           <div class="checklist-report-icon"></div>
           <div class="checklist-percentage"></div>
           <div class="checklist-rating-text"></div>
-          <div class="checklist-report-rerun" data-checklist-action="report-rerun" title="${t("report-changed")}">
+          <div class="checklist-report-rerun" data-checklist-action="report-run" title="${t("report-changed")}">
             <i class="fas fa-history"></i>
           </div>
         </div>
       </div>
       <div class="checklist-report-source-failed">
-      ${t("report-source-failed", {url: docId})}
-      <button class="checklist-report-retry" data-checklist-action="report-rerun">${t("report-retry")}</button>
+        ${t("report-source-failed", {url: docId})}
+        <button class="checklist-report-retry" data-checklist-action="report-run">${t("report-retry")}</button>
       </div>
       <div class="checklist-report-details">
         <div class="checklist-statements">
@@ -131,6 +131,7 @@ class Report extends View {
     });
 
     checker.whenState("run").then(() => {
+      this.emit("run");
       this.startPercentage();
       this.toggleSpinner();
     })
@@ -359,6 +360,7 @@ class Report extends View {
   }
 
   updateView () {
+    // FIXME: should listen to report events in Toc instead of doing this dirty stuff
     const toggleShowDetailsButton = () => {
       const $report = this.get$element();
       const $container = $report.parents(".checklist-report-container").eq(0);

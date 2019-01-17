@@ -497,6 +497,11 @@ body.checklist-toc-is-checked button.checklist-toc-rerun {
   color: #888;
   text-align: center;
   padding: 10px;
+  display: block;
+
+  &.hidden {
+    display: none;
+  }
 
   svg {
     fill: #666;
@@ -505,11 +510,10 @@ body.checklist-toc-is-checked button.checklist-toc-rerun {
 
 .checklist-toc-entry {
   .checklist-toggle-report-details {
-    visibility: hidden;
-    display: block;
+    display: none;
   }
   &.checklist-report-with-details .checklist-toggle-report-details {
-    visibility: visible;
+    display: block;
   }
 
   .checklist-toggle-report-details-show {

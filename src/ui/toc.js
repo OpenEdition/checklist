@@ -90,6 +90,9 @@ class TOC extends View {
                 <span class="checklist-toggle-report-details-show"><i class="far fa-plus-square"></i> ${this.t("toc-show-details")}</span>
                 <span class="checklist-toggle-report-details-hide"><i class="far fa-minus-square"></i> ${this.t("toc-hide-details")}</span>
               </a>
+              <a class="checklist-report-run" data-checklist-action="report-run">
+                <i class="far fa-play-circle"></i> ${this.t("toc-report-run")}
+              </a>
             </div>
           </li>
         `;
@@ -123,14 +126,23 @@ class TOC extends View {
           context: entry.context
         });
 
+        // Stats events
         report.on("rating", () => {
           this.addStat(report.rating);
         });
         report.on("beforeReset", () => {
           this.addStat(report.rating, -1);
         });
-        const isCached = report.fromCache();
 
+        // Hide "run" button
+        const isCached = report.fromCache();
+        const hideRunBtn = () => $element.find(".checklist-report-run").addClass("hidden");
+        report.on("run", hideRunBtn);
+        if (isCached) {
+          hideRunBtn();
+        }
+
+        // Keep a track of unchecked reports
         if (!isCached) {
           this.unchecked.push(report);
         }
