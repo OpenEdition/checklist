@@ -63,7 +63,7 @@ $(function () {
   }
 
   checklist.init({
-    parent: "body",
+    parent: "#pane-container",
     namespace: "demo",
     docId: "index",
     lang: "fr",

@@ -12,6 +12,10 @@ body {
   flex: 1;
 }
 
+#pane-container {
+  position: relative;
+}
+
 #checklist-pane {
   flex: 1;
   position: -webkit-sticky;
@@ -19,6 +23,13 @@ body {
   top: 0;
   max-width: 320px;
   margin-left: 20px;
+}
+
+.checklist-settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 #links {
