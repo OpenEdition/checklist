@@ -54,17 +54,6 @@ class Overview extends View {
     this.stats = {};
 
     const ratings = this.getConfig("ratings", []);
-    ratings.push({
-      id: "failed",
-      icon: "<i class='far fas fa-exclamation-triangle'></i>",
-      text: {
-        fr: "Erreur.",
-        en: "Error."
-      },
-      color: "#fff",
-      bgcolor: "#ddd"
-    });
-
     const $parent = this.find(".checklist-overview-stats");
     const statsHtml = ratings.map((rating) => {
       return `<li class="checklist-overview-stat-${rating.id}"></li>`;
