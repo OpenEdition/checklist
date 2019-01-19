@@ -7,6 +7,8 @@ class Base extends EventEmitter {
     this.caller = caller;
     this.checklist = caller ? caller.checklist : this;
     this.states = {};
+    // TODO: partout
+    this.on("error", console.error);
   }
 
   assign (props, ...objects) {

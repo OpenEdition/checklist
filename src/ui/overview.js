@@ -40,7 +40,10 @@ class Overview extends View {
     const rating = this.ui.getRating(name);
 
     if (rating == null) {
-      throw Error(`Missing rating declaration for '${name}'`);
+      // TODO: gerer les erreur comme ça partout
+      const err = new Error(`Missing rating declaration for '${name}'`);
+      this.emit("error", err);
+      return this;
     };
 
     const icon = rating.icon;
