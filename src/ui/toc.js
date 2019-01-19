@@ -1,6 +1,15 @@
 const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
 
+// Return a flat version of toc
+function extractEntries (obj) {
+  const reducer = (accumulator, item) => {
+    const value = (item.section) ? extractEntries(item.section) : item;
+    return accumulator.concat(value);
+  };
+  return obj.reduce(reducer, []);
+}
+
 class TOC extends View {
   constructor ({ ui, parent, publi }) {
     // Use publi.parent if it exists
@@ -20,9 +29,12 @@ class TOC extends View {
     `;
     this.createView(html);
 
+    this.toc = publi.toc;
+    this.tocEntries = extractEntries(this.toc);
     this.overview = this.ui.getOverview();
+    this.overview.setLength(this.tocEntries.length);
 
-    this.inject(publi.toc);
+    this.inject();
     this.toggleBodyClass();
   }
 
@@ -31,8 +43,8 @@ class TOC extends View {
     return this;
   }
 
-  inject (toc) {
-    this.toc = toc;
+  inject () {
+    const toc = this.toc;
     const $toc = this.find("#checklist-toc");
 
     const createSection = ($parent, entries) => {
@@ -53,7 +65,6 @@ class TOC extends View {
         // Entry
         const href = entry.href;
         const docId = entry.docId || href;
-        this.overview.incrementLength();
 
         const html = `
           <li class="checklist-toc-entry checklist-report-container">
@@ -105,9 +116,10 @@ class TOC extends View {
 
         // Source loading failed
         const toggleFail = (flag = true) => {
-          if (flag) {
-            this.overview.addStat("failed");
-          }
+          if (!flag && !$element.hasClass("checklist-report-failed")) return;
+
+          this.overview.addError(flag);
+
           $element.toggleClass("checklist-report-failed", flag);
           const $icon = report.find(".checklist-report-icon");
           const html = flag ? "<i class='fas fa-exclamation-triangle'></i>" : "";
@@ -143,7 +155,7 @@ class TOC extends View {
   }
 
   rerunAll () {
-    const entries = this.getEntries();
+    const entries = this.tocEntries;
     const reports = entries.map((entry) => {
       const docId = entry.docId || entry.href;
       return this.ui.getReport(docId);
@@ -167,15 +179,9 @@ class TOC extends View {
     return this;
   }
 
-  // Return a flat version of this.toc
+
   getEntries () {
-    const extractEntries = (obj) => {
-      const reducer = (accumulator, item) => {
-        const value = (item.section) ? extractEntries(item.section) : item;
-        return accumulator.concat(value);
-      };
-      return obj.reduce(reducer, []);
-    };
+
     return extractEntries(this.toc);
   }
 

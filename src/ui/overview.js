@@ -6,10 +6,12 @@ class Overview extends View {
 
     this.length = 0;
     this.statsCount = 0;
+    this.errorsCount = 0;
 
     const html = `
       <div id="checklist-overview" class="checklist-overview">
         <div class="checklist-overview-stats"></div>
+        <div class="checklist-overview-errors"></div>
         <div class="checklist-overview-progress">
           <div class="checklist-overview-progressbar"></div>
           <div class="checklist-overview-progresstext"></div>
@@ -53,11 +55,24 @@ class Overview extends View {
     return this;
   }
 
+  addError (flag) {
+    const term = flag ? 1 : -1;
+    this.errorsCount += term;
+    // TODO: add method to safely increment statsCount
+    // and errorsCount also
+    this.statsCount += term;
+    this.updateProgress();
+    // TODO: display some notification in overview
+    this.find(".checklist-overview-errors").text("Errors : " + this.errorsCount);
+    return this;
+  }
+
   // TODO: just empty this html element on reset
   reset () {
     this.stats = {};
 
     const ratings = this.getConfig("ratings", []);
+
     const $parent = this.find(".checklist-overview-stats");
     const statsHtml = ratings.map((rating) => {
       return `<li class="checklist-overview-stat-${rating.id}"></li>`;
@@ -66,8 +81,8 @@ class Overview extends View {
     return this;
   }
 
-  incrementLength () {
-    this.length++;
+  setLength (length) {
+    this.length = length;
   }
 
   updateProgress () {
@@ -77,7 +92,6 @@ class Overview extends View {
     const text = this.t("overview-documents", {count, total})
     this.find(".checklist-overview-progressbar").width(percent  + "%");
     this.find(".checklist-overview-progresstext").html(text);
-
   }
 }
 
