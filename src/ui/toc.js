@@ -132,7 +132,6 @@ class TOC extends View {
           this.addStat(report.rating, -1);
         });
 
-
         // Toggle "show details" button
         report.on("afterUpdateView", () => {
           const hasStatements = () => report.find(".checklist-statements .checklist-statement").length > 0;

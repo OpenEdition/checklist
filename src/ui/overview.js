@@ -4,6 +4,7 @@ class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
 
+    this.stats = {};
     this.length = 0;
     this.statsCount = 0;
     this.errorsCount = 0;
@@ -24,10 +25,24 @@ class Overview extends View {
         </div>
       </div>
     `;
-    this.createView(html);
-    this.reset();
+    this.createView(html).init();
 
     ui.on("filterStatements", () => this.reset());
+  }
+
+  init () {
+    const ratings = this.getConfig("ratings", []);
+    const $parent = this.find(".checklist-overview-stats");
+    const statsHtml = ratings.map((rating) => {
+      return `<li class="checklist-overview-stat-${rating.id}"></li>`;
+    }).join("\n");
+    $parent.html(statsHtml);
+    return this;
+  }
+
+  reset () {
+    this.find(".checklist-overview-stats li").empty();
+    return this;
   }
 
   addStat (name, nb = 1) {
@@ -75,20 +90,6 @@ class Overview extends View {
     const sum = attr + nb;
     if (sum > this.length || sum < 0) return;
     this[attrName] = sum;
-  }
-
-  // TODO: just empty this html element on reset
-  reset () {
-    this.stats = {};
-
-    const ratings = this.getConfig("ratings", []);
-
-    const $parent = this.find(".checklist-overview-stats");
-    const statsHtml = ratings.map((rating) => {
-      return `<li class="checklist-overview-stat-${rating.id}"></li>`;
-    }).join("\n");
-    $parent.html(statsHtml);
-    return this;
   }
 
   setLength (length) {
