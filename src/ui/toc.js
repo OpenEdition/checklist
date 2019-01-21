@@ -184,12 +184,6 @@ class TOC extends View {
     return this;
   }
 
-
-  getEntries () {
-
-    return extractEntries(this.toc);
-  }
-
   toggleBodyClass () {
     const tocIsChecked = this.unchecked.length === 0;
     const tocHasCached = this.find(".checklist-report-from-cache").length > 0;
