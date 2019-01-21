@@ -102,7 +102,6 @@ class Report extends View {
           this.checker = checker;
         })
         .catch((err) => {
-          console.error(err);
           this.triggerState("failed");
         });
     })

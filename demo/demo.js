@@ -49,7 +49,7 @@ $(function () {
       },
       {
         "title": "Une erreur 200",
-        "href": "https://httpstat.us/200?sleep=2000",
+        "href": "https://httpstat.us/200?sleep=5000",
         "context": {
           "textes": true,
           "article": true
@@ -68,7 +68,7 @@ $(function () {
     docId: "index",
     lang: "fr",
     maxSourcesLoading: 5,
-    loaderTimeout: 10000,
+    loaderTimeout: 3000,
 
     translations: {
       fr: {
