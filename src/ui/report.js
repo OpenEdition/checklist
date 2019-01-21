@@ -103,7 +103,7 @@ class Report extends View {
         })
         .catch((err) => {
           console.error(err);
-          this.emit("failed");
+          this.triggerState("failed");
         });
     })
     .catch(console.error);

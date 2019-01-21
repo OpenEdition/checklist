@@ -31,12 +31,13 @@ class Overview extends View {
   }
 
   addStat (name, nb = 1) {
-    if (typeof name !== "string" || nb === 0 || this.statsCount + nb > this.length || this.statsCount + nb < 0) return this;
+    if (typeof name !== "string" || nb === 0) return this;
 
     const value = this.stats[name] || 0;
     const newValue = value + nb < 0 ? 0 : value + nb;
     this.stats[name] = newValue;
-    this.statsCount += nb;
+
+    this.increment("statsCount", nb);
     this.updateProgress();
 
     const rating = this.ui.getRating(name);
@@ -56,15 +57,24 @@ class Overview extends View {
   }
 
   addError (flag) {
-    const term = flag ? 1 : -1;
-    this.errorsCount += term;
-    // TODO: add method to safely increment statsCount
-    // and errorsCount also
-    this.statsCount += term;
+    const nb = flag ? 1 : -1;
+    this.increment("errorsCount", nb);
+    this.increment("statsCount", nb);
     this.updateProgress();
     // TODO: display some notification in overview
     this.find(".checklist-overview-errors").text("Errors : " + this.errorsCount);
     return this;
+  }
+
+  increment (attrName, nb) {
+    const attr = this[attrName];
+    if (typeof attr === "undefined") {
+      this.emit("error", `Overview attribute ${attrName} is undefined.`);
+      return;
+    }
+    const sum = attr + nb;
+    if (sum > this.length || sum < 0) return;
+    this[attrName] = sum;
   }
 
   // TODO: just empty this html element on reset

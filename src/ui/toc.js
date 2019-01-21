@@ -110,10 +110,6 @@ class TOC extends View {
           context: entry.context
         });
 
-        // Stats events
-        report.on("rating", () => this.addStat(report.rating));
-        report.on("beforeReset", () => this.addStat(report.rating, -1));
-
         // Source loading failed
         const toggleFail = (flag = true) => {
           if (!flag && !$element.hasClass("checklist-report-failed")) return;
@@ -125,8 +121,17 @@ class TOC extends View {
           const html = flag ? "<i class='fas fa-exclamation-triangle'></i>" : "";
           $icon.html(html);
         }
+
         report.on("failed", () => toggleFail());
-        report.on("beforeReset", () => toggleFail(false));
+        report.on("rating", () => this.addStat(report.rating));
+        report.on("beforeReset", () => {
+          if (report.hasState("failed")) {
+            toggleFail(false);
+            return;
+          }
+          this.addStat(report.rating, -1);
+        });
+
 
         // Toggle "show details" button
         report.on("afterUpdateView", () => {
