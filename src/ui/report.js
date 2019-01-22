@@ -129,7 +129,7 @@ class Report extends View {
     });
 
     checker.whenState("run").then(() => {
-      this.emit("run");
+      this.triggerState("run");
       this.startPercentage();
       this.toggleSpinner();
     })
@@ -437,6 +437,8 @@ class Report extends View {
     };
 
     if (this.hasState("done")) return this;
+    this.triggerState("run");
+    this.triggerState("fromCache");
     const cache = this.ui.cache;
     const docId = this.docId;
     const record = cache.get(docId);

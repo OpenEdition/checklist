@@ -18,10 +18,18 @@ class Overview extends View {
           <div class="checklist-overview-progresstext"></div>
         </div>
         <div class="checklist-overview-control">
-          <p class="checklist-overview-control-info">${this.t("toc-control-info")}</p>
-          <p class="checklist-overview-control-info-cache">${this.t("toc-control-info-cache")}</p>
-          <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
-          <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
+          <div class="checklist-overview-control-section" data-display-condition="empty">
+            <p class="checklist-overview-info">${this.t("toc-control-info-empty")}</p>
+            <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
+          </div>
+          <div class="checklist-overview-control-section" data-display-condition="ongoing">
+            <p class="checklist-overview-info">${this.t("toc-control-info-ongoing")}</p>
+            <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-complete-check")}</button>
+          </div>
+          <div class="checklist-overview-control-section" data-display-condition="fromCache">
+            <p class="checklist-overview-info">${this.t("toc-control-info-cache")}</p>
+            <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
+          </div>
         </div>
       </div>
     `;
@@ -42,6 +50,7 @@ class Overview extends View {
 
   reset () {
     this.find(".checklist-overview-stats li").empty();
+    this.updateControls();
     return this;
   }
 
@@ -54,6 +63,7 @@ class Overview extends View {
 
     this.increment("statsCount", nb);
     this.updateProgress();
+    this.updateControls();
 
     const rating = this.ui.getRating(name);
 
@@ -76,6 +86,7 @@ class Overview extends View {
     this.increment("errorsCount", nb);
     this.increment("statsCount", nb);
     this.updateProgress();
+    this.updateControls();
     // TODO: display some notification in overview
     this.find(".checklist-overview-errors").text("Errors : " + this.errorsCount);
     return this;
@@ -103,6 +114,20 @@ class Overview extends View {
     const text = this.t("overview-documents", {count, total})
     this.find(".checklist-overview-progressbar").width(percent  + "%");
     this.find(".checklist-overview-progresstext").html(text);
+    return this;
+  }
+
+  updateControls () {
+    const states = this.toc.getStates();
+    console.log(states);
+    if (states.pending) return this;
+
+    this.find("[data-display-condition]").each(function () {
+      const condition = $(this).attr("data-display-condition");
+      const flag = states[condition] === true;
+      $(this).toggleClass("visible", flag);
+    });
+    return this;
   }
 }
 

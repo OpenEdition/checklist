@@ -32,10 +32,11 @@ class TOC extends View {
     this.toc = publi.toc;
     this.tocEntries = extractEntries(this.toc);
     this.overview = this.ui.getOverview();
+    this.overview.toc = this;
     this.overview.setLength(this.tocEntries.length);
 
     this.inject();
-    this.toggleBodyClass();
+    this.overview.updateControls();
   }
 
   addStat (name, nb) {
@@ -158,18 +159,22 @@ class TOC extends View {
     createSection($toc, toc);
   }
 
-  rerunAll () {
+  getReports () {
     const entries = this.tocEntries;
-    const reports = entries.map((entry) => {
+    console.log("entries", entries);
+    return entries.map((entry) => {
       const docId = entry.docId || entry.href;
       return this.ui.getReport(docId);
     });
+  }
+
+  rerunAll () {
+    const reports = this.getReports();
     this.overview.reset();
     reports.forEach((report) => {
       report.rerun();
     });
     this.unchecked = [];
-    this.toggleBodyClass();
     return this;
   }
 
@@ -179,16 +184,18 @@ class TOC extends View {
       report.rerun();
     });
     this.unchecked = [];
-    this.toggleBodyClass();
     return this;
   }
 
-  toggleBodyClass () {
-    const tocIsChecked = this.unchecked.length === 0;
-    const tocHasCached = this.find(".checklist-report-from-cache").length > 0;
-    $(document.body).toggleClass("checklist-toc-is-checked", tocIsChecked);
-    $(document.body).toggleClass("checklist-toc-has-cached", tocHasCached);
-    return this;
+  getStates () {
+    const reports = this.getReports();
+    console.log("reports", reports);
+    const empty = reports.every((r) => !r.hasState("run"));
+    const complete = reports.every((r) => r.hasState("done"));
+    const ongoing = !empty && !complete;
+    const pending = reports.some((r) => r.hasState("run") && !r.hasState("done"));
+    const fromCache = reports.some((r) => r.hasState("fromCache"));
+    return { empty, complete, ongoing, pending, fromCache };
   }
 
   focus (duration = 300) {

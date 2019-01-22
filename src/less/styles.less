@@ -34,6 +34,8 @@ body.checklist-visible {
   background: @bg-color;
   border-left: 1px solid @border-color;
   z-index: @z-index;
+  width: 100%;
+  min-width: @pane-width;
 }
 
 .checklist-pane-contents {
@@ -78,16 +80,11 @@ body.checklist-visible {
   }
 }
 
-.checklist-overview-control-info-cache,
-button.checklist-toc-rerun,
-body.checklist-toc-is-checked button.checklist-toc-run,
-body.checklist-toc-has-cached button.checklist-toc-run {
+[data-display-condition] {
   display: none;
-}
-body.checklist-toc-has-cached .checklist-overview-control-info-cache,
-body.checklist-toc-has-cached button.checklist-toc-rerun,
-body.checklist-toc-is-checked button.checklist-toc-rerun {
-  display: block;
+  &.visible {
+    display: block;
+  }
 }
 
 // MENU
