@@ -1,14 +1,22 @@
 const View = require("./view.js");
 
+function forEachChange (obj, prevObj, callback) {
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+    if (prevObj[key] === value) return ;
+    callback(key, value);
+  });
+}
+
 class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
+    this.prev = { states: {}, ratings: {} };
+    this.createMarkup();
+    ui.on("filterStatements", () => this.reset());
+  }
 
-    this.stats = {};
-    this.length = 0;
-    this.statsCount = 0;
-    this.errorsCount = 0;
-
+  createMarkup () {
     const html = `
       <div id="checklist-overview" class="checklist-overview">
         <div class="checklist-overview-stats"></div>
@@ -33,12 +41,8 @@ class Overview extends View {
         </div>
       </div>
     `;
-    this.createView(html).init();
+    this.createView(html);
 
-    ui.on("filterStatements", () => this.reset());
-  }
-
-  init () {
     const ratings = this.getConfig("ratings", []);
     const $parent = this.find(".checklist-overview-stats");
     const statsHtml = ratings.map((rating) => {
@@ -49,67 +53,36 @@ class Overview extends View {
   }
 
   reset () {
+    this.prev = { states: {}, ratings: {} };
     this.find(".checklist-overview-stats li").empty();
     this.updateControls();
     return this;
   }
 
-  addStat (name, nb = 1) {
-    if (typeof name !== "string" || nb === 0) return this;
-
-    const value = this.stats[name] || 0;
-    const newValue = value + nb < 0 ? 0 : value + nb;
-    this.stats[name] = newValue;
-
-    this.increment("statsCount", nb);
-    this.updateProgress();
-    this.updateControls();
-
-    const rating = this.ui.getRating(name);
-
-    if (rating == null) {
-      // TODO: gerer les erreur comme ça partout
-      const err = new Error(`Missing rating declaration for '${name}'`);
-      this.emit("error", err);
-      return this;
-    };
-
-    const icon = rating.icon;
-    let $el = this.find(`.checklist-overview-stat-${name}`);
-    $el.html(`${icon} ${newValue}`);
-    $el.toggleClass("visible", newValue > 0);
+  update ({ states, ratings }) {
+    this.updateControls(states)
+        .updateProgress(states)
+        .updateRatings(ratings)
+        .updateErrors(states);
+    this.prev = { states, ratings };
     return this;
   }
 
-  addError (flag) {
-    const nb = flag ? 1 : -1;
-    this.increment("errorsCount", nb);
-    this.increment("statsCount", nb);
-    this.updateProgress();
-    this.updateControls();
-    // TODO: display some notification in overview
-    this.find(".checklist-overview-errors").text("Errors : " + this.errorsCount);
+  updateControls (states) {
+    forEachChange(states, this.prev.states, (key, value) => {
+      const $el = this.find(`[data-display-condition='${key}']`);
+      if ($el.length === 0) return;
+      $el.toggleClass("visible", value === true);
+    });
     return this;
   }
 
-  increment (attrName, nb) {
-    const attr = this[attrName];
-    if (typeof attr === "undefined") {
-      this.emit("error", `Overview attribute ${attrName} is undefined.`);
-      return;
-    }
-    const sum = attr + nb;
-    if (sum > this.length || sum < 0) return;
-    this[attrName] = sum;
-  }
+  updateProgress (states) {
+    const prevStates = this.prev.states;
+    if (states.done === prevStates.done && states.length === prevStates.length) return this;
 
-  setLength (length) {
-    this.length = length;
-  }
-
-  updateProgress () {
-    const count = this.statsCount;
-    const total = this.length;
+    const count = states.done;
+    const total = states.length;
     const percent =  count / total * 100;
     const text = this.t("overview-documents", {count, total})
     this.find(".checklist-overview-progressbar").width(percent  + "%");
@@ -117,16 +90,23 @@ class Overview extends View {
     return this;
   }
 
-  updateControls () {
-    const states = this.toc.getStates();
-    console.log(states);
-    if (states.pending) return this;
-
-    this.find("[data-display-condition]").each(function () {
-      const condition = $(this).attr("data-display-condition");
-      const flag = states[condition] === true;
-      $(this).toggleClass("visible", flag);
+  updateRatings (ratings) {
+    forEachChange(ratings, this.prev.ratings, (key, value) => {
+      const rating = this.ui.getRating(key);
+      const icon = rating.icon;
+      let $el = this.find(`.checklist-overview-stat-${key}`);
+      $el.html(`${icon} ${value}`);
+      $el.toggleClass("visible", value > 0);
     });
+    return this;
+  }
+
+  updateErrors (states) {
+    if (states.failed === this.prev.states.failed) return this;
+    // TODO: display some notification in overview
+    const length = states.failed.length;
+    const text = length > 0 ? "Errors : " + length : "";
+    this.find(".checklist-overview-errors").text(text);
     return this;
   }
 }

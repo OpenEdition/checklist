@@ -389,7 +389,7 @@ class Report extends View {
     applyClassToHeader(rating);
     setRatingIcon(rating);
     setRatingText(rating);
-    this.triggerState("rating");
+    this.triggerState("rated");
     return this;
   }
 
@@ -437,12 +437,12 @@ class Report extends View {
     };
 
     if (this.hasState("done")) return this;
-    this.triggerState("run");
-    this.triggerState("fromCache");
     const cache = this.ui.cache;
     const docId = this.docId;
     const record = cache.get(docId);
     updateViewFromRecord(record);
+    this.setState("fromCache", true);
+    this.triggerState("done");
     return record;
   }
 }

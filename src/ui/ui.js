@@ -193,11 +193,13 @@ class UI extends Base {
 
   getRating (id) {
     const ratings = this.getConfig("ratings", []);
-    return ratings.find((rating) => rating.id === id);
-  }
-
-  getOverview () {
-    return this.components.pane.overview;
+    const rating = ratings.find((rating) => rating.id === id);
+    if (rating == null) {
+      // TODO: gerer les erreur comme ça partout
+      const err = new Error(`Missing rating declaration for '${name}'`);
+      this.emit("error", err);
+    };
+    return rating;
   }
 }
 

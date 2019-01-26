@@ -1,5 +1,4 @@
 const svg = require("./svg.json");
-const Overview = require("./overview.js");
 const Toolbar = require("./toolbar.js");
 const View = require("./view.js");
 
@@ -23,9 +22,7 @@ class Pane extends View {
     this.createView(html);
     this.createToolbar();
 
-    if (publi) {
-      this.showOverview();
-    } else {
+    if (!publi) {
       this.showReport();
     }
   }
@@ -42,14 +39,6 @@ class Pane extends View {
     const parent = this.find("#checklist-pane-contents");
     const report = this.ui.createReport({parent, docId: this.docId});
     return report;
-  }
-
-  showOverview () {
-    this.overview = new Overview({
-      ui: this.ui,
-      parent: this.find("#checklist-pane-contents")
-    });
-    return this.overview;
   }
 }
 
