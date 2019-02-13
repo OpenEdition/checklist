@@ -46,17 +46,21 @@ $(function () {
             }
           }
         ]
-      },
-      {
-        "title": "Une erreur 200",
-        "href": "https://httpstat.us/200?sleep=5000",
-        "context": {
-          "textes": true,
-          "article": true
-        }
       }
     ]
   };
+
+  // NOTE: To add an error in toc, append #error to the URL and refresh
+  if (window.location.hash === "#error") {
+    publi.toc.push({
+      "title": "Une erreur 200",
+      "href": "https://httpstat.us/200?sleep=5000",
+      "context": {
+        "textes": true,
+        "article": true
+      }
+    });
+  }
 
   if (isPublication) {
     $("#toc").append(`<p><code>publi</code> key passed to Checklist config:</p> <pre>${JSON.stringify(publi, null, 2)}</pre>`);
