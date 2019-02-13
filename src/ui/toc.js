@@ -174,8 +174,12 @@ class TOC extends View {
       });
 
       // Update entry UI
-      if (report.hasState("fromCache")) hideRunButton(entry);
-      report.on("run", () => hideRunButton(entry));
+      if (report.hasState("fromCache")){
+        hideRunButton(entry);
+      }
+      report.on("run", () => {
+        hideRunButton(entry)
+      } );
       report.on("failed", () => toggleFail(entry));
       report.on("beforeReset", () => toggleFail(entry, false));
       report.on("afterUpdateView", () => toggleDetailsButton(entry));

@@ -418,7 +418,6 @@ class Report extends View {
 
   fromCache () {
     const updateViewFromRecord = (record) => {
-      if (record == null) return false;
       this.get$element().addClass("checklist-report-from-cache");
       const statements = [];
       record.checks.forEach((check) => {
@@ -440,9 +439,11 @@ class Report extends View {
     const cache = this.ui.cache;
     const docId = this.docId;
     const record = cache.get(docId);
-    updateViewFromRecord(record);
-    this.setState("fromCache", true);
-    this.triggerState("done");
+    if (record) {
+      updateViewFromRecord(record);
+      this.setState("fromCache", true);
+      this.triggerState("done");
+    }
     return record;
   }
 }
