@@ -30,7 +30,7 @@ class Overview extends View {
             <div class="checklist-overview-progresstext"></div>
           </div>
         </div>
-        <div class="checklist-overview-section-run" data-display-condition="ongoing">
+        <div class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
         </div>
         <div class="checklist-overview-section-cache" data-display-condition="cache">
@@ -74,8 +74,8 @@ class Overview extends View {
         flag: states.done > 0
       },
       {
-        name: "ongoing",
-        flag: !done
+        name: "run-button",
+        flag: !done && states.pending === 0
       },
       {
         name: "cache",

@@ -236,7 +236,6 @@ class TOC extends View {
   }
 
   rerun (reports) {
-    this.overview.reset();
     reports.forEach((report) => {
       report.rerun();
     });
@@ -244,6 +243,7 @@ class TOC extends View {
   }
 
   rerunAll () {
+    this.overview.reset();
     return this.rerun(this.reports);
   }
 
