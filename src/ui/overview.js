@@ -66,7 +66,7 @@ class Overview extends View {
     return this;
   }
 
-  updateControls (states) {
+  updateControls (states = {}) {
     const done = states.done === states.length;
     const conditions = [
       {

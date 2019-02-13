@@ -102,7 +102,7 @@ class TOC extends View {
   }
 
   createReports () {
-    this.entries.forEach((entry) => {
+    this.reports = this.entries.map((entry) => {
       if (entry.section) return;
       const element = entry.$element.find(".checklist-toc-entry-contents").get(0);
       const metadatas = `<p class="checklist-entry-title"><a href="${entry.href}">${entry.title}</a></p>`;
@@ -114,6 +114,7 @@ class TOC extends View {
         context: entry.context
       });
       entry.report = report;
+      return report;
     });
     return this;
   }

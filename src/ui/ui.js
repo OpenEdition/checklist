@@ -161,7 +161,7 @@ class UI extends Base {
   runToc (rerunAll) {
     const toc = this.components.toc;
     if (!toc) return;
-    return rerunAll === true ? toc.rerunAll().focus() : toc.runUnchecked().focus();
+    return rerunAll === true ? toc.rerunAll().focus() : toc.rerunUnchecked().focus();
   }
 
   showChildpane (name) {
