@@ -105,13 +105,10 @@ class Report extends View {
           })
           .catch((err) => {
             this.triggerState("failed");
-            reject(err);
+            // reject(err); // avoid duplicate logging here
           });
       });
     });
-
-    // .catch(console.error);
-    // return this;
   }
 
 // CHECKER & CHECKS

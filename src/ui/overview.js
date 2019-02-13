@@ -98,7 +98,7 @@ class Overview extends View {
     const count = states.done;
     const total = states.length;
     const percent =  count / total * 100;
-    const text = this.t("overview-documents", {count, total})
+    const text = this.t("overview-documents", {count, total});
     this.find(".checklist-overview-progressbar").width(percent  + "%");
     this.find(".checklist-overview-progresstext").html(text);
     return this;
@@ -116,11 +116,12 @@ class Overview extends View {
   }
 
   updateErrors (states) {
-    if (states.failed === this.prev.states.failed) return this;
-    // TODO: display some notification in overview
-    const length = states.failed.length;
-    const text = length > 0 ? "Errors : " + length : "";
-    this.find(".checklist-overview-errors").text(text);
+    if (this.failed === this.prev.states.failed) return this;
+    const count = states.failed;
+    const $el = this.find(".checklist-overview-errors");
+    const flag = count > 0;
+    const text = flag ? this.t("overview-error", {count}) : "";
+    $el.toggleClass("visible", flag).text(text);
     return this;
   }
 }
