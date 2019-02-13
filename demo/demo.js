@@ -71,8 +71,8 @@ $(function () {
     loaderTimeout: 3000,
 
     translations: {
-      fr: {
-        "toc-check": "Contrôler le numéro"
+      en: {
+        "toc-check": "Control this publication"
       }
     },
 
