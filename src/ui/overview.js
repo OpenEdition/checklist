@@ -12,6 +12,7 @@ class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
     this.prev = { states: {}, ratings: {} };
+    this.isBatchRunning = false;
     this.createMarkup();
     ui.on("filterStatements", () => this.reset());
   }
@@ -67,19 +68,18 @@ class Overview extends View {
   }
 
   updateControls (states = {}) {
-    const done = states.done === states.length;
     const conditions = [
       {
         name: "started",
-        flag: states.done > 0
+        flag: states.done > 0 || states.pending > 0
       },
       {
         name: "run-button",
-        flag: !done && states.pending === 0
+        flag: states.fromCache === 0 && (states.done < states.length) && !this.isBatchRunning
       },
       {
         name: "cache",
-        flag: done && states.fromCache > 1
+        flag: states.fromCache > 0
       }
     ];
 

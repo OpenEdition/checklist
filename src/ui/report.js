@@ -96,17 +96,22 @@ class Report extends View {
     const context = this.context;
     this.reset();
     this.toggleSpinner();
-    checklist.whenState("ready").then(() => {
-      checklist.run({docId, href, context, reloadSource: true})
-        .then((checker) => {
-          this.checker = checker;
-        })
-        .catch((err) => {
-          this.triggerState("failed");
-        });
-    })
-    .catch(console.error);
-    return this;
+    return new Promise ((resolve, reject) => {
+      checklist.whenState("ready").then(() => {
+        checklist.run({docId, href, context, reloadSource: true})
+          .then((checker) => {
+            this.checker = checker;
+            resolve();
+          })
+          .catch((err) => {
+            this.triggerState("failed");
+            reject(err);
+          });
+      });
+    });
+
+    // .catch(console.error);
+    // return this;
   }
 
 // CHECKER & CHECKS

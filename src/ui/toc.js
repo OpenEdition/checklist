@@ -236,8 +236,10 @@ class TOC extends View {
   }
 
   rerun (reports) {
-    reports.forEach((report) => {
-      report.rerun();
+    this.overview.isBatchRunning = true;
+    const proms = reports.map((report) => report.rerun());
+    Promise.all(proms).then(() => {
+      this.overview.isBatchRunning = false;
     });
     return this;
   }
