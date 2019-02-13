@@ -63,7 +63,6 @@ class UI extends Base {
           color: ${rating.color};
           fill: ${rating.color};
           background-color: ${rating.bgcolor};
-          border: 1px solid ${rating.color};
         }
       `);
     });

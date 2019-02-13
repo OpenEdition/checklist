@@ -1,13 +1,5 @@
 const View = require("./view.js");
 
-function forEachChange (obj, prevObj, callback) {
-  Object.keys(obj).forEach((key) => {
-    const value = obj[key];
-    if (prevObj[key] === value) return ;
-    callback(key, value);
-  });
-}
-
 class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
@@ -26,10 +18,6 @@ class Overview extends View {
         <div class="checklist-overview-section-indicators" data-display-condition="started">
           <div class="checklist-overview-stats"></div>
           <div class="checklist-overview-errors"></div>
-          <div class="checklist-overview-progress">
-            <div class="checklist-overview-progressbar"></div>
-            <div class="checklist-overview-progresstext"></div>
-          </div>
         </div>
         <div class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
@@ -45,23 +33,22 @@ class Overview extends View {
     const ratings = this.getConfig("ratings", []);
     const $parent = this.find(".checklist-overview-stats");
     const statsHtml = ratings.map((rating) => {
-      return `<li class="checklist-overview-stat-${rating.id}"></li>`;
-    }).join("\n");
+      return `<div class="checklist-overview-stat-${rating.id}"></div>`;
+    }).join("");
     $parent.html(statsHtml);
     return this;
   }
 
   reset () {
     this.prev = { states: {}, ratings: {} };
-    this.find(".checklist-overview-stats li").empty();
+    this.find(".checklist-overview-stats div").empty();
     this.updateControls();
     return this;
   }
 
   update ({ states, ratings }) {
     this.updateControls(states)
-        .updateProgress(states)
-        .updateRatings(ratings)
+        .updateRatings(states, ratings)
         .updateErrors(states);
     this.prev = { states, ratings };
     return this;
@@ -91,26 +78,18 @@ class Overview extends View {
     return this;
   }
 
-  updateProgress (states) {
-    const prevStates = this.prev.states;
-    if (states.done === prevStates.done && states.length === prevStates.length) return this;
+  updateRatings (states, ratings) {
+    const prev = this.prev;
+    Object.keys(ratings).forEach((key) => {
+      const value = ratings[key];
+      if (prev.ratings[key] === value) return; // don't update if no change
 
-    const count = states.done;
-    const total = states.length;
-    const percent =  count / total * 100;
-    const text = this.t("overview-documents", {count, total});
-    this.find(".checklist-overview-progressbar").width(percent  + "%");
-    this.find(".checklist-overview-progresstext").html(text);
-    return this;
-  }
-
-  updateRatings (ratings) {
-    forEachChange(ratings, this.prev.ratings, (key, value) => {
-      const rating = this.ui.getRating(key);
-      const icon = rating.icon;
+      const total = states.length;
+      const percent =  value / total * 100;
       let $el = this.find(`.checklist-overview-stat-${key}`);
-      $el.html(`${icon} ${value}`);
-      $el.toggleClass("visible", value > 0);
+      $el
+        .width(`${percent}%`)
+        .attr("data-rating-count", value);
     });
     return this;
   }

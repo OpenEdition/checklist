@@ -221,6 +221,7 @@ class TOC extends View {
     ratingsConf.forEach((el) => ratings[el.id] = 0);
 
     const updateRatings = (report) => {
+      if (!report.hasState("done")) return;
       const r = report.rating;
       if (typeof r === "string") ratings[r]++;
     }
