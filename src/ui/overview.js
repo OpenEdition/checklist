@@ -38,9 +38,11 @@ class Overview extends View {
 
     const ratings = this.getConfig("ratings", []);
     const $parent = this.find(".checklist-overview-stats");
-    const statsHtml = ratings.map((rating) => {
-      return `<div class="checklist-overview-stat-${rating.id}"><div class= "checklist-overview-stat-tooltip"></div></div>`;
-    }).join("");
+    const statsDivs = ratings.map((rating) => {
+      return `<div class="checklist-overview-stat-${rating.id}"><div class="checklist-overview-stat-tooltip"></div></div>`;
+    });
+    statsDivs.push(`<div class="checklist-overview-stat-failed"><div class="checklist-overview-stat-tooltip"></div></div>`);
+    const statsHtml = statsDivs.join("");
     $parent.html(statsHtml);
     return this;
   }
@@ -98,28 +100,35 @@ class Overview extends View {
     Object.keys(ratings).forEach((key) => {
       const value = ratings[key];
       if (prev.ratings[key] === value) return; // don't update if no change
-
-      const total = states.length;
-      const percent =  value / total * 100;
-      const $el = this.find(`.checklist-overview-stat-${key}`);
-      $el.width(`${percent}%`);
-
-      const $tooltip = $el.find(".checklist-overview-stat-tooltip");
-      if (value === 0) {
-        $tooltip.removeClass("visible").empty();
-        return;
-      }
-      const rating = this.ui.getRating(key);
-      const icon = rating.icon;
-      const contents = rating.icon + "&nbsp;" + value;
-      $tooltip.html(contents).addClass("visible");
+      this.updateRatingDiv(key, value, states.length);
     });
     return this;
+  }
+
+  updateRatingDiv (name, count, total, icon) {
+    const percent =  count / total * 100;
+    const $el = this.find(`.checklist-overview-stat-${name}`);
+    $el.width(`${percent}%`);
+
+    const $tooltip = $el.find(".checklist-overview-stat-tooltip");
+    if (count === 0) {
+      $tooltip.removeClass("visible").empty();
+      return;
+    }
+
+    icon = icon || this.ui.getRating(name).icon;
+    const contents = icon + "&nbsp;" + count;
+    $tooltip.html(contents).addClass("visible");
   }
 
   updateErrors (states) {
     if (this.failed === this.prev.states.failed) return this;
     const count = states.failed;
+
+    // Add error in rating bar
+    this.updateRatingDiv("failed", count, states.length, "<i class='fas fa-exclamation-triangle'></i>");
+
+    // Add error message
     const $el = this.find(".checklist-overview-errors");
     const flag = count > 0;
     const text = flag ? this.t("overview-error", {count}) : "";
