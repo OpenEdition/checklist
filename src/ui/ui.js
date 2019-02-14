@@ -110,6 +110,13 @@ class UI extends Base {
           border-top-color: ${rating.bgcolor};
         }
       `);
+      if (rating.id === "default") {
+        styles.push(`
+          .checklist-overview-stats {
+             background-color: ${rating.bgcolor};
+          }
+        `);
+      }
     });
 
     // Inject custom styles
