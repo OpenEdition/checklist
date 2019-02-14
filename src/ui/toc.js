@@ -27,7 +27,6 @@ class TOC extends View {
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component visible">
         <div class="checklist-toc-view-contents">
-          <h1>${this.t("toc-title")}</h1>
           <ul id="checklist-toc-stats" class="checklist-toc-stats"></ul>
           <ul id="checklist-toc" class="checklist-toc"></ul>
         </div>
