@@ -194,11 +194,21 @@ $(function () {
         bgcolor: "#dff0d8"
       },
       {
-        id: "empty",
+        id: "failed", // IMPORTANT: must be defined
+        icon: "<i class='fas fa-exclamation-triangle'></i>",
+        text: {
+          fr: "Une erreur est survenue pendant la vérification de ce document.",
+          en: "An error occured while checking this document."
+        },
+        color: "#ddd",
+        bgcolor: "#333"
+      },
+      {
+        id: "default", // IMPORTANT: must be defined
         icon: "<i class='far fa-question-circle'></i>",
         text: {
-          fr: "Aucun test n'est prévu pour ce document.",
-          en: "This document can not be checked."
+          fr: "Ce document n'a pas encore été vérifié.",
+          en: "This document was not checked yet."
         },
         color: "#999",
         bgcolor: "#eee"
@@ -206,7 +216,6 @@ $(function () {
     ],
 
     computeRating: function (statements, report) {
-      if (report.checksCount === 0) return "empty";
       let warning = false;
       for (let i=0; i < statements.length; i++) {
         const statement = statements[i];

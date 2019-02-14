@@ -39,12 +39,11 @@ class Overview extends View {
 
     // Stats
     const ratings = this.getConfig("ratings", []);
+
     const $stats = this.find(".checklist-overview-stats");
-    const statsDivs = ratings.map((rating) => {
+    const statsHtml = ratings.map((rating) => {
       return `<div class="checklist-overview-stat-${rating.id}"><div class="checklist-overview-stat-tooltip"></div></div>`;
-    });
-    statsDivs.push(`<div class="checklist-overview-stat-failed"><div class="checklist-overview-stat-tooltip"></div></div>`);
-    const statsHtml = statsDivs.join("");
+    }).join("");
     $stats.html(statsHtml);
 
     // Legend
@@ -73,8 +72,7 @@ class Overview extends View {
 
   update ({ states, ratings }) {
     this.updateControls(states)
-        .updateRatings(states, ratings)
-        .updateErrors(states);
+        .updateRatings(states, ratings);
     this.prev = { states, ratings };
     return this;
   }
@@ -113,7 +111,20 @@ class Overview extends View {
 
   updateRatings (states, ratings) {
     const prev = this.prev;
+
+    // "default" first
+    if (states.blank + states.pending !== prev.states.blank + prev.states.pending) {
+      this.updateRatingDiv("default", states.blank + states.pending, states.length);
+    }
+
+    // then "failed"
+    if (states.failed !== prev.states.failed) {
+      this.updateRatingDiv("failed", states.failed, states.length);
+    }
+
+    // other ratings finally
     Object.keys(ratings).forEach((key) => {
+      if (key === "default" || key === "failed") return
       const value = ratings[key];
       if (prev.ratings[key] === value) return; // don't update if no change
       this.updateRatingDiv(key, value, states.length);
@@ -138,21 +149,6 @@ class Overview extends View {
     icon = icon || this.ui.getRating(name).icon;
     const contents = icon + "&nbsp;" + count;
     $tooltip.html(contents).addClass("visible");
-  }
-
-  updateErrors (states) {
-    if (this.failed === this.prev.states.failed) return this;
-    const count = states.failed;
-
-    // Add error in rating bar
-    this.updateRatingDiv("failed", count, states.length, "<i class='fas fa-exclamation-triangle'></i>");
-
-    // Add error message
-    const $el = this.find(".checklist-overview-errors");
-    const flag = count > 0;
-    const text = flag ? this.t("overview-error", {count}) : "";
-    $el.toggleClass("visible", flag).text(text);
-    return this;
   }
 }
 
