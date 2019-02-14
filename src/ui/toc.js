@@ -213,7 +213,7 @@ class TOC extends View {
     }
 
     const ratings = {};
-    const ratingsConf = this.getConfig("ratings", []);
+    const ratingsConf = this.ui.ratings;
     ratingsConf.forEach((el) => ratings[el.id] = 0);
 
     const updateRatings = (report) => {

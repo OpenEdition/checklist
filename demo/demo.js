@@ -194,7 +194,7 @@ $(function () {
         bgcolor: "#dff0d8"
       },
       {
-        id: "failed", // IMPORTANT: must be defined
+        id: "failed",
         icon: "<i class='fas fa-exclamation-triangle'></i>",
         text: {
           fr: "Une erreur est survenue pendant la vérification de ce document.",
@@ -204,7 +204,7 @@ $(function () {
         bgcolor: "#333"
       },
       {
-        id: "default", // IMPORTANT: must be defined
+        id: "default",
         icon: "<i class='far fa-question-circle'></i>",
         text: {
           fr: "Ce document n'a pas encore été vérifié.",

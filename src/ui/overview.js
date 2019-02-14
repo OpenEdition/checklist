@@ -38,8 +38,7 @@ class Overview extends View {
     this.createView(html);
 
     // Stats
-    const ratings = this.getConfig("ratings", []);
-
+    const ratings = this.ui.ratings;
     const $stats = this.find(".checklist-overview-stats");
     const statsHtml = ratings.map((rating) => {
       return `<div class="checklist-overview-stat-${rating.id}"><div class="checklist-overview-stat-tooltip"></div></div>`;

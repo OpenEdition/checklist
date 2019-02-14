@@ -21,6 +21,7 @@ class UI extends Base {
     this.parent = parent;
     this.publi = this.getConfig("publi");
     this.cache = new Cache({caller: this});
+    this.ratings = this.getRatings();
     this.initStyles();
 
     const lang = this.getConfig("lang");
@@ -34,6 +35,46 @@ class UI extends Base {
       this.triggerState("initialized");
     })
     .catch(console.error);
+  }
+
+  getRatings () {
+    const ratings = this.getConfig("ratings", []);
+
+    // Add required "failed" and "default" ratings if not defined
+    if (!ratings.some((r) => r.id === "failed")) {
+      ratings.push({
+        id: "failed",
+        icon: "<i class='fas fa-exclamation-triangle'></i>",
+        text: {
+          fr: "Une erreur est survenue pendant la vérification de ce document.",
+          en: "An error occured while checking this document."
+        },
+        color: "#ddd",
+        bgcolor: "#333"
+      });
+    }
+
+    if (!ratings.some((r) => r.id === "default")) {
+      ratings.push({
+        id: "default",
+        icon: "<i class='far fa-question-circle'></i>",
+        text: {
+          fr: "Ce document n'a pas encore été vérifié.",
+          en: "This document was not checked yet."
+        },
+        color: "#999",
+        bgcolor: "#eee"
+      });
+    }
+
+    // Make sure last ratings are "failed" and "default"
+    return ratings.sort((a, b) => {
+      if (a.id === "default") return 1;
+      if (b.id === "default") return -1;
+      if (a.id === "failed") return 1;
+      if (b.id === "failed") return -1;
+      return 0;
+    });
   }
 
   initStyles () {
@@ -56,8 +97,7 @@ class UI extends Base {
     });
 
     // Inject ratings related styles
-    const ratings = this.getConfig("ratings");
-    ratings.forEach((rating) => {
+    this.ratings.forEach((rating) => {
       styles.push(`
         .checklist-rating-${rating.id}, .checklist-overview-stat-${rating.id},
         .checklist-overview-stat-${rating.id} .checklist-overview-stat-tooltip,
@@ -196,8 +236,7 @@ class UI extends Base {
   }
 
   getRating (id) {
-    const ratings = this.getConfig("ratings", []);
-    const rating = ratings.find((rating) => rating.id === id);
+    const rating = this.ratings.find((rating) => rating.id === id);
     if (rating == null) {
       // TODO: gerer les erreur comme ça partout
       const err = new Error(`Missing rating declaration for '${name}'`);
