@@ -175,10 +175,12 @@ body.checklist-visible {
 .checklist-overview-stats {
   margin: 60px 0 20px;
   width: 100%;
-  height: 30px;
+  height: 32px;
   background-color: #ccc;
   border-radius: 6px;
   border: 3px solid #ccc;
+  position: relative;
+  box-sizing: border-box;
 
   div {
     display: inline-block;
@@ -224,6 +226,17 @@ body.checklist-visible {
 
   .checklist-overview-stat-tooltip.visible {
     display: block;
+  }
+
+  &:after {
+    content: " ";
+    border-radius: 3px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    box-shadow: 0 0 0 3px #ccc;
   }
 }
 
