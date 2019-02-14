@@ -6,6 +6,7 @@
   "overview-documents_plural": "Documents contrôlés&nbsp;: {{count}} sur {{total}}",
   "overview-error": "Une erreur de chargement a été rencontrée au cours de l'exécution.",
   "overview-error_plural": "Des erreurs de chargement ont été rencontrées au cours de l'exécution.",
+  "overview-legend-title": "Légende",
   "report-changed": "Ce rapport a été chargé depuis le cache. Cliquez pour le rafraîchir.",
   "report-retry": "Réessayer",
   "report-source-failed": "Erreur lors du chargement de la source&nbsp;: {{url}}.",

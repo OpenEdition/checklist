@@ -19,6 +19,7 @@ class Overview extends View {
           <div class="checklist-overview-stats"></div>
           <div class="checklist-overview-errors"></div>
         </div>
+        <div class="checklist-overview-section-legend"></div>
         <div class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
         </div>
@@ -36,14 +37,29 @@ class Overview extends View {
     `;
     this.createView(html);
 
+    // Stats
     const ratings = this.getConfig("ratings", []);
-    const $parent = this.find(".checklist-overview-stats");
+    const $stats = this.find(".checklist-overview-stats");
     const statsDivs = ratings.map((rating) => {
       return `<div class="checklist-overview-stat-${rating.id}"><div class="checklist-overview-stat-tooltip"></div></div>`;
     });
     statsDivs.push(`<div class="checklist-overview-stat-failed"><div class="checklist-overview-stat-tooltip"></div></div>`);
     const statsHtml = statsDivs.join("");
-    $parent.html(statsHtml);
+    $stats.html(statsHtml);
+
+    // Legend
+    const $legend = this.find(".checklist-overview-section-legend");
+    const legendDivs = ratings.map((rating) => {
+      return `
+        <div class="checklist-overview-legend-${rating.id}">
+          <div class="checklist-overview-legend-icon">${rating.icon}</div>
+          <div class="checklist-overview-legend-text">${this.tk(rating.text)}</div>
+        </div>
+      `;
+    });
+    const legendHtml = `<h3>${this.t("overview-legend-title")}</h3>` + legendDivs.join("");
+    $legend.html(legendHtml);
+
     return this;
   }
 
@@ -109,6 +125,9 @@ class Overview extends View {
     const percent =  count / total * 100;
     const $el = this.find(`.checklist-overview-stat-${name}`);
     $el.width(`${percent}%`);
+
+    const $legend = this.find(`.checklist-overview-legend-${name}`);
+    $legend.toggleClass("visible", count > 0);
 
     const $tooltip = $el.find(".checklist-overview-stat-tooltip");
     if (count === 0) {
