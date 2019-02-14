@@ -13,11 +13,6 @@ body {
 }
 
 #pane-container {
-  position: sticky;
-  top: 0;
-}
-
-#checklist-pane {
   flex: 1;
   position: -webkit-sticky;
   position: sticky;
