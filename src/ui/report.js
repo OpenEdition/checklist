@@ -105,7 +105,7 @@ class Report extends View {
           })
           .catch((err) => {
             this.triggerState("failed");
-            // reject(err); // avoid duplicate logging here
+            reject(err); // avoid duplicate logging here
           });
       });
     });

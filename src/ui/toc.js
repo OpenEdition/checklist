@@ -207,7 +207,7 @@ class TOC extends View {
 
       if (!isRun && !isFromCache) states.blank++;
       if (isDone) states.done++;
-      if (isRun && !isDone) states.pending++;
+      if (isRun && !isDone && !isFailed) states.pending++;
       if (isFromCache) states.fromCache++;
       if (isFailed) states.failed++;
     }
@@ -240,7 +240,7 @@ class TOC extends View {
   rerun (reports) {
     this.isBatchRunning = true;
     const proms = reports.map((report) => report.rerun());
-    Promise.all(proms).then(() => {
+    Promise.all(proms).finally(() => {
       this.isBatchRunning = false;
       this.updateIndicators();
     });
