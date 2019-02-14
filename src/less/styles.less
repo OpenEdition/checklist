@@ -32,10 +32,12 @@ body.checklist-visible {
 .checklist-pane, .checklist-childpane {
   box-sizing: border-box;
   background: @bg-color;
-  border-left: 1px solid @border-color;
+  border: 1px solid @border-color;
   z-index: @z-index;
   width: 100%;
   min-width: @pane-width;
+  border-radius: 6px;
+  margin-top: 10px;
 }
 
 .checklist-pane-contents {
@@ -78,7 +80,7 @@ body.checklist-visible {
   height: @menu-height;
   border-bottom: @border-color 1px solid;
   background: @bg-color;
-
+  border-radius: 6px 6px 0 0;
   & > div {
     padding: 10px;
   }
@@ -130,7 +132,7 @@ body.checklist-visible {
 
 .checklist-toolbar-button {
   border-left: 1px solid @border-color;
-  padding: 8px 12px 4px;
+  padding: 8px 12px;
   text-align: center;
   display: inline-block;
   flex-grow: 1;
