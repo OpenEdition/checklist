@@ -22,6 +22,9 @@ class Overview extends View {
         <div class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
         </div>
+        <div class="checklist-overview-section-done">
+          <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
+        </div>
         <div class="checklist-overview-section-cache" data-display-condition="cache">
           <p class="checklist-overview-info">${this.t("toc-control-info-cache")}</p>
           <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
@@ -63,11 +66,15 @@ class Overview extends View {
       },
       {
         name: "run-button",
-        flag: states.fromCache === 0 && (states.done < states.length) && !this.isBatchRunning
+        flag: states.fromCache === 0 && states.done < states.length && !this.isBatchRunning
       },
       {
         name: "cache",
         flag: states.fromCache > 0
+      },
+      {
+        name:"done",
+        flag: states.done === states.length && !this.isBatchRunning
       }
     ];
 
