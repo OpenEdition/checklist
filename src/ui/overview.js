@@ -4,7 +4,6 @@ class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
     this.prev = { states: {}, ratings: {} };
-    this.isBatchRunning = false;
     this.createMarkup();
     ui.on("filterStatements", () => this.reset());
   }
@@ -21,6 +20,9 @@ class Overview extends View {
         </div>
         <div class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
+        </div>
+        <div class="checklist-overview-section-running" data-display-condition="running">
+          <p class="checklist-overview-running">${this.t("toc-control-running")}</p>
         </div>
         <div class="checklist-overview-section-done" data-display-condition="done">
           <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
@@ -65,8 +67,12 @@ class Overview extends View {
         flag: states.done > 0 || states.pending > 0
       },
       {
+        name: "running",
+        flag: states.pending > 0 || states.isBatchRunning
+      },
+      {
         name: "run-button",
-        flag: states.fromCache === 0 && states.done < states.length && !this.isBatchRunning
+        flag: states.fromCache === 0 && states.done < states.length && !states.isBatchRunning
       },
       {
         name: "cache",
@@ -74,7 +80,7 @@ class Overview extends View {
       },
       {
         name:"done",
-        flag: states.done === states.length && states.pending === 0
+        flag: states.done === states.length && states.pending === 0 && !states.isBatchRunning
       }
     ];
 

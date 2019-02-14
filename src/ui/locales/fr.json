@@ -21,6 +21,7 @@
   "toc-control-done": "Félicitations&nbsp;! Le contenu de la publication a été intégralement vérifié.",
   "toc-control-info": "Cette page vous aide à vérifier la qualité du contenu de cette publication.",
   "toc-control-info-cache": "Des notifications concernant la qualité ont été chargées à partir du cache du navigateur et ne sont peut-être pas à jour.",
+  "toc-control-running": "Vérification en cours...",
   "toc-fold": "Tout replier",
   "toc-hide-details": "Masquer les détails",
   "toc-report-run": "Démarrer la vérification",

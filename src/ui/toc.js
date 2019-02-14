@@ -16,6 +16,7 @@ class TOC extends View {
     super("TOC", ui, parent);
 
     this.toc = publi.toc;
+    this.isBatchRunning = false;
     this.entries = getEntries(this.toc);
     this.createMarkup().createReports().loadReportsFromCache();
     this.overview = this.createOverview();
@@ -137,11 +138,6 @@ class TOC extends View {
 
   createEvents () {
     // Event handlers definition
-    const updateIndicators = () => {
-      const indicators = this.getIndicators();
-      this.overview.update(indicators);
-    }
-
     const toggleFail = function (entry, flag = true) {
       const { $element, report } = entry;
       if (!flag && !$element.hasClass("checklist-report-failed")) return;
@@ -171,7 +167,7 @@ class TOC extends View {
       // Update indicators in overview
       // TODO: add "beforeReset" ?
       ["run", "rated", "done", "failed"].forEach((eventName) => {
-        report.on(eventName, () => updateIndicators());
+        report.on(eventName, () => this.updateIndicators());
       });
 
       // Update entry UI
@@ -188,13 +184,14 @@ class TOC extends View {
 
     // Run events for the first time
     this.entries.forEach(toggleDetailsButton);
-    updateIndicators();
+    this.updateIndicators();
 
     return this;
   }
 
   getIndicators () {
     const states = {
+      isBatchRunning: this.isBatchRunning,
       length: this.entries.length,
       blank: 0,
       done: 0,
@@ -236,11 +233,17 @@ class TOC extends View {
     return { states, ratings };
   }
 
+  updateIndicators () {
+    const indicators = this.getIndicators();
+    this.overview.update(indicators);
+  }
+
   rerun (reports) {
-    this.overview.isBatchRunning = true;
+    this.isBatchRunning = true;
     const proms = reports.map((report) => report.rerun());
     Promise.all(proms).then(() => {
-      this.overview.isBatchRunning = false;
+      this.isBatchRunning = false;
+      this.updateIndicators();
     });
     return this;
   }
