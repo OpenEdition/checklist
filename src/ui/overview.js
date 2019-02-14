@@ -22,7 +22,7 @@ class Overview extends View {
         <div class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
         </div>
-        <div class="checklist-overview-section-done">
+        <div class="checklist-overview-section-done" data-display-condition="done">
           <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
         </div>
         <div class="checklist-overview-section-cache" data-display-condition="cache">
@@ -74,7 +74,7 @@ class Overview extends View {
       },
       {
         name:"done",
-        flag: states.done === states.length && !this.isBatchRunning
+        flag: states.done === states.length && states.pending === 0
       }
     ];
 
