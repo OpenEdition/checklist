@@ -194,6 +194,10 @@ body.checklist-visible {
     padding: 0;
     transition: width 500ms ease-in-out;
     position: relative;
+
+    &:hover .checklist-overview-stat-tooltip {
+      z-index: 9999;
+    }
   }
 
   .checklist-overview-stat-tooltip {
@@ -211,7 +215,7 @@ body.checklist-visible {
     border-radius: 3px;
     position: absolute;
     display: none;
-    z-index: 9999;
+    z-index: 999;
 
     &:after {
       position: absolute;
