@@ -59,10 +59,13 @@ class UI extends Base {
     const ratings = this.getConfig("ratings");
     ratings.forEach((rating) => {
       styles.push(`
-        .checklist-rating-${rating.id}, .checklist-overview-stat-${rating.id} {
+        .checklist-rating-${rating.id}, .checklist-overview-stat-${rating.id}, .checklist-overview-stat-${rating.id} .checklist-overview-stat-tooltip {
           color: ${rating.color};
           fill: ${rating.color};
           background-color: ${rating.bgcolor};
+        }
+        .checklist-overview-stat-${rating.id} .checklist-overview-stat-tooltip:after {
+          border-top-color: ${rating.bgcolor};
         }
       `);
     });
