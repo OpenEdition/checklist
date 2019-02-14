@@ -33,7 +33,7 @@ class Overview extends View {
     const ratings = this.getConfig("ratings", []);
     const $parent = this.find(".checklist-overview-stats");
     const statsHtml = ratings.map((rating) => {
-      return `<div class="checklist-overview-stat-${rating.id}"></div>`;
+      return `<div class="checklist-overview-stat-${rating.id}"><div class= "checklist-overview-stat-tooltip"></div></div>`;
     }).join("");
     $parent.html(statsHtml);
     return this;
@@ -41,7 +41,8 @@ class Overview extends View {
 
   reset () {
     this.prev = { states: {}, ratings: {} };
-    this.find(".checklist-overview-stats div").empty();
+    this.find(".checklist-overview-stats div").removeAttr("style");
+    this.find(".checklist-overview-stat-tooltip").empty();
     this.updateControls();
     return this;
   }
@@ -86,10 +87,18 @@ class Overview extends View {
 
       const total = states.length;
       const percent =  value / total * 100;
-      let $el = this.find(`.checklist-overview-stat-${key}`);
-      $el
-        .width(`${percent}%`)
-        .attr("data-rating-count", value);
+      const $el = this.find(`.checklist-overview-stat-${key}`);
+      $el.width(`${percent}%`);
+
+      const $tooltip = $el.find(".checklist-overview-stat-tooltip");
+      if (value === 0) {
+        $tooltip.removeClass("visible").empty();
+        return;
+      }
+      const rating = this.ui.getRating(key);
+      const icon = rating.icon;
+      const contents = rating.icon + "&nbsp;" + value;
+      $tooltip.html(contents).addClass("visible");
     });
     return this;
   }
