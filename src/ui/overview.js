@@ -1,4 +1,5 @@
 const View = require("./view.js");
+const svg = require("./svg.json");
 
 class Overview extends View {
   constructor ({ ui, parent }) {
@@ -22,7 +23,7 @@ class Overview extends View {
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
         </div>
         <div class="checklist-overview-section-running" data-display-condition="running">
-          <p class="checklist-overview-running">${this.t("toc-control-running")}</p>
+            <p class="checklist-overview-running">${svg.spinner} ${this.t("toc-control-running")}</p>
         </div>
         <div class="checklist-overview-section-done" data-display-condition="done">
           <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
