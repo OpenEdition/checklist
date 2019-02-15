@@ -19,7 +19,7 @@ class Overview extends View {
           <div class="checklist-overview-stats"></div>
           <div class="checklist-overview-errors"></div>
         </div>
-        <div class="checklist-overview-section-legend"></div>
+        <div class="checklist-overview-section-legend" data-display-condition="not-running"></div>
         <div class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
         </div>
@@ -78,6 +78,7 @@ class Overview extends View {
   }
 
   updateControls (states = {}) {
+    const running = states.pending > 0 || states.isBatchRunning;
     const conditions = [
       {
         name: "started",
@@ -85,7 +86,11 @@ class Overview extends View {
       },
       {
         name: "running",
-        flag: states.pending > 0 || states.isBatchRunning
+        flag: running
+      },
+      {
+        name: "not-running",
+        flag: !running
       },
       {
         name: "run-button",
