@@ -118,7 +118,6 @@ class Overview extends View {
   }
 
   updateStats (stats, states) {
-    const transitionDuration = 500;
     const prevStats = this.prevStats;
     const {length, pending, isBatchRunning} = states;
 
@@ -127,22 +126,12 @@ class Overview extends View {
     const $default = this.find(".checklist-overview-stat-default");
     $default.toggleClass("hidden", isRunning);
 
-    Object.keys(stats)
-          .forEach((key) => {
-            const current = stats[key];
-            const prev = prevStats[key];
-
-            // Don't update if no change
-            if (current === prev) return;
-
-            // Delay increased stats update to avoid overflowing divs due to CSS transition
-            if (prev != null && current > prev) {
-              window.setTimeout(() => this.updateStatDiv(key, current, length), transitionDuration);
-              return;
-            }
-
-            this.updateStatDiv(key, current, length);
-          });
+    Object.keys(stats).forEach((key) => {
+      const current = stats[key];
+      const prev = prevStats[key];
+      if (current === prev) return; // Don't update if no change
+      this.updateStatDiv(key, current, length);
+    });
     return this;
   }
 
