@@ -164,14 +164,14 @@ $(function () {
     ],
     ratings: [
       {
-        id: "bad",
-        icon: "<i class='far fa-meh'></i>",
+        id: "excellent",
+        icon: "<i class='far fa-laugh-wink '></i>",
         text: {
-          fr: "Ce document contient des erreurs de composition.",
-          en: "This document contains issues."
+          fr: "Ce document est très bien composé.",
+          en: "This document is well formated"
         },
-        color: "#a94442",
-        bgcolor: "#f2dede"
+        color: "#3c763d",
+        bgcolor: "#dff0d8"
       },
       {
         id: "good",
@@ -184,34 +184,14 @@ $(function () {
         bgcolor: "#d9edf7"
       },
       {
-        id: "excellent",
-        icon: "<i class='far fa-laugh-wink '></i>",
+        id: "bad",
+        icon: "<i class='far fa-meh'></i>",
         text: {
-          fr: "Ce document est très bien composé.",
-          en: "This document is well formated."
+          fr: "Ce document contient des erreurs de composition.",
+          en: "This document contains issues."
         },
-        color: "#3c763d",
-        bgcolor: "#dff0d8"
-      },
-      {
-        id: "failed",
-        icon: "<i class='fas fa-exclamation-triangle'></i>",
-        text: {
-          fr: "Une erreur est survenue pendant la vérification de ce document.",
-          en: "An error occured while checking this document."
-        },
-        color: "#ddd",
-        bgcolor: "#333"
-      },
-      {
-        id: "default",
-        icon: "<i class='far fa-question-circle'></i>",
-        text: {
-          fr: "Ce document n'a pas encore été vérifié.",
-          en: "This document was not checked yet."
-        },
-        color: "#999",
-        bgcolor: "#eee"
+        color: "#a94442",
+        bgcolor: "#f2dede"
       }
     ],
 
