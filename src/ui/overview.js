@@ -4,7 +4,7 @@ const svg = require("./svg.json");
 class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
-    this.prev = { states: {}, ratings: {} };
+    this.prevStats = {};
     this.createMarkup();
     ui.on("filterStatements", () => this.reset());
   }
@@ -62,7 +62,7 @@ class Overview extends View {
   }
 
   reset () {
-    this.prev = { states: {}, ratings: {} };
+    this.prevStats = {};
     this.find(".checklist-overview-stats div").removeAttr("style");
     this.find(".checklist-overview-stat-tooltip").empty();
     this.updateControls();
@@ -70,9 +70,10 @@ class Overview extends View {
   }
 
   update ({ states, ratings }) {
-    this.updateControls(states)
-        .updateRatings(states, ratings);
-    this.prev = { states, ratings };
+    this.updateControls(states);
+    const stats = this.getStats(states, ratings);
+    this.updateStats(stats, states);
+    this.prevStats = stats;
     return this;
   }
 
@@ -108,30 +109,44 @@ class Overview extends View {
     return this;
   }
 
-  updateRatings (states, ratings) {
-    const prev = this.prev;
-
-    // "default" first
-    if (states.blank + states.pending !== prev.states.blank + prev.states.pending) {
-      this.updateRatingDiv("default", states.blank + states.pending, states.length);
-    }
-
-    // then "failed"
-    if (states.failed !== prev.states.failed) {
-      this.updateRatingDiv("failed", states.failed, states.length);
-    }
-
-    // other ratings finally
-    Object.keys(ratings).forEach((key) => {
-      if (key === "default" || key === "failed") return
-      const value = ratings[key];
-      if (prev.ratings[key] === value) return; // don't update if no change
-      this.updateRatingDiv(key, value, states.length);
+  // Return a "stats" objet which contains ratings + "default" and "failed" special stats
+  getStats (states, ratings) {
+    return Object.assign({}, ratings, {
+      default: states.blank + states.pending,
+      failed: states.failed
     });
+  }
+
+  updateStats (stats, states) {
+    const transitionDuration = 500;
+    const prevStats = this.prevStats;
+    const {length, pending, isBatchRunning} = states;
+
+    // Hide "default" stat if script is running
+    const isRunning = pending > 0 || isBatchRunning;
+    const $default = this.find(".checklist-overview-stat-default");
+    $default.toggleClass("hidden", isRunning);
+
+    Object.keys(stats)
+          .forEach((key) => {
+            const current = stats[key];
+            const prev = prevStats[key];
+
+            // Don't update if no change
+            if (current === prev) return;
+
+            // Delay increased stats update to avoid overflowing divs due to CSS transition
+            if (prev != null && current > prev) {
+              window.setTimeout(() => this.updateStatDiv(key, current, length), transitionDuration);
+              return;
+            }
+
+            this.updateStatDiv(key, current, length);
+          });
     return this;
   }
 
-  updateRatingDiv (name, count, total, icon) {
+  updateStatDiv (name, count, total, icon) {
     const percent =  count / total * 100;
     const $el = this.find(`.checklist-overview-stat-${name}`);
     $el.width(`${percent}%`);

@@ -206,14 +206,14 @@ body.checklist-visible {
     transition: width 500ms linear;
     position: relative;
 
+    &.hidden {
+      display: none;
+      transition: none;
+    }
+
     &:hover .checklist-overview-stat-tooltip {
       z-index: 9999;
     }
-  }
-
-  // Hack to avoid overflow during transition
-  div.checklist-overview-stat-default {
-    transition: width 200ms linear;
   }
 
   .checklist-overview-stat-tooltip {
