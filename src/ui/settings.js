@@ -21,7 +21,7 @@ function getViewHtml (cache, filters, t, tk) {
 
   const html = `
     <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
-      <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
+      <button class="checklist-close-btn" data-checklist-action="close-component"><i class="fas fa-times-circle"></i></button>
       <h1>${t("settings-title")}</h1>
       <h2>${t("settings-filters-title")}</h2>
       <p>${t("settings-filters-descripion")}</p>

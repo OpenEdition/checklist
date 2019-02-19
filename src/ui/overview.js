@@ -15,19 +15,19 @@ class Overview extends View {
         <div class="checklist-overview-section-info">
           <p class="checklist-overview-info">${this.t("toc-control-info")}</p>
         </div>
-        <div class="checklist-overview-section-indicators" data-display-condition="started">
+        <div class="checklist-overview-section-indicators">
           <div class="checklist-overview-stats"></div>
           <div class="checklist-overview-errors"></div>
         </div>
         <div class="checklist-overview-section-legend" data-display-condition="not-running"></div>
-        <div class="checklist-overview-section-run" data-display-condition="run-button">
-          <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
-        </div>
         <div class="checklist-overview-section-running" data-display-condition="running">
             <p class="checklist-overview-running">${svg.spinner} ${this.t("toc-control-running")}</p>
         </div>
         <div class="checklist-overview-section-done" data-display-condition="done">
           <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
+        </div>
+        <div class="checklist-overview-section-run" data-display-condition="run-button">
+          <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
         </div>
         <div class="checklist-overview-section-cache" data-display-condition="cache">
           <p class="checklist-overview-info">${this.t("toc-control-info-cache")}</p>
@@ -80,10 +80,6 @@ class Overview extends View {
   updateControls (states = {}) {
     const running = states.pending > 0 || states.isBatchRunning;
     const conditions = [
-      {
-        name: "started",
-        flag: states.done > 0 || states.pending > 0
-      },
       {
         name: "running",
         flag: running

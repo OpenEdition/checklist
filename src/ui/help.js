@@ -7,7 +7,7 @@ class Help extends View {
 
     const html = `
       <div id="checklist-help" class="checklist-help checklist-component checklist-childpane">
-      <button class="checklist-close-btn" data-checklist-action="close-component">×</button>
+      <button class="checklist-close-btn" data-checklist-action="close-component"><i class="fas fa-times-circle"></i></button>
         <h1><i class="fas fa-info-circle"></i> ${this.t("help-title")}</h1>
         <div id="checklist-help-contents"></div>
       </div>
