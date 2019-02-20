@@ -1,13 +1,26 @@
 body {
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#links {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  background: #f7f7f7;
+  border-bottom: #dde1e4 1px solid;
+}
+
+#main {
   display: flex;
   align-items: flex-start;
 }
 
-#container {
-  width: 800px;
+#contents {
+  max-width: 700px;
   display: block;
-  margin: 0 auto;
+  margin-left: 40px 0 40px;
   font-size: 120%;
   flex: 1;
 }
@@ -17,8 +30,9 @@ body {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  max-width: 320px;
-  margin-left: 20px;
+  height: 100vh;
+  max-width: 360px;
+  margin-right: 20px;
 }
 
 .checklist-settings {
@@ -26,10 +40,6 @@ body {
   top: 0;
   left: 0;
   right: 0;
-}
-
-#links {
-  padding: 20px;
 }
 
 .toc-entry {
