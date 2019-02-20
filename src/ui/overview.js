@@ -17,21 +17,26 @@ class Overview extends View {
         </div>
         <div class="checklist-overview-section-indicators">
           <div class="checklist-overview-stats"></div>
-          <div class="checklist-overview-errors"></div>
         </div>
         <div class="checklist-overview-section-legend" data-display-condition="not-running"></div>
         <div class="checklist-overview-section-running" data-display-condition="running">
             <p class="checklist-overview-running">${svg.spinner} ${this.t("toc-control-running")}</p>
         </div>
         <div class="checklist-overview-section-done" data-display-condition="done">
-          <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
-        </div>
-        <div class="checklist-overview-section-run" data-display-condition="run-button">
-          <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="fas fa-book"></i> ${this.t("toc-check")}</button>
+          <div class="checklist-overview-message">
+            <i class="fas fa-thumbs-up"></i>
+            <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
+          </div>
         </div>
         <div class="checklist-overview-section-cache" data-display-condition="cache">
-          <p class="checklist-overview-info">${this.t("toc-control-info-cache")}</p>
+          <div class="checklist-overview-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <p class="checklist-overview-info">${this.t("toc-control-info-cache")}</p>
+          </div>
           <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
+        </div>
+        <div class="checklist-overview-section-run" data-display-condition="run-button">
+          <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="far fa-play-circle"></i> ${this.t("toc-check")}</button>
         </div>
       </div>
     `;
@@ -90,11 +95,11 @@ class Overview extends View {
       },
       {
         name: "run-button",
-        flag: states.fromCache === 0 && states.done < states.length && !states.isBatchRunning
+        flag: states.done < states.length && !states.isBatchRunning
       },
       {
         name: "cache",
-        flag: states.fromCache > 0
+        flag: states.fromCache > 0 && states.done === states.length
       },
       {
         name:"done",

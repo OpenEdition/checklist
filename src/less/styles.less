@@ -163,7 +163,7 @@ body.checklist-visible {
     width: 200px;
     text-align: center;
     padding: 10px;
-    margin: 20px auto 10px;
+    margin: 15px auto 5px;
     background-color: @btn-primary-color;
     border: none;
     color: #fff;
@@ -171,24 +171,16 @@ body.checklist-visible {
     cursor: pointer;
 
     &:hover, &:focus, &:active {
-      background-color: darken(#007bff, 5%);
+      background-color: darken(@btn-primary-color, 5%);
     }
   }
 }
 
-[data-display-condition], .checklist-overview-errors {
+[data-display-condition] {
   display: none;
   &.visible {
     display: block;
   }
-}
-
-.checklist-overview-section-done {
-  font-weight: bold;
-}
-
-.checklist-overview-section-done:not(.visible) .svg-spinner {
-  animation-name: none;
 }
 
 .checklist-overview-stats {
@@ -287,6 +279,35 @@ body.checklist-visible {
 .checklist-overview-legend-text {
   font-size: 13px;
   color: @text-grey;
+}
+
+.checklist-overview-message {
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
+  margin-top: 10px;
+  padding: 10px;
+  border: @border-color;
+  border-radius: 5px;
+  background-color: darken(@bg-color, 5%);
+
+  i {
+    font-size: 20px;
+    margin-top: 4px;
+    margin-right: 12px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.checklist-overview-section-done {
+  font-weight: bold;
+}
+
+.checklist-overview-section-done:not(.visible) .svg-spinner {
+  animation-name: none;
 }
 
 // REPORTS
