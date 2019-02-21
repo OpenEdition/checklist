@@ -19,6 +19,10 @@ function initActions (ui) {
       view.close();
     },
 
+    "dropdown": function () {
+      $(this).parent().toggleClass("visible");
+    },
+
     "help-show": function () {
       const parent = $(this).parent(".checklist-statement").get(0);
       const statement = parent.statement;
@@ -96,6 +100,13 @@ function initActions (ui) {
       ui.emit("afterAction", id);
     });
   }
+
+  // Close dropdowns
+  $(document).on("click", function (event) {
+    const $el = $(event.target);
+    if ($el.is("[data-checklist-action='dropdown']")) return;
+    $(".checklist-dropdown").removeClass("visible");
+  });
 }
 
 module.exports = initActions;

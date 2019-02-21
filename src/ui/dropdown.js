@@ -25,7 +25,7 @@ function getHtml (buttonsCreator, docId, context, ui) {
   const buttonsHtml = infos.map(getEntries).join("");
   const html = `
     <nav class="checklist-dropdown">
-      <button class="checklist-dropdown-button">${t("dropdown-menu-name")} <i class="fas fa-caret-down"></i></button>
+      <button class="checklist-dropdown-button" data-checklist-action="dropdown">${t("dropdown-menu-name")} <i class="fas fa-caret-down"></i></button>
       <ul class="checklist-dropdown-entries">
         ${buttonsHtml}
       </ul>
