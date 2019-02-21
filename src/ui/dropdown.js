@@ -1,40 +1,42 @@
 const Base = require("../base.js");
 const View = require("./view.js");
 
-function getHtml (buttonsCreator, docId, context, tk) {
-  const getButton = (infos) => {
+function getHtml (buttonsCreator, docId, context, ui) {
+  const {t, tk} = ui;
+  const getEntries = (infos) => {
     if (!Base.testCondition(infos.condition, context)) {
       return;
     }
     const icon = infos.icon;
     const translatedTitle = tk(infos.title);
-    const text = icon || translatedTitle;
-    const title = icon ? `title="${translatedTitle}"`: "";
     const attrs = [];
     for (let attr in infos.attributes) {
       const value = infos.attributes[attr];
       attrs.push(`${attr}="${value}"`);
     }
     return `
-      <a class="checklist-toolbar-button" ${title} ${attrs.join(" ")}>
-        ${text}
-      </a>
+      <li class="checklist-dropdown-entry">
+        <a ${attrs.join(" ")}>${icon} ${translatedTitle}</a>
+      </li>
     `;
   };
 
   const infos = buttonsCreator(docId, context);
-  const buttonsHtml = infos.map(getButton).join("");
+  const buttonsHtml = infos.map(getEntries).join("");
   const html = `
-    <div class="checklist-toolbar">
-      ${buttonsHtml}
-    </div>
+    <nav class="checklist-dropdown">
+      <button class="checklist-dropdown-button">${t("dropdown-menu-name")} <i class="fas fa-caret-down"></i></button>
+      <ul class="checklist-dropdown-entries">
+        ${buttonsHtml}
+      </ul>
+    </nav>
   `;
   return html;
 }
 
-class Toolbar extends View {
+class Dropdown extends View {
   constructor ({ ui, parent, docId, context }) {
-    super("Toolbar", ui, parent);
+    super("Dropdown", ui, parent);
 
     const buttonsCreator = this.getConfig("buttonsCreator");
     if (typeof buttonsCreator !== "function") return;
@@ -46,9 +48,9 @@ class Toolbar extends View {
     }
     if (typeof context !== "object") return;
 
-    const html = getHtml(buttonsCreator, docId, context, this.ui.tk);
+    const html = getHtml(buttonsCreator, docId, context, this.ui);
     this.createView(html);
   }
 }
 
-module.exports = Toolbar;
+module.exports = Dropdown;

@@ -1,5 +1,5 @@
 const Overview = require("./overview.js");
-const Toolbar = require("./toolbar.js");
+const Dropdown = require("./dropdown.js");
 const View = require("./view.js");
 
 function getEntries(parent) {
@@ -47,7 +47,7 @@ class TOC extends View {
       createChildren($contents, entry.section);
     };
 
-    const createToolbar = (entry, $element) => {
+    const createDropdown = (entry, $element) => {
       const type = entry.type || this.t("article");
       const icon = entry.icon || "<i class='far fa-file-alt'></i>";
       const headerHtml = `
@@ -55,11 +55,11 @@ class TOC extends View {
           <div class="checklist-toc-entry-brand">${icon} ${type}</div>
         </div>
       `;
-      const $toolbarParent = $(headerHtml);
-      $toolbarParent.prependTo($element);
-      return new Toolbar({
+      const $dropdownParent = $(headerHtml);
+      $dropdownParent.prependTo($element);
+      return new Dropdown({
         ui: this.ui,
-        parent: $toolbarParent,
+        parent: $dropdownParent,
         docId: entry.docId || entry.href,
         context: entry.context
       });
@@ -81,7 +81,7 @@ class TOC extends View {
         </li>
       `;
       const $element = $(html);
-      createToolbar(entry, $element);
+      createDropdown(entry, $element);
       $parent.append($element);
       entry.$element = $element;
     };

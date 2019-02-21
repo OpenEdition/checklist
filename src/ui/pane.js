@@ -1,5 +1,5 @@
 const svg = require("./svg.json");
-const Toolbar = require("./toolbar.js");
+const Dropdown = require("./dropdown.js");
 const View = require("./view.js");
 
 class Pane extends View {
@@ -11,26 +11,26 @@ class Pane extends View {
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
       <div class="checklist-main-menu">
         <div class="checklist-brand">${svg["checklist-logo"]}</div>
+        <div class="checklist-dropdown-container"></div>
         <div class="checklist-main-menu-buttons">
           <button data-checklist-action="settings-show"><i class="fas fa-cog"></i></button>
         </div>
       </div>
-      <div class="checklist-toolbar-container"></div>
       <div id="checklist-pane-contents" class="checklist-pane-contents">
       </div>
     </div>`;
     this.createView(html);
-    this.createToolbar();
+    this.createDropdown();
 
     if (!publi) {
       this.showReport();
     }
   }
 
-  createToolbar () {
-    this.toolbar = new Toolbar({
+  createDropdown () {
+    this.dropdown = new Dropdown({
       ui: this.ui,
-      parent: this.find(".checklist-toolbar-container"),
+      parent: this.find(".checklist-dropdown-container"),
       docId: this.docId
     });
   }
