@@ -24,9 +24,16 @@ body.checklist-visible {
     color: lighten(@link-color, 15%);
   }
 
+  h2 {
+    color: darken(@text-grey, 10%);
+    font-size: 18px;
+    font-weight: bold;
+  }
+
   h3 {
     color: darken(@text-grey, 10%);
     font-size: 14px;
+    font-weight: bold;
   }
 }
 
@@ -37,6 +44,7 @@ body.checklist-visible {
 .checklist-pane, .checklist-childpane {
   box-sizing: border-box;
   background: @bg-color;
+  color: @text-grey;
   z-index: @z-index;
   width: 100%;
   min-width: @pane-width;
@@ -55,36 +63,34 @@ body.checklist-visible {
 
 .checklist-childpane {
   z-index: @z-index + 20;
-  padding: 10px 20px;
   position: absolute;
   min-width: 0;
   min-height: 100%;
 }
 
-.checklist-pane h1, .checklist-childpane h1 {
-  font-size: 16px;
-  color: darken(@text-grey, 20%);
-  border-bottom: 1px solid @border-color;
-  padding: 6px 0 6px 0;
-  margin: 0 0 6px 0;
-}
-
-.checklist-close-btn {
-  position: absolute;
-  padding: 0;
+.checklist-button {
+  display: block;
+  width: 200px;
   text-align: center;
-  top: 10px;
-  right: 10px;;
-  width: 24px;
-  height: 24px;
-  color: darken(@text-grey, 20%);
-  border: none;
-  background: none;
-  background-color: transparent;
+  padding: 10px;
+  margin: 20px auto 5px;
+  background-color: darken(@bg-color, 5%);
+  border: 1px solid @border-color;
+  color: @text-grey;
+  border-radius: 30px;
   cursor: pointer;
 
-  &:hover, &:active, &:focus {
-    color: darken(@text-grey, 40%);
+  &:hover, &:focus, &:active {
+    background-color: darken(@bg-color, 8%);
+  }
+}
+
+.checklist-button-primary {
+  background-color: @btn-primary-color;
+  color: #fff;
+
+  &:hover, &:focus, &:active {
+    background-color: darken(@btn-primary-color, 5%);
   }
 }
 
@@ -108,8 +114,13 @@ body.checklist-visible {
   }
 }
 
-.checklist-brand {
+.checklist-brand, .checklist-main-menu-title {
   flex: 100;
+  font-size: 16px;
+  color: @text-grey;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
 
   svg {
     margin-top: 6px;
@@ -124,7 +135,8 @@ body.checklist-visible {
   button {
     border: none;
     background: transparent;
-    margin: 0;
+    margin: 0 0 0 10px;
+    padding: 0;
     cursor: pointer;
     color: @text-grey;
 
@@ -195,23 +207,6 @@ body.checklist-visible {
 .checklist-overview {
   font-size: 15px;
   color: @text-grey;
-
-  button {
-    display: block;
-    width: 200px;
-    text-align: center;
-    padding: 10px;
-    margin: 20px auto 5px;
-    background-color: @btn-primary-color;
-    border: none;
-    color: #fff;
-    border-radius: 30px;
-    cursor: pointer;
-
-    &:hover, &:focus, &:active {
-      background-color: darken(@btn-primary-color, 5%);
-    }
-  }
 }
 
 [data-display-condition] {
@@ -532,8 +527,8 @@ body.checklist-visible {
 }
 
 .checklist-settings {
-  p {
-    font-size: 14px;
+  h3 {
+    margin-top: 40px;
   }
 }
 

@@ -21,14 +21,21 @@ function getViewHtml (cache, filters, t, tk) {
 
   const html = `
     <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
-      <button class="checklist-close-btn" data-checklist-action="close-component"><i class="fas fa-times-circle"></i></button>
-      <h1>${t("settings-title")}</h1>
-      <h2>${t("settings-filters-title")}</h2>
-      <p>${t("settings-filters-descripion")}</p>
-      ${inputHtml}
-      <h2>${t("settings-cache-title")}</h2>
-      <p>${t("settings-cache-description")}</p>
-      <button data-checklist-action="cache-clear">${t("settings-cache-clear")}</button>
+      <div class="checklist-main-menu">
+        <div class="checklist-main-menu-title"><i class="fas fa-cog"></i> ${t("settings-title")}</div>
+        <div class="checklist-main-menu-buttons">
+          <button class="checklist-close-btn" data-checklist-action="close-component"><i class="fas fa-times-circle"></i></button>
+        </div>
+      </div>
+      <div class="checklist-pane-contents">
+        <h3><i class="fas fa-filter"></i> ${t("settings-filters-title")}</h3>
+        <p>${t("settings-filters-descripion")}</p>
+        ${inputHtml}
+
+        <h3><i class="fas fa-history"></i> ${t("settings-cache-title")}</h3>
+        <p>${t("settings-cache-description")}</p>
+        <button class="checklist-button" data-checklist-action="cache-clear">${t("settings-cache-clear")}</button>
+      </div>
     </div>
   `;
   return html;
