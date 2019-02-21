@@ -12,32 +12,33 @@ class Overview extends View {
   createMarkup () {
     const html = `
       <div id="checklist-overview" class="checklist-overview">
-        <div class="checklist-overview-section-info">
+        <section class="checklist-overview-section-info">
           <p class="checklist-overview-info">${this.t("toc-control-info")}</p>
-        </div>
-        <div class="checklist-overview-section-indicators">
+        </section>
+        <section class="checklist-overview-section-indicators">
+          <h3>${this.t("overview-progress")}</h3>
           <div class="checklist-overview-stats"></div>
-        </div>
-        <div class="checklist-overview-section-legend" data-display-condition="not-running"></div>
-        <div class="checklist-overview-section-running" data-display-condition="running">
+        </section>
+        <section class="checklist-overview-section-legend" data-display-condition="not-running"></section>
+        <section class="checklist-overview-section-running" data-display-condition="running">
             <p class="checklist-overview-running">${svg.spinner} ${this.t("toc-control-running")}</p>
-        </div>
-        <div class="checklist-overview-section-done" data-display-condition="done">
+        </section>
+        <section class="checklist-overview-section-done" data-display-condition="done">
           <div class="checklist-overview-message">
             <i class="fas fa-thumbs-up"></i>
             <p class="checklist-overview-done">${this.t("toc-control-done")}</p>
           </div>
-        </div>
-        <div class="checklist-overview-section-cache" data-display-condition="cache">
+        </section>
+        <section class="checklist-overview-section-cache" data-display-condition="cache">
           <div class="checklist-overview-message">
             <i class="fas fa-exclamation-circle"></i>
             <p class="checklist-overview-info">${this.t("toc-control-info-cache")}</p>
           </div>
           <button class="checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
-        </div>
-        <div class="checklist-overview-section-run" data-display-condition="run-button">
+        </section>
+        <section class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-toc-run" data-checklist-action="toc-run"><i class="far fa-play-circle"></i> ${this.t("toc-check")}</button>
-        </div>
+        </section>
       </div>
     `;
     this.createView(html);
