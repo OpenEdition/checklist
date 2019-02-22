@@ -84,7 +84,7 @@ class Source extends Base {
       };
 
       const href = this.url.href;
-      const timeout = this.getConfig("loaderTimeout", 20000);
+      const timeout = this.getConfig("loaderTimeout", 10000);
       const delay = this.getConfig("loaderDelay", 0);
       const ajaxOptions = {
         url: href,
@@ -98,9 +98,14 @@ class Source extends Base {
       };
 
       // Ability to emulate delay for development purpose
-      window.setTimeout(function () {
+      window.setTimeout(() => {
+        if (delay >= timeout) {
+          this.error(`Could not load URL ${href} because of loaderDelay`);
+          this.complete();
+          return;
+        }
         $.ajax(ajaxOptions);
-      }, delay);
+      }, Math.min(delay, timeout));
     };
 
     return this.self ? loadLocal() : loadRemote();
