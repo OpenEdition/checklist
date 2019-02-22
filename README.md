@@ -46,6 +46,9 @@ checklist.init({
   // Timeout des requêtes Ajax lancées par le Loader
   loaderTimeout: 10000,
 
+  // Délai optionnel lors du chargement des sources (à utiliser pour le dev uniquement)
+  loaderDelay: 0,
+
   // Timeout de l'exécution des tests
   checkTimeout: 3000,
 

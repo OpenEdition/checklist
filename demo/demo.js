@@ -73,6 +73,7 @@ $(function () {
     lang: "fr",
     maxSourcesLoading: 5,
     loaderTimeout: 3000,
+    loaderDelay: 1000,
 
     translations: {
       en: {
