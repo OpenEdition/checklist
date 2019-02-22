@@ -19,7 +19,7 @@ class Overview extends View {
           <h3>${this.t("overview-progress")}</h3>
           <div class="checklist-overview-stats"></div>
         </section>
-        <section class="checklist-overview-section-legend" data-display-condition="not-running"></section>
+        <section class="checklist-overview-section-legend" data-display-condition="legend"></section>
         <section class="checklist-overview-section-running" data-display-condition="running">
             <p class="checklist-overview-running">${svg.spinner} ${this.t("toc-control-running")}</p>
         </section>
@@ -84,14 +84,14 @@ class Overview extends View {
   }
 
   updateControls (states = {}) {
-    const running = states.pending > 0 || states.isBatchRunning;
+    const running = states.pending > 0 || states.restarting > 0 || states.isBatchRunning;
     const conditions = [
       {
         name: "running",
         flag: running
       },
       {
-        name: "not-running",
+        name: "legend",
         flag: !running
       },
       {

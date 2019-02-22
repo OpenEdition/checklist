@@ -164,8 +164,7 @@ class TOC extends View {
       const $element = entry.$element;
 
       // Update indicators in overview
-      // TODO: add "beforeReset" ?
-      ["run", "rated", "done", "failed"].forEach((eventName) => {
+      ["run", "rated", "done", "failed", "reset"].forEach((eventName) => {
         report.on(eventName, () => this.updateIndicators());
       });
 
@@ -193,23 +192,21 @@ class TOC extends View {
       isBatchRunning: this.isBatchRunning,
       length: this.entries.length,
       blank: 0,
-      done: 0,
-      pending: 0,
       fromCache: 0,
+      restarting: 0,
+      pending: 0,
+      done: 0,
       failed: 0
     }
 
     const updateStates = (report) => {
-      const isRun = report.hasState("run");
-      const isDone = report.hasState("done");
-      const isFromCache = report.hasState("fromCache");
-      const isFailed = report.hasState("failed");
-
-      if (!isRun && !isFromCache) states.blank++;
-      if (isDone) states.done++;
-      if (isRun && !isDone && !isFailed) states.pending++;
-      if (isFromCache) states.fromCache++;
-      if (isFailed) states.failed++;
+      const s = report.states;
+      if (!s.run && !s.fromCache) states.blank++;
+      if (s.fromCache) states.fromCache++;
+      if (s.reset && !s.run) states.restarting++;
+      if (s.run && !s.done && !s.failed) states.pending++;
+      if (s.done) states.done++;
+      if (s.failed) states.failed++;
     }
 
     const ratings = {};
