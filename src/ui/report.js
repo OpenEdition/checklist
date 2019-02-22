@@ -97,7 +97,8 @@ class Report extends View {
     const href = this.href;
     const context = this.context;
     this.reset();
-    this.toggleSpinner();
+    this.startProgress();
+    const stopLoaderProgressSimulation = this.simulateLoaderProgress();
     return new Promise ((resolve, reject) => {
       checklist.whenState("ready").then(() => {
         checklist.run({docId, href, context, reloadSource: true})
@@ -108,7 +109,8 @@ class Report extends View {
           .catch((err) => {
             this.triggerState("failed");
             reject(err); // avoid duplicate logging here
-          });
+          })
+          .finally(stopLoaderProgressSimulation);
       });
     });
   }
@@ -134,8 +136,7 @@ class Report extends View {
 
     checker.whenState("run").then(() => {
       this.triggerState("run");
-      this.startPercentage();
-      this.toggleSpinner();
+      this.startProgress();
     })
     .catch(console.error);
 
@@ -303,10 +304,13 @@ class Report extends View {
     return this;
   }
 
-  startPercentage () {
-    const $el = this.find(".checklist-percentage");
-    let displayedPercentage = 0;
+  startProgress () {
+    this.toggleSpinner();
 
+    const $el = this.find(".checklist-percentage");
+    let displayedPercentage = this.percentage || 0;
+
+    // Smooth increment (one by one)
     const intervalId = setInterval(() => {
       // Don't show 0%
       if (displayedPercentage === 0) {
@@ -326,16 +330,36 @@ class Report extends View {
     return this;
   }
 
-  setPercentage () {
-    // If no checker, then process is 100%
-    if (this.checker == null) {
-      this.percentage = 100;
+  simulateLoaderProgress () {
+    const timeout = this.getConfig("loaderTimeout", 10000);
+
+    // In case of a timeout: first increase progress one by one during 50% time, then freeze during 50%, then fail
+    const refreshDelay = timeout / (50 + 50);
+
+    const intervalID = setInterval(() => {
+      this.setProgress(true);
+    }, refreshDelay);
+
+    const clearFunc = (function (intervalId) {
+      return () => clearInterval(intervalId);
+    })(intervalID);
+    return clearFunc;
+  }
+
+  setProgress (incrementLoaderProgress) {
+    const loaderMaxProgress = 49;
+
+    if (incrementLoaderProgress) {
+      if (this.percentage >= loaderMaxProgress) return; // progress freezes here
+      this.percentage += 1;
       return this;
     }
+
+    if (this.checker == null) return this;
     const checker = this.checker;
     const total = checker.rules.length;
     const count = checker.checks.filter((check) => check.hasState("done")).length;
-    this.percentage = (count / total) * 100;
+    this.percentage = Math.floor(loaderMaxProgress + (count / total) * (100 - loaderMaxProgress));
     return this;
   }
 
@@ -353,7 +377,7 @@ class Report extends View {
   updateView () {
     this.emit("beforeUpdateView");
     this.toggleStatementGroups();
-    this.setPercentage();
+    this.setProgress();
     this.emit("afterUpdateView");
     return this;
   }
