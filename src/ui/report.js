@@ -171,6 +171,10 @@ class Report extends View {
     return this;
   }
 
+  isSelf () {
+    return this.checker ? this.checker.source.self : null;
+  }
+
   // STATEMENTS
   // ==========
 
@@ -308,7 +312,7 @@ class Report extends View {
     this.toggleSpinner();
 
     const $el = this.find(".checklist-percentage");
-    let displayedPercentage = this.percentage || 0;
+    let displayedPercentage = this.isSelf() ? 0 : (this.percentage || 0);
 
     // Smooth increment (one by one)
     const intervalId = setInterval(() => {
@@ -359,7 +363,12 @@ class Report extends View {
     const checker = this.checker;
     const total = checker.rules.length;
     const count = checker.checks.filter((check) => check.hasState("done")).length;
-    this.percentage = Math.floor(loaderMaxProgress + (count / total) * (100 - loaderMaxProgress));
+
+    if (this.isSelf()) {
+      this.percentage = Math.floor((count / total) * 100);
+    } else {
+      this.percentage = Math.floor(loaderMaxProgress + (count / total) * (100 - loaderMaxProgress));
+    }
     return this;
   }
 
