@@ -2,19 +2,21 @@ const Base = require("./base.js");
 const Marker = require("./marker.js");
 
 class Statement extends Base {
-  constructor ({name, id, description, type, tags, caller}) {
+  constructor ({name, id, description, type, tags, count, caller}) {
     super("Statement", caller);
     this.check = caller;
     this.docId = caller.docId;
 
-    Object.assign(this, {name, id, description, type, tags});
+    Object.assign(this, {name, id, description, type, count, tags});
 
     if (this.name == null) {
       throw Error("Statement constructor requires a name");
     }
 
+    if (!this.count || this.count < 1) {
+      this.count = 1;
+    }
     this.markers = [];
-    this.count = 1;
   }
 
   add (nb = 1) {

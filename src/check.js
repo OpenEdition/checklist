@@ -50,10 +50,14 @@ class Check extends Base {
   }
 
   notify (value) {
-    if (value === false) return;
+    if (!value) return;
 
     if (typeof value === "string") {
       value = { name: value };
+    }
+
+    if (typeof value === "number" && value > 0) {
+      value = { count: value };
     }
 
     if (value == null) {
@@ -65,14 +69,15 @@ class Check extends Base {
     const description = value.description || this.description;
     const type = value.type || this.type || this.getConfig("defaultType", "info");
     const tags = value.tags || this.tags || [];
+    const count = value.count || 1;
 
-    const statement = new Statement({name, id, description, type, tags, caller: this});
+    const statement = new Statement({name, id, description, type, tags, count, caller: this});
     this.forwardEvents(statement, ["marker"]);
 
     // Increase count if this statement already exists in Check
     const duplicate = statement.getDuplicate();
     if (duplicate) {
-      duplicate.add();
+      duplicate.add(count);
       this.emit("statement.update", duplicate);
     } else {
       // Otherwise register it in Check

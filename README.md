@@ -332,10 +332,13 @@ checklist.init({
     // Créer un statement en utilisant les valeurs par défaut de la règle
     this.notify();
 
-    // Il est posible d'incrémenter le compteur en ajoutant d'autres statements identiques (= qui ont le même id).
+    // Il est posible d'incrémenter le compteur en ajoutant d'autres statements identiques (= qui ont le même id)
     for (var i=0; i < 3; i++) {
       this.notify();
     }
+
+    // ...ou en passant simplement un nombre en paramètre
+    this.notify(3);
 
     // Si notify prend false pour argument alors il n'est pas pris en compte (c'est une écriture courte pour éviter les blocs conditionnels)
     const flag = 0 === 1;
