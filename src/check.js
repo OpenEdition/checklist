@@ -49,7 +49,7 @@ class Check extends Base {
     });
   }
 
-  notify (value) {
+  notify (value, markerObj) {
     if (!value) return;
 
     if (typeof value === "string") {
@@ -84,6 +84,12 @@ class Check extends Base {
       this.statements.push(statement);
       this.emit("statement.new", statement);
     }
+
+    // Add marker
+    if (markerObj) {
+      statement.addMarker(markerObj);
+    }
+
     return statement;
   }
 
@@ -96,11 +102,9 @@ class Check extends Base {
     return this;
   }
 
-  resolve (value) {
+  resolve (value, markerObj) {
     if (this.hasState("done") || this.hasState("success")) return this;
-    if (value != null) {
-      this.notify(value);
-    }
+    this.notify(value, markerObj);
     this.triggerState("success", this);
     setDone(this);
     return this;

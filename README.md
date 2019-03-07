@@ -330,11 +330,11 @@ checklist.init({
   // Dans le cas de sources externes chargées via ajax, le tag body est remplacé par un div pour éviter une erreur du DOM. Pour cette raison le deuxième paramètre d'action() correspond aux classes du body de la source.
   action: function ($, bodyClasses) {
     // Créer un statement en utilisant les valeurs par défaut de la règle
-    this.notify();
+    this.notify(true);
 
     // Il est posible d'incrémenter le compteur en ajoutant d'autres statements identiques (= qui ont le même id)
     for (var i=0; i < 3; i++) {
-      this.notify();
+      this.notify(true);
     }
 
     // ...ou en passant simplement un nombre en paramètre
@@ -360,8 +360,8 @@ checklist.init({
     });
 
     // Ajouter des markers.
-    var statement = this.notify();
-    statement.addMarker({
+    const statement = this.notify();
+    const markerObj = {
       // Titre du marker.
       // Par défaut on utilise le nom du statement (qui est lui même peut-être hérité de la règle, voir ci-dessus).
       name: {
@@ -376,17 +376,21 @@ checklist.init({
       // Element cible.
       target: $("h1").get(0),
 
-      // Position: "after"|"before"
+      // Position: "after"|"before" (default = "before")
       position: "after"
-    });
+    };
+    statement.addMarker(markerObj);
+
+    // Il est aussi possible de passer la description du marker en 2e parametre de notify()
+    this.notify(true, markerObj);
 
     // Déclarer un exception au cours du test (si par exemple un élément de maquette n'existe pas)
     this.reject("Message d'erreur");
 
     // Déclarer la fin du test avec resolve().
     // C'est indipensable car tous les tests sont asynchrones.
-    // Si un argument est donné, this.notify() est exécuté avec cet argument avant la fin du test. Il est donc possible de créer une notification par défaut avec l'argument true.
-    this.resolve(true);
+    // notify() est exécuté avec les arguments passés en paramètre de resolve() avant la fin du test. Il est donc possible de créer une notification par défaut avec l'argument true et de passer un marker optionnel.
+    this.resolve(true, markerObj);
   }
 }
 ```
