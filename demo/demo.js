@@ -337,7 +337,16 @@ $(function () {
         type: "danger",
         condition: "textes || publications",
         action: function () {}
-      }
+      },
+      {
+        id: "err",
+        name: "Une règle qui lance une exception",
+        type: "danger",
+        condition: "textes || publications",
+        action: function () {
+          throw Error("Boum ! (test)");
+         }
+      },
     ]
   })
   .then(function () {

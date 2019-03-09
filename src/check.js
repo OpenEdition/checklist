@@ -126,7 +126,11 @@ class Check extends Base {
     setTimeout(this.reject.bind(this, timeoutMsg), delay);
     const selectFunc = this.source.get$();
     const bodyClasses = this.source.bodyClasses;
-    this.action.call(this, selectFunc, bodyClasses);
+    try {
+      this.action.call(this, selectFunc, bodyClasses);
+    } catch (e) {
+      this.reject(e);
+    }
     return this;
   }
 
