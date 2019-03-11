@@ -71,7 +71,7 @@ class Check extends Base {
     const tags = value.tags || this.tags || [];
     const count = value.count || 1;
 
-    const statement = new Statement({name, id, description, type, tags, count, caller: this});
+    let statement = new Statement({name, id, description, type, tags, count, caller: this});
     this.forwardEvents(statement, ["marker"]);
 
     // Increase count if this statement already exists in Check
@@ -79,6 +79,7 @@ class Check extends Base {
     if (duplicate) {
       duplicate.add(count);
       this.emit("statement.update", duplicate);
+      statement = duplicate;
     } else {
       // Otherwise register it in Check
       this.statements.push(statement);
