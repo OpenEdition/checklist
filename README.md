@@ -376,7 +376,7 @@ checklist.init({
       // Element cible.
       target: $("h1").get(0),
 
-      // Position: "after"|"before" (default = "before")
+      // Position: "prepend"|"append"|"after"|"before" (default = "prepend")
       position: "after"
     };
     statement.addMarker(markerObj);

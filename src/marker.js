@@ -1,7 +1,7 @@
 const Base = require("./base.js");
 
 class Marker extends Base {
-  constructor ({ caller, target, name, position = "before", type }) {
+  constructor ({ caller, target, name, position = "prepend", type }) {
     super("Marker", caller);
 
     if (!target || !name) {

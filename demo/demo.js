@@ -313,7 +313,7 @@ $(function () {
             statement.addMarker({
               name: "Marqueur",
               target: $(this),
-              position: "after"
+              position: "append"
             });
           });
           this.resolve();

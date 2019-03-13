@@ -267,10 +267,14 @@ class Report extends View {
     const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${this.tk(marker.name)}"></span>`;
     const $element = $(html);
     const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");
-    if (marker.position !== "after") {
-        $element.prependTo($filteredTarget);
+    if (marker.position === "before") {
+      $element.insertBefore($filteredTarget);
+    } else if (marker.position === "after") {
+      $element.insertAfter($filteredTarget);
+    } else if (marker.position === "append") {
+      $element.appendTo($filteredTarget);
     } else {
-        $element.appendTo($filteredTarget);
+      $element.prependTo($filteredTarget);
     }
     marker.setElement($element.get(0));
   }
