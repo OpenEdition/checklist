@@ -377,7 +377,10 @@ checklist.init({
       target: $("h1").get(0),
 
       // Position: "prepend"|"append"|"after"|"before" (default = "prepend")
-      position: "after"
+      position: "after",
+
+      // Si true, ajoute la classe .checklist-highlight à l'élément cible
+      highlight: false
     };
     statement.addMarker(markerObj);
 

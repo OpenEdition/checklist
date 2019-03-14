@@ -33,7 +33,6 @@ class Statement extends Base {
     return this.id === statement.id;
   }
 
-  // In rules, set: label = { target, name[, position, type] }
   addMarker (options) {
     try {
       const showMarkers = this.getConfig("showMarkers", true);

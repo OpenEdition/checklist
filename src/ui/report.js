@@ -267,6 +267,7 @@ class Report extends View {
     const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${this.tk(marker.name)}"></span>`;
     const $element = $(html);
     const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");
+
     if (marker.position === "before") {
       $element.insertBefore($filteredTarget);
     } else if (marker.position === "after") {
@@ -276,6 +277,11 @@ class Report extends View {
     } else {
       $element.prependTo($filteredTarget);
     }
+
+    if (marker.highlight) {
+      $filteredTarget.addClass("checklist-highlight");
+    }
+
     marker.setElement($element.get(0));
   }
 
