@@ -279,7 +279,7 @@ class Report extends View {
     }
 
     if (marker.highlight) {
-      $filteredTarget.addClass("checklist-highlight");
+      $filteredTarget.attr("data-checklist-highlight", "true");
     }
 
     marker.setElement($element.get(0));
