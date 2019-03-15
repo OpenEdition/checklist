@@ -1,7 +1,9 @@
 const Base = require("./base.js");
 
+const winHref = window.location.href.replace(window.location.hash, "");
+
 function getUrl (href = "") {
-  return new URL(href, window.location.href);
+  return new URL(href, winHref);
 }
 
 class Source extends Base {
@@ -42,7 +44,7 @@ class Source extends Base {
   }
 
   isSelf () {
-    return this.url.href === window.location.href;
+    return this.url.href === winHref;
   }
 
   load () {
