@@ -200,7 +200,7 @@ class Report extends View {
       const isFiltered = cache.isFiltered([`type-${type}`, ...tagsFilters]);
       const filterClass = isFiltered ? "hidden" : "";
 
-      const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}"><span class="checklist-statement-msg">${countSpan} ${this.tk(statement.name)}</span></li>`;
+      const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}">${countSpan}<span class="checklist-statement-msg">${this.tk(statement.name)}</span></li>`;
       return li;
     };
 

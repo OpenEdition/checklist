@@ -140,6 +140,7 @@ body.checklist-visible {
     padding: 0;
     cursor: pointer;
     color: @text-grey;
+    font-size: 15px;
 
     &:hover, &:active, &:focus {
       color: darken(@text-grey, 20%);
@@ -445,11 +446,16 @@ body.checklist-visible {
 
 .checklist-statement {
   font-size: 15px;
-  padding: 0 2px 0 10px;
+  padding: 0 2px 0 8px;
   margin: 0;
   position: relative;
   min-height: 30px;
   display: flex;
+  align-items: center;
+
+  &:hover .checklist-statement-btn {
+    visibility: visible;
+  }
 }
 
 .checklist-statement + .checklist-statement {
@@ -463,22 +469,25 @@ body.checklist-visible {
 }
 
 .checklist-statement-count {
+  flex: 1;
   color: #fff;
   background: @text-grey;
   font-size: 11px;
   font-weight: bold;
   border-radius: 20px;
   padding: 2px 5px;
-  margin-left: 2px;
+  margin-right: 8px;
 }
 
 .checklist-statement-btn {
   flex: 1;
+  visibility: hidden;
   margin: 0;
   padding: 4px 6px;
   color: lighten(@text-grey, 20%);
   border: none;
   background: none;
+  font-size: 15px;
   cursor: pointer;
 
   &:hover, &:active, &:focus {
