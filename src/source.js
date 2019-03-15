@@ -110,7 +110,8 @@ class Source extends Base {
       }, Math.min(delay, timeout));
     };
 
-    return this.self ? loadLocal() : loadRemote();
+    this.self ? loadLocal() : loadRemote();
+    return this;
   }
 }
 
