@@ -2,3 +2,9 @@
   from {transform:rotate(0deg);}
   to {transform:rotate(360deg);}
 }
+
+@-webkit-keyframes pulsate {
+  70% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+  85% {opacity: 1.0;}
+  100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}

@@ -517,10 +517,35 @@ body.checklist-visible {
   padding: 0;
 }
 
-.checklist-marker:before {
+.checklist-marker {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  background-color: #62bd19;
+  border-radius: 50%;
+  position: relative;
   display: inline-block;
+}
+
+.checklist-marker:not(:hover):after {
+  content: " ";
+  border: 3px solid #62bd19;
+  border-radius: 30px;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 27px;
+  height: 27px;
+  animation: pulsate 3s ease-out;
+  animation-iteration-count: infinite; 
+  opacity: 0.0
+}
+
+.checklist-marker:hover:before {
+  display: block;
   font-family: @font-sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: normal;
   font-style: normal;
   text-decoration: none;
@@ -529,13 +554,31 @@ body.checklist-visible {
   margin: 4px;
   content: attr(data-checklist-marker-name);
   background: @marker-bg-color;
-  border: 1px solid darken(@marker-bg-color, 10%);
   color: @marker-color;
   border-radius: 5px;
+  position: absolute;
+  bottom: 19px;
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.checklist-marker:hover:after {
+  position: absolute;
+  bottom: 17px;
+  left: 50%;
+  margin-left: -6px;
+  width: 0;
+  border-top: 6px solid @marker-bg-color;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
 }
 
 [data-checklist-highlight="true"] {
-  background-color: yellow;
+  background-color: @highlight-color;
 }
 
 .checklist-help {
