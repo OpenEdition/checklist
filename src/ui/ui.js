@@ -93,6 +93,12 @@ class UI extends Base {
         .checklist-statements-${type.id} ul {
           border-left: 5px solid ${type.color};
         }
+        .checklist-marker-type-${type.id} {
+          background-color: ${type.color};
+        }
+        .checklist-marker-type-${type.id}:not(:hover):after {
+          border-color: ${type.color};
+        }
       `);
     });
 

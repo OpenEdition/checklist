@@ -522,7 +522,7 @@ body.checklist-visible {
   height: 16px;
   margin: 0;
   padding: 0;
-  background-color: #62bd19;
+  background-color: @marker-color;
   border-radius: 50%;
   position: relative;
   display: inline-block;
@@ -530,7 +530,7 @@ body.checklist-visible {
 
 .checklist-marker:not(:hover):after {
   content: " ";
-  border: 3px solid #62bd19;
+  border: 3px solid @marker-color;
   border-radius: 30px;
   position: absolute;
   top: -50%;
