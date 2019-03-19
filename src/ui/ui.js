@@ -62,8 +62,8 @@ class UI extends Base {
           fr: "Ce document n'a pas encore été vérifié.",
           en: "This document was not checked yet."
         },
-        color: "#999",
-        bgcolor: "#eee"
+        color: "#292d32",
+        bgcolor: "#D8E0E9"
       });
     }
 
