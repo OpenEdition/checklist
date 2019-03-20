@@ -14,7 +14,7 @@ $(function () {
         "title": "Checklist Demo",
         "href": "http://localhost:3000/demo/",
         "type": "Publication",
-        "icon": "<i class='fas fa-book'></i>",
+        "icon": "fas fa-book",
         "context": {
           "publications": true
         }

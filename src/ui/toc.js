@@ -49,10 +49,10 @@ class TOC extends View {
 
     const createDropdown = (entry, $element) => {
       const type = entry.type || this.t("article");
-      const icon = entry.icon || "<i class='far fa-file-alt'></i>";
+      const icon = entry.icon || "far fa-file-alt";
       const headerHtml = `
         <div class="checklist-toc-entry-header">
-          <div class="checklist-toc-entry-brand">${icon} ${type}</div>
+          <div class="checklist-toc-entry-brand"><i class="${icon}"></i> ${type}</div>
         </div>
       `;
       const $dropdownParent = $(headerHtml);

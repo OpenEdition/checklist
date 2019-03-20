@@ -245,7 +245,7 @@ checklist.init({
         title: $(".publi-title").text(),
         href: window.location.href, // indique qu'il s'agit de la page courante
         type: "Publication",
-        icon: "<i class='fas fa-book'></i>",
+        icon: "fas fa-book",
         context: {"publications": true}
       }
       {
