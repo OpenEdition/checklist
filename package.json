@@ -1,5 +1,5 @@
 {
-  "name": "checklist",
+  "name": "@openedition/checklist",
   "version": "1.0.0",
   "description": "OpenEdition Checklist",
   "main": "dist/checklist.js",
@@ -23,7 +23,6 @@
   ],
   "author": "brrd",
   "license": "GPL-3.0",
-  "private": true,
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.0",
@@ -44,5 +43,16 @@
   },
   "dependencies": {
     "eventemitter2": "^3.0.2"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenEdition/checklist.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OpenEdition/checklist/issues"
+  },
+  "homepage": "https://github.com/OpenEdition/checklist#readme"
 }
