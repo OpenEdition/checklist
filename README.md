@@ -1,55 +1,36 @@
 # OpenEdition Checklist
 
-## Installation
-
-1. Cloner le dépôt.
-2. Installer les dépendances `npm install`.
-3. Compiler le script : `npm run build`
-
-Checklist requiert jQuery et Font Awesome 5.
-
-```html
-  <!-- Font awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
-  <!-- jQuery  -->
-  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-
-  <!-- Noyau de checklist -->
-  <script src="../dist/checklist.js"></script>
-
-  <!-- Configuration de checklist (voir plus bas) -->  
-  <script src="path/to/checklist-config.js"></script>
-```
-
-## Développement
-
-Les scripts npm suivants sont disponibles :
-
-* `build`: transpiler le script.
-* `watch`: transpiler le script automatiquement quand le code est modifié.
-* `test`: lancer les tests unitaires et la démo dans le navigateur.
-* `dev`: transpiler et relancer les tests automatiquement quand le code est modifié.
-* `test-https` et `dev-https` : variantes de `test` et `dev` qui utilisent https. Utile pour tester le script sur un site en https.
-
-### Comment mettre à jour Checklist (noyau JavaScript uniquement)
+## Installation 
 
 NodeJS, NPM et Git doivent être installés sur la machine.
-
-Développement :
 
 1. Cloner ce dépôt
 2. `cd checklist`
 3. `npm install`
-4. (Optionnel) `npm run dev` pour tester en live pendant le développement
 
-Publication :
+## Publication sur NPM
+
+(pour une utilisation dans le plugin [checklist-lodel](https://github.com/OpenEdition/checklist-lodel) notamment)
 
 1. Transpiler le code source : `npm run build`
-2. Incrémenter la version dans `package.json`. Checklist utilise la convention [semver](https://docs.npmjs.com/misc/semver)
+2. Incrémenter la version dans `package.json`. REMARQUE : Checklist utilise la convention [semver](https://docs.npmjs.com/misc/semver)
 3. Publier la nouvelle version sur NPM : `npm publish`
 
-Pour mettre ensuite à jour le plugin Lodel voir : https://github.com/OpenEdition/checklist-lodel
+Pour mettre ensuite à jour `checklist` dans le plugin `checklist-lodel` voir : https://github.com/OpenEdition/checklist-lodel
+
+## Développement
+
+Checklist requiert jQuery et Font Awesome 5.
+
+La commande `npm run dev` permet de transpiler et tester le code automatiquement dans le navigateur, et facilite donc le développement.
+
+Les autres commandes suivantes sont disponibles :
+
+* `npm run build`: transpiler le script.
+* `npm run watch`: transpiler le script automatiquement quand le code est modifié.
+* `npm run test`: lancer les tests unitaires et la démo dans le navigateur.
+* `npm run dev`: transpiler et relancer les tests automatiquement quand le code est modifié.
+* `npm run test-https` et `npm run dev-https` : variantes de `test` et `dev` qui utilisent https. Utile pour tester le script sur un site en https.
 
 ## Utilisation
 
