@@ -8,7 +8,6 @@
     "dev": "npm-run-all --parallel watch test",
     "dev-https": "npm-run-all --parallel watch test-https",
     "jshint": "jshint src test/src",
-    "postinstall": "webpack",
     "test": "browser-sync start --server \".\" --startPath \"test\" --files \"dist\" \"test/dist\" \"demo\" --no-notify",
     "test-https": "browser-sync start --server \".\" --startPath \"test\" --files \"dist\" \"test/dist\" \"demo\" --no-notify --https",
     "watch": "webpack --progress --watch"
@@ -21,7 +20,11 @@
     "journals",
     "books"
   ],
-  "author": "brrd",
+  "author": {
+    "name": "Thomas Brouard",
+    "email": "contact@brrd.fr",
+    "url": "https://brrd.fr"
+  },
   "license": "GPL-3.0",
   "devDependencies": {
     "babel-core": "^6.24.0",
@@ -41,6 +44,9 @@
     "style-loader": "^0.13.2",
     "webpack": "^2.2.1"
   },
+  "files": [
+    "dist/"
+  ],
   "directories": {
     "test": "test"
   },
