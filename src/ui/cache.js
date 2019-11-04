@@ -7,13 +7,11 @@ class Cache extends Base {
   }
 
   get (id, defaultValue) {
-    if (id == null) return;
+    if (id == null) return defaultValue;
     const namespace = this.namespace;
     const key = `checklist-${namespace}-${id}`;
-    if (key != null) {
-      return JSON.parse(localStorage.getItem(key));
-    }
-    return defaultValue;
+    const value = JSON.parse(localStorage.getItem(key));
+    return value === null ? defaultValue : value;
   }
 
   set (id, value) {
@@ -38,7 +36,7 @@ class Cache extends Base {
 
   // Return true if filter exists, i.e. statements must be hidden
   getFilter (id) {
-    return this.get(`filter-${id}`, false);
+    return this.get(`filter-${id}`, true);
   }
 
   // Return true if any filter exists
