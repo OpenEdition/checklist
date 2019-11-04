@@ -279,7 +279,8 @@ class Report extends View {
     }
 
     if (marker.highlight) {
-      $filteredTarget.attr("data-checklist-highlight", "true");
+      const $toHighlight = marker.highlight instanceof jQuery ? marker.highlight : $filteredTarget;
+      $toHighlight.attr("data-checklist-highlight", "true");
     }
 
     marker.setElement($element.get(0));

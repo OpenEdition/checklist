@@ -389,7 +389,8 @@ checklist.init({
       // Position: "prepend"|"append"|"after"|"before" (default = "prepend")
       position: "after",
 
-      // Si true, ajoute la classe .checklist-highlight à l'élément cible
+      // Si true, ajoute l'attribut [data-checklist-highlight="true"] à l'élément cible.
+      // Si highlight est un élément jQuery, c'est à cet élément qui sera ajouté l'attribut.
       highlight: false
     };
     statement.addMarker(markerObj);
