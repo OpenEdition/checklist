@@ -104,7 +104,7 @@ function initActions (ui) {
   // Close dropdowns
   $(document).on("click", function (event) {
     const $el = $(event.target);
-    if ($el.is("[data-checklist-action='dropdown']")) return;
+    if ($el.is("[data-checklist-action='dropdown'], [data-checklist-action='dropdown'] *")) return;
     $(".checklist-dropdown").removeClass("visible");
   });
 }
