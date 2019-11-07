@@ -1,5 +1,7 @@
-const path = require("path");
 const LessPluginAutoPrefix = require("less-plugin-autoprefix");
+const path = require("path");
+const pkg = require("./package.json");
+const webpack = require("webpack");
 
 const jsRule = {
   test: /\.js$/,
@@ -27,6 +29,13 @@ const lessRule = {
   ],
 };
 
+const plugins = [
+  // Inject version
+  new webpack.DefinePlugin({
+    __VERSION__: JSON.stringify(pkg.version)
+  })
+];
+
 module.exports = [
   {
     context: path.resolve(__dirname, "./src"),
@@ -39,7 +48,8 @@ module.exports = [
     },
     module: {
       rules: [jsRule, lessRule],
-    }
+    },
+    plugins
   },
   {
     context: path.resolve(__dirname, "./test/src"),
@@ -52,6 +62,7 @@ module.exports = [
     },
     module: {
       rules: [jsRule],
-    }
+    },
+    plugins
   }
 ];

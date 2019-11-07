@@ -1,3 +1,4 @@
+const checklistVersion = __VERSION__;
 const View = require("./view.js");
 
 function getViewHtml (cache, filters, t, tk) {
@@ -37,7 +38,7 @@ function getViewHtml (cache, filters, t, tk) {
         <p>${t("settings-cache-description")}</p>
         <button class="checklist-button" data-checklist-action="cache-clear">${t("settings-cache-clear")}</button>
 
-        <p class="checklist-credits-infos">${t("credits-infos", {year: new Date().getFullYear()})}</p>
+        <p class="checklist-credits-infos">${t("credits-infos", { year: new Date().getFullYear(), version: checklistVersion})}</p>
       </div>
     </div>
   `;
