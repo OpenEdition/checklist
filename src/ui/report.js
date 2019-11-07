@@ -187,10 +187,10 @@ class Report extends View {
       return tags.map((tag) => `tag-${tag}`);
     };
 
-    const getFilterClass = (tags) => {
+    const isFiltered = (tags) => {
       const cache = this.ui.cache;
       const tagsFilters = getTagsFilters(tags);
-      return cache.isFiltered(tagsFilters) ? "hidden" : "";
+      return cache.isFiltered(tagsFilters);
     };
 
     const getStatementHtml = () => {
@@ -199,7 +199,7 @@ class Report extends View {
       const typeClass = type ? `checklist-statement-type-${type}` : "";
 
       const tags = statement.tags;
-      const filterClass = getFilterClass(tags);
+      const filterClass = isFiltered(tags) ? "hidden" : "";
       const tagsClasses = getTagsClasses(tags);
 
       const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}">${countSpan}<span class="checklist-statement-msg">${this.tk(statement.name)}</span></li>`;
@@ -241,8 +241,8 @@ class Report extends View {
 
     const doInjectStatement = (statement, target) => {
       const tags = statement.tags;
-      const filterClass = getFilterClass(tags);
-      this.injectMarkers(statement.markers, filterClass);
+      const isVisible = !isFiltered(tags);
+      this.injectMarkers(statement.markers, isVisible);
 
       const html = getStatementHtml();
       const element = $(html).get(0);
@@ -267,8 +267,9 @@ class Report extends View {
   // MARKERS
   // =======
 
-  injectMarker(marker, classname = "") {
+  injectMarker(marker, isVisible = true) {
     if (this.showMarkers === false) return;
+    const classname = isVisible ? "" : "hidden";
     const html = `<span class="checklist-marker checklist-marker-type-${marker.type} ${classname}" data-checklist-marker-name="${this.tk(marker.name)}"></span>`;
     const $element = $(html);
     const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");
@@ -284,16 +285,17 @@ class Report extends View {
     }
 
     if (marker.highlight) {
-      const $toHighlight = marker.highlight instanceof jQuery ? marker.highlight : $filteredTarget;
-      $toHighlight.attr("data-checklist-highlight", "true");
+      const $highlightElement = marker.highlight instanceof jQuery ? marker.highlight : $filteredTarget;
+      $highlightElement.attr("data-checklist-highlight", isVisible ? "true" : "false");
+      marker.setHighlightElement($highlightElement);
     }
 
     marker.setElement($element.get(0));
   }
 
-  injectMarkers(markers, classname = "") {
+  injectMarkers(markers, isVisible = true) {
     const fn = (marker) => {
-      return this.injectMarker.call(this, marker, classname);
+      return this.injectMarker.call(this, marker, isVisible);
     };
     oneByOne(markers, fn);
   }
@@ -461,8 +463,13 @@ class Report extends View {
     $elements.each(function() {
       const statement = $(this).get(0).statement;
       const markers = statement.markers;
-      const $markers = $(markers.map((marker) => marker.getElement()));
-      $markers.toggleClass("hidden", hidden);
+      markers.forEach((marker) => {
+        const $marker = $(marker.getElement());
+        $marker.toggleClass("hidden", hidden);
+        const $highlightElement = marker.getHighlightElement();
+        if (!$highlightElement) return;
+        $highlightElement.attr("data-checklist-highlight", !hidden);
+      });
     });
 
     this.toggleStatementGroups();

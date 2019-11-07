@@ -16,8 +16,17 @@ class Marker extends Base {
     return this;
   }
 
-  getElement (element) {
+  getElement () {
     return this.element;
+  }
+
+  setHighlightElement(element) {
+    this.highlightElement = element;
+    return this;
+  }
+
+  getHighlightElement() {
+    return this.highlightElement;
   }
 }
 
