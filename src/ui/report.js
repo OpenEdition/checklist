@@ -187,18 +187,20 @@ class Report extends View {
       return tags.map((tag) => `tag-${tag}`);
     };
 
+    const getFilterClass = (tags) => {
+      const cache = this.ui.cache;
+      const tagsFilters = getTagsFilters(tags);
+      return cache.isFiltered(tagsFilters) ? "hidden" : "";
+    };
+
     const getStatementHtml = () => {
       const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-statement-count">${statement.count}</span>` : "";
       const type = statement.type;
       const typeClass = type ? `checklist-statement-type-${type}` : "";
 
       const tags = statement.tags;
+      const filterClass = getFilterClass(tags);
       const tagsClasses = getTagsClasses(tags);
-
-      const cache = this.ui.cache;
-      const tagsFilters = getTagsFilters(tags);
-      const isFiltered = cache.isFiltered(tagsFilters);
-      const filterClass = isFiltered ? "hidden" : "";
 
       const li = `<li class="checklist-statement ${typeClass} ${filterClass} ${tagsClasses}">${countSpan}<span class="checklist-statement-msg">${this.tk(statement.name)}</span></li>`;
       return li;
@@ -238,7 +240,10 @@ class Report extends View {
     };
 
     const doInjectStatement = (statement, target) => {
-      this.injectMarkers(statement.markers);
+      const tags = statement.tags;
+      const filterClass = getFilterClass(tags);
+      this.injectMarkers(statement.markers, filterClass);
+
       const html = getStatementHtml();
       const element = $(html).get(0);
       // Link element to its statement in order to easily implement filters
@@ -262,9 +267,9 @@ class Report extends View {
   // MARKERS
   // =======
 
-  injectMarker (marker) {
+  injectMarker(marker, classname = "") {
     if (this.showMarkers === false) return;
-    const html = `<span class="checklist-marker checklist-marker-type-${marker.type}" data-checklist-marker-name="${this.tk(marker.name)}"></span>`;
+    const html = `<span class="checklist-marker checklist-marker-type-${marker.type} ${classname}" data-checklist-marker-name="${this.tk(marker.name)}"></span>`;
     const $element = $(html);
     const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");
 
@@ -286,8 +291,11 @@ class Report extends View {
     marker.setElement($element.get(0));
   }
 
-  injectMarkers (markers) {
-    oneByOne(markers, this.injectMarker.bind(this));
+  injectMarkers(markers, classname = "") {
+    const fn = (marker) => {
+      return this.injectMarker.call(this, marker, classname);
+    };
+    oneByOne(markers, fn);
   }
 
   // REJECTIONS
@@ -448,6 +456,15 @@ class Report extends View {
     const selector = `.checklist-statement-${id}`;
     const $elements = this.find(selector);
     $elements.toggleClass("hidden", hidden);
+
+    // Show/hide markers
+    $elements.each(function() {
+      const statement = $(this).get(0).statement;
+      const markers = statement.markers;
+      const $markers = $(markers.map((marker) => marker.getElement()));
+      $markers.toggleClass("hidden", hidden);
+    });
+
     this.toggleStatementGroups();
     this.updateRating();
     return this;

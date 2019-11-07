@@ -15,6 +15,10 @@ class Marker extends Base {
     this.element = element;
     return this;
   }
+
+  getElement (element) {
+    return this.element;
+  }
 }
 
 module.exports = Marker;
