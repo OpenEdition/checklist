@@ -463,6 +463,8 @@ class Report extends View {
     $elements.each(function() {
       const statement = $(this).get(0).statement;
       const markers = statement.markers;
+      if (!markers || markers.length === 0) return;
+      
       markers.forEach((marker) => {
         const $marker = $(marker.getElement());
         $marker.toggleClass("hidden", hidden);
