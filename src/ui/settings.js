@@ -36,6 +36,8 @@ function getViewHtml (cache, filters, t, tk) {
         <h3><i class="fas fa-history"></i> ${t("settings-cache-title")}</h3>
         <p>${t("settings-cache-description")}</p>
         <button class="checklist-button" data-checklist-action="cache-clear">${t("settings-cache-clear")}</button>
+
+        <p class="checklist-credits-infos">${t("credits-infos", {year: new Date().getFullYear()})}</p>
       </div>
     </div>
   `;
