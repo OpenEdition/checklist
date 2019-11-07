@@ -32,6 +32,25 @@ function initActions (ui) {
       ui.showInfo(`<h2>${tk(name)}</h2> <p>${tk(description)}</p>`);
     },
 
+    "filter": function () {
+      const settings = ui.components.settings;
+      const $filters = settings.find(".checklist-filter");
+      
+      const inputHandler = (filterId, hidden) => {
+        ui.filterStatements(filterId, hidden);
+      };
+
+      $filters.each(function() {
+        const filterId = $(this).prop("value");
+        const hidden = !$(this).prop("checked");
+        inputHandler(filterId, hidden);
+      });
+
+      const $filterBtn = settings.find("button[data-checklist-action='filter']");
+      $filterBtn.removeClass("checklist-button-primary");
+      settings.close();
+    },
+
     "goto-next-marker": function () {
       const parent = $(this).parent(".checklist-statement").get(0);
       const statement = parent.statement;

@@ -13,6 +13,7 @@
   "report-retry": "Réessayer",
   "report-source-failed": "Erreur lors du chargement de la source&nbsp;: {{url}}.",
   "report-tests-failed": "Des tests ont échoué",
+  "save": "Enregistrer",
   "settings-cache-clear": "Vider le cache de Checklist",
   "settings-cache-description": "Checklist utilise le cache de votre navigateur pour conserver des informations en mémoire comme les rapports de tests et la configuration.",
   "settings-cache-title": "Cache",

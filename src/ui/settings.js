@@ -31,6 +31,7 @@ function getViewHtml (cache, filters, t, tk) {
         <h3><i class="fas fa-filter"></i> ${t("settings-filters-title")}</h3>
         <p>${t("settings-filters-descripion")}</p>
         ${inputHtml}
+        <button class="checklist-button" data-checklist-action="filter">${t("save")}</button>
 
         <h3><i class="fas fa-history"></i> ${t("settings-cache-title")}</h3>
         <p>${t("settings-cache-description")}</p>
@@ -54,14 +55,9 @@ class Settings extends View {
   }
 
   initEventHandlers () {
-    const inputHandler = (filterId, hidden) => {
-      this.ui.filterStatements(filterId, hidden);
-    };
-
+    const $filterBtn = this.find("button[data-checklist-action='filter']");
     this.find(".checklist-filter").change(function () {
-      const filterId = $(this).prop("value");
-      const hidden = !$(this).prop("checked");
-      inputHandler(filterId, hidden);
+      $filterBtn.addClass("checklist-button-primary");
     });
 
     return this;
