@@ -1,7 +1,7 @@
 {
   "article": "Article",
   "cache-deleted": "Le cache a été supprimé pour ce site.",
-  "credits-infos": "<strong>OpenEdition Checklist</strong> (v. {{version}}) <br/> &copy; {{year}} Thomas Brouard/OpenEdition. Programme distribué sous licence GPL-3.0. <a href=\"https://github.com/OpenEdition/checklist\" target=\"_blank\">En savoir plus.</a>",
+  "credits-infos": "<strong>OpenEdition Checklist</strong> (v. {{version}}) <br/> &#x1f12f; {{year}} Thomas Brouard&nbsp;/&nbsp;OpenEdition. Programme distribué sous licence GPL-3.0. <a href=\"https://github.com/OpenEdition/checklist\" target=\"_blank\">En savoir plus.</a>",
   "dropdown-menu-name": "Document",
   "help-title": "Aide",
   "overview-documents": "Document contrôlé&nbsp;: {{count}} sur {{total}}",
