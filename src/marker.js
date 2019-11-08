@@ -13,6 +13,7 @@ class Marker extends Base {
 
   setElement (element) {
     this.element = element;
+    element.statement = this.caller;
     return this;
   }
 

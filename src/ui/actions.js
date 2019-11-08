@@ -23,9 +23,18 @@ function initActions (ui) {
       $(this).parent().toggleClass("visible");
     },
 
-    "help-show": function () {
-      const parent = $(this).parent(".checklist-statement").get(0);
-      const statement = parent.statement;
+    "help-show": function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+      const $this = $(this);
+      const statement = (() => {
+        if ($this.is(".checklist-marker")) {
+          return this.statement;
+        }
+        const parent = $this.parent(".checklist-statement").get(0);
+        return parent.statement;
+      })();
+      
       const {name, description} = statement;
       if (!name || !description) return;
       const tk = ui.tk;
@@ -113,9 +122,9 @@ function initActions (ui) {
 
   for (let id in actions) {
     const action = actions[id];
-    $(document.body).on("click", `[data-checklist-action='${id}']`, function () {
+    $(document.body).on("click", `[data-checklist-action='${id}']`, function (event) {
       ui.emit("beforeAction", id);
-      action.bind(this)();
+      action.bind(this)(event);
       ui.emit("afterAction", id);
     });
   }
