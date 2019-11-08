@@ -1,5 +1,7 @@
 # OpenEdition Checklist
 
+:information_source: Pour l'implémentation de ce script en tant que plugin pour Lodel, voir : https://github.com/OpenEdition/checklist-lodel
+
 ## Installation 
 
 NodeJS, NPM et Git doivent être installés sur la machine.
