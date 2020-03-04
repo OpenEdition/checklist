@@ -1,6 +1,6 @@
 {
   "name": "@openedition/checklist",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "OpenEdition Checklist",
   "main": "dist/checklist.js",
   "scripts": {
