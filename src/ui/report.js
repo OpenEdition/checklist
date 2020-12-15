@@ -484,9 +484,7 @@ class Report extends View {
 
   toCache () {
     const cache = this.ui.cache;
-    const docId = this.docId;
-    const record = this.checker.export();
-    cache.set(docId, record);
+    cache.recordChecker(this.checker);
     return this;
   }
 

@@ -43,6 +43,31 @@ class Cache extends Base {
   isFiltered (ids) {
     return ids.some((id) => this.getFilter(id));
   }
+
+  recordChecker (checker) {
+    const docId = checker.docId;
+
+    const statements = checker.getStatements().map(({id, count}) => { 
+      // TODO: add overrides
+      return { id, count };
+    });
+
+    const rejections = checker.checks.reduce((res, check) => {
+      if (check.hasState("rejected")) {
+        const { id, errMsg } = check;
+        res.push({ id, errMsg });
+      }
+      return res;
+    }, []);
+    
+    const record = { statements, rejections };
+    // this.set(docId, record);
+    console.log(JSON.stringify(record));
+  }
+
+  getChecker (id) {
+    // TODO
+  }
 }
 
 module.exports = Cache;
