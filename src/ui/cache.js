@@ -1,4 +1,5 @@
 const Base = require("../base.js");
+const Statement = require("../statement.js");
 
 class Cache extends Base {
   constructor ({ caller }) {
@@ -44,7 +45,7 @@ class Cache extends Base {
     return ids.some((id) => this.getFilter(id));
   }
 
-  recordChecker (checker) {
+  setRecord (checker) {
     const docId = checker.docId;
 
     const statements = checker.getStatements().map(({id, count}) => { 
@@ -61,12 +62,34 @@ class Cache extends Base {
     }, []);
     
     const record = { statements, rejections };
-    // this.set(docId, record);
-    console.log(JSON.stringify(record));
+    this.set(docId, record);
   }
 
-  getChecker (id) {
-    // TODO
+  getRecord (docId) {
+    const record = this.get(docId);
+    if (!record) return;
+    
+    const cache = this;
+    const rules = this.getConfig("rules");
+    const getRule = (id) => rules.find(r => r.id === id);
+
+    const statements = record.statements.map(({ id, count }) => {
+      const rule = getRule(id);
+      if (!rule) return;
+      const options = Object.assign({}, rule, { count, caller: cache });
+      return new Statement(options);
+    });
+
+    const rejections = record.rejections.map(({ id, errMsg }) => {
+      const rule = getRule(id);
+      if (!rule) return;
+      return {
+        errMsg,
+        ruleName: rule.name
+      };
+    });
+
+    return { statements, rejections };
   }
 }
 

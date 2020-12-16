@@ -4,8 +4,11 @@ const Marker = require("./marker.js");
 class Statement extends Base {
   constructor ({name, id, description, type, tags, count, caller}) {
     super("Statement", caller);
-    this.check = caller;
-    this.docId = caller.docId;
+    
+    if (caller.classname === "Check") {
+      this.check = caller;
+      this.docId = caller.docId;
+    }
 
     Object.assign(this, {name, id, description, type, count, tags});
 
