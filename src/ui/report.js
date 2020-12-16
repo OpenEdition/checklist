@@ -307,6 +307,7 @@ class Report extends View {
     const $container = this.find(".checklist-rejections");
     $container.addClass("visible");
 
+    errMsg = errMsg || "Please reload this test to display error message here.";
     const $ul = this.find(".checklist-rejections-list");
     const html = `<li class="checklist-rejection" title="${errMsg}"><i class="fas fa-bug"></i>  ${this.tk(ruleName)}</li>`;
     $ul.append(html);

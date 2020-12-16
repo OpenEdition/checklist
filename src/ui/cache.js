@@ -59,8 +59,7 @@ class Cache extends Base {
 
     const rejections = checker.checks.reduce((res, check) => {
       if (check.hasState("rejected")) {
-        const { id, errMsg } = check;
-        res.push({ i: id, e: errMsg });
+        res.push(check.id);
       }
       return res;
     }, []);
@@ -84,13 +83,10 @@ class Cache extends Base {
       return new Statement(options);
     });
 
-    const rejections = record.rejections.map(({ i, e }) => {
-      const rule = getRule(i);
+    const rejections = record.rejections.map((id) => {
+      const rule = getRule(id);
       if (!rule) return;
-      return {
-        errMsg: e,
-        ruleName: rule.name
-      };
+      return { ruleName: rule.name };
     });
 
     return { statements, rejections };
