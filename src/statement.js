@@ -59,12 +59,6 @@ class Statement extends Base {
     }
     return this;
   }
-
-  // Export instance to a minimal plain object which can be stored in cache
-  export () {
-    const clone = Base.export(this, ["docId", "states", "name", "description", "id", "type", "tags", "count"]);
-    return clone;
-  }
 }
 
 module.exports = Statement;

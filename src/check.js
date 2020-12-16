@@ -138,13 +138,6 @@ class Check extends Base {
   test () {
     return Base.testCondition(this.condition, this.context);
   }
-
-  // Export instance to a minimal plain object which can be stored in cache
-  export () {
-    const clone = Base.export(this, ["states", "name", "id", "href", "errMsg"], true);
-    clone.statements = this.statements.map((statement) => statement.export());
-    return clone;
-  }
 }
 
 module.exports = Check;

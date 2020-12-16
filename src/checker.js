@@ -102,13 +102,6 @@ class Checker extends Base {
       return accumulator.concat(check.statements);
     }, []);
   }
-
-  // Export instance to a minimal plain object which can be stored in cache
-  export () {
-    const clone = Base.export(this, ["context", "docId", "states"], true);
-    clone.checks = this.checks.map((check) => check.export());
-    return clone;
-  }
 }
 
 module.exports = Checker;
