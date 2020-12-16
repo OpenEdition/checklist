@@ -1,10 +1,14 @@
 const Base = require("../base.js");
 const Statement = require("../statement.js");
 
+// Increment schema when a breaking change is made in the cache structure.
+const schema = 1;
+
 class Cache extends Base {
   constructor ({ caller }) {
     super("Cache", caller);
     this.namespace = this.getConfig("namespace");
+    this.checkSchema(schema);
   }
 
   get (id, defaultValue) {
@@ -28,6 +32,16 @@ class Cache extends Base {
       if (!regex.test(key)) return;
       localStorage.removeItem(key);
     });
+    return this;
+  }
+
+  checkSchema (expectedSchema) {
+    const cacheSchema = this.get("schema");
+    if (cacheSchema === expectedSchema) return this;
+    if (localStorage.length > 0) {
+      this.clear();
+    }
+    this.set("schema", expectedSchema);
     return this;
   }
 
