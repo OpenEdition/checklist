@@ -50,13 +50,17 @@ class Cache extends Base {
 
     const statements = checker.getStatements().map(({id, count}) => { 
       // TODO: add overrides
-      return { id, count };
+      const statement = { i: id };
+      if (count > 1) {
+        statement.c = count;
+      }
+      return statement;
     });
 
     const rejections = checker.checks.reduce((res, check) => {
       if (check.hasState("rejected")) {
         const { id, errMsg } = check;
-        res.push({ id, errMsg });
+        res.push({ i: id, e: errMsg });
       }
       return res;
     }, []);
@@ -73,18 +77,18 @@ class Cache extends Base {
     const rules = this.getConfig("rules");
     const getRule = (id) => rules.find(r => r.id === id);
 
-    const statements = record.statements.map(({ id, count }) => {
-      const rule = getRule(id);
+    const statements = record.statements.map(({ i, c }) => {
+      const rule = getRule(i);
       if (!rule) return;
-      const options = Object.assign({}, rule, { count, caller: cache });
+      const options = Object.assign({}, rule, { count: c || 1, caller: cache });
       return new Statement(options);
     });
 
-    const rejections = record.rejections.map(({ id, errMsg }) => {
-      const rule = getRule(id);
+    const rejections = record.rejections.map(({ i, e }) => {
+      const rule = getRule(i);
       if (!rule) return;
       return {
-        errMsg,
+        errMsg: e,
         ruleName: rule.name
       };
     });
