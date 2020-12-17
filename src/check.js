@@ -52,26 +52,30 @@ class Check extends Base {
   notify (value, markerObj) {
     if (!value) return;
 
-    if (typeof value === "string") {
-      value = { name: value };
-    }
+    let customKeys;
 
-    if (typeof value === "number" && value > 0) {
+    if (typeof value === "object") {
+      customKeys = Object.keys(value);
+    }
+    else if (typeof value === "string") {
+      value = { name: value };
+      customKeys = ["name"];
+    } 
+    else if (typeof value === "number" && value > 0) {
       value = { count: value };
     }
-
-    if (value == null) {
+    else if (value == null) {
       value = {};
     }
 
     const name = value.name || this.name;
-    const id = value.id || this.id || getIdFromName(name);
+    const id = this.id || getIdFromName(name);
     const description = value.description || this.description;
     const type = value.type || this.type || this.getConfig("defaultType", "info");
     const tags = value.tags || this.tags || [];
     const count = value.count || 1;
 
-    let statement = new Statement({name, id, description, type, tags, count, caller: this});
+    let statement = new Statement({name, id, description, type, tags, count, customKeys, caller: this});
     this.forwardEvents(statement, ["marker"]);
 
     // Increase count if this statement already exists in Check

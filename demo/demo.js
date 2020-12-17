@@ -259,6 +259,26 @@ $(function () {
         }
       },
       {
+        id: "custom-notify",
+        name: "Règle avec un message variable",
+        description: "Cette règle utilise notify() pour redéclarer plusieurs attributs hérités du Check. Attention : cela augmente la taille du cache, c'est donc une fonctionnalité à utiliser avec parcimonie.",
+        type: "warning",
+        condition: "textes || publications",
+        action: function ($) {
+          this.resolve({
+            name: {
+              fr: "Une notification personnalisée",
+              en: "Custom notification"
+            },
+            description: {
+              fr: "<p>Ce Statement n'a pas la même description que la règle parente.</p>",
+              en: "<p>This Statement has a description different than its parent rule's.</p>"
+            },
+            type: "danger"
+          });
+        }
+      },
+      {
         id: "bad-condition",
         name: "Mauvaise condition",
         description: "Cette règle ne sera jamais appliquée.",

@@ -62,13 +62,22 @@ class Cache extends Base {
   setRecord (checker) {
     const docId = checker.docId;
 
-    const statements = checker.getStatements().map(({id, count}) => { 
-      // TODO: add overrides
-      const statement = { i: id };
+    const statements = checker.getStatements().map((statement) => { 
+      const { id, count, customKeys } = statement;
+      const statementRecord = { i: id };
       if (count > 1) {
-        statement.c = count;
+        statementRecord.c = count;
       }
-      return statement;
+      // Overrides
+      if (customKeys && Array.isArray(customKeys)) {
+        statementRecord.o = customKeys.reduce((overrides, key) => {
+          if (key !== "count" && key !== "id" && statement[key]) {
+            overrides[key] = statement[key];
+          }
+          return overrides;
+        }, {});
+      }
+      return statementRecord;
     });
 
     const rejections = checker.checks.reduce((res, check) => {
@@ -90,10 +99,10 @@ class Cache extends Base {
     const rules = this.getConfig("rules");
     const getRule = (id) => rules.find(r => r.id === id);
 
-    const statements = record.statements.map(({ i, c }) => {
+    const statements = record.statements.map(({ i, c, o = {} }) => {
       const rule = getRule(i);
       if (!rule) return;
-      const options = Object.assign({}, rule, { count: c || 1, caller: cache });
+      const options = Object.assign({}, rule, o, { count: c || 1, caller: cache });
       return new Statement(options);
     });
 

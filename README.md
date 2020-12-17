@@ -357,15 +357,15 @@ checklist.init({
     this.notify(flag);
 
     // Créer un statement avec des valeurs personnalisées.
+    // Attention : l'utilisation de cette fonctionnalité augmente considérablement le poids du cache. Il est donc recommandé de privilégier une déclaration de ces valeurs via les attributs de la règle.
     this.notify({
       name: {
         fr: "Une notification différente",
         en: "A different notification"
       },
-      id: "un-id-different",
       description: {
         fr: "<p>Ce Statement n'a pas la même description que la règle parente.</p>",
-        en: "<p>This Statement has a different description."
+        en: "<p>This Statement has a description different than its parent rule's.</p>"
       },
       type: "danger",
       tags: []
