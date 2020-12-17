@@ -23,7 +23,11 @@ class Cache extends Base {
     if (id == null) return;
     const namespace = this.namespace;
     const key = `checklist-${namespace}-${id}`;
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error(error);
+    }
     return this;
   }
 
@@ -38,6 +42,7 @@ class Cache extends Base {
   checkSchema (expectedSchema) {
     const cacheSchema = this.get("schema");
     if (cacheSchema === expectedSchema) return this;
+    console.warn("Cache does not match current schema. Clearing cache...");
     if (localStorage.length > 0) {
       this.clear();
     }
