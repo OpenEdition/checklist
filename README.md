@@ -337,6 +337,9 @@ checklist.init({
   // Permet de créer des filtres spécifiques dans l'interface.
   tags: ["paper"],
 
+  // Booléen qui indique si le compteur doit être affiché même quand il est égal à 1. Par défaut : false.
+  displayCount: true,
+
   // Action de la règle.
   // Ne pas oublier de passer $ en paramètre pour que la règle fonctionne avec les sources externes chargées par le loader.
   // Dans le cas de sources externes chargées via ajax, le tag body est remplacé par un div pour éviter une erreur du DOM. Pour cette raison le deuxième paramètre d'action() correspond aux classes du body de la source.

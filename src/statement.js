@@ -2,7 +2,7 @@ const Base = require("./base.js");
 const Marker = require("./marker.js");
 
 class Statement extends Base {
-  constructor ({name, id, description, type, tags, count, customKeys, caller}) {
+  constructor ({name, id, description, type, tags, count, displayCount = false, customKeys, caller}) {
     super("Statement", caller);
     
     if (caller.classname === "Check") {
@@ -10,7 +10,7 @@ class Statement extends Base {
       this.docId = caller.docId;
     }
 
-    Object.assign(this, {name, id, description, type, count, tags, customKeys});
+    Object.assign(this, {name, id, description, type, tags, count, displayCount, customKeys});
 
     if (this.name == null) {
       throw Error("Statement constructor requires a name");

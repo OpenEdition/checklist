@@ -29,7 +29,7 @@ class Check extends Base {
   constructor ({ context, docId, rule, source, caller }) {
     super("Check", caller);
 
-    const allowedProps = ["context", "docId", "source", "name", "description", "id", "href", "type", "tags", "condition", "action"];
+    const allowedProps = ["context", "docId", "source", "name", "description", "id", "href", "type", "tags", "condition", "action", "displayCount"];
     this.assign(allowedProps, rule, {context, docId, source});
     this.statements = [];
 
@@ -74,8 +74,9 @@ class Check extends Base {
     const type = value.type || this.type || this.getConfig("defaultType", "info");
     const tags = value.tags || this.tags || [];
     const count = value.count || 1;
+    const displayCount = value.displayCount || this.displayCount || false;
 
-    let statement = new Statement({name, id, description, type, tags, count, customKeys, caller: this});
+    let statement = new Statement({name, id, description, type, tags, count, displayCount, customKeys, caller: this});
     this.forwardEvents(statement, ["marker"]);
 
     // Increase count if this statement already exists in Check

@@ -365,7 +365,16 @@ $(function () {
         condition: "textes || publications",
         action: function () {
           throw Error("Boum ! (test)");
-         }
+        }
+      },
+      {
+        id: "displayCount",
+        name: "Une règle qui affiche le count même lorsqu'il est égal à 1.",
+        condition: "textes || publications",
+        displayCount: true,
+        action: function () {
+          this.resolve(true);
+        }
       },
     ]
   })

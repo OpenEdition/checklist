@@ -194,7 +194,7 @@ class Report extends View {
     };
 
     const getStatementHtml = () => {
-      const countSpan = (statement.count && statement.count > 1) ? `<span class="checklist-statement-count">${statement.count}</span>` : "";
+      const countSpan = (statement.count && statement.count > 1 || statement.displayCount) ? `<span class="checklist-statement-count">${statement.count}</span>` : "";
       const type = statement.type;
       const typeClass = type ? `checklist-statement-type-${type}` : "";
 
