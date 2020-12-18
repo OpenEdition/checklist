@@ -2,12 +2,15 @@ const Base = require("./base.js");
 const Marker = require("./marker.js");
 
 class Statement extends Base {
-  constructor ({name, id, description, type, tags, count, caller}) {
+  constructor ({name, id, description, type, tags, count, customKeys, caller}) {
     super("Statement", caller);
-    this.check = caller;
-    this.docId = caller.docId;
+    
+    if (caller.classname === "Check") {
+      this.check = caller;
+      this.docId = caller.docId;
+    }
 
-    Object.assign(this, {name, id, description, type, count, tags});
+    Object.assign(this, {name, id, description, type, count, tags, customKeys});
 
     if (this.name == null) {
       throw Error("Statement constructor requires a name");
@@ -55,12 +58,6 @@ class Statement extends Base {
       throw Error(err)
     }
     return this;
-  }
-
-  // Export instance to a minimal plain object which can be stored in cache
-  export () {
-    const clone = Base.export(this, ["docId", "states", "name", "description", "id", "type", "tags", "count"]);
-    return clone;
   }
 }
 

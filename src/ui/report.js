@@ -307,6 +307,7 @@ class Report extends View {
     const $container = this.find(".checklist-rejections");
     $container.addClass("visible");
 
+    errMsg = errMsg || "Please reload this test to display error message here.";
     const $ul = this.find(".checklist-rejections-list");
     const html = `<li class="checklist-rejection" title="${errMsg}"><i class="fas fa-bug"></i>  ${this.tk(ruleName)}</li>`;
     $ul.append(html);
@@ -484,35 +485,22 @@ class Report extends View {
 
   toCache () {
     const cache = this.ui.cache;
-    const docId = this.docId;
-    const record = this.checker.export();
-    cache.set(docId, record);
+    cache.setRecord(this.checker);
     return this;
   }
 
   fromCache () {
     const updateViewFromRecord = (record) => {
       this.get$element().addClass("checklist-report-from-cache");
-      const statements = [];
-      record.checks.forEach((check) => {
-        this.countCheck(check);
-        if (check.states.rejected) {
-          this.injectRejection({
-            ruleName: check.name,
-            errMsg: check.errMsg
-          });
-        } else {
-          statements.push.apply(statements, check.statements);
-        }
-      });
-      this.injectStatements(statements);
+      this.injectStatements(record.statements);
+      this.injectRejections(record.rejections);
       this.updateRating();
     };
 
     if (this.hasState("done")) return this;
     const cache = this.ui.cache;
     const docId = this.docId;
-    const record = cache.get(docId);
+    const record = cache.getRecord(docId);
     if (record) {
       updateViewFromRecord(record);
       this.setState("fromCache", true);

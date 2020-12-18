@@ -8,8 +8,8 @@ describe("Statement", function () {
 
   var otherValues = {
     name: "Other name",
-    id: "other-id",
-    description: "Other description"
+    description: "Other description",
+    type: "other-type"
   };
 
   function checkStatement (statement, expectedValues, done) {

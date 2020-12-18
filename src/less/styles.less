@@ -61,6 +61,32 @@ body.checklist-visible {
   padding: 0 10px 20px 10px;
 }
 
+.checklist-pane-footer {
+  padding: 0 10px 20px 10px;
+}
+
+.checklist-cache-alert {
+  display: none;
+  border: 2px solid @alert-color;
+  color: @alert-color;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 13px;
+
+  a {
+    color: @alert-color;
+    text-decoration: underline;
+
+    &:hover, &:focus, &:active {
+      color: darken(@alert-color, 10%);
+    }
+  }
+}
+
+.cache-is-full .checklist-cache-alert {
+  display: block;
+}
+
 .checklist-childpane {
   z-index: @z-index + 20;
   position: absolute;
