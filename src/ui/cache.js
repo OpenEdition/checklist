@@ -26,6 +26,7 @@ class Cache extends Base {
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
+      $("body").addClass("cache-is-full");
       console.error(error);
     }
     return this;

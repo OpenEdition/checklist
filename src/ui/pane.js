@@ -8,6 +8,7 @@ class Pane extends View {
 
     this.docId = this.getConfig("docId");
 
+    const t = this.ui.t;
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
       <div class="checklist-main-menu">
         <div class="checklist-brand">${svg["checklist-logo"]}</div>
@@ -16,7 +17,11 @@ class Pane extends View {
           <button data-checklist-action="settings-show"><i class="fas fa-cog"></i></button>
         </div>
       </div>
-      <div id="checklist-pane-contents" class="checklist-pane-contents">
+      <div id="checklist-pane-contents" class="checklist-pane-contents"></div>
+      <div id="checklist-pane-footer" class="checklist-pane-footer">
+        <div class="checklist-cache-alert">
+          ${t("cache-is-full")}
+        </div>
       </div>
     </div>`;
     this.createView(html);
