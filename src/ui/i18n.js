@@ -12,6 +12,15 @@ function getLocales (translations = {}) {
       translation: Object.assign(defaultTranslations, translations[lang])
     };
   });
+
+  // Add locales directly defined in config when the related locales.json is missing
+  Object.keys(translations).forEach((key) => {
+    if (locales[key]) return;
+    locales[key] = {
+      translation: translations[key]
+    }
+  });
+  
   return locales;
 }
 

@@ -79,6 +79,9 @@ $(function () {
     loaderDelay: 1000,
 
     translations: {
+      fr: {
+        "toc-check": "Controler tout (traduction alternative)"
+      },
       en: {
         "toc-check": "Control this publication"
       }
