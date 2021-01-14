@@ -24,8 +24,10 @@ class UI extends Base {
     this.ratings = this.getRatings();
     this.initStyles();
 
-    const lang = this.getConfig("lang");
+    const lang = this.getCurrentLangCode();
+    this.lang = lang;
     const translations = this.getConfig("translations");
+
     i18n({lang, translations}).then(({t, tk}) => {
       this.t = t;
       this.tk = tk;
@@ -35,6 +37,13 @@ class UI extends Base {
       this.triggerState("initialized");
     })
     .catch(console.error);
+  }
+
+  getCurrentLangCode () {
+    const langs = this.getConfig("langs", [{code: "fr", name: "Français"}]);
+    const defaultLang = langs[0].code;
+    const currentLang = this.cache.get("lang", defaultLang);
+    return currentLang;
   }
 
   getRatings () {

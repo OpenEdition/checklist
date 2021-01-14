@@ -70,7 +70,10 @@ $(function () {
     parent: "#pane-container",
     namespace: "demo",
     docId: "index",
-    lang: "fr",
+    langs: [
+      {code: "fr", name: "Français"},
+      {code: "en", name: "English"},
+    ],
     maxSourcesLoading: 5,
     loaderTimeout: 3000,
     loaderDelay: 1000,

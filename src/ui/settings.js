@@ -1,7 +1,7 @@
 const checklistVersion = __VERSION__;
 const View = require("./view.js");
 
-function getViewHtml (cache, filters, t, tk) {
+function getViewHtml (cache, filters, langs, currentLang, t, tk) {
   const getInputHtml = (filters) => {
     const inputs = filters.map((filter) => {
       const isHidden = cache.getFilter(filter.id);
@@ -20,6 +20,20 @@ function getViewHtml (cache, filters, t, tk) {
 
   const inputHtml = getInputHtml(filters);
 
+  const langHtml = ((() => {
+    if (langs.length < 2) return "";
+    const options = langs.map((lang) => {
+      const selectedAttr = currentLang === lang.code ? " selected" : "";
+      return `<option value="${lang.code}"${selectedAttr}>${lang.name}</option>`;
+    }).join("\n");
+    return `
+      <h3><i class="fas fa-language"></i> ${t("settings-language")}</h3>
+      <select class="checklist-language-select">
+        ${options}
+      </select>
+    `;
+  })());
+
   const html = `
     <div id="checklist-settings" class="checklist-settings checklist-component checklist-childpane">
       <div class="checklist-main-menu">
@@ -29,6 +43,8 @@ function getViewHtml (cache, filters, t, tk) {
         </div>
       </div>
       <div class="checklist-pane-contents">
+        ${langHtml}
+
         <h3><i class="fas fa-filter"></i> ${t("settings-filters-title")}</h3>
         <p>${t("settings-filters-descripion")}</p>
         ${inputHtml}
@@ -52,14 +68,22 @@ class Settings extends View {
 
     const cache = this.ui.cache;
     const filters = this.getConfig("filters");
-    const html = getViewHtml(cache, filters, this.ui.t, this.ui.tk);
+    const langs = this.getConfig("langs", []);
+    const html = getViewHtml(cache, filters, langs, this.ui.lang, this.ui.t, this.ui.tk);
     this.createView(html);
     this.initEventHandlers();
   }
 
   initEventHandlers () {
+    const cache = this.ui.cache;
+    this.find(".checklist-language-select").on("change", function () {
+      const newLang = $(this).val();
+      cache.set("lang", newLang);
+      document.location.reload();
+    });
+    
     const $filterBtn = this.find("button[data-checklist-action='filter']");
-    this.find(".checklist-filter").change(function () {
+    this.find(".checklist-filter").on("change", function () {
       $filterBtn.addClass("checklist-button-primary");
     });
 
