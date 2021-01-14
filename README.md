@@ -155,7 +155,7 @@ checklist.init({
       icon: "<i class='far fa-laugh-wink '></i>",
       text: {
         fr: "Ce document est très bien composé.",
-        en: "This document is well formated"
+        en: "This document is very well formated."
       },
       color: "#3c763d",
       bgcolor: "#dff0d8"
