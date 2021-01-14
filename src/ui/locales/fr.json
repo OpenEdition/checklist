@@ -22,6 +22,8 @@
   "settings-disable-title": "Désactiver",
   "settings-filters-descripion": "Afficher les notifications associées aux catégories suivantes&nbsp:",
   "settings-filters-title": "Filtres",
+  "settings-language": "Langue",
+  "settings-language-description": "Définir la langue de Checklist.",
   "settings-title": "Préférences",
   "toc-check": "Contrôler tout",
   "toc-control-done": "Félicitations&nbsp;! La publication a été intégralement contrôlée.",

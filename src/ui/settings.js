@@ -28,6 +28,7 @@ function getViewHtml (cache, filters, langs, currentLang, t, tk) {
     }).join("\n");
     return `
       <h3><i class="fas fa-language"></i> ${t("settings-language")}</h3>
+      <p>${t("settings-language-description")}</p>
       <select class="checklist-language-select">
         ${options}
       </select>
