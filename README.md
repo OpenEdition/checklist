@@ -50,6 +50,7 @@ checklist.init({
   namespace: "foobar",
 
   // Langues de l'interface
+  // Lorsque plusieurs langues sont définies, un menu de sélection des langues est ajouté aux paramètres de Checklist.
   // La première langue est la langue par défaut.
   langs: [
     {code: "fr", name: "Français"},
