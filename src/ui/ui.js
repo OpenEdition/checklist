@@ -261,7 +261,7 @@ class UI extends Base {
     const rating = this.ratings.find((rating) => rating.id === id);
     if (rating == null) {
       // TODO: gerer les erreur comme ça partout
-      const err = new Error(`Missing rating declaration for '${name}'`);
+      const err = new Error(`Missing rating declaration for '${id}'`);
       this.emit("error", err);
     };
     return rating;
