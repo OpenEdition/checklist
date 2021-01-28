@@ -66,8 +66,16 @@ class TOC extends View {
     };
 
     const createArticle = (entry, $parent) => {
+      const context = entry.context;
+      const classAttr = Object.entries(context).reduce((res, el) => {
+        const value = el[1];
+        if (!value) return res;
+        const suffix = typeof value === "string" ? "-" + value : "";
+        return res + " checklist-report-context-" + el[0] + suffix;
+      }, "");
+
       const html = `
-        <li class="checklist-toc-entry checklist-report-container">
+        <li class="checklist-toc-entry checklist-report-container${classAttr}">
           <div class="checklist-toc-entry-contents"></div>
           <div class="checklist-toc-entry-footer">
             <a class="checklist-toggle-report-details" data-checklist-action="toggle-report-details">
