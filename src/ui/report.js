@@ -475,7 +475,7 @@ class Report extends View {
       });
     });
 
-    this.toggleStatementGroups();
+    this.updateView();
     this.updateRating();
     return this;
   }

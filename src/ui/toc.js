@@ -148,8 +148,8 @@ class TOC extends View {
 
     const toggleDetailsButton = function (entry) {
       const { $element, report } = entry;
-      const hasStatements = () => report.find(".checklist-statements .checklist-statement").length > 0;
-      const hasRejections = () => report.find(".checklist-rejections .checklist-rejection").length > 0;
+      const hasStatements = () => report.find(".checklist-statements .checklist-statement:not(.hidden)").length > 0;
+      const hasRejections = () => report.find(".checklist-rejections .checklist-rejection:not(.hidden)").length > 0;
       const containsSomething = hasStatements() || hasRejections();
       $element.toggleClass("checklist-report-with-details", containsSomething);
     }
