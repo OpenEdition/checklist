@@ -75,7 +75,7 @@ class TOC extends View {
       }, "");
 
       const html = `
-        <li class="checklist-toc-entry checklist-report-container${classAttr}">
+        <li class="checklist-toc-entry checklist-report-container checklist-details-visible${classAttr}">
           <div class="checklist-toc-entry-contents"></div>
           <div class="checklist-toc-entry-footer">
             <a class="checklist-toggle-report-details" data-checklist-action="toggle-report-details">
