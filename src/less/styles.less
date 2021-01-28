@@ -490,7 +490,7 @@ body.checklist-visible {
   }
 }
 
-.checklist-statement + .checklist-statement {
+.checklist-statement:not(.hidden) + .checklist-statement {
   border-top: 1px solid @border-color;
 }
 
