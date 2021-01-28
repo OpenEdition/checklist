@@ -15,7 +15,6 @@ $(function () {
         "href": "http://localhost:3000/demo/",
         "type": "Publication",
         "icon": "fas fa-book",
-        "classname": "publication",
         "context": {
           "publications": true
         }
