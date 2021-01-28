@@ -262,6 +262,7 @@ checklist.init({
         title: $(".publi-title").text(),
         href: window.location.href, // indique qu'il s'agit de la page courante
         type: "Publication",
+        classname: "publication", // class additionnelle facultative appliquée à l'entrée
         icon: "fas fa-book",
         context: {"publications": true}
       }
