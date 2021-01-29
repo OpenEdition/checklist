@@ -25,6 +25,9 @@ function getHtml (docId, href, types, metadatas, t, tk) {
       <div class="checklist-report-header">
         ${metadatasDiv}
         <div class="checklist-report-rating">
+          <button class="checklist-report-run checklist-button checklist-button-primary" data-checklist-action="report-run">
+            <i class="far fa-play-circle"></i> ${t("toc-report-run")}
+          </button>
           <div class="checklist-report-icon"></div>
           <div class="checklist-percentage"></div>
           <div class="checklist-rating-text"></div>
@@ -135,7 +138,6 @@ class Report extends View {
     });
 
     checker.whenState("run").then(() => {
-      this.triggerState("run");
       this.startProgress();
     })
     .catch(console.error);
@@ -331,6 +333,7 @@ class Report extends View {
   }
 
   startProgress () {
+    this.triggerState("run");
     this.toggleSpinner();
 
     const $el = this.find(".checklist-percentage");

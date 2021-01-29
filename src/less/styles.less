@@ -409,6 +409,12 @@ body.checklist-visible {
   flex-grow: 1;
 }
 
+.checklist-report-run {
+  margin-right: -10px;
+  width: auto;
+  padding: 10px 20px;
+}
+
 .checklist-report-icon {
   display: block;
   margin: 10px auto;
@@ -712,14 +718,6 @@ body.checklist-visible {
 
   &:hover, &:focus, &:active {
     color: darken(@text-grey, 20%);
-  }
-
-  &.checklist-report-run {
-    color: darken(@btn-primary-color, 10%);
-
-    &:hover, &:focus, &:active {
-      color: @btn-primary-color;
-    }
   }
 
   &.hidden {

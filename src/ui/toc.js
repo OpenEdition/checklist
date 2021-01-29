@@ -82,9 +82,6 @@ class TOC extends View {
               <span class="checklist-toggle-report-details-show"><i class="far fa-plus-square"></i> ${this.t("toc-show-details")}</span>
               <span class="checklist-toggle-report-details-hide"><i class="far fa-minus-square"></i> ${this.t("toc-hide-details")}</span>
             </a>
-            <a class="checklist-report-run" data-checklist-action="report-run">
-              <i class="far fa-play-circle"></i> ${this.t("toc-report-run")}
-            </a>
           </div>
         </li>
       `;
@@ -169,7 +166,6 @@ class TOC extends View {
     // Events creation for each report
     this.entries.forEach((entry) => {
       const report = entry.report;
-      const $element = entry.$element;
 
       // Update indicators in overview
       ["run", "rated", "done", "failed", "reset"].forEach((eventName) => {
@@ -182,7 +178,7 @@ class TOC extends View {
       }
       report.on("run", () => {
         hideRunButton(entry)
-      } );
+      });
       report.on("failed", () => toggleFail(entry));
       report.on("beforeReset", () => toggleFail(entry, false));
       report.on("afterUpdateView", () => toggleDetailsButton(entry));
