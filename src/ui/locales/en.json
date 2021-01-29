@@ -3,7 +3,7 @@
   "cache-deleted": "Checklist cache has been deleted for this site.",
   "cache-is-full": "The application cache is full. The next results will no longer be stored in memory. To correct this problem you can <a href='#' data-checklist-action='cache-clear'>clear Checklist cache</a>.",
   "credits-infos": "<strong>OpenEdition Checklist</strong> (v. {{version}}) <br/> &#x1f12f; {{year}} Thomas Brouard&nbsp;/&nbsp;OpenEdition. Program distributed under GPL-3.0 license. <a href=\"https://github.com/OpenEdition/checklist\" target=\"_blank\">Read more.</a>",
-  "dropdown-menu-name": "Document",
+  "dropdown-menu-name": "Options",
   "help-title": "Help",
   "overview-documents": "Checked document: {{count}} on {{total}}",
   "overview-documents_plural": "Checked documents: {{count}} on {{total}}",
