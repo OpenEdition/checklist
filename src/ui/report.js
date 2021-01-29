@@ -428,6 +428,9 @@ class Report extends View {
     };
 
     const setRatingIcon = (id) => {
+      const $reportContainer = this.get$element().parents(".checklist-report-container");
+      $reportContainer.addClass("checklist-report-with-icon");
+
       const $el = this.find(".checklist-report-icon");
       const rating = this.ui.getRating(id);
       const icon = rating.icon;

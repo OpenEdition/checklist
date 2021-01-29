@@ -384,7 +384,7 @@ body.checklist-visible {
 // REPORTS
 // =======
 
-.checklist-report {
+.checklist-report-with-icon .checklist-report, .checklist-report-with-details .checklist-report {
   padding: 20px 0;
 }
 
@@ -465,6 +465,8 @@ body.checklist-visible {
 .checklist-toggle-report-details {
   display: none;
 }
+
+
 
 .checklist-statements {
   margin: 20px 0;
@@ -675,7 +677,7 @@ body.checklist-visible {
   list-style: none;
   border: 1px solid @border-color;
   border-radius: 5px;
-  margin-top: 40px;
+  margin-top: 30px;
   background: @bg-color;
 
   .checklist-report-rating {
@@ -740,7 +742,7 @@ body.checklist-visible {
     display: none;
   }
 
-  &.checklist-details-visible {
+  &.checklist-details-visible.checklist-report-with-details {
     .checklist-toggle-report-details-show {
       display: none;
     }
