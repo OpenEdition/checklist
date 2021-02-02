@@ -34,7 +34,7 @@ class Overview extends View {
             <i class="fas fa-exclamation-circle"></i>
             <p class="checklist-overview-info">${this.t("toc-control-info-cache")}</p>
           </div>
-          <button class="checklist-button checklist-button-primary checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-history"></i> ${this.t("toc-rerun")}</button>
+          <button class="checklist-button checklist-button-primary checklist-toc-rerun" data-checklist-action="toc-rerun"><i class="fas fa-sync"></i> ${this.t("toc-rerun")}</button>
         </section>
         <section class="checklist-overview-section-run" data-display-condition="run-button">
           <button class="checklist-button checklist-button-primary checklist-toc-run" data-checklist-action="toc-run"><i class="far fa-play-circle"></i> ${this.t("toc-check")}</button>

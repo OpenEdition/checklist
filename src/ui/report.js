@@ -32,7 +32,7 @@ function getHtml (docId, href, types, metadatas, t, tk) {
           <div class="checklist-percentage"></div>
           <div class="checklist-rating-text"></div>
           <div class="checklist-report-rerun" data-checklist-action="report-run" title="${t("report-changed")}">
-            <i class="fas fa-history"></i>
+            <i class="fas fa-sync"></i>
           </div>
         </div>
       </div>
