@@ -152,7 +152,7 @@ class UI extends Base {
 
   createFloatButton () {
     if ($("#checklist-float-btn").length > 0) return;
-    $(`<button id="checklist-float-btn" class="checklist-float-btn" data-checklist-action="goto-next-marker">Loop</button>`).appendTo("body");
+    $(`<button id="checklist-float-btn" class="checklist-float-btn" data-checklist-action="goto-next-marker"><i class="fas fa-search"></i></button>`).appendTo("body");
   }
 
   filterStatements (id, hidden = true) {
