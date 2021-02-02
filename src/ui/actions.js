@@ -61,10 +61,14 @@ function initActions (ui) {
     },
 
     "goto-next-marker": function () {
+      let selector = "[data-checklist-marker-id]";
       const parent = $(this).parent(".checklist-statement").get(0);
-      const statement = parent.statement;
-      const id = statement.id;
-      const $markers = $(`[data-checklist-marker-id="${id}"]`);
+      if (parent) {
+        const statement = parent.statement;
+        const id = statement.id;
+        selector = `[data-checklist-marker-id="${id}"]`;
+      }
+      const $markers = $(selector);
       if ($markers.length === 0) return;
 
       const winPos = $(window).scrollTop();

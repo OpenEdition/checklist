@@ -293,6 +293,8 @@ class Report extends View {
     }
 
     marker.setElement($element.get(0));
+
+    this.ui.createFloatButton();
   }
 
   injectMarkers(markers, isVisible = true) {

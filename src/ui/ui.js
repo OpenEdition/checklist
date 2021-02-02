@@ -150,6 +150,11 @@ class UI extends Base {
     return this;
   }
 
+  createFloatButton () {
+    if ($("#checklist-float-btn").length > 0) return;
+    $(`<button id="checklist-float-btn" class="checklist-float-btn" data-checklist-action="goto-next-marker">Loop</button>`).appendTo("body");
+  }
+
   filterStatements (id, hidden = true) {
     this.emit("filterStatements");
     this.forEachReport((report) => {
