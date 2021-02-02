@@ -63,14 +63,15 @@ function initActions (ui) {
     "goto-next-marker": function () {
       const parent = $(this).parent(".checklist-statement").get(0);
       const statement = parent.statement;
-      const markers = statement.markers;
-      if (!markers || markers.length === 0) return;
+      const id = statement.id;
+      const $markers = $(`[data-checklist-marker-id="${id}"]`);
+      if ($markers.length === 0) return;
 
       const winPos = $(window).scrollTop();
       const isBottomReached = winPos + $(window).height() > $(document).height() - 50;
-      const tops = markers.map((marker) => {
-        return $(marker.element).offset().top;
-      });
+      const tops = $markers.map(function() {
+        return $(this).offset().top;
+      }).get();
       const nextTop = tops.find((top) => {
         return top > winPos + 10;
       });

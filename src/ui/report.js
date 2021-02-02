@@ -272,7 +272,7 @@ class Report extends View {
   injectMarker(marker, isVisible = true) {
     if (this.showMarkers === false) return;
     const classname = isVisible ? "" : "hidden";
-    const html = `<span class="checklist-marker checklist-marker-type-${marker.type} ${classname}" data-checklist-marker-name="${this.tk(marker.name)}" data-checklist-action="help-show"></span>`;
+    const html = `<span class="checklist-marker checklist-marker-type-${marker.type} ${classname}" data-checklist-marker-id="${marker.id}" data-checklist-marker-name="${this.tk(marker.name)}" data-checklist-action="help-show"></span>`;
     const $element = $(html);
     const $filteredTarget = $(marker.target).filter(":not(.checklist-component *)");
 

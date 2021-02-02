@@ -42,7 +42,7 @@ class Statement extends Base {
       if (!showMarkers) return this;
 
       const createMarker = (singleTarget, options) => {
-        const overwriting = {target: singleTarget, caller: this};
+        const overwriting = {target: singleTarget, id: this.id, caller: this};
         const newOptions = Object.assign({}, options, overwriting);
         const marker = new Marker(newOptions);
         this.markers.push(marker);
