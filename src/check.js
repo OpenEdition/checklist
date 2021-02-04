@@ -133,7 +133,7 @@ class Check extends Base {
     const selectFunc = this.source.get$();
     const bodyClasses = this.source.bodyClasses;
     try {
-      this.action.call(this, selectFunc, bodyClasses);
+      this.action.call(this, selectFunc, this.context, bodyClasses);
     } catch (e) {
       this.reject(e);
     }

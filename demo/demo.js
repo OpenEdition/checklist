@@ -247,7 +247,7 @@ $(function () {
         description: "<p>Cette règle recherche une information dans une source externe.",
         href: "./article-1.html",
         condition: "textes || publications",
-        action: function ($, bodyClasses) {
+        action: function ($, context, bodyClasses) {
           var flag = $(".titre-article-1").length === 1 && bodyClasses.indexOf("article-1") > -1;
           this.resolve(flag);
         }
@@ -299,7 +299,7 @@ $(function () {
         description: "Un avertissement qui ne ressort que dans l'article 2.",
         type: "warning",
         condition: "textes || publications",
-        action: function ($, bodyClasses) {
+        action: function ($, context, bodyClasses) {
           const flag = bodyClasses.includes("article-2");
           this.notify(flag);
           this.notify(flag);
@@ -312,7 +312,7 @@ $(function () {
         description: "Une erreur critique qui ne ressort que dans l'article 2.",
         type: "danger",
         condition: "textes || publications",
-        action: function ($, bodyClasses) {
+        action: function ($, context, bodyClasses) {
           const flag = bodyClasses.includes("article-2");
           this.resolve(flag);
         }

@@ -244,7 +244,7 @@ checklist.init({
       },
       condition: "article || publication",
       type: "danger",
-      action: function ($, bodyClasses) {
+      action: function ($, context, bodyClasses) {
         var flag = $("h1").length === 0;
         this.resolve(flag);
       }
@@ -347,8 +347,9 @@ checklist.init({
 
   // Action de la règle.
   // Ne pas oublier de passer $ en paramètre pour que la règle fonctionne avec les sources externes chargées par le loader.
-  // Dans le cas de sources externes chargées via ajax, le tag body est remplacé par un div pour éviter une erreur du DOM. Pour cette raison le deuxième paramètre d'action() correspond aux classes du body de la source.
-  action: function ($, bodyClasses) {
+  // le deuxième paramètre correspond au contexte du checker.
+  // Dans le cas de sources externes chargées via ajax, le tag body est remplacé par un div pour éviter une erreur du DOM. Pour cette raison le dernier paramètre d'action() correspond aux classes du body de la source.
+  action: function ($, context, bodyClasses) {
     // Créer un statement en utilisant les valeurs par défaut de la règle
     this.notify(true);
 
