@@ -1,10 +1,10 @@
 const View = require("./view.js");
+const Stackedbar = require("./stackedbar.js");
 const svg = require("./svg.json");
 
 class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
-    this.prevStats = {};
     this.createMarkup();
     ui.on("filterStatements", () => this.reset());
   }
@@ -17,7 +17,7 @@ class Overview extends View {
         </section>
         <section class="checklist-overview-section-indicators">
           <h3>${this.t("overview-progress")}</h3>
-          <div class="checklist-overview-stats"></div>
+          <div class="checklist-overview-stackedbar-container"></div>
         </section>
         <section class="checklist-overview-section-legend" data-display-condition="legend"></section>
         <section class="checklist-overview-section-running" data-display-condition="running">
@@ -43,15 +43,12 @@ class Overview extends View {
     `;
     this.createView(html);
 
-    // Stats
-    const ratings = this.ui.ratings;
-    const $stats = this.find(".checklist-overview-stats");
-    const statsHtml = ratings.map((rating) => {
-      return `<div class="checklist-overview-stat-${rating.id}"><div class="checklist-overview-stat-tooltip"></div></div>`;
-    }).join("");
-    $stats.html(statsHtml);
+    // Stats (stackedbar)
+    const $statsContainer = this.find(".checklist-overview-stackedbar-container");
+    this.stackedbar = new Stackedbar({ui: this.ui, parent: $statsContainer, overview: this});
 
     // Legend
+    const ratings = this.ui.ratings;
     const $legend = this.find(".checklist-overview-section-legend");
     const legendDivs = ratings.map((rating) => {
       return `
@@ -68,9 +65,7 @@ class Overview extends View {
   }
 
   reset () {
-    this.prevStats = {};
-    this.find(".checklist-overview-stats div").removeAttr("style");
-    this.find(".checklist-overview-stat-tooltip").empty();
+    this.stackedbar.reset();
     this.updateControls();
     return this;
   }
@@ -78,8 +73,7 @@ class Overview extends View {
   update ({ states, ratings }) {
     this.updateControls(states);
     const stats = this.getStats(states, ratings);
-    this.updateStats(stats, states);
-    this.prevStats = stats;
+    this.stackedbar.update(stats, states);
     return this;
   }
 
@@ -124,41 +118,9 @@ class Overview extends View {
     });
   }
 
-  updateStats (stats, states) {
-    const prevStats = this.prevStats;
-    const {length, pending, isBatchRunning} = states;
-
-    // Hide "default" stat if script is running
-    const isRunning = pending > 0 || isBatchRunning;
-    const $default = this.find(".checklist-overview-stat-default");
-    $default.toggleClass("hidden", isRunning);
-
-    Object.keys(stats).forEach((key) => {
-      const current = stats[key];
-      const prev = prevStats[key];
-      if (current === prev) return; // Don't update if no change
-      this.updateStatDiv(key, current, length);
-    });
-    return this;
-  }
-
-  updateStatDiv (name, count, total, icon) {
-    const percent =  count / total * 100;
-    const $el = this.find(`.checklist-overview-stat-${name}`);
-    $el.width(`${percent}%`);
-
+  toggleLegend (name, flag) {
     const $legend = this.find(`.checklist-overview-legend-${name}`);
-    $legend.toggleClass("visible", count > 0);
-
-    const $tooltip = $el.find(".checklist-overview-stat-tooltip");
-    if (count === 0) {
-      $tooltip.removeClass("visible").empty();
-      return;
-    }
-
-    icon = icon || this.ui.getRating(name).icon;
-    const contents = icon + "&nbsp;" + count;
-    $tooltip.html(contents).addClass("visible");
+    $legend.toggleClass("visible", flag);
   }
 }
 

@@ -114,21 +114,21 @@ class UI extends Base {
     // Inject ratings related styles
     this.ratings.forEach((rating) => {
       styles.push(`
-        .checklist-rating-${rating.id}, .checklist-overview-stat-${rating.id},
-        .checklist-overview-stat-${rating.id} .checklist-overview-stat-tooltip,
+        .checklist-rating-${rating.id}, .checklist-stackedbar-stat-${rating.id},
+        .checklist-stackedbar-stat-${rating.id} .checklist-stackedbar-stat-tooltip,
         .checklist-overview-legend-${rating.id} .checklist-overview-legend-icon {
           color: ${rating.color};
           fill: ${rating.color};
           background-color: ${rating.bgcolor};
         }
-        .checklist-overview-stat-${rating.id} .checklist-overview-stat-tooltip:after {
+        .checklist-stackedbar-stat-${rating.id} .checklist-stackedbar-stat-tooltip:after {
           border-top-color: ${rating.bgcolor};
         }
       `);
       if (rating.id === "default") {
         styles.push(`
-          .checklist-overview-stats {
-             background-color: ${rating.bgcolor};
+          .checklist-stackedbar {
+            background-color: ${rating.bgcolor};
           }
         `);
       }
