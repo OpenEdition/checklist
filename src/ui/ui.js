@@ -6,6 +6,7 @@ const i18n = require("./i18n.js");
 const Pane = require("./pane.js");
 const Report = require("./report.js");
 const Settings = require("./settings.js");
+const Stackedbar = require("./stackedbar.js");
 const TOC = require("./toc.js");
 
 class UI extends Base {
@@ -270,6 +271,24 @@ class UI extends Base {
       this.emit("error", err);
     };
     return rating;
+  }
+
+  createStackedbarFromCache (target, docIds) {
+    const cache = this.cache;
+    const computeRating = this.getConfig("computeRating");
+    const states = {length: docIds.length, pending: 0, isBatchRunning: false};
+
+    const increment = (obj, key) => obj[key] = typeof obj[key] === "number" ? obj[key] + 1 : 1;
+    
+    const stats = docIds.reduce((res, docId) => {
+      const record = cache.getRecord(docId);
+      const rating = record && record.statements ? computeRating(record.statements) : "default";
+      increment(res, rating);
+      return res;
+    }, {});
+    
+    const stackedbar = new Stackedbar({ui: this, parent: target});
+    return stackedbar.update(stats, states);
   }
 }
 
