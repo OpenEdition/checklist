@@ -156,12 +156,12 @@ class UI extends Base {
     $(`<button id="checklist-float-btn" class="checklist-float-btn" data-checklist-action="goto-next-marker"><i class="fas fa-search"></i></button>`).appendTo("body");
   }
 
-  filterStatements (id, hidden = true) {
+  filterStatements (filterId, hidden = true) {
     this.emit("filterStatements");
     this.forEachReport((report) => {
-      report.filterStatements(id, hidden);
+      report.filterStatements(filterId, hidden);
     });
-    this.cache.setFilter(id, hidden);
+    this.cache.setFilter(filterId, hidden);
     return this;
   }
 
@@ -288,7 +288,13 @@ class UI extends Base {
     }, {});
     
     const stackedbar = new Stackedbar({ui: this, parent: target});
-    return stackedbar.update(stats, states);
+    stackedbar.update(stats, states);
+
+    this.on("filterStatements", () => {
+      // todo update
+    });
+
+    return stackedbar;
   }
 }
 
