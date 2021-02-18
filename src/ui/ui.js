@@ -276,13 +276,33 @@ class UI extends Base {
   createStackedbarFromCache (target, docIds) {
     const cache = this.cache;
     const computeRating = this.getConfig("computeRating");
+    const rules = this.getConfig("rules");
     const states = {length: docIds.length, pending: 0, isBatchRunning: false};
+
+    const activeFiltersId = (() => {
+      const cache = this.cache;
+      const filters = this.getConfig("filters");
+      return filters
+        .filter((f) => !cache.getFilter(f.id))
+        .map((f) => f.id);
+    })();
+
+    const isStatementActive = (statement) => {
+      const id = statement.id;
+      const rule = rules.find((r) => r.id === id);
+      const tags = rule.tags;
+      if (!tags || tags.length === 0) return true;
+      const intersection = tags.filter(tag => activeFiltersId.includes("tag-" + tag));
+      return intersection.length > 0;
+    }
+
+    const filterStatements = (s) => s.filter(isStatementActive);
 
     const increment = (obj, key) => obj[key] = typeof obj[key] === "number" ? obj[key] + 1 : 1;
     
     const stats = docIds.reduce((res, docId) => {
       const record = cache.getRecord(docId);
-      const rating = record && record.statements ? computeRating(record.statements) : "default";
+      const rating = record && record.statements ? computeRating(filterStatements(record.statements)) : "default";
       increment(res, rating);
       return res;
     }, {});

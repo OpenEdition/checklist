@@ -27,7 +27,7 @@ class Stackedbar extends View {
     $default.toggleClass("hidden", isRunning);
 
 		const updateStat = (name, count, total, icon) => {
-			const percent =  count / total * 100;
+			const percent = count / total * 100;
 			const $el = this.find(`.checklist-stackedbar-stat-${name}`);
 			$el.width(`${percent}%`);
 

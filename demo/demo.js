@@ -43,7 +43,7 @@ $(function () {
             "title": "Troisième article",
             "href": "http://localhost:3000/demo/article-3.html",
             "context": {
-              "no-test": true
+              "paper-test-only": true
             }
           }
         ]
@@ -352,7 +352,7 @@ $(function () {
         description: "Une règle qui est associée à la catégorie 'papier'",
         type: "warning",
         tags: ["paper"],
-        condition: "textes || publications",
+        condition: "textes || publications || paper-test-only",
         action: function () {
           this.resolve(true);
         }
