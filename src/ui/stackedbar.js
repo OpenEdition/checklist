@@ -3,22 +3,22 @@ const View = require("./view.js");
 class Stackedbar extends View {
   constructor ({ ui, parent, overview }) {
     super("Overview", ui, parent);
-		this.overview = overview;
-		this.prevStats = {};
+    this.overview = overview;
+    this.prevStats = {};
     this.createMarkup();
   }
 
-	createMarkup() {
-		const ratings = this.ui.ratings;
-		const statsHtml = ratings.map((rating) => {
+  createMarkup() {
+    const ratings = this.ui.ratings;
+    const statsHtml = ratings.map((rating) => {
       return `<div class="checklist-stackedbar-stat-${rating.id}"><div class="checklist-stackedbar-stat-tooltip"></div></div>`;
     }).join("");
-		const html = `<div class="checklist-stackedbar">${statsHtml}</div>`
+    const html = `<div class="checklist-stackedbar">${statsHtml}</div>`
     this.createView(html);
-	}
+  }
 
-	update (stats, states) {
-		const ratingsId = this.getConfig("ratings").map(r => r.id);
+  update (stats, states) {
+    const ratingsId = this.getConfig("ratings").map(r => r.id);
     const prevStats = this.prevStats;
     const {length, pending, isBatchRunning} = states;
 
@@ -27,25 +27,25 @@ class Stackedbar extends View {
     const $default = this.find(".checklist-stackedbar-stat-default");
     $default.toggleClass("hidden", isRunning);
 
-		const updateStat = (name, count, total, icon) => {
-			const percent = count / total * 100;
-			const $el = this.find(`.checklist-stackedbar-stat-${name}`);
-			$el.width(`${percent}%`);
+    const updateStat = (name, count, total, icon) => {
+      const percent = count / total * 100;
+      const $el = this.find(`.checklist-stackedbar-stat-${name}`);
+      $el.width(`${percent}%`);
 
-			if (this.overview) {
-				this.overview.toggleLegend(name, count > 0);
-			}
+      if (this.overview) {
+        this.overview.toggleLegend(name, count > 0);
+      }
 
-			const $tooltip = $el.find(".checklist-stackedbar-stat-tooltip");
-			if (count === 0) {
-				$tooltip.removeClass("visible").empty();
-				return;
-			}
+      const $tooltip = $el.find(".checklist-stackedbar-stat-tooltip");
+      if (count === 0) {
+        $tooltip.removeClass("visible").empty();
+        return;
+      }
 
-			icon = icon || this.ui.getRating(name).icon;
-			const contents = icon + "&nbsp;" + count;
-			$tooltip.html(contents).addClass("visible");
-		}
+      icon = icon || this.ui.getRating(name).icon;
+      const contents = icon + "&nbsp;" + count;
+      $tooltip.html(contents).addClass("visible");
+    }
 
     ratingsId.forEach((key) => {
       const current = stats[key] || 0;
@@ -54,15 +54,15 @@ class Stackedbar extends View {
       updateStat(key, current, length);
     });
 
-		this.prevStats = stats;
+    this.prevStats = stats;
     return this;
   }
 
-	reset() {
-		this.prevStats = {};
+  reset() {
+    this.prevStats = {};
     this.find("div").removeAttr("style");
     this.find(".checklist-stackedbar-stat-tooltip").empty();
-	}
+  }
 }
 
 module.exports = Stackedbar;
