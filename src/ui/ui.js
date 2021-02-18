@@ -157,11 +157,12 @@ class UI extends Base {
   }
 
   filterStatements (filterId, hidden = true) {
-    this.emit("filterStatements");
+    this.emit("beforeFilterStatements");
     this.forEachReport((report) => {
       report.filterStatements(filterId, hidden);
     });
     this.cache.setFilter(filterId, hidden);
+    this.emit("afterFilterStatements");
     return this;
   }
 
@@ -277,42 +278,43 @@ class UI extends Base {
     const cache = this.cache;
     const computeRating = this.getConfig("computeRating");
     const rules = this.getConfig("rules");
+
+    const updateStackedBar = (stackedbar) => {
+      const activeFiltersId = (() => {
+        const cache = this.cache;
+        const filters = this.getConfig("filters");
+        return filters
+          .filter((f) => !cache.getFilter(f.id))
+          .map((f) => f.id);
+      })();
+  
+      const isStatementActive = (statement) => {
+        const id = statement.id;
+        const rule = rules.find((r) => r.id === id);
+        const tags = rule.tags;
+        if (!tags || tags.length === 0) return true;
+        const intersection = tags.filter(tag => activeFiltersId.includes("tag-" + tag));
+        return intersection.length > 0;
+      }
+  
+      const filterStatements = (s) => s.filter(isStatementActive);
+  
+      const increment = (obj, key) => obj[key] = typeof obj[key] === "number" ? obj[key] + 1 : 1;
+      
+      const stats = docIds.reduce((res, docId) => {
+        const record = cache.getRecord(docId);
+        const rating = record && record.statements ? computeRating(filterStatements(record.statements)) : "default";
+        increment(res, rating);
+        return res;
+      }, {});
+
+      stackedbar.update(stats, states);
+    };
+    
     const states = {length: docIds.length, pending: 0, isBatchRunning: false};
-
-    const activeFiltersId = (() => {
-      const cache = this.cache;
-      const filters = this.getConfig("filters");
-      return filters
-        .filter((f) => !cache.getFilter(f.id))
-        .map((f) => f.id);
-    })();
-
-    const isStatementActive = (statement) => {
-      const id = statement.id;
-      const rule = rules.find((r) => r.id === id);
-      const tags = rule.tags;
-      if (!tags || tags.length === 0) return true;
-      const intersection = tags.filter(tag => activeFiltersId.includes("tag-" + tag));
-      return intersection.length > 0;
-    }
-
-    const filterStatements = (s) => s.filter(isStatementActive);
-
-    const increment = (obj, key) => obj[key] = typeof obj[key] === "number" ? obj[key] + 1 : 1;
-    
-    const stats = docIds.reduce((res, docId) => {
-      const record = cache.getRecord(docId);
-      const rating = record && record.statements ? computeRating(filterStatements(record.statements)) : "default";
-      increment(res, rating);
-      return res;
-    }, {});
-    
     const stackedbar = new Stackedbar({ui: this, parent: target});
-    stackedbar.update(stats, states);
-
-    this.on("filterStatements", () => {
-      // todo update
-    });
+    updateStackedBar(stackedbar);
+    this.on("afterFilterStatements", () => updateStackedBar(stackedbar));
 
     return stackedbar;
   }

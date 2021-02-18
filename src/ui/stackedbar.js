@@ -18,6 +18,7 @@ class Stackedbar extends View {
 	}
 
 	update (stats, states) {
+		const ratingsId = this.getConfig("ratings").map(r => r.id);
     const prevStats = this.prevStats;
     const {length, pending, isBatchRunning} = states;
 
@@ -46,8 +47,8 @@ class Stackedbar extends View {
 			$tooltip.html(contents).addClass("visible");
 		}
 
-    Object.keys(stats).forEach((key) => {
-      const current = stats[key];
+    ratingsId.forEach((key) => {
+      const current = stats[key] || 0;
       const prev = prevStats[key];
       if (current === prev) return; // Don't update if no change
       updateStat(key, current, length);
