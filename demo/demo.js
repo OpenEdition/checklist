@@ -4,8 +4,9 @@ $(function () {
     return;
   }
 
-  // Prepare publi
   const isPublication = $(document.body).hasClass("publication");
+  const isArticle = $(document.body).hasClass("article");
+  const isMisc =$(document.body).hasClass("misc");
 
   const publi = {
     parent: "#toc-container",
@@ -42,7 +43,7 @@ $(function () {
             "title": "Troisième article",
             "href": "http://localhost:3000/demo/article-3.html",
             "context": {
-              "no-test": true
+              "paper-test-only": true
             }
           }
         ]
@@ -215,8 +216,8 @@ $(function () {
 
     context: function () {
       return {
-        "article": !isPublication,
-        "textes":  !isPublication,
+        "article": isArticle,
+        "textes":  isArticle,
         "publications": isPublication,
         "motsclesfr": $(".motsclesfr .entry").length
       };
@@ -351,7 +352,7 @@ $(function () {
         description: "Une règle qui est associée à la catégorie 'papier'",
         type: "warning",
         tags: ["paper"],
-        condition: "textes || publications",
+        condition: "textes || publications || paper-test-only",
         action: function () {
           this.resolve(true);
         }
@@ -385,10 +386,15 @@ $(function () {
     ]
   })
   .then(function () {
-    // Don't ditrectly run tests on publications
-    if (!isPublication) {
+    if (isArticle) {
       checklist.run().catch(console.error);
     }
+    if (isMisc) {
+      var $target = $(".stackedbar-container");
+      var docIds = ["http://localhost:3000/demo/article-1.html", "http://localhost:3000/demo/article-2.html", "http://localhost:3000/demo/article-3.html"];
+      checklist.ui.createStackedbarFromCache($target, docIds);
+    }
+
   })
   .catch(console.error);
 });

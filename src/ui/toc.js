@@ -26,10 +26,7 @@ class TOC extends View {
   createMarkup () {
     const html = `
       <div id="checklist-toc-view" class="checklist-toc-view checklist-component visible">
-        <div class="checklist-toc-view-contents">
-          <ul id="checklist-toc-stats" class="checklist-toc-stats"></ul>
-          <ul id="checklist-toc" class="checklist-toc"></ul>
-        </div>
+        <ul id="checklist-toc" class="checklist-toc"></ul>
       </div>
     `;
     this.createView(html);

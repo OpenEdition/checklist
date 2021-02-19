@@ -6,6 +6,7 @@ const i18n = require("./i18n.js");
 const Pane = require("./pane.js");
 const Report = require("./report.js");
 const Settings = require("./settings.js");
+const Stackedbar = require("./stackedbar.js");
 const TOC = require("./toc.js");
 
 class UI extends Base {
@@ -114,21 +115,21 @@ class UI extends Base {
     // Inject ratings related styles
     this.ratings.forEach((rating) => {
       styles.push(`
-        .checklist-rating-${rating.id}, .checklist-overview-stat-${rating.id},
-        .checklist-overview-stat-${rating.id} .checklist-overview-stat-tooltip,
+        .checklist-rating-${rating.id}, .checklist-stackedbar-stat-${rating.id},
+        .checklist-stackedbar-stat-${rating.id} .checklist-stackedbar-stat-tooltip,
         .checklist-overview-legend-${rating.id} .checklist-overview-legend-icon {
           color: ${rating.color};
           fill: ${rating.color};
           background-color: ${rating.bgcolor};
         }
-        .checklist-overview-stat-${rating.id} .checklist-overview-stat-tooltip:after {
+        .checklist-stackedbar-stat-${rating.id} .checklist-stackedbar-stat-tooltip:after {
           border-top-color: ${rating.bgcolor};
         }
       `);
       if (rating.id === "default") {
         styles.push(`
-          .checklist-overview-stats {
-             background-color: ${rating.bgcolor};
+          .checklist-stackedbar {
+            background-color: ${rating.bgcolor};
           }
         `);
       }
@@ -155,12 +156,13 @@ class UI extends Base {
     $(`<button id="checklist-float-btn" class="checklist-float-btn" data-checklist-action="goto-next-marker"><i class="fas fa-search"></i></button>`).appendTo("body");
   }
 
-  filterStatements (id, hidden = true) {
-    this.emit("filterStatements");
+  filterStatements (filterId, hidden = true) {
+    this.emit("beforeFilterStatements");
     this.forEachReport((report) => {
-      report.filterStatements(id, hidden);
+      report.filterStatements(filterId, hidden);
     });
-    this.cache.setFilter(id, hidden);
+    this.cache.setFilter(filterId, hidden);
+    this.emit("afterFilterStatements");
     return this;
   }
 
@@ -270,6 +272,51 @@ class UI extends Base {
       this.emit("error", err);
     };
     return rating;
+  }
+
+  createStackedbarFromCache (target, docIds) {
+    const cache = this.cache;
+    const computeRating = this.getConfig("computeRating");
+    const rules = this.getConfig("rules");
+
+    const updateStackedBar = (stackedbar) => {
+      const activeFiltersId = (() => {
+        const cache = this.cache;
+        const filters = this.getConfig("filters");
+        return filters
+          .filter((f) => !cache.getFilter(f.id))
+          .map((f) => f.id);
+      })();
+  
+      const isStatementActive = (statement) => {
+        const id = statement.id;
+        const rule = rules.find((r) => r.id === id);
+        const tags = rule.tags;
+        if (!tags || tags.length === 0) return true;
+        const intersection = tags.filter(tag => activeFiltersId.includes("tag-" + tag));
+        return intersection.length > 0;
+      }
+  
+      const filterStatements = (s) => s.filter(isStatementActive);
+  
+      const increment = (obj, key) => obj[key] = typeof obj[key] === "number" ? obj[key] + 1 : 1;
+      
+      const stats = docIds.reduce((res, docId) => {
+        const record = cache.getRecord(docId);
+        const rating = record && record.statements ? computeRating(filterStatements(record.statements)) : "default";
+        increment(res, rating);
+        return res;
+      }, {});
+
+      stackedbar.update(stats, states);
+    };
+    
+    const states = {length: docIds.length, pending: 0, isBatchRunning: false};
+    const stackedbar = new Stackedbar({ui: this, parent: target});
+    updateStackedBar(stackedbar);
+    this.on("afterFilterStatements", () => updateStackedBar(stackedbar));
+
+    return stackedbar;
   }
 }
 

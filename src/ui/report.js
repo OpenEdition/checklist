@@ -463,8 +463,8 @@ class Report extends View {
   // FILTERS
   // =======
 
-  filterStatements (id, hidden = true) {
-    const selector = `.checklist-statement-${id}`;
+  filterStatements (filterId, hidden = true) {
+    const selector = `.checklist-statement-${filterId}`;
     const $elements = this.find(selector);
     $elements.toggleClass("hidden", hidden);
 
@@ -484,7 +484,9 @@ class Report extends View {
     });
 
     this.updateView();
-    this.updateRating();
+    if (this.hasState("rated")) {
+      this.updateRating();
+    }
     return this;
   }
 
