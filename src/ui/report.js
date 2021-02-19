@@ -484,7 +484,9 @@ class Report extends View {
     });
 
     this.updateView();
-    this.updateRating();
+    if (this.hasState("rated")) {
+      this.updateRating();
+    }
     return this;
   }
 
