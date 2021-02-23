@@ -22,6 +22,8 @@ function getHtml (buttonsCreator, docId, context, ui) {
   };
 
   const infos = buttonsCreator(docId, context);
+  if (infos == null) return null;
+
   const buttonsHtml = infos.map(getEntries).join("");
   const html = `
     <nav class="checklist-dropdown">
