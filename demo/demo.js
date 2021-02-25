@@ -68,6 +68,7 @@ $(function () {
   }
 
   checklist.init({
+    homeHref: "/demo",
     parent: "#pane-container",
     namespace: "demo",
     docId: "index",

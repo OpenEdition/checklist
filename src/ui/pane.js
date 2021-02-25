@@ -7,11 +7,14 @@ class Pane extends View {
     super("Pane", ui, parent);
 
     this.docId = this.getConfig("docId");
+    const homeHref = this.getConfig("homeHref");
+    const logo = svg["checklist-logo"];
+    const brand = homeHref ? `<a href="${homeHref}">${logo}</a>` : logo;
 
     const t = this.ui.t;
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
       <div class="checklist-main-menu">
-        <div class="checklist-brand">${svg["checklist-logo"]}</div>
+        <div class="checklist-brand">${brand}</div>
         <div class="checklist-dropdown-container"></div>
         <div class="checklist-main-menu-buttons">
           <button data-checklist-action="settings-show"><i class="fas fa-cog"></i></button>
