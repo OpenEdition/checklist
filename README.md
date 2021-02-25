@@ -82,6 +82,12 @@ checklist.init({
     }
   },
 
+  // Ajouter un message optionnel dans l'interface
+  paneMessage: {
+    fr: "Ceci est un test de message ajouté au début du paneau latéral.",
+    en: "This is a test message added to the side pane."
+  },
+
   // Une fonction qui permet de créer les boutons de la barre d'outil.
   // Prend l'identifant du document en paramètre.
   buttonsCreator: function (docId, context) {

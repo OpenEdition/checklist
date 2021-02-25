@@ -80,6 +80,11 @@ $(function () {
     loaderTimeout: 3000,
     loaderDelay: 1000,
 
+    paneMessage: {
+      fr: "Ceci est un test de message ajouté au début du paneau latéral.",
+      en: "This is a test message added to the side pane."
+    },
+
     translations: {
       fr: {
         "toc-check": "Controler tout (traduction alternative)"

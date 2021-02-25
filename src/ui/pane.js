@@ -6,12 +6,16 @@ class Pane extends View {
   constructor ({ ui, parent, publi }) {
     super("Pane", ui, parent);
 
+    const {t, tk} = ui;
+    
     this.docId = this.getConfig("docId");
     const homeHref = this.getConfig("homeHref");
     const logo = svg["checklist-logo"];
     const brand = homeHref ? `<a href="${homeHref}">${logo}</a>` : logo;
+    
+    const paneMessage = this.getConfig("paneMessage");
+    const msg = paneMessage ? `<div id="checklist-pane-message" class="checklist-pane-message">${tk(paneMessage)}</div>` : "";
 
-    const t = this.ui.t;
     const html = `<div id="checklist-pane" class="checklist-pane checklist-component">
       <div class="checklist-main-menu">
         <div class="checklist-brand">${brand}</div>
@@ -20,6 +24,7 @@ class Pane extends View {
           <button data-checklist-action="settings-show"><i class="fas fa-cog"></i></button>
         </div>
       </div>
+      ${msg}
       <div id="checklist-pane-contents" class="checklist-pane-contents"></div>
       <div id="checklist-pane-footer" class="checklist-pane-footer">
         <div class="checklist-cache-alert">
