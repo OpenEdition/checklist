@@ -57,6 +57,9 @@ checklist.init({
     {code: "en", name: "English"},
   ],
 
+  // Lien du logo Checklist (optionnel)
+  homeHref: "/checklist",
+
   // Nombre maximum de requêtes Ajax lancées simultanément par le Loader
   maxSourcesLoading: 5,
 
@@ -418,6 +421,16 @@ checklist.init({
     this.resolve(true, markerObj);
   }
 }
+```
+
+## Affichage de barres de progression
+
+Checklist expose une API pour afficher une barre de progression de la vérification d'un groupe de documents (Stackedbar) à partir des données du cache :
+
+```javascript
+  var $target = $(".stackedbar-container");
+  var docIds = ["url/to/article-1.html", "url/to/article-2.html", "url/to/article-3.html"];
+  checklist.ui.createStackedbarFromCache($target, docIds);
 ```
 
 ## Fonctionnement interne
