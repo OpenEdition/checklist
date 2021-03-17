@@ -102,6 +102,23 @@ class Checklist extends Base {
         return Promise.reject(err);
       });
   }
+
+  runBatch({docs = [], rules, context}) {
+    // Wait for the 'ready' event
+    if (!this.hasState("ready")) {
+      return this.postponePromise("ready", "run", arguments);
+    }
+
+    rules = rules || this.getConfig("rules");
+    const contextCreator = context || this.getConfig("context");
+
+    const proms = docs.map(({ docId, href }) => {
+      const checker = new Checker({ docId, href, rules, contextCreator, caller: this });
+      return checker.run().catch((error) => ({ error, docId, href }));
+    });
+
+    return Promise.all(proms);
+  }
 }
 
 module.exports = Checklist;
