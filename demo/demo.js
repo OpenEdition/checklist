@@ -396,9 +396,23 @@ $(function () {
       checklist.run().catch(console.error);
     }
     if (isMisc) {
+      // Stackedbar demo
       var $target = $(".stackedbar-container");
       var docIds = ["http://localhost:3000/demo/article-1.html", "http://localhost:3000/demo/article-2.html", "http://localhost:3000/demo/article-3.html"];
       checklist.ui.createStackedbarFromCache($target, docIds);
+
+      // Batch Check demo
+      $("#run-batch").on("click", function() {
+        var input = $("#batch-input").val();
+        var options = {
+          docs: JSON.parse(input),
+        };
+        checklist.runBatch(options)
+        .then((res) => {
+          console.log(res);
+          alert("Please check your browser console.");
+        });
+      });
     }
 
   })
