@@ -429,6 +429,22 @@ checklist.init({
 }
 ```
 
+## Vérification par lots
+
+La méthode `Checklist.runBatch({ docs, rules, context })` permet de lancer la vérification de plusieurs documents et de récupérer une promesse retournant les Checkers obtenus (et des erreurs pour les traitements ayant échoué).
+
+* Le paramètre `docs` est un objet de la forme `{ docId, href }` qui contient les informations sur les documents à tester.
+* Le paramètre `rules` (optionel) contient une liste de règles alternative à utiliser pour les tests.
+* Le paramètre `context` (optionel) contient un contexte alternatif à utiliser pour les tests.
+
+```javascript
+var docs = [
+  { docId: "doc1", href: "url/to/doc1" },
+  { docId: "doc2", href: "url/to/doc2" }
+];
+checklist.runBatch({ docs: docs }).then(console.log); // Array(2) [ {…}, {…} ]
+```
+
 ## Affichage de barres de progression
 
 Checklist expose une API pour afficher une barre de progression de la vérification d'un groupe de documents (Stackedbar) à partir des données du cache :
