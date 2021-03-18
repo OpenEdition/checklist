@@ -408,8 +408,13 @@ $(function () {
           docs: JSON.parse(input),
         };
         checklist.runBatch(options)
-        .then((res) => {
-          console.log(res);
+        .then((checkers) => {
+          console.log(checkers);
+          checkers.forEach((checker) => {
+            if (checker.error) return;
+            var statements = checker.getStatements();
+            console.log(statements);
+          });
           alert("Please check your browser console.");
         });
       });
