@@ -110,10 +110,10 @@ class Checklist extends Base {
     }
 
     rules = rules || this.getConfig("rules");
-    const contextCreator = context || this.getConfig("context");
+    const defaultContext = context || this.getConfig("context");
 
-    const proms = docs.map(({ docId, href }) => {
-      const checker = new Checker({ docId, href, rules, contextCreator, caller: this });
+    const proms = docs.map(({ docId, href, context = defaultContext }) => {
+      const checker = new Checker({ docId, href, rules, contextCreator: context, caller: this });
       return checker.run().catch((error) => ({ error, docId, href }));
     });
 
