@@ -230,11 +230,11 @@ checklist.init({
   },
 
   // Fonction de création du contexte.
-  context: function ($) {
+  context: function ($, bodyClasses) {
     return {
-      "article": true,
-      "textes": true,
-      "publication": false,
+      "article": bodyClasses.includes("article"),
+      "textes": bodyClasses.includes("textes"),
+      "publication": bodyClasses.includes("publication"),
       "motsclesfr": $(".motsclesfr .entry").length
     };
   },

@@ -220,11 +220,11 @@ $(function () {
       return warning ? "good" : "excellent";
     },
 
-    context: function () {
+    context: function ($, bodyClasses) {
       return {
-        "article": isArticle,
-        "textes":  isArticle,
-        "publications": isPublication,
+        "article": bodyClasses.includes("article"),
+        "textes":  bodyClasses.includes("article"),
+        "publications": bodyClasses.includes("publication"),
         "motsclesfr": $(".motsclesfr .entry").length
       };
     },
