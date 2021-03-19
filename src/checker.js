@@ -49,7 +49,7 @@ class Checker extends Base {
       return this.postponePromise("ready", "run", arguments);
     }
 
-    this.triggerState("run");
+    this.triggerState("run", this);
 
     if (this.hasState("error")) {
       return Promise.reject(this.errorMsg);

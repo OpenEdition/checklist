@@ -4,6 +4,12 @@ const Config = require("./config.js");
 const Loader = require("./loader.js");
 const UI = require("./ui/ui.js");
 
+function forwardCheckerEvents(checklist, checker) {
+  const events = [ {"run": "checker.run"},
+  {"done": "checker.done"}, {"error": "checker.error"}, "check.run", "check.done", "check.success", "check.rejected", "check.dropped", "statement.new", "statement.update", "marker"];
+  checklist.forwardEvents(checker, events);
+}
+
 class Checklist extends Base {
   constructor (userConfig) {
     super("Checklist");
@@ -62,11 +68,6 @@ class Checklist extends Base {
       return this.postponePromise("ready", "run", arguments);
     }
 
-    const forwardCheckerEvents = (checker) => {
-      const events = [ "check.run", "check.done", "check.success", "check.rejected", "check.dropped", "statement.new", "statement.update", "checker.run", "checker.done", "marker"];
-      this.forwardEvents(checker, events);
-    };
-
     docId = docId || this.getConfig("docId");
     rules = rules || this.getConfig("rules");
 
@@ -86,21 +87,8 @@ class Checklist extends Base {
       .catch(console.error);
     }
 
-    // Events
-    checker.once("run", () => {
-      this.emit("checker.run", checker);
-    });
-    forwardCheckerEvents(checker);
-
-    return checker.run()
-      .then(() => {
-        this.emit("checker.done", checker);
-        return checker;
-      })
-      .catch((err) => {
-        this.emit("checker.error", err, checker);
-        return Promise.reject(err);
-      });
+    forwardCheckerEvents(this, checker);
+    return checker.run();
   }
 
   runBatch({docs = [], rules, context}) {
@@ -114,6 +102,7 @@ class Checklist extends Base {
 
     const proms = docs.map(({ docId, href, context = defaultContext }) => {
       const checker = new Checker({ docId, href, rules, contextCreator: context, caller: this });
+      forwardCheckerEvents(this, checker);
       return checker.run().catch((error) => ({ error, docId, href }));
     });
 
