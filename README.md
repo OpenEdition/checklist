@@ -436,6 +436,7 @@ La méthode `Checklist.runBatch({ docs, rules, context })` permet de lancer la v
 * Le paramètre `docs` est un objet de la forme `{ docId, href }` qui contient les informations sur les documents à tester.
 * Le paramètre `rules` (optionel) contient une liste de règles alternative à utiliser pour les tests.
 * Le paramètre `context` (optionel) contient un contexte alternatif à utiliser pour les tests.
+* La paramètre `reloadSources` force quand il est vrai le rechargement des sources du loader avant l'exécution.
 
 ```javascript
 var docs = [

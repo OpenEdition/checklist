@@ -91,10 +91,14 @@ class Checklist extends Base {
     return checker.run();
   }
 
-  runBatch({docs = [], rules, context}) {
+  runBatch({docs = [], rules, context, reloadSources}) {
     // Wait for the 'ready' event
     if (!this.hasState("ready")) {
       return this.postponePromise("ready", "run", arguments);
+    }
+
+    if (reloadSources) {
+      this.loader.clear();
     }
 
     rules = rules || this.getConfig("rules");
