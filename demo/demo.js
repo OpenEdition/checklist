@@ -45,6 +45,14 @@ $(function () {
             "context": {
               "paper-test-only": true
             }
+          },
+          {
+            "title": "Timeout article",
+            "href": "http://www.google.com:81",
+            "context": {
+              "textes": true,
+              "article": true
+            }
           }
         ]
       }

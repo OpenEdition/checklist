@@ -63,6 +63,9 @@ checklist.init({
   // Nombre maximum de requêtes Ajax lancées simultanément par le Loader
   maxSourcesLoading: 5,
 
+  // Nombre de nouvelles tentatives en cas de time out lors du chargement d'une source
+  sourceRetry: 2,
+
   // Timeout des requêtes Ajax lancées par le Loader
   loaderTimeout: 10000,
 
