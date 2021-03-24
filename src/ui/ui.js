@@ -151,9 +151,17 @@ class UI extends Base {
     return this;
   }
 
-  createFloatButton () {
-    if ($("#checklist-float-btn").length > 0) return;
-    $(`<button id="checklist-float-btn" class="checklist-float-btn" data-checklist-action="goto-next-marker"><i class="fas fa-search"></i></button>`).appendTo("body");
+  updateFloatButton () {
+    // Create float button
+    let $floatBtn = $("#checklist-float-btn");
+    if ($floatBtn.length === 0) {
+      $floatBtn = $(`<button id="checklist-float-btn" class="checklist-float-btn" data-checklist-action="goto-next-marker"><i class="fas fa-search"></i></button>`).appendTo("body");
+    }
+
+    // Hide/show button
+    const $markers = $(".checklist-marker:visible");
+    const flag = $markers.length > 0;
+    $floatBtn.toggleClass("visible", flag);
   }
 
   filterStatements (filterId, hidden = true) {
@@ -161,6 +169,7 @@ class UI extends Base {
     this.forEachReport((report) => {
       report.filterStatements(filterId, hidden);
     });
+    this.updateFloatButton();
     this.cache.setFilter(filterId, hidden);
     this.emit("afterFilterStatements");
     return this;

@@ -127,6 +127,7 @@ body.checklist-visible {
 }
 
 .checklist-float-btn {
+  display: none;
   position: fixed;
   bottom: 30px;
   right: 30px;
@@ -143,6 +144,10 @@ body.checklist-visible {
   cursor: pointer;
   transition: opacity .2s linear;
   outline: none;
+}
+
+.checklist-float-btn.visible {
+  display: block;
 }
 
 .checklist-float-btn:hover {

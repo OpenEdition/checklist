@@ -294,7 +294,9 @@ class Report extends View {
 
     marker.setElement($element.get(0));
 
-    this.ui.createFloatButton();
+    if (isVisible) {
+      this.ui.updateFloatButton();
+    }
   }
 
   injectMarkers(markers, isVisible = true) {
