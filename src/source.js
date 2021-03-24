@@ -13,6 +13,7 @@ class Source extends Base {
     this.href = href;
     this.url = getUrl(href);
     this.self = this.isSelf();
+    this.remainingTries = this.getConfig("sourceRetry", 2);
   }
 
   complete () {
@@ -83,6 +84,7 @@ class Source extends Base {
         this.root = root;
         this.bodyClasses = bodyClasses;
         this.success();
+        this.complete();
       };
 
       const href = this.url.href;
@@ -93,10 +95,17 @@ class Source extends Base {
         timeout,
         success: ajaxSuccess,
         error: (jqXHR, textStatus, errorThrown) => {
+          if (textStatus == "timeout") {
+            if (this.remainingTries > 0) {
+              this.remainingTries--;
+              $.ajax(ajaxOptions);
+              return;
+            }
+          }
           const msg = `Could not load URL ${href} (${textStatus}: ${errorThrown})`;
           this.error(Error(msg));
-        },
-        complete: this.complete.bind(this)
+          this.complete();
+        }
       };
 
       // Ability to emulate delay for development purpose

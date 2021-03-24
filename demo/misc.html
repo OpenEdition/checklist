@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Checklist Demo: Misc UI Methods</title>
+  <title>Checklist Demo: Misc Methods</title>
 
   <!-- Font awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -24,9 +24,34 @@
   <div id="main">
     <div id="pane-container"></div>
     <article id="contents">
-      <h1 class="publi-title">Checklist Misc UI Methods</h1>
+      <h1 class="publi-title">Checklist Misc Methods</h1>
       <p><strong>Stacked bar :</strong></p>
       <div class="stackedbar-container"></div>
+
+      <p><strong>Batch Check</strong></p>
+      <textarea name="batch-input" id="batch-input" cols="30" rows="10">[
+        {
+          "docId": "toc",
+          "href": "http://localhost:3000/demo/"
+        },
+        {
+          "docId": "article-1",
+          "href": "http://localhost:3000/demo/article-1.html"
+        },
+        {
+          "docId": "article-2",
+          "href": "http://localhost:3000/demo/article-2.html"
+        },
+        {
+          "docId": "article-3",
+          "href": "http://localhost:3000/demo/article-3.html"
+        },
+        {
+          "docId": "missing-article",
+          "href": "http://localhost:3000/demo/404.html"
+        }
+      ]</textarea>
+      <button id="run-batch">Run!</button>
     </article>
   </div>
 </body>

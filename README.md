@@ -63,6 +63,9 @@ checklist.init({
   // Nombre maximum de requêtes Ajax lancées simultanément par le Loader
   maxSourcesLoading: 5,
 
+  // Nombre de nouvelles tentatives en cas de time out lors du chargement d'une source
+  sourceRetry: 2,
+
   // Timeout des requêtes Ajax lancées par le Loader
   loaderTimeout: 10000,
 
@@ -230,11 +233,11 @@ checklist.init({
   },
 
   // Fonction de création du contexte.
-  context: function ($) {
+  context: function ($, bodyClasses) {
     return {
-      "article": true,
-      "textes": true,
-      "publication": false,
+      "article": bodyClasses.includes("article"),
+      "textes": bodyClasses.includes("textes"),
+      "publication": bodyClasses.includes("publication"),
       "motsclesfr": $(".motsclesfr .entry").length
     };
   },
@@ -427,6 +430,23 @@ checklist.init({
     this.resolve(true, markerObj);
   }
 }
+```
+
+## Vérification par lots
+
+La méthode `Checklist.runBatch({ docs, rules, context })` permet de lancer la vérification de plusieurs documents et de récupérer une promesse retournant les Checkers obtenus (et des erreurs pour les traitements ayant échoué).
+
+* Le paramètre `docs` est un objet de la forme `{ docId, href }` qui contient les informations sur les documents à tester.
+* Le paramètre `rules` (optionel) contient une liste de règles alternative à utiliser pour les tests.
+* Le paramètre `context` (optionel) contient un contexte alternatif à utiliser pour les tests.
+* La paramètre `reloadSources` force quand il est vrai le rechargement des sources du loader avant l'exécution.
+
+```javascript
+var docs = [
+  { docId: "doc1", href: "url/to/doc1" },
+  { docId: "doc2", href: "url/to/doc2" }
+];
+checklist.runBatch({ docs: docs }).then(console.log); // Array(2) [ {…}, {…} ]
 ```
 
 ## Affichage de barres de progression

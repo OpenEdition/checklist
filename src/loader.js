@@ -22,7 +22,9 @@ class Loader extends Base {
       }
 
       source.whenState("ready").then(() => {
-        this.loadingCount--;
+        if (this.loadingCount > 0) {
+          this.loadingCount--;
+        }
         this.dequeue();
         if (source.hasState("success")) {
           return resolve(source);
@@ -76,6 +78,12 @@ class Loader extends Base {
     if (sourceIndex === -1 || this.sources[sourceIndex].isSelf()) return this;
     this.sources.splice(sourceIndex, 1);
     return this;
+  }
+
+  clear () {
+    this.sources = [this.selfSource];
+    this.queue = [];
+    this.loadingCount = 0;
   }
 }
 
