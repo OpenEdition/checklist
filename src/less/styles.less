@@ -10,7 +10,7 @@ body.checklist-visible {
 
 .checklist-component {
   font-family: @font-sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   display: none;
   cursor: default;
 
@@ -32,8 +32,8 @@ body.checklist-visible {
 
   h3 {
     color: darken(@text-grey, 10%);
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 600;
   }
 }
 
@@ -224,7 +224,7 @@ body.checklist-visible {
   padding: 6px 10px;
   margin: 0;
   color: @text-grey;
-  font-size: 14px;
+  font-size: 13.5px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -257,7 +257,7 @@ body.checklist-visible {
 }
 
 .checklist-dropdown-entry a {
-  font-size: 13px;
+  font-size: 13.5px;
   padding: 10px 15px;
   display: block;
   color: @text-grey;
@@ -275,7 +275,6 @@ body.checklist-visible {
 // ========
 
 .checklist-overview {
-  font-size: 15px;
   color: @text-grey;
 }
 
@@ -323,7 +322,7 @@ body.checklist-visible {
   .checklist-stackedbar-stat-tooltip {
     width: 40px;
     height: 20px;
-    padding: 8px 0 4px;
+    padding: 4px 0;
     text-align: center;
     top: -39px;
     left: 50%;
@@ -383,7 +382,7 @@ body.checklist-visible {
 }
 
 .checklist-overview-legend-text {
-  font-size: 13px;
+  font-size: 13.5px;
   color: @text-grey;
 }
 
@@ -522,7 +521,7 @@ body.checklist-visible {
 }
 
 .checklist-statement {
-  font-size: 15px;
+  font-size: 14px;
   padding: 0 2px 0 8px;
   margin: 0;
   position: relative;
@@ -552,8 +551,9 @@ body.checklist-visible {
   font-size: 11px;
   font-weight: bold;
   border-radius: 20px;
-  padding: 2px 5px;
+  padding: 1px 5px;
   margin-right: 8px;
+  height: 15px;
 }
 
 .checklist-statement-btn {
@@ -633,14 +633,13 @@ body.checklist-visible {
   text-decoration: none;
   text-transform: none;
   padding: 2px 6px;
-  margin: 4px;
   line-height: 175%;
   content: attr(data-checklist-marker-name);
   background: @marker-bg-color;
   color: @marker-color;
   border-radius: 5px;
   position: absolute;
-  bottom: 19px;
+  bottom: 22px;
   white-space: nowrap;
   left: 50%;
   transform: translateX(-50%);
@@ -828,13 +827,14 @@ body.checklist-visible {
 }
 
 .checklist-toggle-open-parent:after {
-  content: " \25B6";
-  font-size: .9em;
+  content: " \25B8";
+  font-size: 1.5em;
   margin-left: 4px;
+  transition: transform ease-out .2s;
 }
 
 .open > .checklist-toggle-open-parent:after {
-  content: " \25BC";
+  transform: rotate(90deg);
 }
 
 .checklist-collapsed {
