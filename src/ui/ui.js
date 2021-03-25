@@ -246,12 +246,22 @@ class UI extends Base {
     return rerunAll === true ? toc.rerunAll().focus() : toc.rerunUnchecked().focus();
   }
 
-  showChildpane (name) {
+  showChildpane (name, closeOnClick) {
     const components = this.components;
     for (let key in components) {
       const component = components[key];
       if (!component.childpane) continue;
       component.toggle(key === name);
+    }
+    if (closeOnClick) {
+      const clickHandler = (e) => {
+        const parentEl = document.querySelector(this.parent);
+        const isPaneDescendant = $.contains(parentEl, e.target);
+        if (isPaneDescendant) return;
+        this.hideChildpanes();
+        $(window).off("click", clickHandler);
+      };
+      $(window).on("click", clickHandler);
     }
     return this;
   }
@@ -263,7 +273,7 @@ class UI extends Base {
 
   showInfo (info) {
     this.components.help.setContent(info);
-    this.showChildpane("help");
+    this.showChildpane("help", true);
     return this;
   }
 

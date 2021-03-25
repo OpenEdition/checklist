@@ -361,6 +361,25 @@ $(function () {
         }
       },
       {
+        id: "markers",
+        name: "Une autre règle qui injecte d'autres marqueurs",
+        description: "Cette règle injecte un marqueur à un paragraphe sur 4.",
+        condition: "textes || publications",
+        type: "warning",
+        action: function ($) {
+          const statement = this.notify(true);
+          $("p").each(function (index) {
+            if (index % 4 !== 0) return;
+            statement.addMarker({
+              name: "Marqueur",
+              target: $(this),
+              position: "append"
+            });
+          });
+          this.resolve();
+        }
+      },
+      {
         id: "paper-rule",
         name: "Paper rule",
         description: "Une règle qui est associée à la catégorie 'papier'",
