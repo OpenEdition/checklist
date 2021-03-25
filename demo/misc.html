@@ -1,58 +1,58 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Checklist Demo: Misc Methods</title>
+	<meta charset="utf-8">
+	<title>Checklist Demo: Misc Methods</title>
 
-  <!-- Font awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css" />
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="styles.css" />
 
-  <!-- jQuery -->
-  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<!-- jQuery -->
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
-  <!-- Checklist -->
-  <script src="../dist/checklist.js"></script>
-  <script src="demo.js"></script>
+	<!-- Checklist -->
+	<script src="../dist/checklist.js"></script>
+	<script src="demo.js"></script>
 </head>
 <body class="misc">
-  <div id="links">
-    <a href="./">&lt; Retour</a>
-  </div>
-  <div id="main">
-    <div id="pane-container"></div>
-    <article id="contents">
-      <h1 class="publi-title">Checklist Misc Methods</h1>
-      <p><strong>Stacked bar :</strong></p>
-      <div class="stackedbar-container"></div>
+	<div id="links">
+		<a href="./">&lt; Retour</a>
+	</div>
+	<div id="main">
+		<div id="pane-container"></div>
+		<article id="contents">
+			<h1 class="publi-title">Checklist Misc Methods</h1>
+			<p><strong>Stacked bar :</strong></p>
+			<div class="stackedbar-container"></div>
 
-      <p><strong>Batch Check</strong></p>
-      <textarea name="batch-input" id="batch-input" cols="30" rows="10">[
-        {
-          "docId": "toc",
-          "href": "http://localhost:3000/demo/"
-        },
-        {
-          "docId": "article-1",
-          "href": "http://localhost:3000/demo/article-1.html"
-        },
-        {
-          "docId": "article-2",
-          "href": "http://localhost:3000/demo/article-2.html"
-        },
-        {
-          "docId": "article-3",
-          "href": "http://localhost:3000/demo/article-3.html"
-        },
-        {
-          "docId": "missing-article",
-          "href": "http://localhost:3000/demo/404.html"
-        }
-      ]</textarea>
-      <button id="run-batch">Run!</button>
-    </article>
-  </div>
+			<p><strong>Batch Check</strong></p>
+			<textarea name="batch-input" id="batch-input" cols="30" rows="10">[
+				{
+					"docId": "toc",
+					"href": "http://localhost:3000/demo/"
+				},
+				{
+					"docId": "article-1",
+					"href": "http://localhost:3000/demo/article-1.html"
+				},
+				{
+					"docId": "article-2",
+					"href": "http://localhost:3000/demo/article-2.html"
+				},
+				{
+					"docId": "article-3",
+					"href": "http://localhost:3000/demo/article-3.html"
+				},
+				{
+					"docId": "missing-article",
+					"href": "http://localhost:3000/demo/404.html"
+				}
+			]</textarea>
+			<button id="run-batch">Run!</button>
+		</article>
+	</div>
 </body>
 </html>

@@ -1,65 +1,65 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Checklist Demo</title>
+	<meta charset="utf-8">
+	<title>Checklist Demo</title>
 
-  <!-- Font awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css" />
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="styles.css" />
 
-  <!-- jQuery -->
-  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<!-- jQuery -->
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
-  <!-- Checklist -->
-  <script src="../dist/checklist.js"></script>
-  <script src="demo.js"></script>
+	<!-- Checklist -->
+	<script src="../dist/checklist.js"></script>
+	<script src="demo.js"></script>
 
-  <script>
-    function fillLocalStorage() {
-      var i = 0;
-      var str = "x".repeat(50);
-      try {
-        while(true) {
-          localStorage.setItem(i, str);
-          i++;
-        }
-      } catch (error) {
-        alert("localStorage is full");
-      }
-    }
+	<script>
+		function fillLocalStorage() {
+			var i = 0;
+			var str = "x".repeat(50);
+			try {
+				while(true) {
+					localStorage.setItem(i, str);
+					i++;
+				}
+			} catch (error) {
+				alert("localStorage is full");
+			}
+		}
 
-    function clearLocalStorage() {
-      localStorage.clear();
-      alert("localStorage is empty");
-    }
-  </script>
+		function clearLocalStorage() {
+			localStorage.clear();
+			alert("localStorage is empty");
+		}
+	</script>
 </head>
 <body class="publication">
-  <div id="links">
-    <a href="../test">Tests</a> - <strong>Demo</strong> - <a href="../demo/misc.html">Demo : Misc Methods</a> - Cache : <a href="#" onclick="clearLocalStorage()">Clear</a> / <a href="#" onclick="fillLocalStorage()">Fill</a>
-  </div>
-  <div id="main">
-    <div id="pane-container"></div>
-    <article id="contents">
-      <h1 class="publi-title">Checklist Demo</h1>
-      <section id="toc">
-        <ul>
-          <li class="toc-entry">
-            <a href="./article-1.html">article-1.html</a>
-          </li>
-          <li class="toc-entry">
-            <a href="./article-2.html">article-2.html</a>
-          </li>
-          <li class="toc-entry">
-            <a href="./article-3.html">article-3.html</a>
-          </li>
-        </ul>
-      </section>
-      <div id="toc-container"></div>
-    </article>
-  </div>
+	<div id="links">
+		<a href="../test">Tests</a> - <strong>Demo</strong> - <a href="../demo/misc.html">Demo : Misc Methods</a> - Cache : <a href="#" onclick="clearLocalStorage()">Clear</a> / <a href="#" onclick="fillLocalStorage()">Fill</a>
+	</div>
+	<div id="main">
+		<div id="pane-container"></div>
+		<article id="contents">
+			<h1 class="publi-title">Checklist Demo</h1>
+			<section id="toc">
+				<ul>
+					<li class="toc-entry">
+						<a href="./article-1.html">article-1.html</a>
+					</li>
+					<li class="toc-entry">
+						<a href="./article-2.html">article-2.html</a>
+					</li>
+					<li class="toc-entry">
+						<a href="./article-3.html">article-3.html</a>
+					</li>
+				</ul>
+			</section>
+			<div id="toc-container"></div>
+		</article>
+	</div>
 </body>
 </html>
