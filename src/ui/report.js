@@ -174,7 +174,7 @@ class Report extends View {
   }
 
   isSelf () {
-    return this.checker ? this.checker.source.self : null;
+    return this.checker && this.checker.source ? this.checker.source.self : null;
   }
 
   // STATEMENTS
