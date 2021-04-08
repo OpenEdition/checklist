@@ -4,7 +4,7 @@ const View = require("./view.js");
 function getHtml (buttonsCreator, docId, context, ui) {
   const {t, tk} = ui;
   const getEntries = (infos) => {
-    if (!Base.testCondition(infos.condition, context)) {
+    if (!infos || !Base.testCondition(infos.condition, context)) {
       return;
     }
     const icon = infos.icon;
