@@ -361,7 +361,7 @@ $(function () {
         }
       },
       {
-        id: "markers",
+        id: "markers2",
         name: "Une autre règle qui injecte d'autres marqueurs",
         description: "Cette règle injecte un marqueur à un paragraphe sur 4.",
         condition: "textes || publications",
@@ -415,7 +415,7 @@ $(function () {
         action: function () {
           this.resolve(true);
         }
-      },
+      }
     ]
   })
   .then(function () {
