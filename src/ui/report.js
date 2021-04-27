@@ -241,7 +241,9 @@ class Report extends View {
       $($ul).append(element);
     };
 
-    const doInjectStatement = (statement, target) => {
+    const doInjectStatement = (statement) => {
+      if (statement == null) return;
+
       const tags = statement.tags;
       const isVisible = !isFiltered(tags);
       this.injectMarkers(statement.markers, isVisible);
