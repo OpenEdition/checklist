@@ -2,7 +2,7 @@ const checklistVersion = __VERSION__;
 const View = require("./view.js");
 
 function getViewHtml (cache, filters, langs, currentLang, t, tk) {
-  const getInputHtml = (filters) => {
+  const getInputHtml = (filters = []) => {
     const inputs = filters.map((filter) => {
       const isHidden = cache.getFilter(filter.id);
       const checkedAttr = isHidden ? "" : "checked";
@@ -15,7 +15,14 @@ function getViewHtml (cache, filters, langs, currentLang, t, tk) {
         </div>
       `;
     });
-    return inputs.join("\n");
+    if (inputs.length === 0) return "";
+
+    return `
+      <h3><i class="fas fa-filter"></i> ${t("settings-filters-title")}</h3>
+      <p>${t("settings-filters-descripion")}</p>
+      ${inputs.join("\n")}
+      <button class="checklist-button" data-checklist-action="filter">${t("save")}</button>
+    `;
   };
 
   const inputHtml = getInputHtml(filters);
@@ -46,10 +53,7 @@ function getViewHtml (cache, filters, langs, currentLang, t, tk) {
       <div class="checklist-pane-contents">
         ${langHtml}
 
-        <h3><i class="fas fa-filter"></i> ${t("settings-filters-title")}</h3>
-        <p>${t("settings-filters-descripion")}</p>
         ${inputHtml}
-        <button class="checklist-button" data-checklist-action="filter">${t("save")}</button>
 
         <h3><i class="fas fa-history"></i> ${t("settings-cache-title")}</h3>
         <p>${t("settings-cache-description")}</p>
