@@ -301,13 +301,14 @@ class UI extends Base {
     const updateStackedBar = (stackedbar) => {
       const activeFiltersId = (() => {
         const cache = this.cache;
-        const filters = this.getConfig("filters");
+        const filters = this.getConfig("filters", []);
         return filters
           .filter((f) => !cache.getFilter(f.id))
           .map((f) => f.id);
       })();
   
       const isStatementActive = (statement) => {
+        if (!statement) return false;
         const id = statement.id;
         const rule = rules.find((r) => r.id === id);
         const tags = rule.tags;
