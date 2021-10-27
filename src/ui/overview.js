@@ -6,7 +6,6 @@ class Overview extends View {
   constructor ({ ui, parent }) {
     super("Overview", ui, parent);
     this.createMarkup();
-    ui.on("beforeFilterStatements", () => this.reset());
   }
 
   createMarkup () {
